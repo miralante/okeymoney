@@ -1,0 +1,22 @@
+# wrangler.toml — Cloudflare Workers (static assets) configuration for
+# Okeymoney.
+#
+# Okeymoney is a fully static site (plain HTML/CSS/JS, no build step, no
+# server-side code), so it's deployed as a Worker with no `main` script —
+# just a static-assets binding. This is Cloudflare's current recommended
+# path for static sites (the classic "Pages" product is being superseded by
+# Workers + static assets). `wrangler pages deploy` / a Pages-style
+# wrangler.toml (`pages_build_output_dir`) do not apply here.
+#
+# See: https://developers.cloudflare.com/workers/static-assets/
+
+name = "okeymoney"
+compatibility_date = "2026-07-27"
+
+[assets]
+directory = "."
+# Okeymoney is a single-page app: every "screen" lives inside index.html
+# (tabs are swapped client-side via classList in app.js) and the wizard
+# opens as an overlay on the same page. There is no server-side routing
+# to do, so Cloudflare's default 404 page is fine — no custom
+# not_found_handling needed.
