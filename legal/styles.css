@@ -1,0 +1,15 @@
+/* Okeymoney — legal page: narrower reading column, simple header. */
+.legal { max-width: 720px; }
+
+.legal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+  margin: var(--space-large) 0;
+}
+
+.legal-header .lang-row { align-self: flex-end; }
+
+.legal main p, .legal main li { max-width: none; }

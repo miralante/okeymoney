@@ -1,0 +1,30 @@
+.DS_Store
+Thumbs.db
+node_modules/
+.dev/
+/.check_out.txt
+
+# Local editor / IDE / AI assistant metadata — local to the dev machine,
+# not part of the public repo.
+.vscode/
+.idea/
+.github/copilot-instructions.md
+
+**/graphify-out/
+.graphify*
+.graphifyignore
+
+# Secrets and credentials — never commit
+.env
+.env.*
+*.pem
+*.p12
+*.pfx
+*.key
+*.keystore
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+**/credentials.json
+**/service-account*.json

@@ -1,0 +1,416 @@
+/* ==========================================================================
+   Okeymoney — Reusable components
+   Requires tokens.css and base.css.
+   Buttons >= 64px, gap >= 16px (accessibility rules, see doc/en/SPEC.md).
+   ========================================================================== */
+
+/* ---- Utilities ---- */
+.center { text-align: center; }
+.hidden { display: none !important; }
+.stack { display: flex; flex-direction: column; gap: var(--space); }
+.row { display: flex; align-items: center; gap: var(--space); flex-wrap: wrap; }
+
+/* ---- Page container ---- */
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: var(--space-large) var(--space) calc(var(--tabbar-height) + var(--space-large));
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: var(--button-min);
+  min-width: var(--button-min);
+  width: 100%;
+  padding: 12px 28px;
+  border: 3px solid transparent;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #FFFFFF;
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover { transform: scale(1.02); box-shadow: var(--shadow); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; transform: none; cursor: default; }
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+
+.btn-audio {
+  width: auto;
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 3px solid var(--color-border);
+}
+
+/* ---- Back / close link (top of every wizard step) ---- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--button-min);
+  padding: 12px 20px;
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.back-link:hover { border-color: var(--accent); }
+
+/* ---- Cards ---- */
+.card {
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space-large);
+  box-shadow: var(--shadow);
+}
+
+/* ---- Progress bar (informational only — no pressure) ---- */
+.progress-bar {
+  position: relative;
+  height: 28px;
+  background: var(--color-bg);
+  border: 2px solid var(--color-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-2);
+  border-radius: 14px;
+  transition: width 0.4s ease;
+}
+
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--text-small);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ---- Feedback zone (aria-live) ---- */
+.feedback {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  font-size: var(--text-large);
+  font-weight: 700;
+  text-align: center;
+}
+
+.feedback.success { color: var(--color-success); }
+.feedback.encourage { color: var(--color-encourage); }
+
+/* ---- Celebration (brief, <= 2 s) ---- */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space);
+  background: rgba(250, 247, 242, 0.95);
+  z-index: 200;
+  text-align: center;
+  padding: var(--space);
+}
+
+.celebration.hidden { display: none; }
+
+.celebration .emoji {
+  font-size: 96px;
+  animation: celebrate 0.6s ease;
+}
+
+.celebration .message {
+  font-size: var(--text-title);
+  font-weight: 700;
+  color: var(--color-success);
+}
+
+@keyframes celebrate {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ---- Screen header ---- */
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-large);
+}
+
+.screen-header h1, .screen-header h2 {
+  flex: 1;
+  font-size: var(--text-large);
+}
+
+/* ---- Balance (Home) ---- */
+.balance-card {
+  background: var(--accent-soft);
+  border: 3px solid var(--accent);
+}
+
+.balance-label {
+  font-size: var(--text-base);
+  color: var(--color-text-soft);
+}
+
+.balance-amount {
+  font-size: calc(var(--text-title) * 1.4);
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.balance-amount button {
+  background: none;
+  border: none;
+  font: inherit;
+  color: inherit;
+  padding: 4px;
+}
+
+/* ---- Big option grid (categories, icons) ---- */
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--space);
+}
+
+.btn-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 110px;
+  padding: var(--space);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-base);
+  font-weight: 700;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.btn-option .icon { font-size: 40px; }
+
+.btn-option:hover { border-color: var(--accent); }
+
+.btn-option[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+/* ---- Step wizard ---- */
+.wizard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space);
+  margin-bottom: var(--space);
+}
+
+.step-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.step-dots .dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-border);
+}
+
+.step-dots .dot.active { background: var(--accent); }
+.step-dots .dot.done { background: var(--accent-2); }
+
+/* ---- Amount display + numeric keypad ---- */
+.amount-display {
+  text-align: center;
+  font-size: calc(var(--text-title) * 1.2);
+  font-weight: 800;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: var(--space);
+}
+
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.keypad-key {
+  min-height: var(--button-min);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: var(--text-large);
+  font-weight: 700;
+}
+
+.keypad-key:active { background: var(--accent-soft); border-color: var(--accent); }
+
+/* ---- Money table: coin/banknote breakdown preview ---- */
+.money-table {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: var(--space);
+  background: var(--color-surface);
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  min-height: 80px;
+}
+
+.money-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: inherit;
+  font-weight: 800;
+  color: #3A2E1E;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+  box-shadow: var(--shadow);
+}
+
+.money-token.coin { width: 52px; height: 52px; border-radius: 50%; font-size: 15px; }
+.money-token.note { min-width: 84px; height: 48px; border-radius: 8px; font-size: 15px; }
+
+.money-c5, .money-c10, .money-c20, .money-c50 { background: #E9C55B; border: 3px solid #BC9430; }
+.money-c1 { background: #D9D9D9; border: 5px solid #C9A227; }
+.money-c2 { background: #E3C14B; border: 5px solid #B9B9B9; }
+.money-n5 { background: #C9CFD8; border: 3px solid #8E99A8; }
+.money-n10 { background: #EFB2A6; border: 3px solid #C56F5C; }
+.money-n20 { background: #AFC8E8; border: 3px solid #6D8FBC; }
+.money-n50 { background: #F2C08A; border: 3px solid #C98B3F; }
+
+/* ---- Goals ---- */
+.goal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: var(--space);
+}
+
+.goal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  border: 3px solid var(--color-border);
+  border-radius: var(--radius);
+  background: var(--color-surface);
+  padding: var(--space);
+  min-height: var(--button-min);
+}
+
+.goal-card .icon { font-size: 36px; }
+.goal-card.achieved { border-color: var(--accent-2); background: var(--accent-2-soft); }
+
+/* ---- Bottom tab bar (predictable, always-visible navigation) ---- */
+.tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--tabbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background: var(--color-surface);
+  border-top: 3px solid var(--color-border);
+  z-index: 50;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.tab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: var(--button-min);
+  min-height: var(--button-min);
+  background: none;
+  border: none;
+  color: var(--color-text-soft);
+  font-size: var(--text-small);
+  font-weight: 700;
+}
+
+.tab-button .icon { font-size: 26px; }
+
+.tab-button[aria-current="page"] { color: var(--accent); }
+
+.fab-button {
+  position: relative;
+  top: -18px;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-size: 34px;
+  font-weight: 800;
+  border: 4px solid var(--color-surface);
+  box-shadow: var(--shadow);
+}
+
+/* ---- Footer legal link (present on every screen) ---- */
+.footer-app {
+  display: flex;
+  justify-content: center;
+  padding: var(--space) 0 8px;
+  margin-top: var(--space);
+}
+
+.legal-link {
+  color: var(--color-text-soft);
+  font-size: var(--text-small);
+  padding: 8px 12px;
+  text-decoration: underline;
+}
+
+.legal-link:hover, .legal-link:focus {
+  color: var(--color-text);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn:hover { transform: none; }
+}

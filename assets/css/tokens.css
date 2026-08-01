@@ -1,0 +1,49 @@
+/* ==========================================================================
+   Okeymoney — Design tokens
+   High-contrast light theme. See doc/en/SPEC.md (accessibility rules).
+   ========================================================================== */
+
+:root {
+  /* Base colors — accessible light theme */
+  --color-bg: #FAF7F2;
+  --color-surface: #FFFFFF;
+  --color-text: #1A1A2E;
+  --color-text-soft: #4A4A68;
+  --color-border: #D8D2C8;
+
+  /* Brand accent — money/savings green (also used for primary buttons) */
+  --accent: #2E7D32;
+  --accent-soft: #E6F2E6;
+  --accent-2: #B8860B;      /* gold, used for coins/savings highlights */
+  --accent-2-soft: #F7EFDD;
+
+  /* Feedback (never an aggressive red for mistakes) */
+  --color-success: #2E7D32;
+  --color-success-soft: #E6F2E6;
+  --color-encourage: #C05621;
+  --color-encourage-soft: #F9EBE2;
+
+  /* Typography. --text-scale is applied by assets/js/storage.js based on
+     a saved preference (Normal=1/Large/Extra large); defaults to 1, so
+     anyone who hasn't touched the preference sees no change. */
+  --font: 'Atkinson Hyperlegible', 'Nunito', system-ui, -apple-system, sans-serif;
+  --text-scale: 1;
+  --text-base: calc(20px * var(--text-scale));
+  --text-small: calc(17px * var(--text-scale));
+  --text-large: calc(28px * var(--text-scale));
+  --text-title: calc(36px * var(--text-scale));
+
+  /* Touch and spacing */
+  --button-min: 64px;
+  --space: 16px;
+  --space-large: 24px;
+  --radius: 16px;
+  --shadow: 0 2px 8px rgba(26, 26, 46, 0.12);
+
+  /* Visible focus */
+  --color-focus: #1B6CA8;
+
+  /* Bottom tab bar height, used to pad page content so it never hides
+     behind the fixed bar (rule: predictable, always-visible navigation). */
+  --tabbar-height: 88px;
+}

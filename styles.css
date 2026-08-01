@@ -1,0 +1,23 @@
+/* ==========================================================================
+   Okeymoney — App-specific styles only. Shared components live in
+   assets/css/components.css.
+   ========================================================================== */
+
+.lang-row {
+  justify-content: flex-end;
+  margin-bottom: var(--space);
+}
+
+#goalName {
+  width: 100%;
+}
+
+#goalName::placeholder {
+  color: var(--color-text-soft);
+}
+
+.balance-amount {
+  display: inline-flex;
+  min-height: var(--button-min);
+  border-radius: var(--radius);
+}

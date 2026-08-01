@@ -1,0 +1,19 @@
+{
+  "name": "Okeymoney",
+  "short_name": "Okeymoney",
+  "description": "Aprende a manejar tu dinero: cuánto tienes, cuánto gastas y cuánto ahorras.",
+  "lang": "es",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#FAF7F2",
+  "icons": [
+    {
+      "src": "./assets/img/icono.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

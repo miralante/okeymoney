@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es" data-i18n-title="pageTitle">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Okeymoney — Protección de datos</title>
+  <meta name="description" content="Okeymoney: qué datos guarda, dónde y por qué. Sin registro, sin cookies, sin analítica.">
+  <meta name="theme-color" content="#FAF7F2">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" href="../assets/img/icono.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container legal">
+    <a href="../index.html" class="back-link" data-i18n="core.back">← Volver</a>
+    <header class="legal-header">
+      <div class="row lang-row">
+        <button type="button" class="btn-audio" id="btnLangEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
+        <button type="button" class="btn-audio" id="btnLangEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
+      </div>
+      <img src="../assets/img/icono.svg" alt="" width="72" height="72">
+      <h1 data-i18n="pageTitle">Protección de datos</h1>
+      <p data-i18n="tagline">Sin registro. Sin cookies. Sin analítica.</p>
+      <p data-i18n="lead">Okeymoney no pide tus datos personales. Todo lo que guarda vive únicamente en este dispositivo. Aquí explicamos, en detalle, qué guardamos y por qué.</p>
+    </header>
+
+    <main class="stack">
+      <section id="responsible" class="card">
+        <h2 data-i18n="responsibleTitle">Quién trata tus datos</h2>
+        <p data-i18n="responsibleP1">Okeymoney es una aplicación desarrollada de forma independiente. No hay ningún servidor propio que reciba o almacene tus datos: la aplicación es un conjunto de páginas estáticas que se ejecutan en tu navegador, en tu propio dispositivo.</p>
+      </section>
+
+      <section id="data" class="card">
+        <h2 data-i18n="dataTitle">Qué guardamos y por qué</h2>
+        <p data-i18n="dataP1">Okeymoney funciona sin cuentas, sin cookies y sin analítica: no sabemos quién eres ni cómo usas la aplicación.</p>
+        <p data-i18n="dataP2">Lo único que se guarda vive en el <code>localStorage</code> de tu navegador, en tu propio dispositivo, y nunca se envía a ningún servidor:</p>
+        <ul>
+          <li><strong data-i18n="dataItem1Label">Tu dinero</strong>: <span data-i18n="dataItem1Text">cuánto dinero dijiste que tenías y los gastos que has apuntado (dibujo y precio).</span></li>
+          <li><strong data-i18n="dataItem2Label">Tus metas</strong>: <span data-i18n="dataItem2Text">el nombre y el precio de lo que quieres conseguir, y cuánto dinero has guardado para ello.</span></li>
+          <li><strong data-i18n="dataItem3Label">Idioma</strong>: <span data-i18n="dataItem3Text">si eliges español o inglés.</span></li>
+        </ul>
+        <p data-i18n="dataP3">Nunca guardamos: tu nombre, contraseñas, ni datos que permitan identificarte fuera de este dispositivo.</p>
+        <p data-i18n="dataP4">Esta información se guarda mientras no se borre, y sirve únicamente para que tus cuentas no se pierdan al cerrar la aplicación.</p>
+      </section>
+
+      <section id="rights" class="card">
+        <h2 data-i18n="rightsTitle">Tus derechos y cómo ejercerlos</h2>
+        <p data-i18n="rightsP1">Como todo lo guardado está en tu dispositivo y no en un servidor, tú tienes el control directo: puedes verlo, cambiarlo o borrarlo en cualquier momento, sin pedírnoslo a nosotros.</p>
+        <p data-i18n="rightsP2">Para borrarlo, borra los datos de navegación de tu navegador para este sitio, desde su configuración.</p>
+        <p><a class="btn btn-secondary" href="../index.html" data-i18n="rightsLinkApp">Ir a Okeymoney</a></p>
+      </section>
+
+      <section id="minors" class="card">
+        <h2 data-i18n="minorsTitle">Menores de edad y personas con discapacidad</h2>
+        <p data-i18n="minorsP1">Okeymoney está pensada para que la use de forma autónoma cualquier persona, incluidas personas menores de edad y personas con discapacidad intelectual.</p>
+        <p data-i18n="minorsP2">Como la aplicación no recoge datos personales en ningún servidor, no es necesario el consentimiento de un tutor para tratar datos: no hay ningún tratamiento que autorizar. Sí recomendamos la supervisión habitual que una familia o un profesional haga sobre el uso de cualquier dispositivo, sobre todo al principio.</p>
+      </section>
+
+      <section id="contact" class="card">
+        <h2 data-i18n="contactTitle">Cambios y contacto</h2>
+        <p data-i18n="contactP1">Esta página puede actualizarse si cambia la aplicación.</p>
+        <p data-i18n="contactP2">Última actualización: 1 de agosto de 2026.</p>
+      </section>
+    </main>
+
+    <footer class="footer-app">
+      <a class="btn btn-secondary" href="../index.html" data-i18n="footerApp">Ir a Okeymoney</a>
+    </footer>
+  </div>
+
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="strings.es.js"></script>
+  <script src="strings.en.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      function paintLanguageSelector() {
+        var active = App.i18n.locale();
+        document.getElementById('btnLangEs').setAttribute('aria-pressed', String(active === 'es'));
+        document.getElementById('btnLangEn').setAttribute('aria-pressed', String(active === 'en'));
+      }
+      document.getElementById('btnLangEs').addEventListener('click', function () { App.i18n.setLocale('es'); });
+      document.getElementById('btnLangEn').addEventListener('click', function () { App.i18n.setLocale('en'); });
+      paintLanguageSelector();
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../sw.js').catch(function () {});
+      }
+    })();
+  </script>
+</body>
+</html>

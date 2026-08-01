@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" data-i18n-title="title">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Okeymoney</title>
+  <meta name="description" content="Aprende a manejar tu dinero: cuánto tienes, cuánto gastas y cuánto ahorras.">
+  <meta name="theme-color" content="#FAF7F2">
+  <link rel="icon" href="assets/img/icono.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container" id="app">
+
+    <div class="row lang-row">
+      <button type="button" class="btn-audio" id="btnLangEs" aria-pressed="false" aria-label="Español">🇪🇸</button>
+      <button type="button" class="btn-audio" id="btnLangEn" aria-pressed="false" aria-label="English">🇬🇧</button>
+    </div>
+
+    <!-- Screen: Mi dinero (dashboard) -->
+    <section id="screen-home" class="stack">
+      <div class="card balance-card center">
+        <p class="balance-label" data-i18n="home.balanceLabel">Tienes</p>
+        <button type="button" class="balance-amount" id="btnEditBalance" data-i18n-aria="home.editBalanceAria" aria-label="Cambiar cuánto dinero tienes">
+          <span id="balanceValue">0,00 €</span>
+        </button>
+        <p class="balance-label" data-i18n="home.editHint">Toca el número para cambiarlo</p>
+      </div>
+      <div id="moneyPreview" class="money-table" aria-hidden="true"></div>
+      <h2 data-i18n="home.recentTitle">Tus últimos movimientos</h2>
+      <div id="recentList" class="stack"></div>
+      <p id="recentEmpty" class="card center hidden" data-i18n="home.recentEmpty">Todavía no has apuntado ningún gasto.</p>
+    </section>
+
+    <!-- Screen: Mis metas (savings goals) -->
+    <section id="screen-goals" class="stack hidden">
+      <div class="screen-header">
+        <h1 data-i18n="goals.title">Mis metas</h1>
+      </div>
+      <button type="button" class="btn" id="btnNewGoal" data-i18n="goals.newButton">+ Nueva meta</button>
+      <div id="goalList" class="goal-grid"></div>
+      <p id="goalEmpty" class="card center hidden" data-i18n="goals.empty">Todavía no tienes ninguna meta. ¡Crea la primera!</p>
+    </section>
+
+    <!-- Screen: Aprender (placeholder for v1) -->
+    <section id="screen-learn" class="stack hidden">
+      <div class="screen-header">
+        <h1 data-i18n="learn.title">Aprender</h1>
+      </div>
+      <div class="card center">
+        <p style="font-size:48px" aria-hidden="true">🚧</p>
+        <p data-i18n="learn.comingSoon">Muy pronto podrás practicar aquí con juegos sobre el dinero.</p>
+      </div>
+      <ul id="learnTeaser" class="stack"></ul>
+    </section>
+
+    <!-- Screen: step-by-step wizard (register expense / new goal / add money / edit balance) -->
+    <section id="screen-wizard" class="stack hidden" aria-live="polite"></section>
+
+    <div class="footer-app">
+      <a class="legal-link" href="legal/index.html" data-i18n="core.dataProtection">Protección de datos</a>
+    </div>
+  </div>
+
+  <nav class="tabbar" role="navigation" aria-label="Secciones de Okeymoney">
+    <button type="button" class="tab-button" data-tab="home" aria-current="page">
+      <span class="icon" aria-hidden="true">🏠</span>
+      <span data-i18n="tabs.home">Mi dinero</span>
+    </button>
+    <button type="button" class="fab-button" id="btnNewExpense" data-i18n-aria="tabs.newExpenseAria" aria-label="Apuntar un gasto">+</button>
+    <button type="button" class="tab-button" data-tab="goals">
+      <span class="icon" aria-hidden="true">🐷</span>
+      <span data-i18n="tabs.goals">Mis metas</span>
+    </button>
+    <button type="button" class="tab-button" data-tab="learn">
+      <span class="icon" aria-hidden="true">🎓</span>
+      <span data-i18n="tabs.learn">Aprender</span>
+    </button>
+  </nav>
+
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="assets/js/tts.js"></script>
+  <script src="assets/js/storage.js"></script>
+  <script src="assets/js/feedback.js"></script>
+  <script src="assets/js/money.js"></script>
+  <script src="strings.es.js"></script>
+  <script src="strings.en.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
