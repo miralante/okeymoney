@@ -10,6 +10,13 @@
       (root app and legal/).
    3. sw.js <-> disk parity: every ARCHIVOS path exists.
    4. manifest.json icons exist on disk.
+   5. Mandatory rule: zero mentions of disability, occupational therapy
+      or minors in user-facing files (see doc/<locale>/SPEC.md §4).
+   6. _headers: every quoted Content-Security-Policy source expression
+      (e.g. 'self') has exactly one leading and one trailing quote —
+      catches malformed quoting like ''self'' that browsers silently
+      drop, turning a directive into "block everything" (this bit
+      teclatlon in production; see the sibling repo's CLOUDFLARE.md).
    Output: list of failures with the exact file. Exit code 1 if there
    are any, "OK (N checks)" otherwise.
    ============================================================ */
@@ -63,7 +70,10 @@ jsFiles.forEach(function (file) {
   }
 });
 
-/* --- 2. es/en key parity --- */
+/* --- 2. strings.<locale>.js key parity across all supported locales --- */
+/* When adding a new supported language, add its code here. The check
+   verifies every file in `dir` whose name matches `strings.<locale>.js`
+   has the exact same key set as every other one. */
 function extractDictFromStrings(file) {
   var captured = null;
   var sandbox = { App: { i18n: { register: function (dict, loc) {
@@ -93,31 +103,38 @@ function flattenKeys(obj, prefix) {
   return out;
 }
 
-function compareEsEn(dir, label) {
-  var fileEs = path.join(dir, 'strings.es.js');
-  var fileEn = path.join(dir, 'strings.en.js');
-  if (!fs.existsSync(fileEs) || !fs.existsSync(fileEn)) return;
+function compareLocales(dir, label) {
+  var entries = fs.readdirSync(dir)
+    .filter(function (name) { return /^strings\.[a-zA-Z0-9-]+\.js$/.test(name); });
+  if (entries.length < 2) return;
   checks += 1;
-  var dictEs = extractDictFromStrings(fileEs);
-  var dictEn = extractDictFromStrings(fileEn);
-  if (!dictEs || !dictEn) {
-    failures.push(label + ': could not extract the es/en dicts');
-    return;
-  }
-  var keysEs = flattenKeys(dictEs, '').sort();
-  var keysEn = flattenKeys(dictEn, '').sort();
-  var onlyEs = keysEs.filter(function (k) { return keysEn.indexOf(k) === -1; });
-  var onlyEn = keysEn.filter(function (k) { return keysEs.indexOf(k) === -1; });
-  if (onlyEs.length || onlyEn.length) {
-    var detail = [];
-    if (onlyEs.length) detail.push('only in es: ' + onlyEs.join(', '));
-    if (onlyEn.length) detail.push('only in en: ' + onlyEn.join(', '));
-    failures.push(label + ': ' + detail.join('; '));
-  }
+  var dicts = {};
+  entries.forEach(function (name) {
+    var d = extractDictFromStrings(path.join(dir, name));
+    if (!d) {
+      failures.push(label + ': could not extract dict from ' + name);
+      return;
+    }
+    dicts[name] = flattenKeys(d, '').sort();
+  });
+  if (failures.length && failures[failures.length - 1].indexOf('could not extract') !== -1) return;
+  var names = Object.keys(dicts);
+  var reference = names[0];
+  names.slice(1).forEach(function (name) {
+    var a = dicts[reference], b = dicts[name];
+    var onlyA = a.filter(function (k) { return b.indexOf(k) === -1; });
+    var onlyB = b.filter(function (k) { return a.indexOf(k) === -1; });
+    if (onlyA.length || onlyB.length) {
+      var detail = [];
+      if (onlyA.length) detail.push('only in ' + reference + ': ' + onlyA.join(', '));
+      if (onlyB.length) detail.push('only in ' + name + ': ' + onlyB.join(', '));
+      failures.push(label + ': ' + detail.join('; '));
+    }
+  });
 }
 
-compareEsEn(ROOT, 'strings.<locale>.js');
-compareEsEn(path.join(ROOT, 'legal'), 'legal/');
+compareLocales(ROOT, 'strings.<locale>.js');
+compareLocales(path.join(ROOT, 'legal'), 'legal/');
 
 /* --- 3. sw.js <-> disk parity --- */
 checks += 1;
@@ -144,6 +161,91 @@ var manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'manifest.json'), 'utf
   if (!fs.existsSync(full)) {
     failures.push('manifest.json: icon ' + icon.src + ' does not exist on disk');
   }
+});
+
+/* --- 5. Mandatory rule: zero disability / occupational therapy / minors mentions ---
+   doc/<locale>/SPEC.md §4: the end user never sees terms naming
+   intellectual disability, occupational therapy, minors, or equivalents.
+   This scan only covers the files the end user actually reaches;
+   internal docs (SPEC.md, README.md, CONTRIBUTING.md, CLAUDE.md) are
+   out of scope by design (they explain the project's real objective,
+   which is the very reason this rule exists).
+
+   Each entry pairs a substring or word-boundary match mode. Spanish
+   phrases and unambiguous English stems use substring; English words
+   that would produce false positives as substrings (e.g. "minor"
+   inside "minor annoyance") use word-boundary.
+*/
+checks += 1;
+var FORBIDDEN_TERMS = [
+  { term: 'discapacidad', match: 'substring' },
+  { term: 'disabilit', match: 'substring' },
+  { term: 'intelectual', match: 'substring' },
+  { term: 'intellectual', match: 'substring' },
+  { term: 'terapia ocupacional', match: 'substring' },
+  { term: 'occupational therap', match: 'substring' },
+  { term: 'dificultades cognitivas', match: 'substring' },
+  { term: 'cognitive difficult', match: 'substring' },
+  { term: 'necesidades especiales', match: 'substring' },
+  { term: 'special needs', match: 'substring' },
+  { term: 'capacidades diferentes', match: 'substring' },
+  { term: 'different abilities', match: 'substring' },
+  { term: 'menor de edad', match: 'substring' },
+  { term: 'menores de edad', match: 'substring' },
+  { term: 'personas menores', match: 'substring' },
+  { term: 'minor', match: 'word' },
+  { term: 'underage', match: 'word' },
+  { term: 'children', match: 'word' }
+];
+function isUserFile(file) {
+  var name = path.basename(file).toLowerCase();
+  return /\.html?$/.test(name) || /\.js$/.test(name);
+}
+function listFiles(dir) {
+  var out = [];
+  if (!fs.existsSync(dir)) return out;
+  fs.readdirSync(dir).forEach(function (f) {
+    var full = path.join(dir, f);
+    if (fs.statSync(full).isFile() && isUserFile(full)) out.push(full);
+  });
+  return out;
+}
+var userFacingTargets = [path.join(ROOT, 'index.html')]
+  .concat(listFiles(path.join(ROOT, 'legal')));
+userFacingTargets.forEach(function (file) {
+  var content = fs.readFileSync(file, 'utf8').toLowerCase();
+  FORBIDDEN_TERMS.forEach(function (entry) {
+    var term = entry.term;
+    var hit;
+    if (entry.match === 'word') {
+      hit = new RegExp('\\b' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b').test(content);
+    } else {
+      hit = content.indexOf(term.toLowerCase()) !== -1;
+    }
+    if (hit) {
+      failures.push(rel(file) + ': contains "' + term + '" — no page visible to the user may mention disability, occupational therapy, or minors (see doc/en/SPEC.md §4)');
+    }
+  });
+});
+
+/* --- 6. _headers: CSP source-expression quoting --- */
+checks += 1;
+var headersContent = fs.readFileSync(path.join(ROOT, '_headers'), 'utf8');
+headersContent.split('\n').filter(function (line) {
+  return /^\s*Content-Security-Policy:/i.test(line);
+}).forEach(function (line) {
+  var value = line.replace(/^\s*Content-Security-Policy:/i, '');
+  value.split(';').forEach(function (directive) {
+    directive.trim().split(/\s+/).filter(Boolean).forEach(function (token) {
+      var quoteCount = (token.match(/'/g) || []).length;
+      if (quoteCount === 0) return;
+      var wellFormed = quoteCount === 2 && token[0] === "'" && token[token.length - 1] === "'";
+      if (!wellFormed) {
+        failures.push('_headers: malformed CSP source expression "' + token +
+          '" — quotes should wrap the keyword exactly once (e.g. \'self\', not \'\'self\'\')');
+      }
+    });
+  });
 });
 
 /* --- Result --- */
