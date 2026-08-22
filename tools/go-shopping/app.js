@@ -1,0 +1,60 @@
+/* tools/go-shopping — Ir a la tienda.
+   Each case: you have a budget and 4 items to consider. Pick the 2 that
+   fit. 3 options (which pair to take), socratic, +20 tokens on completion. */
+(function () {
+  'use strict';
+  App.activity.run({
+    slug: 'go-shopping',
+    rewardCents: 2000,
+    casos: [
+      { id: 's1',
+        instruccionKey: 's1instr',
+        escenaHtml: '<p>Presupuesto: 6 €</p><p>🥖 2 € &nbsp; 🍎 1 € &nbsp; 🧃 1,50 € &nbsp; 🎮 20 €</p>',
+        opciones: ['opPanManzana', 'opPanJugo', 'opFrutaJuego'],
+        correctaIndex: 0,
+        pistaKey: 's1pista', explicacionKey: 's1expl' },
+      { id: 's2',
+        instruccionKey: 's2instr',
+        escenaHtml: '<p>Presupuesto: 10 €</p><p>🩹 3 € &nbsp; 🍜 4 € &nbsp; 📚 8 € &nbsp; 🎮 25 €</p>',
+        opciones: ['opTiritasLibro', 'opComidaJuego', 'opComidaTiritas'],
+        correctaIndex: 2,
+        pistaKey: 's2pista', explicacionKey: 's2expl' },
+      { id: 's3',
+        instruccionKey: 's3instr',
+        escenaHtml: '<p>Presupuesto: 8 €</p><p>🚌 1,50 € &nbsp; 🧥 30 € &nbsp; 🍞 2 € &nbsp; 💧 1 €</p>',
+        opciones: ['opTransComida', 'opAguaAbrigo', 'opAbrigoComida'],
+        correctaIndex: 0,
+        pistaKey: 's3pista', explicacionKey: 's3expl' },
+      { id: 's4',
+        instruccionKey: 's4instr',
+        escenaHtml: '<p>Presupuesto: 15 €</p><p>🎧 25 € &nbsp; 💊 4 € &nbsp; 🍎 3 € &nbsp; 📚 9 €</p>',
+        opciones: ['opMediLibro', 'opAuricularesFruta', 'opFrutaLibro'],
+        correctaIndex: 0,
+        pistaKey: 's4pista', explicacionKey: 's4expl' },
+      { id: 's5',
+        instruccionKey: 's5instr',
+        escenaHtml: '<p>Presupuesto: 12 €</p><p>🧥 30 € &nbsp; 🍜 5 € &nbsp; 🩹 2 € &nbsp; ☂️ 8 €</p>',
+        opciones: ['opComidaTiritas2', 'opParaguasComida', 'opAbrigoTiritas'],
+        correctaIndex: 0,
+        pistaKey: 's5pista', explicacionKey: 's5expl' },
+      { id: 's6',
+        instruccionKey: 's6instr',
+        escenaHtml: '<p>Presupuesto: 20 €</p><p>🎮 25 € &nbsp; 👟 15 € &nbsp; 📚 8 € &nbsp; 🩹 3 €</p>',
+        opciones: ['opZapatillasLibro', 'opLibroTiritas2', 'opJuegoZapatillas'],
+        correctaIndex: 0,
+        pistaKey: 's6pista', explicacionKey: 's6expl' },
+      { id: 's7',
+        instruccionKey: 's7instr',
+        escenaHtml: '<p>Presupuesto: 5 €</p><p>📱 100 € &nbsp; 🍞 2 € &nbsp; 💧 1 € &nbsp; 🩹 2 €</p>',
+        opciones: ['opComidaAgua', 'opMovilTiritas', 'opPanMovil'],
+        correctaIndex: 0,
+        pistaKey: 's7pista', explicacionKey: 's7expl' },
+      { id: 's8',
+        instruccionKey: 's8instr',
+        escenaHtml: '<p>Presupuesto: 30 €</p><p>🧥 25 € &nbsp; 🎧 50 € &nbsp; 🩹 2 € &nbsp; 🍞 2 €</p>',
+        opciones: ['opAbrigoTiritas2', 'opPanAuriculares', 'opTiritasPan'],
+        correctaIndex: 0,
+        pistaKey: 's8pista', explicacionKey: 's8expl' }
+    ]
+  });
+})();

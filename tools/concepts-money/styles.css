@@ -1,0 +1,86 @@
+/* ==========================================================================
+   tools/concepts-money/styles.css
+   Activity-specific styles for "¿Qué es el dinero?".
+   Inherits tokens + base + components from the shared app shell.
+   Dark theme active — uses new tokens (--superficie-*, --texto-*,
+   --acento, --exito, --aliento). Only the .opcion-btn.correcta /
+   .animo state colours and the head-shake feedback animation remain
+   activity-specific.
+   ========================================================================== */
+
+.escena {
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--espacio-4);
+}
+
+.token-grande {
+  width: 96px;
+  height: 96px;
+  font-size: 22px;
+}
+.token-grande.note {
+  min-width: 144px;
+  height: 80px;
+  font-size: 22px;
+}
+
+.opciones {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: var(--espacio-4);
+  margin-bottom: var(--espacio-4);
+}
+
+/* .opcion-btn Socratic state colours — distinct from the base .opcion-btn
+   defined in activities.css because this activity plays a specific
+   feedback animation on .animo (head-shake, banned for destructive
+   feedback by SPEC.md §3.1 but used here as gentle motion-cue only). */
+.opcion-btn {
+  min-height: var(--tocable);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  transition: transform var(--motion-rapida) var(--ease-suave),
+              border-color var(--motion-rapida) var(--ease-suave),
+              background var(--motion-rapida) var(--ease-suave);
+}
+.opcion-btn:hover:not(:disabled),
+.opcion-btn:focus-visible:not(:disabled) {
+  border-color: var(--acento);
+  transform: scale(1.02);
+}
+.opcion-btn.correcta {
+  border-color: var(--exito);
+  background: var(--acento-suave);
+  color: var(--exito);
+}
+.opcion-btn.animo {
+  border-color: var(--aliento);
+  background: rgba(232, 200, 121, 0.18);
+  animation: head-shake 0.5s var(--ease-suave);
+}
+.opcion-btn:disabled { cursor: default; opacity: 0.6; }
+.opcion-btn.correcta:disabled { opacity: 1; }
+
+.pista {
+  text-align: center;
+  font-size: var(--texto-400);
+  color: var(--texto-secundario);
+  padding: var(--espacio-4);
+  background: var(--superficie-1);
+  border: 2px dashed var(--aliento);
+  border-radius: var(--radio-2);
+  margin-bottom: var(--espacio-4);
+}
+
+@keyframes head-shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opcion-btn.animo { animation: none; }
+}

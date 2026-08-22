@@ -2,6 +2,7 @@
   'use strict';
   App.i18n.register({
     pageTitle: 'Protección de datos',
+    metaDescription: 'Okeymoney: qué datos guarda, dónde y por qué. Sin registro, sin cookies, sin analítica.',
     tagline: 'Sin registro. Sin cookies. Sin analítica.',
     lead: 'Okeymoney no pide tus datos personales. Todo lo que guarda vive únicamente en este dispositivo. Aquí explicamos, en detalle, qué guardamos y por qué.',
     responsibleTitle: 'Quién trata tus datos',
@@ -21,9 +22,6 @@
     rightsP1: 'Como todo lo guardado está en tu dispositivo y no en un servidor, tú tienes el control directo: puedes verlo, cambiarlo o borrarlo en cualquier momento, sin pedírnoslo a nosotros.',
     rightsP2: 'Para borrarlo, borra los datos de navegación de tu navegador para este sitio, desde su configuración.',
     rightsLinkApp: 'Ir a Okeymoney',
-    minorsTitle: 'Menores de edad y personas con discapacidad',
-    minorsP1: 'Okeymoney está pensada para que la use de forma autónoma cualquier persona, incluidas personas menores de edad y personas con discapacidad intelectual.',
-    minorsP2: 'Como la aplicación no recoge datos personales en ningún servidor, no es necesario el consentimiento de un tutor para tratar datos: no hay ningún tratamiento que autorizar. Sí recomendamos la supervisión habitual que una familia o un profesional haga sobre el uso de cualquier dispositivo, sobre todo al principio.',
     contactTitle: 'Cambios y contacto',
     contactP1: 'Esta página puede actualizarse si cambia la aplicación.',
     contactP2: 'Última actualización: 1 de agosto de 2026.',

@@ -3,6 +3,17 @@
   'use strict';
   App.i18n.register({
     title: 'Okeymoney',
+    appName: 'Okeymoney',
+
+    agent: {
+      persona: 'Persona',
+      empresa: 'Empresa',
+      banco: 'Banco'
+    },
+
+    meta: {
+      description: 'Aprende a manejar tu dinero: cuánto tienes, cuánto gastas y cuánto ahorras.'
+    },
 
     tabs: {
       home: 'Mi dinero',
@@ -12,13 +23,15 @@
     },
 
     home: {
+      saludo: 'Hola. ¿Qué quieres hacer hoy?',
+      moreGoals: '+{n} más',
+      anchorAria: 'Ir a {theme}',
       balanceLabel: 'Tienes',
       editBalanceAria: 'Cambiar cuánto dinero tienes',
-      editHint: 'Toca el número para cambiarlo',
-      recentTitle: 'Tus últimos movimientos',
-      recentEmpty: 'Todavía no has apuntado ningún gasto.',
+      editHint: 'Toca para cambiar cuánto dinero tienes',
       setBalanceTitle: '¿Cuánto dinero tienes?',
-      setBalanceInstruction: 'Cuenta tu dinero y escribe cuánto tienes ahora.'
+      setBalanceInstruction: 'Cuenta tu dinero y escribe cuánto tienes ahora.',
+      catalogueTitle: 'Aprende con Okeymoney'
     },
 
     expense: {
@@ -63,15 +76,51 @@
     learn: {
       title: 'Aprender',
       comingSoon: 'Muy pronto podrás practicar aquí con juegos sobre el dinero.',
-      teaser: {
-        change: '🪙 Calcular la vuelta',
-        budget: '📋 Hacer un presupuesto',
-        needsWants: '🤔 Lo que necesito y lo que quiero'
+      walletLabel: 'Tu monedero de práctica',
+      intro: 'Gana 🪙 practicando con actividades. Tu monedero de práctica es independiente del dinero real.',
+      stateDone: '✓ Hecha',
+      stateAvailable: '▶ Empezar',
+      stateLocked: '🔒 Pronto',
+      themes: {
+        concepts: 'Conceptos básicos',
+        daily: 'Vida cotidiana',
+        safety: 'Seguridad'
+      },
+      activityTitle: {
+        'concepts-money':  '¿Qué es el dinero?',
+        'needs-vs-wants':  'Necesito o quiero',
+        'budget-first':    '¿Qué compro primero?',
+        'go-shopping':     'Ir a la tienda',
+        'change-back':     'Calcular la vuelta',
+        'my-shopping-day': 'Mi compra del día',
+        'safe-money':      'Mi dinero está seguro'
+      },
+      activityDesc: {
+        'concepts-money':  'Identifica monedas y billetes por su valor.',
+        'needs-vs-wants':  'Distingue lo que necesitas de lo que deseas.',
+        'budget-first':    'Decide qué comprar antes con un dinero limitado.',
+        'go-shopping':     'Haz una compra pequeña con un presupuesto.',
+        'change-back':     'Calcula cuánto te tienen que devolver al pagar.',
+        'my-shopping-day': 'Practica todo junto en una compra completa.',
+        'safe-money':      'Reconoce transferencias raras y estafas, y qué hacer.'
       }
     },
 
     wizard: {
       closeAria: 'Cerrar y no guardar'
+    },
+
+    keypad: {
+      deleteDigit: 'Borrar el último dígito',
+      clear: 'Borrar todo'
+    },
+
+    offline: {
+      title: 'Sin conexión',
+      heading: 'Sin conexión',
+      body: 'No hemos podido cargar esta página. Comprueba tu conexión a Internet y vuelve a intentarlo.',
+      homeLink: 'Volver a Okeymoney',
+      metaDescription: 'Okeymoney está sin conexión: comprueba tu conexión a Internet y vuelve a intentarlo.'
     }
   }, 'es');
 })();

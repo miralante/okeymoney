@@ -27,9 +27,9 @@
 > `wrangler.toml` — it would break the deploy.
 >
 > **Live URL:** <https://okeymoney.miralante.workers.dev> (confirmed
-> by direct testing: 200 on the homepage, a real 404 on an unmatched
-> path — no custom `not_found_handling` configured, which matches the
-> deliberate choice documented below).
+> by direct testing: 200 on the homepage, and a real 404 on an
+> unmatched path served from the repo's own `404.html` via
+> `not_found_handling = "404-page"` in `wrangler.toml`).
 
 Okeymoney is deployed as a **Cloudflare Worker (static assets)**,
 using its built-in GitHub integration. There is no custom GitHub

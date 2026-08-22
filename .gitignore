@@ -8,7 +8,13 @@ node_modules/
 # not part of the public repo.
 .vscode/
 .idea/
+.claude/
 .github/copilot-instructions.md
+
+# Local dev-server logs and scratch files
+.serve.out.log
+.serve.err.log
+_o.txt
 
 **/graphify-out/
 .graphify*

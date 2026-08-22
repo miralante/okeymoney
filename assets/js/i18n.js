@@ -18,6 +18,10 @@
   var LOCALE_KEY = 'okeymoney:locale';
   var SUPPORTED = ['es', 'en'];
   var DEFAULT_LOCALE = 'es';
+  /* BCP47 mapping for speechSynthesis voices. Add a new entry for each
+     locale in SUPPORTED. Falls back to DEFAULT_LOCALE if a language
+     isn't listed. */
+  var BCP47 = { es: 'es-ES', en: 'en-US' };
 
   var DICT = {
     es: {
@@ -31,7 +35,28 @@
         listen: '🔊 Escuchar',
         listenInstructions: 'Escuchar las instrucciones',
         loading: 'Cargando…',
-        dataProtection: 'Protección de datos'
+        dataProtection: 'Protección de datos',
+        otraAppLinkHint: 'Se abre en otra aplicación, en una pestaña nueva.',
+        apptonomiaNombre: 'Apptonomia',
+        calculiaNombre: 'Calculia',
+        sinonimiaNombre: 'Sinonimia',
+        teclatlonNombre: 'Teclatlon',
+        /* Shared keypad + change-back vocabulary used by every
+           sceneMode: keypad activity (driven by activity-runtime.js). */
+        keypad: {
+          deleteDigit: 'Borrar el último dígito',
+          clear: 'Borrar todo',
+          check: 'Comprobar'
+        },
+        challenge: {
+          paid: 'Pagas con',
+          purchase: 'La compra vale',
+          hint: 'Piénsalo con calma.',
+          hintSubtract: 'Resta: lo que pagas menos lo que vale la compra.'
+        },
+        practice: {
+          tokensSuffix: 'monedas de práctica'
+        }
       },
       feedback: {
         success: ['¡Muy bien!', '¡Genial!', '¡Lo has conseguido!', '¡Estupendo!'],
@@ -49,7 +74,26 @@
         listen: '🔊 Listen',
         listenInstructions: 'Listen to the instructions',
         loading: 'Loading…',
-        dataProtection: 'Data protection'
+        dataProtection: 'Data protection',
+        otraAppLinkHint: 'Opens another app, in a new tab.',
+        apptonomiaNombre: 'Apptonomia',
+        calculiaNombre: 'Calculia',
+        sinonimiaNombre: 'Sinonimia',
+        teclatlonNombre: 'Teclatlon',
+        keypad: {
+          deleteDigit: 'Delete last digit',
+          clear: 'Clear',
+          check: 'Check'
+        },
+        challenge: {
+          paid: 'You pay with',
+          purchase: 'The purchase costs',
+          hint: 'Think calmly.',
+          hintSubtract: 'Subtract: what you pay minus what the purchase costs.'
+        },
+        practice: {
+          tokensSuffix: 'practice tokens'
+        }
       },
       feedback: {
         success: ['Well done!', 'Great!', 'You got it!', 'Fantastic!'],
@@ -88,7 +132,7 @@
   }
 
   function lang() {
-    return locale() === 'en' ? 'en-US' : 'es-ES';
+    return BCP47[locale()] || BCP47[DEFAULT_LOCALE];
   }
 
   /** Merges one language's texts into the internal dictionary.
@@ -104,6 +148,7 @@
   }
 
   function lookup(dictForLocale, key) {
+    if (typeof key !== 'string') return undefined;
     var parts = key.split('.');
     var current = dictForLocale;
     for (var i = 0; i < parts.length; i++) {
@@ -114,6 +159,7 @@
   }
 
   function t(key) {
+    if (typeof key !== 'string') return '';
     var loc = locale();
     var value = lookup(DICT[loc], key);
     if (value === undefined && loc !== DEFAULT_LOCALE) {
@@ -125,6 +171,7 @@
   }
 
   function pick(key) {
+    if (typeof key !== 'string') return '';
     var loc = locale();
     var value = lookup(DICT[loc], key);
     if (!Array.isArray(value) && loc !== DEFAULT_LOCALE) {
@@ -143,6 +190,15 @@
     var ariaNodes = root.querySelectorAll('[data-i18n-aria]');
     for (var j = 0; j < ariaNodes.length; j++) {
       ariaNodes[j].setAttribute('aria-label', t(ariaNodes[j].getAttribute('data-i18n-aria')));
+    }
+    /* data-i18n-meta="key" on a <meta> element: write the resolved
+       translation into the meta's `content` attribute. Lets us
+       localize <meta name="description"> and similar without changing
+       the static default markup (which still reads in Spanish if
+       i18n.js fails to load). */
+    var metaNodes = root.querySelectorAll('[data-i18n-meta]');
+    for (var k = 0; k < metaNodes.length; k++) {
+      metaNodes[k].setAttribute('content', t(metaNodes[k].getAttribute('data-i18n-meta')));
     }
     var titleKey = document.documentElement.getAttribute('data-i18n-title');
     if (titleKey) {
@@ -172,4 +228,16 @@
     pick: pick,
     apply: apply
   };
+
+  /* ---- language selector metadata (drives the index.html button list) ----
+     LABEL is the visible text on the language button, FLAG is the emoji
+     shown before it. Add a new entry per locale in SUPPORTED. */
+  var LABEL = { es: 'Español', en: 'English' };
+  var FLAG = { es: '🇪🇸', en: '🇬🇧' };
+
+  /* Expose for the language selector (rendered by index.html /
+     app.js). Read-only at runtime; extend these maps when adding a
+     supported language. */
+  window.App.i18n.LABEL = LABEL;
+  window.App.i18n.FLAG = FLAG;
 })();

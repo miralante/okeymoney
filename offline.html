@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" data-i18n-title="offline.title">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sin conexión</title>
+  <meta name="description" content="Okeymoney está sin conexión: comprueba tu conexión a Internet y vuelve a intentarlo." data-i18n-meta="offline.metaDescription">
+  <meta name="theme-color" content="#FAF7F2">
+  <link rel="stylesheet" href="assets/css/tokens.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <style>
+    .offline-shell {
+      max-width: 32rem;
+      margin: 2rem auto;
+      padding: 0 var(--space);
+      line-height: 1.5;
+    }
+    .offline-shell h1 {
+      margin-bottom: var(--space);
+    }
+    .offline-shell a {
+      display: inline-block;
+      margin-top: var(--space);
+      padding: 12px 20px;
+      border: 3px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--color-surface);
+      color: var(--color-text);
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .offline-shell a:hover { border-color: var(--accent); }
+  </style>
+</head>
+<body>
+  <main class="offline-shell">
+    <h1 data-i18n="offline.heading">Sin conexión</h1>
+    <p data-i18n="offline.body">No hemos podido cargar esta página. Comprueba tu conexión a Internet y vuelve a intentarlo.</p>
+    <p><a href="./index.html" data-i18n="offline.homeLink">Volver a Okeymoney</a></p>
+  </main>
+  <script src="assets/js/utils.js"></script>
+  <script src="assets/js/i18n.js"></script>
+  <script src="strings.es.js"></script>
+  <script src="strings.en.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      if (navigator.serviceWorker && navigator.serviceWorker.controller) {
+        navigator.serviceWorker.getRegistration().then(function (reg) {
+          if (reg) reg.update();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

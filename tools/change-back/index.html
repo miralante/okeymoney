@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es" data-i18n-title="title">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calcular la vuelta — Okeymoney</title>
+  <meta name="description" content="Aprende a calcular cuánto te tienen que devolver al pagar." data-i18n-meta="metaDescription">
+  <meta name="theme-color" content="#FAF7F2">
+  <link rel="icon" href="../../assets/img/icono.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../../assets/css/tokens.css">
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/componentes.css">
+  <link rel="stylesheet" href="../../assets/css/activities.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-tema="aprender">
+  <main class="container actividad">
+    <header class="tool-header">
+      <a href="../../index.html#aprende" class="back-link" data-i18n="core.back">← Volver</a>
+      <h1 data-i18n="title">Calcular la vuelta</h1>
+      <span class="practice-tokens" id="practiceTokens" aria-live="polite" aria-label="0 monedas de práctica">0</span>
+    </header>
+    <p class="instruccion" id="instruccion" data-i18n="instruccion">Escribe cuánto te tienen que devolver.</p>
+    <div class="escena card center" id="escena" aria-live="polite"></div>
+    <div class="opciones" id="opciones"></div>
+    <div class="pista" id="pista" hidden></div>
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+    <div class="actividad-cta">
+      <button type="button" class="btn btn-secondary" id="btnReiniciar" data-i18n="reiniciar" hidden>↻ Jugar otra vez</button>
+    </div>
+  </main>
+  <script src="../../assets/js/utils.js"></script>
+  <script src="../../assets/js/i18n.js"></script>
+  <script src="../../assets/js/storage.js"></script>
+  <script src="../../assets/js/feedback.js"></script>
+  <script src="../../assets/js/money.js"></script>
+  <script src="../../assets/js/wallet.js"></script>
+  <script src="../../assets/js/activity-runtime.js"></script>
+  <script src="strings.es.js"></script>
+  <script src="strings.en.js"></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../../sw.js').catch(function () {});
+    }
+  </script>
+</body>
+</html>

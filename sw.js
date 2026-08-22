@@ -1,12 +1,13 @@
 /* ============================================================
    Okeymoney — Service Worker
    Cache-first strategy for the app shell (works offline).
-   When adding new files: add them to ARCHIVOS and bump VERSION.
+   When adding new files: add them to FILES and bump VERSION.
    ============================================================ */
-var VERSION = 'okeymoney-v1';
+var VERSION = 'okeymoney-v22';
 
-var ARCHIVOS = [
+var FILES = [
   './index.html',
+  './offline.html',
   './manifest.json',
   './app.js',
   './data.js',
@@ -19,7 +20,7 @@ var ARCHIVOS = [
   './legal/strings.en.js',
   './assets/css/tokens.css',
   './assets/css/base.css',
-  './assets/css/components.css',
+  './assets/css/componentes.css',
   './assets/fonts/atkinson-hyperlegible-400.woff2',
   './assets/fonts/atkinson-hyperlegible-700.woff2',
   './assets/fonts/nunito-variable.woff2',
@@ -29,14 +30,48 @@ var ARCHIVOS = [
   './assets/js/storage.js',
   './assets/js/feedback.js',
   './assets/js/money.js',
-  './assets/img/icono.svg'
+  './assets/js/wallet.js',
+  './assets/js/activity-runtime.js',
+  './assets/css/activities.css',
+  './assets/img/icono.svg',
+
+  /* Activities live in tools/<slug>/. When adding a new activity, append
+     its files here AND bump VERSION so installed PWAs get the new shell. */
+  './tools/concepts-money/index.html',
+  './tools/concepts-money/app.js',
+  './tools/concepts-money/strings.es.js',
+  './tools/concepts-money/strings.en.js',
+  './tools/needs-vs-wants/index.html',
+  './tools/needs-vs-wants/app.js',
+  './tools/needs-vs-wants/strings.es.js',
+  './tools/needs-vs-wants/strings.en.js',
+  './tools/budget-first/index.html',
+  './tools/budget-first/app.js',
+  './tools/budget-first/strings.es.js',
+  './tools/budget-first/strings.en.js',
+  './tools/go-shopping/index.html',
+  './tools/go-shopping/app.js',
+  './tools/go-shopping/strings.es.js',
+  './tools/go-shopping/strings.en.js',
+  './tools/change-back/index.html',
+  './tools/change-back/app.js',
+  './tools/change-back/strings.es.js',
+  './tools/change-back/strings.en.js',
+  './tools/my-shopping-day/index.html',
+  './tools/my-shopping-day/app.js',
+  './tools/my-shopping-day/strings.es.js',
+  './tools/my-shopping-day/strings.en.js',
+  './tools/safe-money/index.html',
+  './tools/safe-money/app.js',
+  './tools/safe-money/strings.es.js',
+  './tools/safe-money/strings.en.js'
 ];
 
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(VERSION).then(function (cache) {
       /* cache: 'reload' avoids storing stale copies from the browser's HTTP cache */
-      var requests = ARCHIVOS.map(function (a) {
+      var requests = FILES.map(function (a) {
         return new Request(a, { cache: 'reload' });
       });
       return cache.addAll(requests);
@@ -78,21 +113,21 @@ self.addEventListener('fetch', function (event) {
         }
         return r;
       }).catch(function () {
-        /* Offline / network failure: reply with a tiny inline HTML that
-           stays at the current URL and offers a link to the app. */
-        return new Response(
-          '<!doctype html><html lang="es"><head><meta charset="utf-8">' +
-          '<meta name="viewport" content="width=device-width,initial-scale=1">' +
-          '<title>Sin conexión</title><style>body{font-family:system-ui,sans-serif;' +
-          'margin:2rem auto;max-width:32rem;padding:0 1rem;line-height:1.5}' +
-          'a{color:#2E7D32}</style></head><body>' +
-          '<h1>Sin conexión</h1>' +
-          '<p>No hemos podido cargar esta página. Comprueba tu conexión a ' +
-          'Internet y vuelve a intentarlo.</p>' +
-          '<p><a href="./index.html">Volver a Okeymoney</a></p>' +
-          '</body></html>',
-          { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } }
-        );
+        /* Offline / network failure: serve offline.html (i18n-aware via
+           the same strings.<locale>.js files cached at install), or a
+           minimal fallback if even that misses in the cache. */
+        return caches.match('./offline.html').then(function (offline) {
+          if (offline) return offline;
+          return new Response(
+            '<!doctype html><html lang="es"><head><meta charset="utf-8">' +
+            '<meta name="viewport" content="width=device-width,initial-scale=1">' +
+            '<title>Offline</title></head><body>' +
+            '<h1>Offline</h1>' +
+            '<p><a href="./index.html">Back to Okeymoney</a></p>' +
+            '</body></html>',
+            { status: 200, headers: { 'Content-Type': 'text/html; charset=utf-8' } }
+          );
+        });
       });
     })
   );

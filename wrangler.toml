@@ -15,8 +15,13 @@ compatibility_date = "2026-07-27"
 
 [assets]
 directory = "."
-# Okeymoney is a single-page app: every "screen" lives inside index.html
-# (tabs are swapped client-side via classList in app.js) and the wizard
-# opens as an overlay on the same page. There is no server-side routing
-# to do, so Cloudflare's default 404 page is fine — no custom
-# not_found_handling needed.
+# Serve 404.html for any path that isn't a static asset, instead of
+# Cloudflare's default 404 page. Okeymoney is a single-page app (every
+# "screen" lives inside index.html, tabs are swapped client-side via
+# classList in app.js, and the wizard opens as an overlay on the same
+# page), so a real 404.html is the only path that ever matters for an
+# unmatched URL — direct visits to a stale bookmark, a typo in the URL,
+# or a link shared before a route was renamed. The page itself is
+# minimal (meta refresh + a single "Volver al inicio" link) because
+# the SPA's real entry point is index.html and any branded shell would
+# be duplicate chrome.

@@ -5,8 +5,7 @@
 > | Documento | Qué contiene | Cuándo leerlo |
 > |---|---|---|
 > | `CLAUDE.md` | Flujo operativo para agentes de IA | Solo cuando un agente de IA hace el cambio |
-> | `doc/<en\|es>/tecnico.md` (este) | Arquitectura, esquema de datos, APIs, recetas | Al desarrollar o modificar la app |
-> | `doc/<en\|es>/SPEC.md` | Producto, público, principios innegociables | Antes de cualquier cambio de producto o interfaz |
+> | `doc/<en\|es>/tecnico.md` (este) | Arquitectura, esquema de datos, APIs, recetas | Al desarrollar o modificar la app || `doc/<en\|es>/I18N.md` | Arquitectura multiidioma + receta para añadir un idioma | Al añadir un idioma o tocar el sistema i18n |> | `doc/<en\|es>/SPEC.md` | Producto, público, principios innegociables | Antes de cualquier cambio de producto o interfaz |
 > | Historial del proyecto | Vive en Git (`git log`); no se mantiene una hoja de ruta externa | Para entender por qué algo es como es |
 > | `README.md` | Introducción breve, cómo ejecutar y desplegar | Primer contacto con el repositorio |
 
@@ -185,7 +184,7 @@ lee con `App.storage.get('data')` / `set('data', …)`), más dos claves
 pequeñas que siguen la convención de las apps hermanas: `okeymoney:locale`
 (idioma activo) y `okeymoney:prefs` (reservada para ajustes futuros —
 tamaño de texto, sonidos — todavía no expuestos en la interfaz, ver
-SPEC.md §7).
+SPEC.md §8).
 
 **Todos los importes son céntimos enteros.** Nunca euros en coma
 flotante — `0.1 + 0.2` no es `0.3` en IEEE 754, y una app de dinero no
@@ -207,7 +206,7 @@ puede permitirse ese tipo de error. `App.money.format(350)` muestra
   // Cada gasto y cada aportación a una meta, en el orden en que se
   // escribieron. balanceCents() = initialBalanceCents + suma(ingresos)
   // - suma(gastos) - suma(ahorros). No existe el tipo de movimiento
-  // "ingreso" en la interfaz de la v1 (ver SPEC.md §7), pero el esquema
+  // "ingreso" en la interfaz de la v1 (ver SPEC.md §8), pero el esquema
   // ya lo admite para cuando se construya ese flujo.
   "movements": [
     {
@@ -225,7 +224,7 @@ puede permitirse ese tipo de error. `App.money.format(350)` muestra
   // Metas de ahorro ("Mi hucha"). No se borran nunca automáticamente,
   // ni siquiera al conseguirlas — la persona decide si quiere borrar
   // alguna y cuándo (todavía no hay interfaz para borrar en la v1; ver
-  // SPEC.md §7).
+  // SPEC.md §8).
   "goals": [
     {
       "id": "g8f7e6xyz",
@@ -308,6 +307,13 @@ siempre céntimos enteros.
 | `breakdown(cents)` | Descompone un importe en monedas/billetes, de mayor a menor (voraz) |
 | `createToken(cents)` | Crea un `<span>` decorativo de moneda/billete con ARIA |
 | `paintTokens(container, pieces)` | Dibuja los tokens de una descomposición dentro de `container` |
+| `formatPractice(cents)` | Importe de práctica localizado (`"2,50 🔑"` / `"2.50 🔑"`); usa la clave `practice.symbol` registrada en `App.i18n` (por defecto `🔑`) |
+| `spokenPractice(cents)` | Importe de práctica en palabras, para futuras TTS ("2 okeys y 50 subokeys") |
+
+Las claves `practice.*` (`name`, `plural`, `sub`, `symbol`) se
+registran en `App.i18n` dentro de `money.js` para los dos locales y
+son comprobadas por `scripts/check.js`. Ver §10 para el monedero de
+práctica que usa estos formateadores.
 
 ### 4.4 `window.App.storage` (`storage.js`)
 
@@ -343,16 +349,19 @@ bastante cortos como para no necesitarlo, según la regla 4 de SPEC.md
 
 ## 5. Internacionalización
 
-Mismo patrón que las apps hermanas: un archivo por idioma
-(`strings.es.js` / `strings.en.js`), los dos cargados sin condiciones (sin
-`document.write`, así `App.i18n.register` siempre se ejecuta antes de que
-`data.js`/`app.js` lean cualquier texto). `es` es el idioma por defecto y
-la fuente de verdad. `scripts/check.js` falla si las claves de los dos
-archivos no coinciden. Añadir un texto de interfaz: añadir la clave a
-**los dos** archivos con la misma forma; añadir un idioma nuevo: ampliar
-`SUPPORTED` en `i18n.js`, añadir `strings.<locale>.js`, añadirlo a
-`ARCHIVOS` en `sw.js`, y ampliar la comparación de idiomas de
-`scripts/check.js` (hoy fijada a es/en).
+Referencia completa: [`doc/es/I18N.md`](I18N.md) (y su espejo
+[`doc/en/I18N.md`](../en/I18N.md)). La versión corta: un archivo por
+idioma (`strings.es.js` / `strings.en.js`), ambos cargados de forma
+síncrona (sin `document.write`, así `App.i18n.register` siempre corre antes
+de que `data.js`/`app.js` lean texto). `es` es el idioma por defecto y la
+fuente de verdad. `scripts/check.js` falla si dos `strings.<locale>.js`
+del mismo scope (raíz, `legal/`) tienen conjuntos de claves distintos.
+Añadir un texto UI: añadir la clave en **todos** los `strings.<locale>.js`
+con la misma forma; añadir un idioma soportado: seguir la receta de 9
+pasos en `I18N.md` §5 (ampliar `SUPPORTED`, `BCP47`, `LABEL`, `FLAG` en
+`i18n.js`, el bloque `core`/`feedback`, `DECIMAL_SEP` en `money.js`, el
+nuevo `strings.<locale>.js`, el `FILES` de `sw.js`, y la lista de
+`<script>`).
 
 ---
 
@@ -387,7 +396,7 @@ válida sin mostrar nunca un mensaje de error.
 ## 7. PWA y service worker
 
 - `sw.js` sigue la estrategia **cache-first** para el cascarón de la app.
-  Contrato al tocar archivos: añadir los nuevos a `ARCHIVOS`; subir
+  Contrato al tocar archivos: añadir los nuevos a `FILES`; subir
   `VERSION` (`okeymoney-vNN`) ante cualquier cambio en un archivo
   cacheado, o quien tenga la PWA instalada no verá el cambio.
 - `manifest.json`: `display: standalone`, `start_url: ./index.html`.
@@ -411,7 +420,7 @@ node scripts/check.js
 
 `scripts/check.js` comprueba: que cada archivo `.js` sea válido, que
 `strings.es.js` / `strings.en.js` tengan las mismas claves (app raíz y
-`legal/`), que cada ruta de `ARCHIVOS` en `sw.js` exista en disco, y que
+`legal/`), que cada ruta de `FILES` en `sw.js` exista en disco, y que
 cada icono de `manifest.json` exista. La CI
 (`.github/workflows/validate.yml`) ejecuta el mismo comando en cada push
 y pull request.
@@ -424,6 +433,110 @@ por WebKit/Safari según el §1.3.
 
 ---
 
-## 9. Licencia
+## 10. Monedero de práctica y persistencia de actividades
+
+Okeymoney expone un **segundo libro de movimientos** para la moneda
+de práctica ("Tokens" / "okey" 🔑), completamente independiente del
+libro real en `okeymoney:data`. Los dos libros nunca se mezclan y no
+hay conversión entre ellos: los créditos de práctica no afectan al
+saldo en €, y viceversa.
+
+### 10.1 `window.App.wallet` (`wallet.js`)
+
+Un segundo libro, guardado bajo `localStorage['okeymoney:practiceWallet']`,
+con céntimos enteros en okeys (1 eurocéntimo = 1 subokey).
+
+| Función | Firma | Descripción |
+|---|---|---|
+| `balance()` | `() → number` | Saldo actual en céntimos de okey |
+| `credit(cents, reason)` | `(number, string) → number` | Añade `cents` (positivo o negativo) y registra el motivo en `history` |
+| `reset()` | `() → void` | Reinicia el monedero de práctica a 0 y borra el historial |
+| `activityStatus(slug)` | `(string) → {done, completedAt, attempts} \| null` | Registro de finalización de una actividad, o null |
+| `markActivityDone(slug, attempts)` | `(string, number) → void` | Marca una actividad como hecha (idempotente) |
+
+`App.money.formatPractice()` y `App.money.spokenPractice()` (ver §4.3)
+formatean el saldo. Ambas usan las claves `practice.*` registradas en
+`App.i18n` (`name`, `plural`, `sub`, `symbol`) — la paridad es/en la
+comprueba `scripts/check.js`.
+
+### 10.2 Persistencia por actividad
+
+Cada actividad usa una clave de `localStorage` por slug:
+
+- `okeymoney:activity:<slug>` → `{ done: true, completedAt: 'YYYY-MM-DD', attempts: N }`
+
+Completar una actividad por primera vez llama a
+`App.wallet.credit(rewardCents, 'activity:<slug>')` **y**
+`App.wallet.markActivityDone(slug, attempts)`. Las repeticiones no
+vuelven a acreditar (la comprobación `activityStatus.done` es
+idempotente), pero la actividad sigue disponible si la persona quiere
+repetirla.
+
+### 10.3 Catálogo de actividades
+
+Siete actividades viven bajo `tools/<slug>/`. Cada una es una carpeta
+independiente con `index.html`, `app.js`, `strings.es.js`,
+`strings.en.js`, más `data.js` y `styles.css` opcionales. Todas
+reutilizan el bucle socrático compartido de
+`assets/js/activity-runtime.js` (`App.activity.run(opts)`);
+`change-back` es la única que usa una mecánica propia con teclado
+numérico.
+
+Según [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), el catálogo se pinta en
+la **página de inicio** (debajo de las tarjetas Mi dinero y Mis metas)
+y, de forma redundante, en la pestaña Aprender — las dos llaman a la
+misma `renderActivityThemes(container)` de `app.js`. Las actividades se
+agrupan en **tres secciones temáticas** (`DATA.learnThemes` en
+`data.js`, una `<section class="learn-theme">` por tema), al estilo
+Apptonomia: cada sección fija `--acento`/`--acento-suave` localmente a
+uno de los tokens de acento por pestaña (`--acento` verde / `--acento-2`
+azul / `--acento-3` ámbar, de `assets/css/tokens.css`), de modo que el
+componente `.activity-card` existente cambia de color por tema sin
+lógica extra por tarjeta — esta sustitución es necesaria porque las
+tres secciones se pintan juntas en la página de inicio, así que ninguna
+pestaña está "activa". Las secciones se pintan en un orden pedagógico
+fijo: `concepts` (conceptos básicos) → `daily` (vida cotidiana) →
+`safety` (seguridad).
+
+El catálogo, la recompensa de cada actividad y el vocabulario de
+agentes están documentados en
+[`actividades.md`](actividades.md) (catálogo de actividades).
+
+### 10.4 Los tres agentes básicos
+
+Cada caso nombra uno de los tres agentes — persona / empresa / banco —
+declarado como `agente: 'persona' | 'empresa' | 'banco'` (opcional),
+más una clave i18n opcional `agenteName`. El runtime pinta una
+`agente__card` con el emoji del avatar (`👤` / `🏪` / `🏦`), la
+etiqueta de rol desde `App.i18n.t('agent.<tipo>')` y el nombre
+concreto del agente desde `agenteName`. Las actividades nuevas
+reutilizan las mismas tres entradas del mapa `AGENTES` en
+`activity-runtime.js`; no se inventan emojis ad-hoc.
+
+### 10.5 Añadir una actividad nueva
+
+1. Copiar `tools/concepts-money/` (la plantilla más simple) en
+   `tools/<new-slug>/`. Si la actividad solo necesita `app.js` +
+   `strings.*.js`, se pueden omitir `data.js` y `styles.css` — la
+   mayoría reutilizan `assets/css/activities.css` y `activity-runtime.js`
+   compartidos.
+2. Añadir `agente` y `agenteName` a cada caso de `app.js` para que el
+   runtime pinte la tarjeta del agente.
+3. Añadir las claves en los dos `strings.<locale>.js` y comprobar con
+   `scripts/check.js`.
+4. Añadir el slug a `DATA.activities` en `data.js` (raíz) con
+   `available: true` y un `theme` que coincida con uno de
+   `DATA.learnThemes` (`concepts` / `daily` / `safety` — añadir una
+   entrada de tema nueva ahí, con un `accent` que apunte a uno de los
+   tokens `--acento*` en `assets/css/tokens.css`, solo si de verdad no
+   encaja en ninguna sección existente) para que el catálogo de la
+   página de inicio y la pestaña Aprender lo muestren en la sección
+   correcta.
+5. Añadir los archivos de la actividad a `sw.js` `FILES` y bumpear
+   `VERSION`.
+
+---
+
+## 11. Licencia
 
 MIT — ver [`LICENSE`](../../LICENSE).

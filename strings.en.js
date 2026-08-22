@@ -3,6 +3,17 @@
   'use strict';
   App.i18n.register({
     title: 'Okeymoney',
+    appName: 'Okeymoney',
+
+    agent: {
+      persona: 'Person',
+      empresa: 'Shop',
+      banco: 'Bank'
+    },
+
+    meta: {
+      description: 'Learn to manage your money: how much you have, how much you spend, and how much you save.'
+    },
 
     tabs: {
       home: 'My money',
@@ -12,13 +23,15 @@
     },
 
     home: {
+      saludo: 'Hi. What do you want to do today?',
+      moreGoals: '+{n} more',
+      anchorAria: 'Jump to {theme}',
       balanceLabel: 'You have',
       editBalanceAria: 'Change how much money you have',
-      editHint: 'Tap the number to change it',
-      recentTitle: 'Your latest movements',
-      recentEmpty: "You haven't added any expenses yet.",
+      editHint: 'Tap to change how much money you have',
       setBalanceTitle: 'How much money do you have?',
-      setBalanceInstruction: 'Count your money and write how much you have now.'
+      setBalanceInstruction: 'Count your money and write how much you have now.',
+      catalogueTitle: 'Learn with Okeymoney'
     },
 
     expense: {
@@ -63,15 +76,51 @@
     learn: {
       title: 'Learn',
       comingSoon: "Soon you'll be able to practise here with games about money.",
-      teaser: {
-        change: '🪙 Working out change',
-        budget: '📋 Making a budget',
-        needsWants: '🤔 What I need and what I want'
+      walletLabel: 'Your practice wallet',
+      intro: 'Earn 🪙 by practising activities. Your practice wallet is separate from your real money.',
+      stateDone: '✓ Done',
+      stateAvailable: '▶ Start',
+      stateLocked: '🔒 Soon',
+      themes: {
+        concepts: 'Basic concepts',
+        daily: 'Everyday life',
+        safety: 'Safety'
+      },
+      activityTitle: {
+        'concepts-money':  'What is money?',
+        'needs-vs-wants':  'Need or want',
+        'budget-first':    'What do I buy first?',
+        'go-shopping':     'Go shopping',
+        'change-back':     'Working out change',
+        'my-shopping-day': 'My shopping day',
+        'safe-money':      'My money is safe'
+      },
+      activityDesc: {
+        'concepts-money':  'Identify coins and banknotes by their value.',
+        'needs-vs-wants':  'Tell apart what you need from what you want.',
+        'budget-first':    'Decide what to buy first with a limited budget.',
+        'go-shopping':     'Make a small purchase with a budget.',
+        'change-back':     'Calculate how much change you should get.',
+        'my-shopping-day': 'Practise everything together in a full shop.',
+        'safe-money':      'Recognise strange transfers and scams, and what to do.'
       }
     },
 
     wizard: {
       closeAria: 'Close without saving'
+    },
+
+    keypad: {
+      deleteDigit: 'Delete last digit',
+      clear: 'Clear'
+    },
+
+    offline: {
+      title: 'Offline',
+      heading: 'Offline',
+      body: "We couldn't load this page. Check your internet connection and try again.",
+      homeLink: 'Back to Okeymoney',
+      metaDescription: "Okeymoney is offline: check your internet connection and try again."
     }
   }, 'en');
 })();

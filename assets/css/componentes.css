@@ -1,0 +1,1060 @@
+/* ==========================================================================
+   Okeymoney — Componentes reutilizables (TODO.md §3)
+
+   Este archivo es la fuente única de verdad para los componentes visuales
+   de la app. Sustituye al antiguo components.css renombrado en Fase 2.
+   Requiere tokens.css y base.css.
+
+   Convenciones:
+   - Todos los colores, espaciados, radios y motion vienen de tokens.css.
+   - Los componentes son accesibles por teclado (:focus-visible usa --acento).
+   - Se respeta prefers-reduced-motion (override global en base.css).
+   - Nombres de clase en kebab-case; modificadores con --variante.
+   ========================================================================== */
+
+/* ---- Utilities ---- */
+.center { text-align: center; }
+.hidden { display: none !important; }
+.stack { display: flex; flex-direction: column; gap: var(--espacio-3); }
+.row { display: flex; align-items: center; gap: var(--espacio-4); flex-wrap: wrap; }
+
+/* ---- Page container ----
+   Padding inferior pensado para dejar sitio al FAB flotante
+   (.fab-flotante) que vive abajo a la derecha — no para el tabbar,
+   que se eliminó en Fase 3. */
+.container {
+  max-width: var(--contenedor-max);
+  margin: 0 auto;
+  padding: var(--espacio-5) var(--espacio-4) calc(var(--tocable-lg) + var(--espacio-6));
+}
+
+@media (min-height: 720px) {
+  .container { padding: var(--espacio-4) var(--espacio-4) calc(var(--tocable-lg) + var(--espacio-5)); }
+}
+
+/* ==========================================================================
+   §3.1 Botón
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-3);
+  min-height: var(--tocable);
+  min-width: var(--tocable);
+  width: 100%;
+  padding: var(--espacio-3) var(--espacio-5);
+  border: 3px solid transparent;
+  border-radius: var(--radio-2);
+  background: var(--acento);
+  color: var(--texto-primario);
+  font-family: inherit;
+  font-size: var(--texto-400);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform var(--motion-rapida) var(--ease-suave),
+              box-shadow var(--motion-rapida) var(--ease-suave),
+              background var(--motion-rapida) var(--ease-suave);
+}
+
+.btn:hover { transform: scale(1.02); box-shadow: var(--sombra-2); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.5; transform: none; cursor: default; }
+.btn:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+/* Variantes */
+.btn--secundario {
+  background: var(--superficie-2);
+  color: var(--texto-primario);
+  border-color: var(--borde);
+}
+.btn--fantasma {
+  background: transparent;
+  color: var(--texto-primario);
+  border-color: transparent;
+}
+.btn--fantasma:hover { background: var(--superficie-2); }
+.btn--peligro {
+  background: var(--error);
+  color: var(--texto-primario);
+}
+
+/* Tamaños */
+.btn--grande { min-height: var(--tocable-lg); font-size: var(--texto-500); }
+.btn--xl { min-height: var(--tocable-xl); font-size: var(--texto-500); padding: var(--espacio-4); }
+
+/* Alias legacy (v1) — mantiene compatibilidad con clases ya en uso en
+   index.html / tools/* mientras se migran a los modificadores BEM. */
+.btn-secondary {
+  background: var(--superficie-2);
+  color: var(--texto-primario);
+  border-color: var(--borde);
+}
+.btn-audio {
+  width: auto;
+  background: var(--superficie-1);
+  color: var(--texto-primario);
+  border: 3px solid var(--borde);
+}
+
+@media (min-height: 720px) {
+  .btn {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 6px var(--espacio-5);
+    font-size: var(--texto-300);
+    border-width: 2px;
+  }
+}
+
+/* ---- Back / close link (top of every wizard step) ---- */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  min-height: var(--tocable);
+  padding: var(--espacio-2) var(--espacio-4);
+  border-radius: var(--radio-2);
+  background: var(--superficie-1);
+  border: 2px solid var(--borde);
+  color: var(--texto-primario);
+  font-size: var(--texto-300);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+}
+.back-link:hover { border-color: var(--acento); }
+.back-link:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+/* ==========================================================================
+   §3.2 Tarjeta
+   ========================================================================== */
+.card {
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-2);
+  padding: var(--espacio-5);
+  box-shadow: var(--sombra-1);
+}
+
+/* Variante elevada (hojas, modales) */
+.card--elevada {
+  box-shadow: var(--sombra-2);
+  border-color: transparent;
+}
+
+@media (min-height: 720px) {
+  .card { padding: var(--espacio-4); }
+}
+
+/* ==========================================================================
+   §3.3 Input / keypad numérico (selector principal para importes)
+   ========================================================================== */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--espacio-3);
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.keypad__tecla {
+  min-height: var(--tocable-xl);
+  font-size: var(--texto-600);
+  font-weight: var(--peso-fuerte);
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-2);
+  color: var(--texto-primario);
+  cursor: pointer;
+  transition: background var(--motion-rapida) var(--ease-suave),
+              transform var(--motion-rapida) var(--ease-suave);
+}
+.keypad__tecla:hover { background: var(--superficie-2); }
+.keypad__tecla:active { transform: scale(0.97); }
+.keypad__tecla:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+.keypad__tecla--borrar {
+  background: var(--superficie-2);
+  color: var(--texto-secundario);
+}
+.keypad__tecla--limpiar {
+  background: var(--superficie-2);
+  color: var(--aliento);
+}
+
+.amount-display {
+  font-size: var(--texto-700);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  color: var(--acento);
+  text-align: center;
+  padding: var(--espacio-4) 0;
+  min-height: var(--tocable-xl);
+}
+
+/* Money-table (preview de monedas/billetes bajo el keypad) */
+.money-table {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  justify-content: center;
+  margin: var(--espacio-4) 0;
+}
+.money-table__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--espacio-2) var(--espacio-3);
+  background: var(--acento-suave);
+  border-radius: var(--radio-1);
+  color: var(--texto-primario);
+  font-weight: var(--peso-medio);
+  font-size: var(--texto-300);
+}
+
+/* ==========================================================================
+   §3.4 Tab bar (navegación inferior)
+   ========================================================================== */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr 1fr;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-3) calc(var(--espacio-2) + env(safe-area-inset-bottom));
+  background: var(--superficie-1);
+  border-top: 1px solid var(--borde);
+  z-index: 50;
+  min-height: var(--tabbar-height);
+}
+
+.tab-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--tocable);
+  padding: var(--espacio-2);
+  background: transparent;
+  border: none;
+  border-radius: var(--radio-1);
+  color: var(--texto-secundario);
+  font-family: inherit;
+  font-size: var(--texto-200);
+  font-weight: var(--peso-medio);
+  cursor: pointer;
+  transition: color var(--motion-rapida) var(--ease-suave),
+              background var(--motion-rapida) var(--ease-suave);
+}
+.tab-button:hover { background: var(--superficie-2); }
+.tab-button:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 2px;
+}
+.tab-button[aria-current="page"] {
+  color: var(--acento);
+  position: relative;
+}
+.tab-button[aria-current="page"]::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--acento);
+}
+.tab-button .icon { font-size: 28px; line-height: 1; }
+
+/* FAB "+" central (legacy del tabbar v2 — sigue en uso por si se restaura) */
+.fab-button {
+  width: var(--tocable-lg);
+  height: var(--tocable-lg);
+  border-radius: 50%;
+  background: var(--acento);
+  color: var(--texto-primario);
+  border: none;
+  font-size: 40px;
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--sombra-2);
+  transition: transform var(--motion-rapida) var(--ease-suave),
+              box-shadow var(--motion-rapida) var(--ease-suave);
+  justify-self: center;
+}
+.fab-button:hover { transform: scale(1.05); box-shadow: var(--sombra-3); }
+.fab-button:active { transform: scale(0.96); }
+.fab-button:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+}
+
+/* FAB flotante: vive fuera de cualquier barra, abajo a la derecha del
+   viewport. Único punto de entrada a "Apuntar un gasto" (dinero real).
+   Sustituye al FAB central del antiguo tabbar (Fase 3). */
+.fab-flotante {
+  position: fixed;
+  right: var(--espacio-4);
+  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
+  z-index: 60;
+  width: var(--tocable-lg);
+  height: var(--tocable-lg);
+  border-radius: 50%;
+  background: var(--acento);
+  color: var(--texto-primario);
+  border: none;
+  font-size: 40px;
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: var(--sombra-3);
+  transition: transform var(--motion-rapida) var(--ease-suave),
+              box-shadow var(--motion-rapida) var(--ease-suave);
+}
+.fab-flotante:hover { transform: scale(1.05); box-shadow: var(--sombra-3); }
+.fab-flotante:active { transform: scale(0.96); }
+.fab-flotante:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+/* Mientras el wizard está abierto a pantalla completa, el FAB flotante
+   no pinta — el wizard es su propio cierre. Se activa desde app.js con
+   la clase <body class="wizard-open">. */
+body.wizard-open .fab-flotante { display: none; }
+
+/* ==========================================================================
+   §3.5 Hoja / wizard
+   ========================================================================== */
+.wizard {
+  background: var(--superficie-1);
+  border-radius: var(--radio-3) var(--radio-3) 0 0;
+  box-shadow: var(--sombra-2);
+  padding: var(--espacio-5);
+  border: 1px solid transparent;
+}
+
+.wizard__header {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-bottom: var(--espacio-5);
+}
+
+.wizard__title {
+  flex: 1;
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  color: var(--texto-primario);
+}
+
+.wizard__close {
+  min-height: var(--tocable);
+  min-width: var(--tocable);
+  background: transparent;
+  border: none;
+  border-radius: var(--radio-1);
+  color: var(--texto-secundario);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+.wizard__close:hover { background: var(--superficie-2); color: var(--texto-primario); }
+.wizard__close:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 2px;
+}
+
+.wizard__dots {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin-bottom: var(--espacio-4);
+}
+.wizard__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--superficie-3);
+}
+.wizard__dot.is-active { background: var(--acento); }
+
+.wizard__footer {
+  display: flex;
+  gap: var(--espacio-3);
+  margin-top: var(--espacio-5);
+  flex-wrap: wrap;
+}
+.wizard__footer .btn { flex: 1; min-width: 0; }
+
+/* ==========================================================================
+   §3.6 Chip (wallet de práctica, estado de meta)
+   ========================================================================== */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-3);
+  background: var(--acento-suave);
+  border-radius: var(--radio-pill);
+  color: var(--texto-primario);
+  font-weight: var(--peso-medio);
+  font-size: var(--texto-300);
+}
+.chip--logro {
+  background: var(--acento-2-suave);
+}
+.chip__icon { font-size: 20px; line-height: 1; }
+
+/* Alias legacy (v1) — el nombre "wallet-chip" sigue apareciendo en
+   index.html, app.js y tools/*. Lo tratamos como componente §3.6. */
+.wallet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-2) var(--espacio-3);
+  background: var(--acento-suave);
+  border-radius: var(--radio-pill);
+  color: var(--texto-primario);
+  font-weight: var(--peso-medio);
+  font-size: var(--texto-300);
+  align-self: flex-start;
+}
+.wallet-chip__icon { font-size: 20px; line-height: 1; }
+
+/* ==========================================================================
+   §3.7 Display de saldo (héroe de Mi dinero)
+   ========================================================================== */
+.balance-card {
+  text-align: center;
+  padding: var(--espacio-6) var(--espacio-5);
+}
+.balance-card .balance-label {
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+  margin: 0;
+}
+.balance-amount {
+  display: inline-flex;
+  min-height: var(--tocable-lg);
+  padding: var(--espacio-3) var(--espacio-5);
+  border-radius: var(--radio-2);
+  background: transparent;
+  border: 2px solid transparent;
+  color: var(--acento);
+  font-size: var(--texto-700);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  cursor: pointer;
+  transition: background var(--motion-rapida) var(--ease-suave);
+}
+.balance-amount:hover { background: var(--superficie-2); }
+.balance-amount:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+.balance-card .balance-label[data-i18n="home.editHint"] {
+  color: var(--texto-tenue);
+  font-size: var(--texto-200);
+  margin-top: var(--espacio-2);
+}
+
+/* ==========================================================================
+   §3.8 Fila de movimiento (historial de Mi dinero)
+   ========================================================================== */
+.movement-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3);
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-2);
+}
+.movement-row__icon {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--superficie-2);
+  border-radius: 50%;
+  font-size: 28px;
+}
+.movement-row__label {
+  color: var(--texto-primario);
+  font-weight: var(--peso-medio);
+  font-size: var(--texto-300);
+}
+.movement-row__date {
+  color: var(--texto-tenue);
+  font-size: var(--texto-200);
+  margin-top: 2px;
+}
+.movement-row__amount {
+  color: var(--texto-primario);
+  font-weight: var(--peso-medio);
+  font-size: var(--texto-400);
+  text-align: right;
+}
+
+/* ==========================================================================
+   §3.9 Tarjeta de meta
+   ========================================================================== */
+.goal-card {
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-2);
+  padding: var(--espacio-5);
+  box-shadow: var(--sombra-1);
+}
+.goal-card__header {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  margin-bottom: var(--espacio-4);
+}
+.goal-card__icon { font-size: var(--texto-500); line-height: 1; }
+.goal-card__name {
+  flex: 1;
+  font-size: var(--texto-400);
+  font-weight: var(--peso-medio);
+  color: var(--texto-primario);
+}
+.goal-card__target {
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+  margin: var(--espacio-3) 0;
+}
+
+/* ==========================================================================
+   §3.10 Toast de feedback (complementa feedback.js)
+   ========================================================================== */
+.toast-feedback {
+  position: fixed;
+  bottom: calc(var(--tabbar-height) + var(--espacio-4));
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-5);
+  background: var(--superficie-1);
+  border-radius: var(--radio-pill);
+  border-left: 4px solid var(--exito);
+  color: var(--exito);
+  font-size: var(--texto-300);
+  font-weight: var(--peso-medio);
+  box-shadow: var(--sombra-2);
+  z-index: 100;
+  animation: toast-in var(--motion-normal) var(--ease-suave);
+}
+.toast-feedback--aliento {
+  border-left-color: var(--aliento);
+  color: var(--aliento);
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translate(-50%, 10px); }
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ==========================================================================
+   Barra de progreso (legado — la usaban .progress-bar en components.css)
+   ========================================================================== */
+.progress-bar {
+  position: relative;
+  height: 28px;
+  background: var(--superficie-3);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--acento);
+  border-radius: 14px;
+  transition: width var(--motion-normal) var(--ease-suave);
+}
+.progress-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--texto-300);
+  font-weight: var(--peso-medio);
+  color: var(--texto-primario);
+}
+
+/* ==========================================================================
+   Feedback inline (legado — feedback.js usa .feedback)
+   ========================================================================== */
+.feedback {
+  min-height: var(--tocable);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-3);
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  text-align: center;
+}
+.feedback.success { color: var(--exito); }
+.feedback.encourage { color: var(--aliento); }
+
+/* ==========================================================================
+   Celebración (complementa .celebration de feedback.js)
+   ========================================================================== */
+.celebration {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-4);
+  background: rgba(250, 247, 242, 0.92);
+  z-index: 200;
+  text-align: center;
+  padding: var(--espacio-4);
+}
+.celebration.hidden { display: none; }
+.celebration .emoji {
+  font-size: 96px;
+  animation: celebrate var(--motion-lenta) var(--ease-suave);
+}
+.celebration .message {
+  font-size: var(--texto-600);
+  font-weight: var(--peso-fuerte);
+  color: var(--exito);
+}
+
+@keyframes celebrate {
+  0% { transform: scale(0.4); opacity: 0; }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   Screen header (cabecera de pestaña)
+   ========================================================================== */
+.screen-header {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--espacio-4);
+}
+.screen-header h1, .screen-header h2 {
+  flex: 1;
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  color: var(--texto-primario);
+}
+
+/* ==========================================================================
+   Footer y anclas hermanas
+   ========================================================================== */
+.footer-app {
+  margin-top: var(--espacio-6);
+  padding-top: var(--espacio-4);
+  border-top: 1px solid var(--borde);
+  text-align: center;
+}
+
+.legal-link {
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Goal grid
+   ========================================================================== */
+.goal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: var(--espacio-4);
+}
+
+/* ==========================================================================
+   §3.X Cabecera, anclas y tarjetas grandes (estilo Routime)
+   El home de Okeymoney es un catálogo: cabecera con idioma + marca +
+   saludo + barra de anclas a los módulos temáticos y
+   tarjetas grandes con pictograma + nombre + detalle. Cada módulo
+   define --acento / --acento-suave localmente (inline) y todas las
+   tarjetas / cabeceras de módulo lo leen: un solo set de reglas,
+   varios temas.
+   ========================================================================== */
+
+/* ---- Cabecera ---- */
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4) 0 var(--espacio-3);
+}
+
+.cabecera .logo {
+  margin: 0 auto;
+  display: block;
+}
+
+.cabecera h1 {
+  margin: 0;
+  font-size: var(--texto-600, var(--texto-500));
+  font-weight: var(--peso-fuerte);
+  color: var(--texto-primario);
+  text-align: center;
+  line-height: var(--linea-apretada);
+}
+
+.saludo {
+  margin: 0;
+  font-size: var(--texto-400);
+  font-weight: var(--peso-medio);
+  color: var(--texto-secundario);
+  text-align: center;
+}
+
+/* ---- Selector de idioma (Routime) ---- */
+.idioma-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  justify-content: center;
+  align-self: stretch;
+}
+
+.btn-idioma {
+  min-height: var(--tocable);
+  padding: var(--espacio-2) var(--espacio-3);
+  font-family: inherit;
+  font-size: var(--texto-300);
+  font-weight: var(--peso-medio);
+  color: var(--texto-primario);
+  background: var(--superficie-1);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio-2);
+  cursor: pointer;
+  transition: border-color var(--motion-rapida) var(--ease-suave),
+              background var(--motion-rapida) var(--ease-suave);
+}
+
+.btn-idioma:hover { border-color: var(--acento); }
+
+.btn-idioma[aria-pressed="true"] {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+}
+
+.btn-idioma:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+/* (legacy .stars rules removed: el contador de práctica ya no aparece
+   en el home. Vive solo en la cabecera de cada tool como
+   .practice-tokens, definido en §3.Y más abajo.) */
+
+/* ---- Anclas de módulo (jump-to-section) ---- */
+.anclas-modulo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio-2);
+  justify-content: center;
+  padding: 0 0 var(--espacio-4);
+}
+
+.ancla-modulo {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tocable);
+  padding: var(--espacio-2) var(--espacio-3);
+  font-family: inherit;
+  font-size: var(--texto-300);
+  font-weight: var(--peso-medio);
+  text-decoration: none;
+  color: var(--texto-primario);
+  background: var(--superficie-1);
+  border: 2px solid var(--acento);
+  border-radius: var(--radio-2);
+  transition: background var(--motion-rapida) var(--ease-suave),
+              color var(--motion-rapida) var(--ease-suave);
+}
+
+.ancla-modulo:hover,
+.ancla-modulo:focus-visible {
+  background: var(--acento);
+  color: var(--texto-primario);
+  filter: brightness(0.92);
+}
+
+.ancla-modulo:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 2px;
+}
+
+/* ---- Módulo temático (sección del catálogo) ---- */
+.modulos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-5);
+}
+
+.modulo {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+}
+
+.modulo h2 {
+  margin: 0;
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  color: var(--acento);
+  border-left: 6px solid var(--acento);
+  padding-left: 12px;
+}
+
+/* ---- Grid de tarjetas grandes ---- */
+.grid-tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--espacio-4);
+}
+
+/* ---- Tarjeta genérica (Routime: picto + nombre + detalle) ---- */
+.tarjeta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 160px;
+  padding: var(--espacio-4);
+  background: var(--superficie-1);
+  border: 2px solid var(--acento-suave);
+  border-radius: var(--radio-2);
+  box-shadow: var(--sombra-1);
+  text-decoration: none;
+  text-align: center;
+  color: var(--texto-primario);
+  transition: transform var(--motion-rapida) var(--ease-suave),
+              border-color var(--motion-rapida) var(--ease-suave);
+}
+
+.tarjeta:hover {
+  transform: translateY(-2px);
+  border-color: var(--acento);
+}
+
+.tarjeta:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+.tarjeta .picto {
+  font-size: 48px;
+  line-height: 1;
+}
+
+.tarjeta .nombre {
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+  color: var(--acento);
+  line-height: var(--linea-apretada);
+}
+
+.tarjeta .detalle {
+  font-size: var(--texto-300);
+  color: var(--texto-secundario);
+  line-height: var(--linea-normal, 1.4);
+}
+
+.tarjeta__estado {
+  position: absolute;
+  top: var(--espacio-2);
+  right: var(--espacio-2);
+  font-size: 18px;
+  line-height: 1;
+  color: var(--exito);
+}
+
+.tarjeta { position: relative; } /* ancla para .tarjeta__estado */
+
+/* ---- Variantes de tarjeta ---- */
+
+/* Mi dinero — saldo grande, pictograma dinero, color principal */
+.tarjeta--money .tarjeta__nombre {
+  font-size: var(--texto-700, 40px);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mis metas — pictograma hucha, detalle con progreso de la primera meta */
+.tarjeta--goals .tarjeta__estado {
+  background: var(--acento);
+  color: var(--texto-primario);
+  padding: 4px 10px;
+  border-radius: var(--radio-pill);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-medio);
+  position: static;
+  margin-top: var(--espacio-2);
+}
+
+/* Actividad del catálogo — distintivo de estado ✓/▶/🔒 arriba a la derecha */
+.tarjeta--activity {
+  min-height: 180px;
+}
+
+.tarjeta--activity.is-done {
+  border-color: var(--exito);
+  background: var(--acento-suave);
+}
+
+.tarjeta--activity.is-done .tarjeta__estado {
+  color: var(--exito);
+}
+
+.tarjeta--activity.is-locked {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* Etiqueta pequeña encima del nombre (Mi dinero · Mis metas usan esto) */
+.tarjeta__etiqueta {
+  font-size: var(--texto-200);
+  font-weight: var(--peso-medio);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--texto-secundario);
+}
+
+/* ==========================================================================
+   §3.Y Cabecera de herramientas (.tool-header)
+
+   Patrón Routime: cada tools/<slug>/index.html lleva un
+   <header class="tool-header"> con tres hijos en una fila flex:
+     1. <a class="back-link">          ← Volver al catálogo
+     2. <h1> (flex: 1)                 título, ocupa el espacio central
+     3. <span class="practice-tokens"> contador de práctica, esquina sup. derecha
+
+   El contador de práctica (🪙 N) lo actualiza activity-runtime.js con
+   el saldo de App.wallet (en céntimos, redondeado a enteros de
+   1 token = 1 €). El emoji 🪙 lo añade CSS via ::before.
+   ========================================================================== */
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--espacio-4);
+}
+
+.tool-header h1 {
+  flex: 1;
+  margin: 0;
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  color: var(--texto-primario);
+  min-width: 0; /* permite que el texto se trunque si el título es largo */
+}
+
+/* Tokens de práctica en tools: pill con fondo verde claro, emoji 🪙
+   aplicado por CSS, número entero escrito por activity-runtime.js.
+   El <h1> con flex:1 empuja este <span> a la esquina superior derecha. */
+.tool-header .practice-tokens {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  background: var(--acento-suave);
+  border-radius: var(--radio-pill);
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.tool-header .practice-tokens::before {
+  content: "🪙";
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   §X Responsive: móvil (≤ 640px)
+   Sin `@media (max-width)` previo — el layout mobile-first asume una sola
+   columna, pero conviene apretar padding y tipografía en pantallas muy
+   estrechas para que el contenido respire. Las metas (.tarjeta--goals)
+   ya viven como tarjetas de ancho completo; aquí reforzamos los botones
+   grandes y los títulos de sección.
+   ========================================================================== */
+@media (max-width: 640px) {
+  .container {
+    padding-left: var(--espacio-3);
+    padding-right: var(--espacio-3);
+  }
+  .tool-header h1 { font-size: 1.75rem; }
+  .tarjeta--money,
+  .tarjeta--goals { padding: var(--espacio-3); }
+  .btn { padding: var(--espacio-2) var(--espacio-3); }
+}
+
+/* ==========================================================================
+   §X Responsive: tablet (641px–1023px)
+   Ajustes intermedios: el contenedor respira más, los títulos crecen un
+   punto. No movemos layout porque el grid sigue siendo auto-fill.
+   ========================================================================== */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .tool-header h1 { font-size: 2rem; }
+  .tarjeta--money,
+  .tarjeta--goals { padding: var(--espacio-4); }
+}
+
+/* ==========================================================================
+   §X Responsive: escritorio ancho (≥ 1024px)
+   En monitor 1080p+ el contenedor (--contenedor-max 960px) se ve cómodo,
+   pero los títulos y las metas se ven pequeños. Engordamos tipografía y
+   damos aire extra. .catalogo (la home con tarjetas de actividad) sigue
+   siendo auto-fill/minmax así que se reordenará sola.
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .tool-header h1 { font-size: 2.25rem; }
+  .tarjeta--money,
+  .tarjeta--goals { padding: var(--espacio-5); }
+  .catalogo { gap: var(--espacio-4); }
+}

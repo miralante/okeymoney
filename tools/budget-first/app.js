@@ -1,0 +1,48 @@
+/* tools/budget-first — ¿Qué compro primero?
+   Each case: budget X €, three things to buy, decide which to buy FIRST.
+   3 options, socratic, +12 tokens on completion. */
+(function () {
+  'use strict';
+  App.activity.run({
+    slug: 'budget-first',
+    rewardCents: 1200,
+    casos: [
+      { id: 'b1',
+        instruccionKey: 'b1instr',
+        escenaHtml: '<p>🍞 2 € · 🎮 30 € · 💧 1 €</p>',
+        opciones: ['opAgua', 'opPan', 'opJuego'],
+        correctaIndex: 1,
+        pistaKey: 'b1pista', explicacionKey: 'b1expl' },
+      { id: 'b2',
+        instruccionKey: 'b2instr',
+        escenaHtml: '<p>💊 8 € · 📺 200 € · 🍎 3 €</p>',
+        opciones: ['opFruta', 'opMedi', 'opTele'],
+        correctaIndex: 1,
+        pistaKey: 'b2pista', explicacionKey: 'b2expl' },
+      { id: 'b3',
+        instruccionKey: 'b3instr',
+        escenaHtml: '<p>🚌 1,50 € · 🎁 25 € · ☂️ 5 €</p>',
+        opciones: ['opBus', 'opRegalo', 'opParaguas'],
+        correctaIndex: 0,
+        pistaKey: 'b3pista', explicacionKey: 'b3expl' },
+      { id: 'b4',
+        instruccionKey: 'b4instr',
+        escenaHtml: '<p>🧥 40 € · 🍜 6 € · 📱 300 €</p>',
+        opciones: ['opComida2', 'opAbrigo', 'opMovil'],
+        correctaIndex: 1,
+        pistaKey: 'b4pista', explicacionKey: 'b4expl' },
+      { id: 'b5',
+        instruccionKey: 'b5instr',
+        escenaHtml: '<p>🩹 4 € · 🎮 30 € · 🧃 2 €</p>',
+        opciones: ['opJugo', 'opJuego2', 'opTiritas'],
+        correctaIndex: 2,
+        pistaKey: 'b5pista', explicacionKey: 'b5expl' },
+      { id: 'b6',
+        instruccionKey: 'b6instr',
+        escenaHtml: '<p>📚 12 € · 🎧 50 € · 🚌 1,50 €</p>',
+        opciones: ['opLibro', 'opAuriculares', 'opTransporte'],
+        correctaIndex: 2,
+        pistaKey: 'b6pista', explicacionKey: 'b6expl' }
+    ]
+  });
+})();

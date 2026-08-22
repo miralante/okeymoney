@@ -1,0 +1,21 @@
+/* tools/change-back — only what's genuinely specific to the change/vuelta
+   mechanic. The shared keypad/amount-display/money-table components now
+   live in `assets/css/componentes.css` (TODO.md §3.3) and are imported
+   via the activities cascade. */
+
+.tokens-row {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-4);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.tokens-row__label {
+  font-size: var(--texto-400);
+  font-weight: var(--peso-medio);
+  color: var(--texto-secundario);
+}
+
+.token-grande { width: 96px; height: 96px; font-size: 22px; }
+.token-grande.note { min-width: 144px; height: 80px; font-size: 22px; }

@@ -3,84 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Okeymoney</title>
-  <meta name="description" content="Aprende a manejar tu dinero: cuánto tienes, cuánto gastas y cuánto ahorras.">
+
+  <!-- ===== SEO: título, descripción, keywords, canonical, robots ===== -->
+  <title>Okeymoney — Aprende a manejar tu dinero, paso a paso</title>
+  <meta name="description" content="Okeymoney es una aplicación web gratuita y sin registro para aprender a manejar el dinero cotidiano: saldo, gastos, metas de ahorro y un asistente guiado para registrar gastos. Pensada para autonomía diaria. Parte de la suite Apptonomia.">
+  <meta name="keywords" content="okeymoney, apptonomia, educación financiera, dinero cotidiano, autonomía personal, ahorro, gastos, easy read, lectura fácil, accesibilidad cognitiva, aplicaciones gratuitas sin registro, compras, presupuesto">
+  <meta name="author" content="Apptonomia">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <link rel="canonical" href="https://okeymoney.apptonomia.uk/">
+  <link rel="alternate" hreflang="es" href="https://okeymoney.apptonomia.uk/?lang=es">
+  <link rel="alternate" hreflang="en" href="https://okeymoney.apptonomia.uk/?lang=en">
+  <link rel="alternate" hreflang="x-default" href="https://okeymoney.apptonomia.uk/">
+
+  <!-- ===== Open Graph ===== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Apptonomia">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:locale:alternate" content="en_US">
+  <meta property="og:title" content="Okeymoney — Aprende a manejar tu dinero, paso a paso">
+  <meta property="og:description" content="Saldo, gastos, metas de ahorro y un asistente guiado para registrar gastos. Gratis y sin registro. Parte de la suite Apptonomia.">
+  <meta property="og:url" content="https://okeymoney.apptonomia.uk/">
+  <meta property="og:image" content="https://okeymoney.apptonomia.uk/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Okeymoney: educación financiera para la vida diaria">
+
+  <!-- ===== Twitter Card ===== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Okeymoney — Aprende a manejar tu dinero, paso a paso">
+  <meta name="twitter:description" content="Saldo, gastos, metas de ahorro y un asistente guiado. Gratis y sin registro.">
+  <meta name="twitter:image" content="https://okeymoney.apptonomia.uk/og-image.png">
+
+  <!-- ===== Theme / appearance ===== -->
   <meta name="theme-color" content="#FAF7F2">
+  <meta name="color-scheme" content="light">
+
   <link rel="icon" href="assets/img/icono.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
+
+  <!-- ===== JSON-LD: SoftwareApplication + parentOrganization =====
+       Okeymoney is a FinanceApplication (not EducationalApplication),
+       so LLMs/Google classify it correctly in finance queries. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "@id": "https://okeymoney.apptonomia.uk/#app",
+        "name": "Okeymoney",
+        "url": "https://okeymoney.apptonomia.uk/",
+        "applicationCategory": "FinanceApplication",
+        "applicationSubCategory": "Educación financiera",
+        "operatingSystem": "Web",
+        "inLanguage": ["es", "en"],
+        "isAccessibleForFree": true,
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+        "description": "Aprende a manejar el dinero cotidiano: saldo, gastos, metas de ahorro y un asistente guiado paso a paso.",
+        "parentOrganization": { "@id": "https://apptonomia.uk/#org" }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Apptonomia", "item": "https://apptonomia.uk/" },
+          { "@type": "ListItem", "position": 2, "name": "Okeymoney", "item": "https://okeymoney.apptonomia.uk/" }
+        ]
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/componentes.css">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body data-tema="dinero">
+  <!--
+    Home unificado (Fase 3 de PRODUCT-DESIGN.md + estilo visual
+    alineado con el hermano Routime): cabecera tipo catálogo
+    (idioma + marca + saludo), barra
+    de anclas a cada módulo temático y, debajo, tres tarjetas
+    grandes (Mi dinero · Mis metas · catálogo de actividades)
+    en un único scroll. Sin tabbar: el FAB flotante "Apuntar
+    un gasto" vive abajo a la derecha.
+    Los monederos de práctica (🔑) no aparecen como tarjetas
+    propias — el contador 🪙 de práctica vive en la cabecera de cada
+    el saldo de práctica; el detalle vive dentro de cada tool.
+  -->
   <div class="container" id="app">
 
-    <div class="row lang-row">
-      <button type="button" class="btn-audio" id="btnLangEs" aria-pressed="false" aria-label="Español">🇪🇸</button>
-      <button type="button" class="btn-audio" id="btnLangEn" aria-pressed="false" aria-label="English">🇬🇧</button>
-    </div>
-
-    <!-- Screen: Mi dinero (dashboard) -->
-    <section id="screen-home" class="stack">
-      <div class="card balance-card center">
-        <p class="balance-label" data-i18n="home.balanceLabel">Tienes</p>
-        <button type="button" class="balance-amount" id="btnEditBalance" data-i18n-aria="home.editBalanceAria" aria-label="Cambiar cuánto dinero tienes">
-          <span id="balanceValue">0,00 €</span>
-        </button>
-        <p class="balance-label" data-i18n="home.editHint">Toca el número para cambiarlo</p>
+    <header class="cabecera centrado">
+      <div class="idioma-selector" id="langRow" role="group" aria-label="Elegir idioma">
+        <!-- buttons injected by app.js init() from App.i18n.SUPPORTED -->
       </div>
-      <div id="moneyPreview" class="money-table" aria-hidden="true"></div>
-      <h2 data-i18n="home.recentTitle">Tus últimos movimientos</h2>
-      <div id="recentList" class="stack"></div>
-      <p id="recentEmpty" class="card center hidden" data-i18n="home.recentEmpty">Todavía no has apuntado ningún gasto.</p>
-    </section>
-
-    <!-- Screen: Mis metas (savings goals) -->
-    <section id="screen-goals" class="stack hidden">
-      <div class="screen-header">
-        <h1 data-i18n="goals.title">Mis metas</h1>
+      <img src="assets/img/icono.svg" alt="" width="72" height="72" class="logo">
+      <h1 data-i18n="appName">Okeymoney</h1>
+      <div class="fila centrado-fila">
+        <p class="saludo" id="saludo" data-i18n="home.saludo">Hola. ¿Qué quieres hacer hoy?</p>
       </div>
-      <button type="button" class="btn" id="btnNewGoal" data-i18n="goals.newButton">+ Nueva meta</button>
-      <div id="goalList" class="goal-grid"></div>
-      <p id="goalEmpty" class="card center hidden" data-i18n="goals.empty">Todavía no tienes ninguna meta. ¡Crea la primera!</p>
-    </section>
+    </header>
 
-    <!-- Screen: Aprender (placeholder for v1) -->
-    <section id="screen-learn" class="stack hidden">
-      <div class="screen-header">
-        <h1 data-i18n="learn.title">Aprender</h1>
-      </div>
-      <div class="card center">
-        <p style="font-size:48px" aria-hidden="true">🚧</p>
-        <p data-i18n="learn.comingSoon">Muy pronto podrás practicar aquí con juegos sobre el dinero.</p>
-      </div>
-      <ul id="learnTeaser" class="stack"></ul>
-    </section>
+    <!-- Anclas a cada módulo temático del catálogo de actividades. -->
+    <nav class="anclas-modulo" aria-label="Ir a un módulo" id="anclasModulo"></nav>
 
-    <!-- Screen: step-by-step wizard (register expense / new goal / add money / edit balance) -->
+    <main class="pila modulos">
+
+      <!-- Bloque 1: Mi dinero — tarjeta grande con el saldo real. -->
+      <a href="#" class="tarjeta tarjeta--money" id="tarjetaSaldo" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
+        <span class="picto" aria-hidden="true">💶</span>
+        <span class="tarjeta__etiqueta" data-i18n="home.balanceLabel">Tienes</span>
+        <span class="tarjeta__nombre" id="balanceValue">0,00 €</span>
+        <span class="tarjeta__detalle" data-i18n="home.editHint">Toca para cambiar cuánto dinero tienes</span>
+        <span class="tarjeta__estado" aria-hidden="true" id="recentesResumen"></span>
+      </a>
+
+      <!-- Bloque 2: Mis metas — tarjeta grande con hasta 3 metas en preview. -->
+      <a href="#" class="tarjeta tarjeta--goals" id="tarjetaMetas" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
+        <span class="picto" aria-hidden="true">🐷</span>
+        <span class="tarjeta__etiqueta" data-i18n="goals.title">Mis metas</span>
+        <span class="tarjeta__detalle" id="metasResumen" data-i18n="goals.empty">Todavía no tienes ninguna meta. ¡Crea la primera!</span>
+        <span class="tarjeta__estado" aria-hidden="true" id="metasCta" data-i18n="goals.newButton">+ Nueva meta</span>
+      </a>
+
+      <!-- Bloque 3: catálogo de actividades de práctica, en orden temático
+           pedagógico (conceptos básicos → vida cotidiana → seguridad). Cada
+           .tarjeta dentro de un .modulo se pinta por activity-runtime.js
+           (estructura picto + nombre + detalle + estado ✓/▶/🔒). -->
+      <section id="aprende" class="modulo modulo--catalogo" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
+        <h2><span aria-hidden="true" data-i18n="home.catalogueTitle">Aprende con Okeymoney</span></h2>
+        <div id="homeActivities" class="grid-tarjetas"></div>
+      </section>
+
+    </main>
+
+    <!-- Pantalla del wizard paso a paso (registrar gasto / nueva meta /
+         añadir dinero a meta / cambiar saldo). Solo se muestra mientras
+         hay un wizard abierto; el resto del tiempo está oculto. -->
     <section id="screen-wizard" class="stack hidden" aria-live="polite"></section>
 
     <div class="footer-app">
       <a class="legal-link" href="legal/index.html" data-i18n="core.dataProtection">Protección de datos</a>
     </div>
+
   </div>
 
-  <nav class="tabbar" role="navigation" aria-label="Secciones de Okeymoney">
-    <button type="button" class="tab-button" data-tab="home" aria-current="page">
-      <span class="icon" aria-hidden="true">🏠</span>
-      <span data-i18n="tabs.home">Mi dinero</span>
-    </button>
-    <button type="button" class="fab-button" id="btnNewExpense" data-i18n-aria="tabs.newExpenseAria" aria-label="Apuntar un gasto">+</button>
-    <button type="button" class="tab-button" data-tab="goals">
-      <span class="icon" aria-hidden="true">🐷</span>
-      <span data-i18n="tabs.goals">Mis metas</span>
-    </button>
-    <button type="button" class="tab-button" data-tab="learn">
-      <span class="icon" aria-hidden="true">🎓</span>
-      <span data-i18n="tabs.learn">Aprender</span>
-    </button>
-  </nav>
+  <!-- FAB flotante: única entrada a "Apuntar un gasto" (dinero real).
+       Vive fuera de la barra inferior (el tabbar se eliminó en Fase 3). -->
+  <button type="button" class="fab-flotante" id="btnNewExpense" data-i18n-aria="tabs.newExpenseAria" aria-label="Apuntar un gasto">+</button>
 
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/i18n.js"></script>
@@ -88,6 +158,7 @@
   <script src="assets/js/storage.js"></script>
   <script src="assets/js/feedback.js"></script>
   <script src="assets/js/money.js"></script>
+  <script src="assets/js/wallet.js"></script>
   <script src="strings.es.js"></script>
   <script src="strings.en.js"></script>
   <script src="data.js"></script>

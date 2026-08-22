@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Okeymoney — Activity-specific styles
+
+   Phase 3 audit (TODO.md §5.3): every selector that duplicated a
+   component in `assets/css/componentes.css` has been removed. The
+   shared components (`.feedback`, `.wallet-chip`, `.opcion-btn`,
+   `.pista`, `.actividad-header`, `.opciones`, `.escena`, `.agente`)
+   are now sourced exclusively from `componentes.css`. This file
+   keeps ONLY the rules that are genuinely activity-mechanic specific
+   and would not belong in the shared components layer.
+   ========================================================================== */
+
+/* Activity option button — only the .correcta / .animo state colours
+   remain, which encode Socratic feedback per activity (Apptonomia-style
+   state colours, not a generic component). The shared .btn component
+   already provides size, padding, focus ring, transitions. */
+.opcion-btn {
+  min-height: var(--tocable-lg);
+  padding: var(--espacio-4);
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-2);
+  color: var(--texto-primario);
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  cursor: pointer;
+  transition: border-color var(--motion-rapida) var(--ease-suave),
+              background var(--motion-rapida) var(--ease-suave),
+              transform var(--motion-rapida) var(--ease-suave);
+}
+.opcion-btn:hover { border-color: var(--acento); }
+.opcion-btn:active { transform: scale(0.98); }
+.opcion-btn.correcta {
+  border-color: var(--exito);
+  background: var(--acento-suave);
+}
+.opcion-btn.animo {
+  border-color: var(--aliento);
+  background: rgba(192, 86, 33, 0.18);      /* aliento suave (light) */
+}
+.opcion-btn:disabled { cursor: default; }
+
+.pista {
+  background: rgba(192, 86, 33, 0.12);      /* aliento transparente (light) */
+  color: var(--aliento);
+  padding: var(--espacio-4);
+  border-radius: var(--radio-2);
+  border: 2px dashed var(--aliento);
+  text-align: center;
+}
+
+.actividad-cta {
+  display: flex;
+  justify-content: center;
+  margin-top: var(--espacio-4);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .opcion-btn:active { transform: none; }
+}

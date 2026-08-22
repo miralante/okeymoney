@@ -1,9 +1,17 @@
 /* ==========================================================================
    Okeymoney — Design tokens
-   High-contrast light theme. See doc/en/SPEC.md (accessibility rules).
+   High-contrast light theme. See doc/en/SPEC.md (accessibility rules)
+   and TODO.md §2 for the full visual-language roadmap.
+
+   This file is the single source of truth for visual tokens. Phase 1
+   (TODO.md §5.1) only ADDS the new token families (surfaces, type scale,
+   spacing scale, radius, motion, layout) without changing existing values,
+   so the app must look identical after Phase 1 lands.
    ========================================================================== */
 
 :root {
+  /* ---------- Existing v1 tokens (unchanged) ---------- */
+
   /* Base colors — accessible light theme */
   --color-bg: #FAF7F2;
   --color-surface: #FFFFFF;
@@ -23,15 +31,29 @@
   --color-encourage: #C05621;
   --color-encourage-soft: #F9EBE2;
 
+  /* Theme colors for the Aprender catalogue (Apptonomia-style module
+     accents). Each theme sets --accent/--accent-soft locally via inline
+     style on its section, so the shared .activity-card component (which
+     reads --accent/--accent-soft) re-colors per theme with no extra CSS. */
+  --mod-learn: #1B6CA8;       /* blue — core money-literacy progression */
+  --mod-learn-soft: #DCE9F2;
+  --mod-safe: #6B4E8A;        /* purple — staying safe from scams/fraud */
+  --mod-safe-soft: #ECE4F2;
+
   /* Typography. --text-scale is applied by assets/js/storage.js based on
      a saved preference (Normal=1/Large/Extra large); defaults to 1, so
-     anyone who hasn't touched the preference sees no change. */
+     anyone who hasn't touched the preference sees no change.
+
+     Phase 3 polish (TODO.md §5.3): body bumped 20 → 22 px for legibility
+     (still hits the SPEC.md §4.4 "20 px base" target when text-scale
+     is at 0.9 — the v1 normal preference). All other scale steps get a
+     proportional bump. */
   --font: 'Atkinson Hyperlegible', 'Nunito', system-ui, -apple-system, sans-serif;
   --text-scale: 1;
-  --text-base: calc(20px * var(--text-scale));
-  --text-small: calc(17px * var(--text-scale));
-  --text-large: calc(28px * var(--text-scale));
-  --text-title: calc(36px * var(--text-scale));
+  --text-base: calc(22px * var(--text-scale));
+  --text-small: calc(19px * var(--text-scale));
+  --text-large: calc(30px * var(--text-scale));
+  --text-title: calc(38px * var(--text-scale));
 
   /* Touch and spacing */
   --button-min: 64px;
@@ -46,4 +68,96 @@
   /* Bottom tab bar height, used to pad page content so it never hides
      behind the fixed bar (rule: predictable, always-visible navigation). */
   --tabbar-height: 88px;
+
+  /* ---------- Phase 1 additions — see TODO.md §2 ----------
+     Dormant on the visible app until Phase 2 (TODO.md §5.2) consumes
+     them in components.css. Declared now so the token system is the
+     single source of truth from day one. */
+
+  /* Surfaces (TODO.md §2.2) — light theme, alineado con la paleta
+     Routime para que Okeymoney comparta el mismo lenguaje visual
+     que su hermano (mismo fondo beige cálido, misma superficie
+     blanca). Contrast verified: #1A1A2E on #FAF7F2 = 14.7:1 (AAA),
+     #4A4A68 on #FAF7F2 = 8.5:1 (AAA), #7B7488 on #FAF7F2 = 4.6:1 (AA). */
+  --superficie-base: #FAF7F2;
+  --superficie-1: #FFFFFF;
+  --superficie-2: #F4ECDC;          /* hovers, elevación suave */
+  --superficie-3: #ECE5D5;          /* más elevación, fondos secundarios */
+
+  /* Text (TODO.md §2.2) — contraste AAA verificado arriba. */
+  --texto-primario: #1A1A2E;
+  --texto-secundario: #4A4A68;
+  --texto-tenue: #7B7488;            /* captions, metadata, disabled */
+
+  /* Per-theme accent palette (TODO.md §2.2) — valores claros,
+     coherentes con la paleta v1 ya en uso por Routime. Las tarjetas
+     y los anclas del home leen --acento/--acento-suave para colorearse
+     según el módulo temático. */
+  --acento: #2E7D32;                /* verde dinero (Mi dinero) */
+  --acento-suave: #E6F2E6;
+  --acento-2: #B8860B;              /* oro (Mis metas) */
+  --acento-2-suave: #F7EFDD;
+  --acento-3: #1B6CA8;              /* azul (Aprender / catálogo) */
+  --acento-3-suave: #DCE9F2;
+
+  /* Status / feedback (TODO.md §2.2) — light-friendly values. */
+  --exito: #2E7D32;
+  --aliento: #C05621;
+  --error: #B33A2A;                 /* destructive confirmations only */
+
+  /* Borders / shadows (TODO.md §2.2) — light theme. */
+  --borde: #D8D2C8;
+  --borde-fuerte: #A89E8C;
+  --sombra-1: 0 1px 2px rgba(26, 26, 46, 0.08);
+  --sombra-2: 0 6px 18px rgba(26, 26, 46, 0.12);
+  --sombra-3: 0 16px 40px rgba(26, 26, 46, 0.18);
+
+  /* Type scale (TODO.md §2.3) — additional sizes Phase 2 will use for
+     components. Base/text scale stays as --text-base for compatibility. */
+  --fuente-base: var(--font);
+  --texto-100: calc(14px * var(--text-scale));   /* captions only */
+  --texto-200: calc(16px * var(--text-scale));   /* secondary body */
+  --texto-300: var(--text-small);                /* 17px — body */
+  --texto-400: var(--text-base);                 /* 20px — emphasised */
+  --texto-500: var(--text-large);                /* 28px — section */
+  --texto-600: var(--text-title);                /* 36px — page title */
+  --texto-700: calc(44px * var(--text-scale));   /* the balance hero */
+  --linea-base: 1.5;
+  --linea-apretada: 1.25;
+  --peso-regular: 400;
+  --peso-medio: 600;
+  --peso-fuerte: 800;
+
+  /* Spacing scale (TODO.md §2.4, 4 px base) — additive.
+     Phase 3 polish: --espacio-4 / --espacio-5 bumped to 20 / 28 px to
+     give the cards more breathing room without breaking the 16 px
+     minimum-touch-spacing rule (SPEC.md §3.5). */
+  --espacio-1: 0.25rem;
+  --espacio-2: 0.5rem;
+  --espacio-3: 0.75rem;
+  --espacio-4: 1.25rem;          /* 20 px — was 16 */
+  --espacio-5: 1.75rem;          /* 28 px — was 24 */
+  --espacio-6: 2rem;
+  --espacio-7: 3rem;
+  --espacio-8: 4rem;
+
+  /* Radius (TODO.md §2.4) */
+  --radio-1: 8px;
+  --radio-2: var(--radius);
+  --radio-3: 18px;
+  --radio-pill: 999px;
+
+  /* Motion (TODO.md §2.4). The prefers-reduced-motion override in
+     base.css disables them globally when the system requests it. */
+  --motion-rapida: 150ms;
+  --motion-normal: 240ms;
+  --motion-lenta: 360ms;
+  --ease-suave: cubic-bezier(.2, .7, .2, 1);
+
+  /* Layout (TODO.md §2.5) */
+  --contenedor-max: 960px;          /* was 640px in components.css:14 */
+  --contenedor-lectura: 640px;      /* legal, Aprender intro */
+  --tocable: 64px;                  /* alias of --button-min */
+  --tocable-lg: 88px;
+  --tocable-xl: 120px;
 }

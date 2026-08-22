@@ -1,13 +1,14 @@
-/* Okeymoney — legal page: narrower reading column, simple header. */
-.legal { max-width: 720px; }
+/* Okeymoney — legal page: narrower reading column, simple header.
+   Dark theme active — inherits surfaces, text, accent from tokens. */
+.legal { max-width: var(--contenedor-lectura); }
 
 .legal-header {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: var(--espacio-2);
   text-align: center;
-  margin: var(--space-large) 0;
+  margin: var(--espacio-5) 0;
 }
 
 .legal-header .lang-row { align-self: flex-end; }

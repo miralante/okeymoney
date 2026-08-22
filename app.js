@@ -1,9 +1,10 @@
 /* ==========================================================================
    Okeymoney — App logic
-   Single-page app: three tabs (Mi dinero, Mis metas, Aprender) sharing one
-   ledger in localStorage, plus a full-screen step-by-step wizard reused by
-   every flow that asks for an amount (register an expense, set how much
-   money you have, set a goal's price, add money to a goal).
+   Single-page app: one long home scroll (Mi dinero → Mis metas → catálogo
+   de actividades), sharing one ledger in localStorage, plus a full-screen
+   step-by-step wizard reused by every flow that asks for an amount
+   (register an expense, set how much money you have, set a goal's price,
+   add money to a goal). FAB flotante lanza "Apuntar un gasto".
    Requires assets/js (App.utils, App.i18n, App.storage, App.feedback,
    App.money) and data.js.
    ========================================================================== */
@@ -54,76 +55,144 @@
     return state.goals.filter(function (g) { return g.id === id; })[0];
   }
 
-  /* ---------- Navigation ---------- */
-  var TABS = ['home', 'goals', 'learn'];
-  var currentTab = 'home';
+  /* ---------- Navigation ----------
+     Sin pestañas (Fase 3): el home es un único scroll. El único "salto"
+     real es ocultar el home para mostrar el wizard a pantalla completa. */
   var wizard = null; /* { type, step, ...fields } while a wizard is open */
-
-  function showTab(tab) {
-    currentTab = tab;
-    wizard = null;
-    TABS.forEach(function (t) {
-      $('#screen-' + t).classList.toggle('hidden', t !== tab);
-    });
-    $('#screen-wizard').classList.add('hidden');
-    $$('.tab-button').forEach(function (btn) {
-      if (btn.getAttribute('data-tab') === tab) btn.setAttribute('aria-current', 'page');
-      else btn.removeAttribute('aria-current');
-    });
-    if (tab === 'home') renderHome();
-    if (tab === 'goals') renderGoals();
-    if (tab === 'learn') renderLearn();
-  }
 
   function openWizard(w) {
     wizard = w;
-    TABS.forEach(function (t) { $('#screen-' + t).classList.add('hidden'); });
+    /* El home queda en el DOM pero "detrás" del wizard. Cuando el wizard
+       se cierra, simplemente lo ocultamos y el home ya está renderizado. */
     $('#screen-wizard').classList.remove('hidden');
+    document.body.classList.add('wizard-open');
     renderWizard();
   }
 
   function closeWizard() {
     wizard = null;
-    showTab(currentTab);
+    $('#screen-wizard').classList.add('hidden');
+    document.body.classList.remove('wizard-open');
+    renderHome();
   }
 
-  /* ---------- Home (Mi dinero) ---------- */
+  /* ---------- Home (single long scroll, estilo Routime) ----------
+     Cabecera tipo catálogo (idioma + marca + saludo),
+     barra de anclas a módulos temáticos, y debajo dos tarjetas
+     grandes (Mi dinero · Mis metas) más la sección de catálogo.
+     El monedero de práctica (🔑) NO aparece como tarjeta propia:
+     su saldo se ve en el contador 🪙 de la cabecera de cada tool
+     tool. Las anclas las genera el JS desde DATA.learnThemes. */
   function renderHome() {
-    $('#balanceValue').textContent = App.money.format(balanceCents());
-    App.money.paintTokens($('#moneyPreview'), App.money.breakdown(Math.max(balanceCents(), 0)));
+    /* Cabecera: solo el saludo. El saldo de práctica (App.wallet)
+       ya no se muestra aquí — el indicador vive en la cabecera de
+       cada tool (esquina superior derecha), que es donde el usuario
+       lo ve crecer al completar actividades. */
+    var saludo = $('#saludo');
+    if (saludo) saludo.textContent = App.i18n.t('home.saludo');
 
-    var recent = state.movements.slice(-5).reverse();
-    var list = $('#recentList');
-    list.innerHTML = '';
-    recent.forEach(function (m) {
-      var row = document.createElement('div');
-      row.className = 'card row';
-      var icon = m.type === 'expense' ? (categoryById(m.categoryId) || {}).icon || '🧩'
-        : m.type === 'saving' ? '🐷' : '➕';
-      var label = m.type === 'expense' ? App.i18n.t('categories.' + m.categoryId)
-        : m.type === 'saving' ? App.utils.escapeHtml((goalById(m.goalId) || {}).name || '')
-        : App.i18n.t('home.balanceLabel');
-      var sign = m.type === 'income' ? '+' : '-';
-      row.innerHTML =
-        '<span class="icon" aria-hidden="true" style="font-size:28px">' + icon + '</span>' +
-        '<span style="flex:1">' + label + '</span>' +
-        '<strong>' + sign + App.money.format(m.amountCents) + '</strong>';
-      list.appendChild(row);
-    });
-    $('#recentEmpty').classList.toggle('hidden', recent.length > 0);
+    /* Anclas a cada módulo temático (Conceptos · Vida cotidiana ·
+       Seguridad). El catálogo pintará las tarjetas reales; las
+       anclas son solo un índice de salto. */
+    renderModuleAnchors();
+
+    /* Tarjeta Mi dinero — el saldo real, grande y centrado. */
+    var balEl = $('#balanceValue');
+    if (balEl) balEl.textContent = App.money.format(balanceCents());
+
+    /* Tarjeta Mis metas — resumen: si no hay metas, mostramos el
+       empty + CTA; si hay, mostramos la primera meta con su
+       progreso y un pequeño sufijo "+N más". */
+    renderMetasResumen();
+
+    /* Catálogo de actividades (módulos temáticos con tarjetas
+       picto + nombre + detalle). Lo pinta el runtime compartido. */
+    renderActivityThemes($('#homeActivities'));
   }
 
-  $('#btnEditBalance').addEventListener('click', function () {
-    openWizard({ type: 'setBalance', step: 1, amountCents: Math.max(balanceCents(), 0) });
-  });
+  /* Pinta la barra de anclas (#mod-concepts / #mod-daily / #mod-safety)
+     desde DATA.learnThemes. Cada ancla lleva el accent del módulo para
+     que el bordeado se vea del color del tema al que apunta. */
+  function renderModuleAnchors() {
+    var wrap = $('#anclasModulo');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    DATA.learnThemes.forEach(function (theme) {
+      var a = document.createElement('a');
+      a.href = '#mod-' + theme.id;
+      a.className = 'ancla-modulo';
+      a.style.setProperty('--acento', getComputedStyle(document.documentElement).getPropertyValue('--' + theme.accent).trim());
+      var label = App.i18n.t('learn.themes.' + theme.id);
+      a.textContent = label;
+      a.setAttribute('aria-label', App.i18n.t('home.anchorAria').replace('{theme}', label));
+      wrap.appendChild(a);
+    });
+  }
+
+  /* Tarjeta "Mis metas": un resumen compacto. Cuando NO hay metas,
+     muestra el mensaje empty + CTA "+ Nueva meta". Cuando hay,
+     muestra la primera meta con su porcentaje y el sufijo "+N más"
+     si hay más. */
+  function renderMetasResumen() {
+    var detalle = $('#metasResumen');
+    var cta = $('#metasCta');
+    if (!detalle || !cta) return;
+    if (!state.goals.length) {
+      detalle.textContent = App.i18n.t('goals.empty');
+      cta.textContent = App.i18n.t('goals.newButton');
+      return;
+    }
+    var g = state.goals[0];
+    var pct = g.targetCents > 0 ? Math.min(100, Math.round((g.savedCents / g.targetCents) * 100)) : 0;
+    var extra = state.goals.length > 1
+      ? ' ' + App.i18n.t('home.moreGoals').replace('{n}', String(state.goals.length - 1))
+      : '';
+    detalle.textContent =
+      g.icon + ' ' + App.utils.escapeHtml(g.name) + ' — ' +
+      App.i18n.t('goals.progressText')
+        .replace('{saved}', App.money.format(g.savedCents))
+        .replace('{target}', App.money.format(g.targetCents)) +
+      ' (' + pct + '%)' + extra;
+    cta.textContent = '+ ' + App.i18n.t('goals.addButton').replace('+ ', '');
+  }
+
+  /* Click en la tarjeta "Mi dinero" → abre el wizard para fijar el
+     saldo. La tarjeta sigue siendo un <a> para tener semántica de
+     enlace, pero navegamos a wizard en lugar de a otra página. */
+  var tarjetaSaldo = $('#tarjetaSaldo');
+  if (tarjetaSaldo) {
+    tarjetaSaldo.addEventListener('click', function (e) {
+      e.preventDefault();
+      openWizard({ type: 'setBalance', step: 1, amountCents: Math.max(balanceCents(), 0) });
+    });
+  }
+
+  /* Click en la tarjeta "Mis metas" → si no hay metas, abre el
+     wizard de nueva meta; si hay, abre el wizard de añadir dinero
+     a la primera meta (atajo rápido). */
+  var tarjetaMetas = $('#tarjetaMetas');
+  if (tarjetaMetas) {
+    tarjetaMetas.addEventListener('click', function (e) {
+      e.preventDefault();
+      if (!state.goals.length) {
+        openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
+      } else {
+        openWizard({ type: 'goalAdd', step: 1, goalId: state.goals[0].id, amountCents: 0 });
+      }
+    });
+  }
 
   $('#btnNewExpense').addEventListener('click', function () {
     openWizard({ type: 'expense', step: 1, categoryId: null, amountCents: 0 });
   });
 
-  /* ---------- Goals (Mis metas / Mi hucha) ---------- */
   function renderGoals() {
+    /* Deprecated en Fase 3: la pantalla Mis metas ya no existe como
+       pestaña. La tarjeta grande del home (#tarjetaMetas) la pinta
+       renderMetasResumen(). Esta función se conserva vacía por si
+       alguien la llama por error desde código viejo; no hace nada. */
     var list = $('#goalList');
+    if (!list) return;
     list.innerHTML = '';
     state.goals.forEach(function (g) {
       var pct = g.targetCents > 0 ? Math.min(100, Math.round((g.savedCents / g.targetCents) * 100)) : 0;
@@ -153,23 +222,92 @@
       }
       list.appendChild(card);
     });
-    $('#goalEmpty').classList.toggle('hidden', state.goals.length > 0);
+    var empty = $('#goalEmpty');
+    if (empty) empty.classList.toggle('hidden', state.goals.length > 0);
   }
 
-  $('#btnNewGoal').addEventListener('click', function () {
-    openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
-  });
-
-  /* ---------- Learn (Aprender) — placeholder for v1 ---------- */
-  function renderLearn() {
-    var ul = $('#learnTeaser');
-    ul.innerHTML = '';
-    DATA.learnTeaser.forEach(function (id) {
-      var li = document.createElement('li');
-      li.className = 'card';
-      li.textContent = App.i18n.t('learn.teaser.' + id);
-      ul.appendChild(li);
+  /* Deprecated en Fase 3: el botón "+ Nueva meta" ya solo vive en la
+     tarjeta compacta del home (#btnNewGoalHome). Conservamos el binding
+     por compatibilidad con herramientas externas que aún lo busquen. */
+  var btnNewGoal = $('#btnNewGoal');
+  if (btnNewGoal) {
+    btnNewGoal.addEventListener('click', function () {
+      openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
     });
+  }
+
+  /* "+ Nueva meta" dentro de la tarjeta Mis metas del home abre el
+     wizard nuevo de meta. */
+  var btnNewGoalHome = $('#btnNewGoalHome');
+  if (btnNewGoalHome) {
+    btnNewGoalHome.addEventListener('click', function () {
+      openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
+    });
+  }
+
+  /* ---------- Learn (activity catalogue, grouped by theme) ----------
+     Estilo Routime: cada actividad es una .tarjeta con .picto +
+     .nombre + .detalle + .tarjeta__estado opcional. Las tarjetas se
+     pintan dentro de una .grid-tarjetas dentro de un .modulo (sección
+     temática con su propio accent). */
+  function activityCard(a) {
+    var card = document.createElement('a');
+    card.className = 'tarjeta tarjeta--activity';
+    if (!a.available) card.classList.add('is-locked');
+    var status = App.wallet.activityStatus(a.slug);
+    if (status && status.done) card.classList.add('is-done');
+    card.href = a.available ? a.href : '#';
+    card.setAttribute('aria-disabled', a.available ? 'false' : 'true');
+    card.setAttribute('aria-label',
+      App.i18n.t('learn.activityTitle.' + a.slug) + ' — ' +
+      App.i18n.t('learn.activityDesc.' + a.slug));
+    var stateGlyph = status && status.done ? '✓' : (a.available ? '▶' : '🔒');
+    card.innerHTML =
+      '<span class="picto" aria-hidden="true">' + a.icon + '</span>' +
+      '<span class="nombre" data-i18n="learn.activityTitle.' + a.slug + '">' +
+        App.i18n.t('learn.activityTitle.' + a.slug) +
+      '</span>' +
+      '<span class="detalle" data-i18n="learn.activityDesc.' + a.slug + '">' +
+        App.i18n.t('learn.activityDesc.' + a.slug) +
+      '</span>' +
+      '<span class="tarjeta__estado" aria-hidden="true">' + stateGlyph + '</span>';
+    return card;
+  }
+
+  /* Pinta los tres módulos temáticos (DATA.learnThemes, orden
+     pedagógico fijo) en `wrap`. Cada módulo es una <section class="modulo
+     modulo--catalogo"> con su propio accent (color del tema). Las
+     tarjetas viven en una .grid-tarjetas dentro del módulo.
+     PRODUCT-DESIGN.md §3.3 / §9 Phase 2. Within a theme, activities are
+     already ordered easiest to hardest (DATA.activities). */
+  function renderActivityThemes(wrap) {
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    DATA.learnThemes.forEach(function (theme) {
+      var activities = DATA.activities.filter(function (a) { return a.theme === theme.id; });
+      if (!activities.length) return;
+      var section = document.createElement('section');
+      section.className = 'modulo modulo--catalogo';
+      section.id = 'mod-' + theme.id;
+      var rootStyle = getComputedStyle(document.documentElement);
+      section.style.setProperty('--acento', rootStyle.getPropertyValue('--' + theme.accent).trim());
+      section.style.setProperty('--acento-suave', rootStyle.getPropertyValue('--' + theme.accent + '-suave').trim());
+      var heading = document.createElement('h2');
+      heading.textContent = App.i18n.t('learn.themes.' + theme.id);
+      section.appendChild(heading);
+      var grid = document.createElement('div');
+      grid.className = 'grid-tarjetas';
+      activities.forEach(function (a) { grid.appendChild(activityCard(a)); });
+      section.appendChild(grid);
+      wrap.appendChild(section);
+    });
+  }
+
+  function renderLearn() {
+    /* Deprecated en Fase 3: la pestaña Aprender se ha integrado al home
+       como bloque <section id="aprende">#homeActivities. No queda nada
+       que pintar aquí, pero conservamos la función vacía por si código
+       viejo (tests, tools externos) la sigue invocando. */
   }
 
   /* ---------- Wizard: shared chrome (back/close + step dots) ---------- */
@@ -227,8 +365,8 @@
       btn.type = 'button';
       btn.className = 'keypad-key';
       btn.textContent = k;
-      if (k === '⌫') btn.setAttribute('aria-label', App.i18n.locale() === 'en' ? 'Delete last digit' : 'Borrar');
-      if (k === '⌦') btn.setAttribute('aria-label', App.i18n.locale() === 'en' ? 'Clear' : 'Borrar todo');
+      if (k === '⌫') btn.setAttribute('aria-label', App.i18n.t('keypad.deleteDigit'));
+      if (k === '⌦') btn.setAttribute('aria-label', App.i18n.t('keypad.clear'));
       btn.addEventListener('click', function () {
         if (k === '⌫') {
           value = Math.floor(value / 10);
@@ -247,7 +385,7 @@
     $('#wizNext').addEventListener('click', function () { opts.onConfirm(value); });
   }
 
-  /* ---------- Wizard: register an expense (3 steps) ---------- */
+  /* ---------- Wizard: register an expense (3 steps: category, amount, confirm) ---------- */
   function renderExpenseStep1() {
     var html =
       wizardChrome(3, 1, null) +
@@ -313,7 +451,7 @@
       });
       save();
       var message = App.i18n.t('expense.savedMessage');
-      App.feedback.celebrate(message, function () { showTab('home'); });
+      App.feedback.celebrate(message, function () { closeWizard(); });
     });
   }
 
@@ -330,12 +468,12 @@
       onBack: null,
       onConfirm: function (cents) {
         setBalanceTo(cents);
-        App.feedback.celebrate(App.i18n.t('expense.savedMessage'), function () { showTab('home'); });
+        App.feedback.celebrate(App.i18n.t('expense.savedMessage'), function () { closeWizard(); });
       }
     });
   }
 
-  /* ---------- Wizard: new goal (2 steps: icon+name, then price) ---------- */
+  /* ---------- Wizard: new goal (2 steps: icon+name, then target price) ---------- */
   function renderGoalStep1() {
     $('#screen-wizard').innerHTML =
       wizardChrome(2, 1, null) +
@@ -394,7 +532,7 @@
           achieved: false
         });
         save();
-        App.feedback.celebrate(App.i18n.t('goals.savedMessage'), function () { showTab('goals'); });
+        App.feedback.celebrate(App.i18n.t('goals.savedMessage'), function () { closeWizard(); });
       }
     });
   }
@@ -421,7 +559,7 @@
         goal.savedCents += cents;
         if (goal.savedCents >= goal.targetCents) goal.achieved = true;
         save();
-        App.feedback.celebrate(App.i18n.t('goals.addedMessage'), function () { showTab('goals'); });
+        App.feedback.celebrate(App.i18n.t('goals.addedMessage'), function () { closeWizard(); });
       }
     });
   }
@@ -442,24 +580,33 @@
     }
   }
 
-  /* ---------- Tab bar ---------- */
-  $$('.tab-button').forEach(function (btn) {
-    btn.addEventListener('click', function () { showTab(btn.getAttribute('data-tab')); });
-  });
-
-  /* ---------- Language selector ---------- */
-  function paintLanguageSelector() {
+  /* ---------- Language selector ----------
+     Built from App.i18n.SUPPORTED so adding a locale (see doc/I18N.md §5)
+     only requires extending SUPPORTED + LABEL + FLAG in i18n.js and
+     creating the new strings.<locale>.js — no HTML edit. */
+  function renderLanguageSelector() {
+    var row = $('#langRow');
+    if (!row) return;
     var active = App.i18n.locale();
-    $('#btnLangEs').setAttribute('aria-pressed', String(active === 'es'));
-    $('#btnLangEn').setAttribute('aria-pressed', String(active === 'en'));
+    row.innerHTML = '';
+    App.i18n.SUPPORTED.forEach(function (loc) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn-audio';
+      btn.id = 'btnLang' + loc.toUpperCase();
+      btn.setAttribute('data-locale', loc);
+      btn.setAttribute('aria-pressed', String(active === loc));
+      btn.setAttribute('aria-label', App.i18n.LABEL[loc] || loc);
+      btn.textContent = (App.i18n.FLAG[loc] || '') + ' ' + (App.i18n.LABEL[loc] || loc);
+      btn.addEventListener('click', function () { App.i18n.setLocale(loc); });
+      row.appendChild(btn);
+    });
   }
-  $('#btnLangEs').addEventListener('click', function () { App.i18n.setLocale('es'); });
-  $('#btnLangEn').addEventListener('click', function () { App.i18n.setLocale('en'); });
-  paintLanguageSelector();
+  renderLanguageSelector();
 
   /* ---------- Boot ---------- */
   App.i18n.apply();
-  showTab('home');
+  renderHome();
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js').catch(function () {});

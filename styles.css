@@ -1,23 +1,18 @@
 /* ==========================================================================
-   Okeymoney — App-specific styles only. Shared components live in
-   assets/css/components.css.
-   ========================================================================== */
+   Okeymoney — App-specific styles only.
+   Shared components live in assets/css/componentes.css.
 
-.lang-row {
-  justify-content: flex-end;
-  margin-bottom: var(--space);
-}
+   La cabecera tipo catálogo, las anclas de módulo y las tarjetas
+   grandes (.tarjeta / .tarjeta--money / .tarjeta--goals) viven en
+   componentes.css §3.X (estilo Routime). Aquí solo lo genuinamente
+   específico de Okeymoney. ========================================================================== */
 
+/* Wizard: campo de nombre de la meta (sigue usándose en los wizards
+   nuevos de meta en las herramientas que lo requieran). */
 #goalName {
   width: 100%;
 }
 
 #goalName::placeholder {
-  color: var(--color-text-soft);
-}
-
-.balance-amount {
-  display: inline-flex;
-  min-height: var(--button-min);
-  border-radius: var(--radius);
+  color: var(--texto-tenue);
 }
