@@ -120,19 +120,19 @@
       <section id="bloque-didactico" class="learning-block learning-block--didactic" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow">01</p>
-          <h2 data-i18n="blocks.didactic.title">Aprende paso a paso</h2>
-          <p class="learning-block__intro" data-i18n="blocks.didactic.intro">Entiende el dinero antes de practicar.</p>
+          <h2 data-i18n="blocks.didactic.title">Aprende sobre tu dinero</h2>
+          <p class="learning-block__intro" data-i18n="blocks.didactic.intro">Ideas sencillas para entender y manejar mejor tu dinero.</p>
         </div>
         <div id="didacticLessons" class="grid-tarjetas didactic-grid"></div>
-        <a class="btn btn--secundario learning-block__cta" href="#bloque-test" data-i18n="blocks.didactic.cta">Después, comprueba lo que sabes</a>
+        <a class="btn btn--secundario learning-block__cta" href="#bloque-test" data-i18n="blocks.didactic.cta">Ahora, prueba lo que has aprendido</a>
       </section>
 
-      <!-- Bloque 2: tests existentes, agrupados por tema y con Tokens. -->
+      <!-- Bloque 2: índice de tests; cada actividad se ejecuta dentro de su unidad. -->
       <section id="bloque-test" class="learning-block learning-block--test" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow">02</p>
-          <h2 data-i18n="blocks.test.title">Comprueba lo que sabes</h2>
-          <p class="learning-block__intro" data-i18n="blocks.test.intro">Responde a situaciones y gana Tokens por practicar.</p>
+          <h2 data-i18n="blocks.test.title">Pon a prueba lo que sabes</h2>
+          <p class="learning-block__intro" data-i18n="blocks.test.intro">Cada unidad termina con una actividad. Practica con situaciones y gana Tokens.</p>
         </div>
         <div class="token-summary" aria-live="polite">
           <span class="token-summary__icon" aria-hidden="true">🪙</span>
@@ -142,6 +142,7 @@
           </span>
           <span class="token-summary__hint" data-i18n="blocks.test.rewardHint">Cada actividad suma Tokens una vez.</span>
         </div>
+        <p class="test-index__intro" data-i18n="blocks.test.indexIntro">Cada unidad tiene su propia actividad. Usa este índice para volver a la que quieras.</p>
         <div id="testActivities" class="learning-block__activities"></div>
       </section>
 
@@ -275,10 +276,6 @@
     </div>
 
   </div>
-
-  <!-- FAB flotante: única entrada a "Apuntar un gasto" (dinero real).
-       Vive fuera de la barra inferior (el tabbar se eliminó en Fase 3). -->
-  <button type="button" class="fab-flotante" id="btnNewExpense" data-i18n-aria="tabs.newExpenseAria" aria-label="Apuntar un gasto">+</button>
 
   <script src="assets/js/utils.js"></script>
   <script src="assets/js/i18n.js"></script>

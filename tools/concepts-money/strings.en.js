@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'What is money?',
+    title: 'Find out what each coin is worth',
     metaDescription: 'Learn to identify coins and banknotes: how much each one is worth.',
     instruccion: 'Tap the correct amount for this coin or banknote.',
     op1c: '1 cent', op2c: '2 cents', op5c: '5 cents',

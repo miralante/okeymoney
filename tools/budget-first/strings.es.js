@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: '¿Qué compro primero?',
+    title: '¿Qué te conviene comprar primero?',
     metaDescription: 'Aprende a decidir qué comprar antes con un dinero limitado.',
     instruccion: 'Elige qué comprar primero.',
     opAgua: '💧 El agua (1 €)', opPan: '🍞 El pan (2 €)', opJuego: '🎮 El juego (30 €)',

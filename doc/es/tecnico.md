@@ -489,7 +489,7 @@ vuelven a acreditar (la comprobación `activityStatus.done` es
 idempotente), pero la actividad sigue disponible si la persona quiere
 repetirla.
 
-### 10.3 Catálogo de actividades
+### 10.3 Actividades de test dentro de las unidades
 
 Siete actividades viven bajo `tools/<slug>/`. Cada una es una carpeta
 independiente con `index.html`, `app.js`, `strings.es.js`,
@@ -499,21 +499,15 @@ reutilizan el bucle socrático compartido de
 `change-back` es la única que usa una mecánica propia con teclado
 numérico.
 
-Según [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), el catálogo se pinta en
-la **página de inicio** (debajo de las tarjetas Mi dinero y Mis metas)
-y, de forma redundante, en la pestaña Aprender — las dos llaman a la
-misma `renderActivityThemes(container)` de `app.js`. Las actividades se
-agrupan en **tres secciones temáticas** (`DATA.learnThemes` en
-`data.js`, una `<section class="learn-theme">` por tema), al estilo
-Apptonomia: cada sección fija `--acento`/`--acento-suave` localmente a
-uno de los tokens de acento por pestaña (`--acento` verde / `--acento-2`
-azul / `--acento-3` ámbar, de `assets/css/tokens.css`), de modo que el
-componente `.activity-card` existente cambia de color por tema sin
-lógica extra por tarjeta — esta sustitución es necesaria porque las
-tres secciones se pintan juntas en la página de inicio, así que ninguna
-pestaña está "activa". Las secciones se pintan en un orden pedagógico
-fijo: `concepts` (conceptos básicos) → `daily` (vida cotidiana) →
-`safety` (seguridad).
+Según [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), cada unidad de la
+**página de inicio** combina dos fases consecutivas: explicación
+didáctica y test correspondiente. `renderDidacticLessons()` construye
+esas unidades desde `DATA.didacticLessons` + `DATA.learningIndex`, y
+enlaza cada test disponible con su ruta real en `tools/<slug>/`.
+El bloque 2 ya no duplica el catálogo: `renderTestIndex()` muestra un
+índice compacto que devuelve a la unidad donde se realiza cada test.
+Las unidades se ordenan según `DATA.didacticLessons`; el índice de tests
+respeta el orden de `DATA.activities`.
 
 El catálogo, la recompensa de cada actividad y el vocabulario de
 agentes están documentados en

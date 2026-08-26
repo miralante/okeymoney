@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Calcular la vuelta',
+    title: 'Comprueba tu cambio',
     metaDescription: 'Aprende a calcular cuánto te tienen que devolver al pagar.',
     instruccion: 'Escribe cuánto te tienen que devolver.',
     shopMercadona: 'Mercadona', shopPanaderia: 'La panadería', shopFarmacia: 'La farmacia', shopTienda: 'La tienda de ropa',

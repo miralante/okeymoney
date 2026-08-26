@@ -26,6 +26,8 @@
       strings.<locale>.js: it passes checks 1-6 silently, then renders
       as the raw key text in the browser, because t() returns the key
       itself on a lookup miss (see assets/js/i18n.js t()).
+   8. Activity route and learning-index integrity: every available activity
+      points to an existing page and every didactic lesson has a mapped test.
    Output: list of failures with the exact file. Exit code 1 if there
    are any, "OK (N checks)" otherwise.
    ============================================================ */
@@ -465,6 +467,38 @@ headersContent.split('\n').filter(function (line) {
     });
   }
   targets.forEach(checkDomain);
+})();
+
+/* --- 8. Activity routes and didactic → test pairing --- */
+(function checkActivityRoutes() {
+  checks += 1;
+  var sandbox = {};
+  try {
+    vm.createContext(sandbox);
+    vm.runInContext(fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8'), sandbox);
+  } catch (e) {
+    failures.push('data.js: could not load DATA for activity route check');
+    return;
+  }
+  var data = sandbox.DATA || {};
+  (data.activities || []).forEach(function (activity) {
+    if (!activity.available) return;
+    var target = path.join(ROOT, String(activity.href || '').replace(/^\.\//, ''));
+    if (!activity.href || !fs.existsSync(target)) {
+      failures.push('data.js: activity ' + activity.slug + ' points to a missing route ' + activity.href);
+    }
+  });
+  (data.didacticLessons || []).forEach(function (lesson) {
+    var row = (data.learningIndex || []).filter(function (item) { return item.id === lesson.id; })[0];
+    if (!row || !Array.isArray(row.testSlugs) || !row.testSlugs.length) {
+      failures.push('data.js: didactic lesson ' + lesson.id + ' has no mapped test');
+      return;
+    }
+    row.testSlugs.forEach(function (slug) {
+      var activity = (data.activities || []).filter(function (item) { return item.slug === slug && item.available; })[0];
+      if (!activity) failures.push('data.js: didactic lesson ' + lesson.id + ' maps to unavailable test ' + slug);
+    });
+  });
 })();
 
 /* --- Result --- */

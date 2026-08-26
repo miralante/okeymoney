@@ -18,8 +18,7 @@
     tabs: {
       home: 'Mi dinero',
       goals: 'Mis metas',
-      learn: 'Aprender',
-      newExpenseAria: 'Apuntar un gasto'
+      learn: 'Aprender'
     },
 
     home: {
@@ -101,45 +100,51 @@
 
     blocks: {
       didactic: {
-        title: 'Aprende paso a paso',
-        intro: 'Entiende el dinero antes de practicar.',
-        cta: 'Después, comprueba lo que sabes',
+        title: 'Aprende sobre tu dinero',
+        intro: 'Ideas sencillas para entender y manejar mejor tu dinero.',
+        cta: 'Ahora, prueba lo que has aprendido',
+        lessonPhase: 'Fase 1 · Descubre',
+        testPhase: 'Fase 2 · Ponlo en práctica',
+        testPhaseDetail: 'Ahora prueba esta idea con una actividad.',
+        testLink: 'Probar: {title}',
         lessons: {
-          moneyTitle: 'Entiende el dinero',
-          moneyDetail: 'Reconoce monedas, billetes y su valor.',
-          choicesTitle: 'Piensa antes de elegir',
-          choicesDetail: 'Distingue lo que necesitas de lo que quieres.',
-          budgetTitle: 'Planifica tu dinero',
-          budgetDetail: 'Ordena tus compras antes de gastar.',
-          changeTitle: 'Paga y revisa la vuelta',
-          changeDetail: 'Comprueba que recibes el cambio correcto.',
-          savingTitle: 'Ahorra para una meta',
-          savingDetail: 'Guarda un poco para algo que quieres conseguir.',
-          safetyTitle: 'Protege tu dinero',
-          safetyDetail: 'Aprende a detectar riesgos y pedir ayuda.',
-          documentsTitle: 'Sigue los documentos',
-          documentsDetail: 'Entiende qué ocurre entre pedir algo y pagarlo.',
-          assetsTitle: 'Lee tu foto financiera',
-          assetsDetail: 'Distingue lo que tienes, lo que debes, lo que entra y lo que sale.',
-          accountingTitle: 'Registra y ordena',
-          accountingDetail: 'La contabilidad recoge hechos; el control te ayuda a decidir.',
-          assetLifecycleTitle: 'Cuida la vida de tus bienes',
-          assetLifecycleDetail: 'Calcula cuándo pierden valor y decide qué hacer cuando se quedan obsoletos.',
-          returnRiskTitle: 'Rentabilidad y riesgo',
-          returnRiskDetail: 'Compara lo que podrías ganar con lo que podrías perder.',
-          investmentOperationsTitle: 'Operaciones de inversión',
-          investmentOperationsDetail: 'Reconoce qué ocurre cuando compras, vendes o mueves una inversión.',
-          bankProductsTitle: 'Tarjetas y cuentas bancarias',
-          bankProductsDetail: 'Distingue cuándo usas tu saldo, un crédito o el dinero que guardas.',
-          housingTitle: 'Vivienda: alquiler o propiedad',
-          housingDetail: 'Compara costes, compromisos y flexibilidad antes de decidir.'
+          moneyTitle: 'Conoce el valor de tu dinero',
+          moneyDetail: 'Aprende a reconocer monedas, billetes y lo que vale cada uno.',
+          choicesTitle: 'Elige lo que necesitas',
+          choicesDetail: 'Distingue entre lo que necesitas y lo que te apetece.',
+          budgetTitle: 'Organiza tus compras',
+          budgetDetail: 'Ordena lo que quieres comprar antes de gastar.',
+          changeTitle: 'Paga y comprueba tu cambio',
+          changeDetail: 'Mira que la vuelta que recibes sea correcta.',
+          savingTitle: 'Guarda dinero para algo que quieres',
+          savingDetail: 'Aparta poco a poco una cantidad para alcanzar una meta.',
+          safetyTitle: 'Cuida tu dinero',
+          safetyDetail: 'Aprende a reconocer riesgos y a pedir ayuda cuando lo necesites.',
+          documentsTitle: 'Sigue el camino de una compra',
+          documentsDetail: 'Descubre qué pasa desde que haces un pedido hasta que lo pagas.',
+          assetsTitle: 'Mira cómo está tu dinero',
+          assetsDetail: 'Distingue lo que tienes, lo que debes y el dinero que entra y sale.',
+          accountingTitle: 'Apunta y ordena tus movimientos',
+          accountingDetail: 'Anotar lo que pasa te ayuda a saber cómo va tu dinero y decidir mejor.',
+          assetLifecycleTitle: 'Cuida tus cosas y su valor',
+          assetLifecycleDetail: 'Descubre cómo pierden valor con el tiempo y qué hacer cuando dejan de servirte.',
+          returnRiskTitle: 'Valora lo que puedes ganar y perder',
+          returnRiskDetail: 'Compara una posible ganancia con el riesgo de perder dinero.',
+          investmentOperationsTitle: 'Aprende qué pasa al invertir',
+          investmentOperationsDetail: 'Reconoce qué ocurre cuando compras, vendes o cambias una inversión.',
+          bankProductsTitle: 'Conoce tus tarjetas y cuentas',
+          bankProductsDetail: 'Descubre cuándo usas tu saldo, un crédito o dinero que has reservado.',
+          housingTitle: 'Elige dónde vivir: ¿alquilar o comprar?',
+          housingDetail: 'Compara gastos, compromisos y libertad antes de decidir.'
         }
       },
       test: {
-        title: 'Comprueba lo que sabes',
-        intro: 'Responde a situaciones y gana Tokens por practicar.',
+        title: 'Pon a prueba lo que sabes',
+        intro: 'Cada unidad termina con una actividad. Practica con situaciones y gana Tokens.',
         walletLabel: 'Tokens de práctica',
-        rewardHint: 'Cada actividad suma Tokens una vez.'
+        rewardHint: 'Cada actividad suma Tokens una vez.',
+        indexIntro: 'Cada unidad tiene su propia actividad. Usa este índice para volver a la que quieras.',
+        indexHint: 'Ir a la unidad'
       },
       simulation: {
         title: 'Simula situaciones reales con dinero',
@@ -491,22 +496,22 @@
         safety: 'Seguridad'
       },
       activityTitle: {
-        'concepts-money':  '¿Qué es el dinero?',
-        'needs-vs-wants':  'Necesito o quiero',
-        'budget-first':    '¿Qué compro primero?',
-        'go-shopping':     'Ir a la tienda',
-        'change-back':     'Calcular la vuelta',
-        'my-shopping-day': 'Mi compra del día',
-        'safe-money':      'Mi dinero está seguro'
+        'concepts-money':  'Descubre cuánto vale cada moneda',
+        'needs-vs-wants':  '¿Lo necesitas o lo quieres?',
+        'budget-first':    '¿Qué te conviene comprar primero?',
+        'go-shopping':     'Haz tu compra',
+        'change-back':     'Comprueba tu cambio',
+        'my-shopping-day': 'Organiza tu compra del día',
+        'safe-money':      'Protege tu dinero'
       },
       activityDesc: {
-        'concepts-money':  'Identifica monedas y billetes por su valor.',
-        'needs-vs-wants':  'Distingue lo que necesitas de lo que deseas.',
-        'budget-first':    'Decide qué comprar antes con un dinero limitado.',
-        'go-shopping':     'Haz una compra pequeña con un presupuesto.',
-        'change-back':     'Calcula cuánto te tienen que devolver al pagar.',
+        'concepts-money':  'Aprende a reconocer monedas y billetes por su valor.',
+        'needs-vs-wants':  'Piensa si algo te hace falta o simplemente te apetece.',
+        'budget-first':    'Ordena tus compras cuando el dinero es limitado.',
+        'go-shopping':     'Haz una compra pequeña sin salirte del presupuesto.',
+        'change-back':     'Comprueba cuánto dinero deben devolverte al pagar.',
         'my-shopping-day': 'Practica todo junto en una compra completa.',
-        'safe-money':      'Reconoce transferencias raras y estafas, y qué hacer.'
+        'safe-money':      'Aprende a reconocer transferencias extrañas y estafas.'
       }
     },
 

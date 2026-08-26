@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Mi dinero está seguro',
+    title: 'Protege tu dinero',
     metaDescription: 'Aprende a reconocer transferencias erróneas y estafas, y cómo actuar.',
     instruccion: 'Lee la situación y elige qué harías.',
 

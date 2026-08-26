@@ -18,8 +18,7 @@
     tabs: {
       home: 'My money',
       goals: 'My goals',
-      learn: 'Learn',
-      newExpenseAria: 'Add an expense'
+      learn: 'Learn'
     },
 
     home: {
@@ -101,45 +100,51 @@
 
     blocks: {
       didactic: {
-        title: 'Learn step by step',
-        intro: 'Understand money before you practise.',
-        cta: 'Next, check what you know',
+        title: 'Learn about your money',
+        intro: 'Simple ideas to help you understand and manage your money.',
+        cta: 'Now, try what you have learned',
+        lessonPhase: 'Phase 1 · Discover',
+        testPhase: 'Phase 2 · Try it out',
+        testPhaseDetail: 'Now try this idea in an activity.',
+        testLink: 'Try: {title}',
         lessons: {
-          moneyTitle: 'Understand money',
-          moneyDetail: 'Recognise coins, notes and their value.',
-          choicesTitle: 'Think before choosing',
-          choicesDetail: 'Tell apart what you need from what you want.',
-          budgetTitle: 'Plan your money',
-          budgetDetail: 'Put your purchases in order before spending.',
+          moneyTitle: 'Get to know your money',
+          moneyDetail: 'Learn to recognise coins, notes and what each one is worth.',
+          choicesTitle: 'Choose what you need',
+          choicesDetail: 'Tell apart what you need from what you feel like having.',
+          budgetTitle: 'Organise your purchases',
+          budgetDetail: 'Put what you want to buy in order before spending.',
           changeTitle: 'Pay and check your change',
-          changeDetail: 'Check that you get the right change back.',
-          savingTitle: 'Save for a goal',
-          savingDetail: 'Keep a little for something you want to get.',
+          changeDetail: 'Make sure the change you get back is right.',
+          savingTitle: 'Put money aside for something you want',
+          savingDetail: 'Set a little aside at a time to reach a goal.',
           safetyTitle: 'Keep your money safe',
-          safetyDetail: 'Learn to spot risks and ask for help.',
-          documentsTitle: 'Follow the documents',
-          documentsDetail: 'Understand what happens between ordering and paying.',
-          assetsTitle: 'Read your money picture',
-          assetsDetail: 'Tell apart what you have, what you owe, what comes in and what goes out.',
-          accountingTitle: 'Record and organise',
-          accountingDetail: 'Accounting records facts; control helps you decide.',
-          assetLifecycleTitle: 'Care for the life of your things',
-          assetLifecycleDetail: 'Calculate when they lose value and decide what to do when they become obsolete.',
-          returnRiskTitle: 'Return and risk',
-          returnRiskDetail: 'Compare what you could gain with what you could lose.',
-          investmentOperationsTitle: 'Investment operations',
+          safetyDetail: 'Learn to spot risks and ask for help when you need it.',
+          documentsTitle: 'Follow a purchase from start to finish',
+          documentsDetail: 'See what happens from placing an order to paying for it.',
+          assetsTitle: 'See how your money is doing',
+          assetsDetail: 'Tell apart what you have, what you owe, and what comes in and goes out.',
+          accountingTitle: 'Write down and organise your movements',
+          accountingDetail: 'Recording what happens helps you see how your money is doing and decide well.',
+          assetLifecycleTitle: 'Look after your things and their value',
+          assetLifecycleDetail: 'See how things lose value over time and what to do when they no longer work for you.',
+          returnRiskTitle: 'Think about what you could gain or lose',
+          returnRiskDetail: 'Compare a possible gain with the risk of losing money.',
+          investmentOperationsTitle: 'Learn what happens when you invest',
           investmentOperationsDetail: 'Recognise what happens when you buy, sell or move an investment.',
-          bankProductsTitle: 'Bank cards and accounts',
-          bankProductsDetail: 'Tell apart using your balance, credit or money you are putting aside.',
-          housingTitle: 'Housing: rent or own',
-          housingDetail: 'Compare costs, commitments and flexibility before deciding.'
+          bankProductsTitle: 'Get to know your cards and accounts',
+          bankProductsDetail: 'See when you use your own balance, credit or money you have set aside.',
+          housingTitle: 'Choose where to live: rent or buy?',
+          housingDetail: 'Compare costs, commitments and freedom before deciding.'
         }
       },
       test: {
-        title: 'Check what you know',
-        intro: 'Answer situations and earn Tokens as you practise.',
+        title: 'Put your knowledge to work',
+        intro: 'Each unit ends with an activity. Practise with situations and earn Tokens.',
         walletLabel: 'Practice Tokens',
-        rewardHint: 'Each activity adds Tokens once.'
+        rewardHint: 'Each activity adds Tokens once.',
+        indexIntro: 'Each unit has its own activity. Use this index to return to the one you want.',
+        indexHint: 'Go to the unit'
       },
       simulation: {
         title: 'Simulate real money situations',
@@ -491,22 +496,22 @@
         safety: 'Safety'
       },
       activityTitle: {
-        'concepts-money':  'What is money?',
-        'needs-vs-wants':  'Need or want',
-        'budget-first':    'What do I buy first?',
-        'go-shopping':     'Go shopping',
-        'change-back':     'Working out change',
-        'my-shopping-day': 'My shopping day',
-        'safe-money':      'My money is safe'
+        'concepts-money':  'Find out what each coin is worth',
+        'needs-vs-wants':  'Do you need it or want it?',
+        'budget-first':    'What is best to buy first?',
+        'go-shopping':     'Make your purchase',
+        'change-back':     'Check your change',
+        'my-shopping-day': 'Plan your shopping day',
+        'safe-money':      'Keep your money safe'
       },
       activityDesc: {
-        'concepts-money':  'Identify coins and banknotes by their value.',
-        'needs-vs-wants':  'Tell apart what you need from what you want.',
-        'budget-first':    'Decide what to buy first with a limited budget.',
-        'go-shopping':     'Make a small purchase with a budget.',
-        'change-back':     'Calculate how much change you should get.',
+        'concepts-money':  'Learn to recognise coins and notes by their value.',
+        'needs-vs-wants':  'Think about whether something is needed or simply wanted.',
+        'budget-first':    'Put your purchases in order when money is limited.',
+        'go-shopping':     'Make a small purchase without going over budget.',
+        'change-back':     'Check how much money you should get back.',
         'my-shopping-day': 'Practise everything together in a full shop.',
-        'safe-money':      'Recognise strange transfers and scams, and what to do.'
+        'safe-money':      'Learn to spot unusual transfers and scams.'
       }
     },
 

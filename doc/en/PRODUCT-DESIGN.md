@@ -54,11 +54,8 @@ hiding the catalogue behind a tab.
 - **The goals state moves to a compact "Mis metas" card** below "Mi
   dinero", also on the home. The full goals screen stays available
   via an "open" affordance on the card (level 1 wizard).
-- **The bottom tab bar is simplified to three destinations plus the
-  FAB**: a tab for the **home** itself (so the catalogue is always one
-  tap away), the FAB "+" that always opens "Register an expense", and
-  the **Aprender** tab becomes a redundant shortcut to the same
-  catalogue — the tab is removed, the catalogue IS the home.
+- **The bottom tab bar is simplified**: the "Register an expense" action
+  lives inside the simulation block and no floating button duplicates it.
 
 ### 1.3 What stays the same
 
@@ -104,8 +101,8 @@ next in three steps:
 1. **Learn**: short didactic cards with no score or penalty.
 2. **Check**: the 7 activities in pedagogical order (conceptos → vida
    cotidiana → seguridad), with Tokens and calm progress checks.
-3. **Simulate**: balance, goals and expense entry in euros, plus the "+"
-   FAB as a shortcut for the everyday action.
+3. **Simulate**: balance, goals and expense entry in euros, with the
+   action available directly in this block.
 
 ### 2.2 Catalogue ↔ money plane, conceptually
 
@@ -132,11 +129,13 @@ The home follows one clear progression in both content and visual design:
    money value, spending choices, saving, change, safety, documents, the
    money picture, control, asset life, return, risk, investment operations and
    bank card and account types, and housing choices.
-   There is no score or penalty;
+   Each unit contains the explanation and its corresponding test phase
+   immediately after it. There is no score or penalty;
    this block prepares the person to practise.
-2. **Test block — Check what you know.** It contains the seven existing
-   activities, grouped by theme. Each keeps its Socratic loop and credits
-   Tokens to the practice wallet, separate from the euro ledger.
+2. **Test block — Check what you know.** It shows an index of the seven
+   existing activities and returns to each unit. The test runs inside its
+   unit, keeps its Socratic loop and credits Tokens to the practice wallet,
+   separate from the euro ledger.
 3. **Simulation block — Real money situations.** Balance, goals and
    expense cards represent everyday shopping, payments and saving with
    euro amounts. It also includes change, safety, everyday-rights,
@@ -242,8 +241,8 @@ practice wallet chip:
 - Below: the last 3 movements (same row component as today), with a
   **"Ver historial completo"** affordance that opens the full history
   view (a level-1 sub-screen reachable from this card).
-- A small **"+ Registrar un gasto"** link inside the card duplicates
-  the FAB for discoverability.
+- The **"Register an expense"** card in the simulation keeps the action
+  visible where it belongs.
 
 ### 3.2 Mis metas card
 
@@ -258,39 +257,23 @@ A compact card listing goals with their progress bars:
 - Empty state (no goals): a short invitation + the same **"+ Nueva
   meta"** link.
 
-### 3.3 Catalogue of activities
+### 3.3 Didactic unit with an integrated test
 
-Below the cards, the catalogue renders **three themed sections** in
-fixed pedagogical order:
+Each didactic unit contains two consecutive phases: the explanation and
+its corresponding test. The themed index is no longer duplicated as an
+independent catalogue.
 
-1. **Conceptos básicos** — `concepts-money`, `needs-vs-wants`.
-2. **Vida cotidiana** — `budget-first`, `go-shopping`, `change-back`,
-   `my-shopping-day`.
-3. **Seguridad** — `safe-money`.
-
-Each section uses the same visual pattern as Apptonomia: a left accent
-border + coloured heading, then a responsive grid of activity cards
-(2 cols on phone, 3 cols on tablet+).
-
-Each card carries:
-
-- A large emoji icon (from `data.js` `activityIcons`).
-- The activity title in the active language.
-- The reward in Tokens (`🔷 +X,XX`) — what the learner earns on
-  completion.
-- The completion state: not done (default), done (✓ mark, calm green
-  border, no re-reward per [`SPEC.md`](../en/SPEC.md) §3.1 / §7.4
-  "once per person").
-
-Each card is **a link** to `tools/<slug>/index.html`, the activity
-itself. Tapping it is the only thing the learner needs to do.
+On desktop the two phases sit in columns; on mobile they stack to keep
+the sequence clear. Links in the second phase open the real activity at
+`tools/<slug>/index.html` and show Token progress without duplicating the
+test content.
 
 ### 3.4 Bottom tab bar
 
-After v2 the bar has **two destinations plus the FAB**:
+After v2 the bar has no additional FAB:
 
 - **Home** — the catalogue + cards screen (always the leftmost button).
-- **+** (FAB) — opens "Register an expense" (unchanged).
+- The "Register an expense" action is in the simulation block.
 - *(right slot reserved)* — left as a small **language picker button**
   for one-handed switching without scrolling. If you prefer not to
   duplicate, drop it and rely on the header picker.
@@ -307,7 +290,7 @@ Wizards that today live behind a tab are reachable from the new cards:
 
 | Wizard | Reachable from |
 |---|---|
-| Register an expense | FAB (primary) + "Registrar un gasto" link inside the Mi dinero card |
+| Register an expense | "Register an expense" card inside the simulation block |
 | New goal | "+ Nueva meta" inside the Mis metas card |
 | Add money to a goal | Tap a goal row in the Mis metas card (or in the full goals view) |
 | Recount balance | Tap the big balance figure in the Mi dinero card |
@@ -319,13 +302,13 @@ This keeps the **max-3-level navigation rule**
 
 ---
 
-## 4. Catalogue content (level 0)
+## 4. Unit and test content (level 0)
 
-### 4.1 The 7 activities, regrouped
+### 4.1 The 7 activities and their units
 
 The 7 activities already documented in [`activities.md`](activities.md)
-are regrouped in the v2 home into three themed sections in pedagogical
-order:
+are assigned to didactic units through `DATA.learningIndex`. The table
+keeps their themes and difficulty order:
 
 | Theme | Order | Slug | Title (es / en) | Reward (🔷) |
 |---|---|---|---|---|
@@ -339,38 +322,18 @@ order:
 
 Same total reward (🔷 150,00 if everything is completed) as in v1.
 
-### 4.2 Theme accents
+### 4.2 Journey accents
 
-The three themes use the accent palette already declared in
-[`assets/css/tokens.css`](../../assets/css/tokens.css):
+The didactic phase uses the warm accent and the test phase uses the blue
+accent; block 2 reuses blue for its index. Showing both phases in one
+unit makes the learn → check order visible.
 
-| Theme | Token | Value (current dark theme) |
-|---|---|---|
-| Conceptos básicos | `--acento` | `#7BD389` (green) |
-| Vida cotidiana | `--acento-2` | `#7FB6E8` (blue) |
-| Seguridad | `--acento-3` | `#E8C879` (amber) |
+### 4.3 Unit and index rendering
 
-The per-tab accent logic via `data-tema` on `<body>` (introduced in
-the v1.1 visual redesign — see [`TODO.md`](../../TODO.md) §2.2) is
-**not used on the home**: the home renders all three themes at once, so
-the body-level accent cannot vary per section. Each section sets its
-own `--acento` locally (Apptonomia-style), exactly like the v1
-"Aprender" screen did.
-
-### 4.3 Section rendering
-
-The renderer reads `DATA.learnThemes` (already defined in `data.js` —
-see [`activities.md`](activities.md)) and emits one
-`<section class="learn-theme theme-<key>">` per theme. Each section is
-self-contained: it sets its own `--acento` and `--acento-suave` via
-inline style on its root, so the heading and cards pick up the theme
-colour with no extra CSS rules beyond the existing
-`.learn-theme h2 { color: var(--acento); border-left: 8px solid var(--acento); }`
-block.
-
-No new CSS components are needed for the catalogue: the activity cards
-already exist (see `styles.css` `.activity-card`) and just need to be
-emitted by `app.js` from `DATA.learnThemes`.
+`renderDidacticLessons()` generates the units and their test links;
+`renderTestIndex()` generates the alternative index in block 2. Both
+renderers consume the same `DATA.learningIndex` relationship, and
+`scripts/check.js` verifies that every unit has a test and a valid route.
 
 ---
 
@@ -391,7 +354,7 @@ practice activities, applied to the real-money plane.
 - Show the current balance + the live coin/banknote preview.
 - Show the practice wallet chip.
 - Show the last 3 movements.
-- Provide one-tap entry to "Register an expense" (also via the FAB).
+- Provide one-tap entry to "Register an expense" inside simulation.
 - Provide one-tap entry to "Recount balance" (tap the balance figure).
 - Provide one-tap entry to the full history view.
 
@@ -448,7 +411,7 @@ sub-screen.
 ### 7.1 From 4 destinations to 2 + FAB
 
 v1: `home` · `+` (FAB) · `goals` · `learn`
-v2: `home` · `+` (FAB) · *(optional language button)*
+v2: `home` · *(optional language button)*; expense entry is in simulation
 
 The Aprender and Mis metas tabs are **removed**, not just hidden.
 Their screens are reachable from the home via the cards (see §3.5).
@@ -547,7 +510,7 @@ v2 ships when **all four phases** are done and:
 
 1. The home renders cards + catalogue in one vertical scroll, dark
    theme active, WCAG AA contrast.
-2. The tab bar has 2 destinations + the FAB.
+2. There is no floating button: expense entry lives in simulation.
 3. The 7 activities are reachable from the home catalogue.
 4. The Mi dinero card, Mis metas card, history view, goals view,
    register-expense wizard, create-goal wizard, and add-money-to-goal

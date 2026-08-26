@@ -416,8 +416,7 @@ every push and pull request.
 
 Not yet automated (manual before shipping a change): a real-browser walk
 through each wizard (expense, set balance, new goal, add to goal), a
-check that the `+` FAB opens the expense wizard from every tab, and a
-WebKit/Safari pass per §1.3.
+check of the simulation entry points, and a WebKit/Safari pass per §1.3.
 
 ---
 
@@ -457,7 +456,7 @@ Completing an activity for the first time calls `App.wallet.credit(rewardCents, 
 do not re-credit (the `activityStatus.done` check is idempotent) but
 stay available if the person wants to repeat the activity.
 
-### 10.3 Activity catalogue
+### 10.3 Test activities inside each unit
 
 Seven activities live under `tools/<slug>/`. Each one is a self-contained
 folder with `index.html`, `app.js`, `strings.es.js`, `strings.en.js`,
@@ -466,19 +465,14 @@ shared Socratic loop in `assets/js/activity-runtime.js`
 (`App.activity.run(opts)`); `change-back` is the only one that uses a
 custom keypad mechanic instead.
 
-Per [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), the catalogue renders on
-the **home** (below the Mi dinero and Mis metas cards) and, redundantly,
-on the Aprender tab — both call the same `renderActivityThemes(container)`
-in `app.js`. Activities group into **three themed sections**
-(`DATA.learnThemes` in `data.js`, one `<section class="learn-theme">`
-per theme), Apptonomia-style: each section sets `--acento`/`--acento-suave`
-locally to one of the per-tab accent tokens (`--acento` green /
-`--acento-2` blue / `--acento-3` amber, from `assets/css/tokens.css`), so
-the existing `.activity-card` component re-colors per theme with no
-per-card logic — this override is needed because all three sections
-render together on the home, so no single tab accent is "active".
-Sections render in a fixed pedagogical order: `concepts` (conceptos
-básicos) → `daily` (vida cotidiana) → `safety` (seguridad).
+Per [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), each **home** unit combines
+two consecutive phases: a didactic explanation followed by its
+corresponding test. `renderDidacticLessons()` builds these units from
+`DATA.didacticLessons` + `DATA.learningIndex`, and links each available
+test to its real `tools/<slug>/` route. The test block no longer repeats
+the catalogue: `renderTestIndex()` provides a compact index that returns
+to the unit where each test is performed. Units follow
+`DATA.didacticLessons`; the test index follows `DATA.activities`.
 
 The catalogue, the per-activity reward, and the agent vocabulary are
 documented in [`activities.md`](activities.md) (catalogue of activities).

@@ -4,7 +4,7 @@
    de actividades), sharing one ledger in localStorage, plus a full-screen
    step-by-step wizard reused by every flow that asks for an amount
    (register an expense, set how much money you have, set a goal's price,
-   add money to a goal). FAB flotante lanza "Apuntar un gasto".
+   add money to a goal). Expense entry lives in the simulation block.
    Requires assets/js (App.utils, App.i18n, App.storage, App.feedback,
    App.money) and data.js.
    ========================================================================== */
@@ -103,7 +103,7 @@
     renderInsights();
     renderFinancialStatement();
     renderFinancialControl();
-    renderActivityThemes($('#testActivities'));
+    renderTestIndex($('#testActivities'));
   }
 
   function hasMovementType(type) {
@@ -342,15 +342,35 @@
     if (!wrap) return;
     wrap.innerHTML = '';
     DATA.didacticLessons.forEach(function (lesson) {
-      var card = document.createElement('article');
-      card.className = 'tarjeta lesson-card';
-      card.style.setProperty('--acento', 'var(--acento-3)');
-      card.style.setProperty('--acento-suave', 'var(--acento-3-suave)');
-      card.innerHTML =
-        '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
-        '<span class="tarjeta__nombre">' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title') + '</span>' +
-        '<span class="tarjeta__detalle">' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Detail') + '</span>';
-      wrap.appendChild(card);
+      var unit = document.createElement('article');
+      unit.className = 'learning-unit';
+      unit.id = 'unidad-' + lesson.id;
+      unit.setAttribute('aria-labelledby', 'unidad-' + lesson.id + '-title');
+      var lessonIndex = DATA.learningIndex.filter(function (row) { return row.id === lesson.id; })[0];
+      var tests = lessonIndex && Array.isArray(lessonIndex.testSlugs) ? lessonIndex.testSlugs.map(function (slug) {
+        return DATA.activities.filter(function (activity) { return activity.slug === slug && activity.available; })[0];
+      }).filter(Boolean) : [];
+      var testLinks = tests.map(function (activity) {
+        var title = App.i18n.t('learn.activityTitle.' + activity.slug);
+        var label = App.i18n.t('blocks.didactic.testLink').replace('{title}', title);
+        var status = App.wallet.activityStatus(activity.slug);
+        var stateGlyph = status && status.done ? '✓' : '▶';
+        return '<a class="learning-unit__test-link" href="' + App.utils.escapeHtml(activity.href) + '">' +
+          '<span aria-hidden="true">' + stateGlyph + '</span> ' + App.utils.escapeHtml(label) + '</a>';
+      }).join('');
+      unit.innerHTML =
+        '<div class="learning-unit__lesson">' +
+          '<p class="learning-unit__phase">' + App.i18n.t('blocks.didactic.lessonPhase') + '</p>' +
+          '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
+          '<h3 id="unidad-' + lesson.id + '-title">' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title') + '</h3>' +
+          '<p>' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Detail') + '</p>' +
+        '</div>' +
+        '<div class="learning-unit__test">' +
+          '<p class="learning-unit__phase">' + App.i18n.t('blocks.didactic.testPhase') + '</p>' +
+          '<p>' + App.i18n.t('blocks.didactic.testPhaseDetail') + '</p>' +
+          (testLinks ? '<div class="learning-unit__test-links">' + testLinks + '</div>' : '') +
+        '</div>';
+      wrap.appendChild(unit);
     });
   }
 
@@ -417,7 +437,6 @@
     });
   }
 
-  $('#btnNewExpense').addEventListener('click', openExpenseWizard);
   var inlineExpense = $('#btnNewExpenseInline');
   if (inlineExpense) inlineExpense.addEventListener('click', openExpenseWizard);
   var newIncome = $('#btnNewIncome');
@@ -568,62 +587,30 @@
     });
   }
 
-  /* ---------- Learn (activity catalogue, grouped by theme) ----------
-     Estilo Routime: cada actividad es una .tarjeta con .picto +
-     .nombre + .detalle + .tarjeta__estado opcional. Las tarjetas se
-     pintan dentro de una .grid-tarjetas dentro de un .modulo (sección
-     temática con su propio accent). */
-  function activityCard(a) {
-    var card = document.createElement('a');
-    card.className = 'tarjeta tarjeta--activity';
-    if (!a.available) card.classList.add('is-locked');
-    var status = App.wallet.activityStatus(a.slug);
-    if (status && status.done) card.classList.add('is-done');
-    card.href = a.available ? a.href : '#';
-    card.setAttribute('aria-disabled', a.available ? 'false' : 'true');
-    card.setAttribute('aria-label',
-      App.i18n.t('learn.activityTitle.' + a.slug) + ' — ' +
-      App.i18n.t('learn.activityDesc.' + a.slug));
-    var stateGlyph = status && status.done ? '✓' : (a.available ? '▶' : '🔒');
-    card.innerHTML =
-      '<span class="picto" aria-hidden="true">' + a.icon + '</span>' +
-      '<span class="nombre" data-i18n="learn.activityTitle.' + a.slug + '">' +
-        App.i18n.t('learn.activityTitle.' + a.slug) +
-      '</span>' +
-      '<span class="detalle" data-i18n="learn.activityDesc.' + a.slug + '">' +
-        App.i18n.t('learn.activityDesc.' + a.slug) +
-      '</span>' +
-      '<span class="tarjeta__estado" aria-hidden="true">' + stateGlyph + '</span>';
-    return card;
-  }
-
-  /* Pinta los tres módulos temáticos (DATA.learnThemes, orden
-     pedagógico fijo) en `wrap`. Cada módulo es una <section class="modulo
-     modulo--catalogo"> con su propio accent (color del tema). Las
-     tarjetas viven en una .grid-tarjetas dentro del módulo.
-     PRODUCT-DESIGN.md §3.3 / §9 Phase 2. Within a theme, activities are
-     already ordered easiest to hardest (DATA.activities). */
-  function renderActivityThemes(wrap) {
+  /* The test block is now an index, not a second copy of the activities.
+     Each real test runs inside its didactic unit; these links jump back to
+     that unit so the learner keeps the sequence visible. */
+  function renderTestIndex(wrap) {
     if (!wrap) return;
     wrap.innerHTML = '';
-    DATA.learnThemes.forEach(function (theme) {
-      var activities = DATA.activities.filter(function (a) { return a.theme === theme.id; });
-      if (!activities.length) return;
-      var section = document.createElement('section');
-      section.className = 'modulo modulo--catalogo';
-      section.id = 'mod-' + theme.id;
-      var rootStyle = getComputedStyle(document.documentElement);
-      section.style.setProperty('--acento', rootStyle.getPropertyValue('--' + theme.accent).trim());
-      section.style.setProperty('--acento-suave', rootStyle.getPropertyValue('--' + theme.accent + '-suave').trim());
-      var heading = document.createElement('h2');
-      heading.textContent = App.i18n.t('learn.themes.' + theme.id);
-      section.appendChild(heading);
-      var grid = document.createElement('div');
-      grid.className = 'grid-tarjetas';
-      activities.forEach(function (a) { grid.appendChild(activityCard(a)); });
-      section.appendChild(grid);
-      wrap.appendChild(section);
+    var list = document.createElement('div');
+    list.className = 'test-index';
+    DATA.activities.forEach(function (activity) {
+      var lesson = DATA.learningIndex.filter(function (row) {
+        return Array.isArray(row.testSlugs) && row.testSlugs.indexOf(activity.slug) !== -1;
+      })[0];
+      if (!lesson) return;
+      var status = App.wallet.activityStatus(activity.slug);
+      var link = document.createElement('a');
+      link.className = 'test-index__item' + (status && status.done ? ' is-done' : '');
+      link.href = '#unidad-' + lesson.id;
+      link.innerHTML = '<span class="test-index__icon" aria-hidden="true">' +
+        (status && status.done ? '✓' : activity.icon) + '</span>' +
+        '<span><strong>' + App.i18n.t('learn.activityTitle.' + activity.slug) + '</strong>' +
+        '<small>' + App.i18n.t('blocks.test.indexHint') + '</small></span>';
+      list.appendChild(link);
     });
+    wrap.appendChild(list);
   }
 
   function renderLearn() {

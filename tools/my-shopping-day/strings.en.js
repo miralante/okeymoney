@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'My shopping day',
+    title: 'Plan your shopping day',
     metaDescription: 'Practise everything together in a full shop: think, prioritise, buy, work out change and save.',
     instruccion: 'Five steps for a full shop.',
     shopTu: 'You', shopMercadona: 'Supermarket', shopFarmacia: 'Pharmacy', shopBanco: 'Bank',

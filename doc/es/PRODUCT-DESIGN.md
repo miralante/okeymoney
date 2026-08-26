@@ -59,11 +59,9 @@ obliga a esconder el catálogo detrás de una pestaña.
   debajo de "Mi dinero", también en la home. La pantalla completa de
   metas queda accesible vía una afordancia de "abrir" en la tarjeta
   (sub-pantalla nivel 1).
-- **La barra de pestañas inferior se simplifica a dos destinos más
-  el FAB**: una pestaña para la **home** en sí (el catálogo a un
-  tap), el FAB "+" que siempre abre "Registrar un gasto", y la
-  pestaña **Aprender** desaparece (el catálogo ES la home, una pestaña
-  que apunta al mismo contenido sería redundante y confusa).
+- **La barra de pestañas inferior se simplifica**: la acción de
+  "Registrar un gasto" vive dentro del bloque de simulación y no hay
+  ningún botón flotante que duplique esa entrada.
 
 ### 1.3 Qué se conserva
 
@@ -113,8 +111,8 @@ qué hacer a continuación en tres pasos:
 1. **Aprender**: tarjetas didácticas breves, sin nota ni penalización.
 2. **Comprobar**: las 7 activities en orden pedagógico (conceptos → vida
    cotidiana → seguridad), con Tokens y checks de progreso tranquilos.
-3. **Simular**: saldo, metas y registro de un gasto en euros, más el FAB
-   "+" como atajo para la acción cotidiana.
+3. **Simular**: saldo, metas y registro de un gasto en euros, con la
+   acción disponible directamente en este bloque.
 
 ### 2.2 Catálogo ↔ plano del dinero, conceptualmente
 
@@ -144,11 +142,13 @@ contenido como en el diseño visual:
    vuelta, la seguridad, los documentos, la foto financiera, el control,
    la vida útil de los bienes, la rentabilidad, el riesgo y las operaciones
    de inversión, los tipos de tarjetas y cuentas bancarias, y la vivienda.
+   Cada unidad contiene la explicación y, a continuación, la fase de test
+   correspondiente.
    No hay nota ni penalización: prepara para practicar.
-2. **Bloque de test — Comprueba lo que sabes.** Reúne las siete
-   activities existentes, agrupadas por tema. Cada actividad conserva el
-   bucle Socrático y acredita Tokens en el monedero de práctica, separado
-   del ledger de euros.
+2. **Bloque de test — Comprueba lo que sabes.** Muestra un índice de las
+   siete activities existentes y devuelve a cada unidad. El test se ejecuta
+   dentro de la unidad, conserva el bucle Socrático y acredita Tokens en el
+   monedero de práctica, separado del ledger de euros.
 3. **Bloque de simulación — Situaciones reales con dinero.** Las tarjetas
    de saldo, metas y registro de gasto representan compras, pagos y ahorro
    de la vida diaria con importes en euros. Incluye además prácticas de
@@ -258,8 +258,8 @@ chip del monedero de práctica:
 - Debajo: los últimos 3 movimientos (mismo componente de fila que
   hoy), con una afordancia **"Ver historial completo"** que abre la
   vista de historial completa (sub-pantalla nivel 1).
-- Un enlace pequeño **"+ Registrar un gasto"** dentro de la tarjeta
-  duplica el FAB por descubribilidad.
+- La tarjeta **"Registrar un gasto"** del bloque de simulación mantiene
+  la acción visible donde corresponde.
 
 ### 3.2 Tarjeta Mis metas
 
@@ -275,41 +275,24 @@ Una tarjeta compacta con la lista de metas y sus barras de progreso:
 - Estado vacío (sin metas): una invitación corta + el mismo enlace
   **"+ Nueva meta"**.
 
-### 3.3 Catálogo de actividades
+### 3.3 Unidad didáctica con test integrado
 
-Debajo de las tarjetas, el catálogo renderiza **tres secciones
-temáticas** en orden pedagógico fijo:
+Cada unidad didáctica contiene dos fases consecutivas: la explicación y
+el test correspondiente. El índice de temas ya no se duplica como un
+catálogo independiente.
 
-1. **Conceptos básicos** — `concepts-money`, `needs-vs-wants`.
-2. **Vida cotidiana** — `budget-first`, `go-shopping`, `change-back`,
-   `my-shopping-day`.
-3. **Seguridad** — `safe-money`.
-
-Cada sección usa el mismo patrón visual que Apptonomia: borde de
-acento a la izquierda + título coloreado, luego una rejilla
-responsive de tarjetas de actividad (2 columnas en móvil, 3 en
-tablet+).
-
-Cada tarjeta lleva:
-
-- Un icono emoji grande (de `data.js` `activityIcons`).
-- El título de la actividad en el idioma activo.
-- La recompensa en Tokens (`🔷 +X,XX`) — lo que se gana al
-  completarla.
-- El estado de completado: no hecha (por defecto), hecha (✓, borde
-  verde calmado, sin re-recompensar por
-  [`SPEC.md`](../es/SPEC.md) §3.1 / §7.4 "una vez por persona").
-
-Cada tarjeta es **un enlace** a `tools/<slug>/index.html`, la
-actividad misma. Tocarla es lo único que la persona tiene que hacer.
+En escritorio las dos fases se ven en columnas; en móvil se apilan para
+conservar el orden. Los enlaces de la segunda fase llevan a la actividad
+real en `tools/<slug>/index.html`, y muestran el estado de Tokens sin
+duplicar el contenido del test.
 
 ### 3.4 Barra de pestañas inferior
 
-Tras v2 la barra tiene **dos destinos más el FAB**:
+Tras v2 la barra no incluye un FAB adicional:
 
 - **Home** — la pantalla de catálogo + tarjetas (siempre el botón
   izquierdo).
-- **+** (FAB) — abre "Registrar un gasto" (sin cambios).
+- La acción "Registrar un gasto" se encuentra en el bloque de simulación.
 - *(slot derecho reservado)* — un **botón de idioma** pequeño para
   cambiar sin hacer scroll. Si prefieres no duplicarlo, se quita y se
   usa solo el selector del header.
@@ -326,7 +309,7 @@ nuevas tarjetas:
 
 | Wizard | Accesible desde |
 |---|---|
-| Registrar un gasto | FAB (principal) + enlace "Registrar un gasto" dentro de la tarjeta Mi dinero |
+| Registrar un gasto | Tarjeta "Registrar un gasto" dentro del bloque de simulación |
 | Nueva meta | "+ Nueva meta" dentro de la tarjeta Mis metas |
 | Añadir dinero a una meta | Tap en una fila de meta de la tarjeta Mis metas (o de la vista completa) |
 | Reconteo de saldo | Tap en la cifra grande del saldo en la tarjeta Mi dinero |
@@ -338,13 +321,13 @@ Esto mantiene intacta la **regla de navegación máximo 3 niveles**
 
 ---
 
-## 4. Contenido del catálogo (nivel 0)
+## 4. Contenido de unidades y tests (nivel 0)
 
-### 4.1 Las 7 activities, reagrupadas
+### 4.1 Las 7 activities y sus unidades
 
 Las 7 activities ya documentadas en [`actividades.md`](actividades.md)
-se reagrupan en la home de v2 en tres secciones temáticas en orden
-pedagógico:
+se asignan a las unidades didácticas mediante `DATA.learningIndex`.
+La tabla conserva sus temas y orden de dificultad:
 
 | Tema | Orden | Slug | Título (es / en) | Recompensa (🔷) |
 |---|---|---|---|---|
@@ -358,37 +341,18 @@ pedagógico:
 
 Misma recompensa total (🔷 150,00 si se completa todo) que en v1.
 
-### 4.2 Acentos de los temas
+### 4.2 Acentos del recorrido
 
-Los tres temas usan la paleta de acentos ya declarada en
-[`assets/css/tokens.css`](../../assets/css/tokens.css):
+La fase didáctica usa el acento cálido y la fase de test el acento azul;
+el bloque 2 reutiliza el azul para su índice. La relación visual de
+ambas fases dentro de una unidad hace visible el orden enseñar → testear.
 
-| Tema | Token | Valor (tema oscuro actual) |
-|---|---|---|
-| Conceptos básicos | `--acento` | `#7BD389` (verde) |
-| Vida cotidiana | `--acento-2` | `#7FB6E8` (azul) |
-| Seguridad | `--acento-3` | `#E8C879` (ámbar) |
+### 4.3 Renderizado de unidades e índice
 
-La lógica de acento por pestaña vía `data-tema` en `<body>`
-(introducida en el rediseño visual v1.1 — ver [`TODO.md`](../../TODO.md)
-§2.2) **no se usa en la home**: la home renderiza los tres temas a
-la vez, así que el acento a nivel de body no puede variar por
-sección. Cada sección pone su propio `--acento` local (estilo
-Apptonomia), igual que ya hacía la pantalla "Aprender" de v1.
-
-### 4.3 Renderizado por sección
-
-El renderer lee `DATA.learnThemes` (ya definido en `data.js` — ver
-[`actividades.md`](actividades.md)) y emite un
-`<section class="learn-theme theme-<key>">` por tema. Cada sección
-es autocontenida: pone su propio `--acento` y `--acento-suave` vía
-style inline en su raíz, para que el título y las tarjetas pillen
-el color del tema sin reglas CSS extra más allá del bloque existente
-`.learn-theme h2 { color: var(--acento); border-left: 8px solid var(--acento); }`.
-
-No hace falta ningún componente CSS nuevo para el catálogo: las
-tarjetas de actividad ya existen (ver `styles.css` `.activity-card`)
-y solo hay que emitirlas desde `app.js` a partir de `DATA.learnThemes`.
+`renderDidacticLessons()` genera las unidades y sus enlaces de test;
+`renderTestIndex()` genera el índice alternativo del bloque 2. Ambos
+renderers consumen la misma relación `DATA.learningIndex`, y
+`scripts/check.js` comprueba que ninguna unidad queda sin test ni ruta.
 
 ---
 
@@ -409,7 +373,7 @@ para sus actividades de práctica, aplicado al plano del dinero real.
 - Mostrar el saldo actual + el preview en vivo de monedas/billetes.
 - Mostrar el chip del monedero de práctica.
 - Mostrar los últimos 3 movimientos.
-- Ofrecer entrada en un tap a "Registrar un gasto" (también vía FAB).
+- Ofrecer entrada en un tap a "Registrar un gasto" dentro de simulación.
 - Ofrecer entrada en un tap a "Reconteo de saldo" (tap en la cifra).
 - Ofrecer entrada en un tap a la vista de historial completa.
 
@@ -470,7 +434,7 @@ sub-pantalla.
 ### 7.1 De 4 destinos a 2 + FAB
 
 v1: `home` · `+` (FAB) · `goals` · `learn`
-v2: `home` · `+` (FAB) · *(botón de idioma opcional)*
+v2: `home` · *(botón de idioma opcional)*; el gasto se registra en simulación
 
 Las pestañas Aprender y Mis metas se **eliminan**, no se ocultan.
 Sus pantallas son accesibles desde la home vía las tarjetas (ver §3.5).
@@ -575,7 +539,7 @@ v2 se entrega cuando **las cuatro fases** están hechas y:
 
 1. La home renderiza tarjetas + catálogo en un único scroll vertical,
    tema oscuro activo, contraste WCAG AA.
-2. La barra de pestañas tiene 2 destinos + el FAB.
+2. No hay botón flotante: el registro de gasto está en simulación.
 3. Las 7 activities son accesibles desde el catálogo de la home.
 4. La tarjeta Mi dinero, la tarjeta Mis metas, la vista de historial,
    la vista de metas, el wizard de Registrar un gasto, el wizard de

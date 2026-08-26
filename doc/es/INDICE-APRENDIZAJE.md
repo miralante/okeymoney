@@ -4,6 +4,10 @@ Este índice es la referencia rápida del recorrido de Okeymoney:
 
 **enseñar → testear con Tokens → simular con euros**.
 
+En la portada, cada unidad didáctica contiene dos fases consecutivas: primero
+la explicación y a continuación el test correspondiente. El bloque 2 conserva
+un índice de los tests y un acceso alternativo a cada unidad.
+
 **Cobertura actual:** 14 contenidos didácticos · 7 actividades de test ·
 17 entradas de simulación.
 

@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'My money is safe',
+    title: 'Keep your money safe',
     metaDescription: 'Learn to spot erroneous transfers and scams, and how to act.',
     instruccion: 'Read the situation and choose what you would do.',
 

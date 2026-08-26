@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Need or want',
+    title: 'Do you need it or want it?',
     metaDescription: 'Learn to tell apart what you need from what you want.',
     instruccion: 'Is this a need, a want, or both?',
     opNecesito: 'I need it',

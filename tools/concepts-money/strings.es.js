@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: '¿Qué es el dinero?',
+    title: 'Descubre cuánto vale cada moneda',
     metaDescription: 'Aprende a identificar monedas y billetes: cuánto vale cada uno.',
     instruccion: 'Toca la cantidad correcta para esta moneda o billete.',
     op1c: '1 céntimo', op2c: '2 céntimos', op5c: '5 céntimos',

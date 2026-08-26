@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Mi compra del día',
+    title: 'Organiza tu compra del día',
     metaDescription: 'Practica todo junto en una compra completa: pensar, priorizar, comprar, calcular la vuelta y ahorrar.',
     instruccion: 'Cinco pasos para una compra completa.',
     shopTu: 'Tú', shopMercadona: 'El supermercado', shopFarmacia: 'La farmacia', shopBanco: 'El banco',

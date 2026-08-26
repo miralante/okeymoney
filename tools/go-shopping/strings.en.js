@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Go shopping',
+    title: 'Make your purchase',
     metaDescription: 'Make a small purchase with a budget.',
     instruccion: 'Choose what to put in the basket.',
     opPanManzana: '🥖 Bread + 🍎 Apple',

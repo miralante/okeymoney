@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'What do I buy first?',
+    title: 'What is best to buy first?',
     metaDescription: 'Learn to decide what to buy first with a limited budget.',
     instruccion: 'Choose what to buy first.',
     opAgua: '💧 Water (1 €)', opPan: '🍞 Bread (2 €)', opJuego: '🎮 Game (30 €)',

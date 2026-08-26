@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Working out change',
+    title: 'Check your change',
     metaDescription: 'Learn to calculate how much change you should get.',
     instruccion: 'Type how much change you should get.',
     shopMercadona: 'Supermarket', shopPanaderia: 'Bakery', shopFarmacia: 'Pharmacy', shopTienda: 'Clothes shop',

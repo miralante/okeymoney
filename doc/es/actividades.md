@@ -1,9 +1,9 @@
 # Catálogo de actividades
 
-> Okeymoney incluye **7 actividades de práctica**, agrupadas en **tres
-> secciones temáticas** (ver `DATA.learnThemes` en `data.js`) que se
-> pintan en el catálogo de la página de inicio y, de forma redundante,
-> en la pestaña Aprender (ver [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)):
+> Okeymoney incluye **7 actividades de práctica**, enlazadas desde la
+> fase de test de sus unidades didácticas (ver `DATA.learningIndex` en
+> `data.js`). El bloque 2 de la portada conserva un índice de acceso
+> alternativo (ver [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)):
 > *Conceptos básicos* (2 actividades, el núcleo educativo), *Vida
 > cotidiana* (4 actividades, de menor a mayor dificultad, simulación y
 > práctica) y *Seguridad* (1 actividad, la última porque es la
@@ -81,14 +81,13 @@ haciendo la transacción.
 
 **Total al completar todas: 🔑 150,00.**
 
-Cada tema se pinta como su propia `<section class="learn-theme">` con
-un color de acento distinto (`--acento` verde / `--acento-2` azul /
-`--acento-3` ámbar en `assets/css/tokens.css`), al estilo Apptonomia —
-ver [`tecnico.md`](tecnico.md) §10.3. *Conceptos básicos* va primero
-por ser el núcleo educativo; *Vida cotidiana* es simulación y
-práctica, de menor a mayor dificultad; *Seguridad* va al final porque
-reconocer estafas es la habilidad práctica de mayor consecuencia real
-del catálogo.
+Las actividades mantienen esos tres temas como metadatos pedagógicos,
+pero la portada las presenta dentro de cada unidad didáctica. Las
+unidades siguen el orden de `DATA.didacticLessons`; *Conceptos básicos*
+va primero por ser el núcleo educativo, *Vida cotidiana* aumenta la
+dificultad y *Seguridad* cierra el recorrido por su mayor consecuencia
+práctica. El índice del bloque 2 ofrece un acceso alternativo a cada
+unidad (ver [`tecnico.md`](tecnico.md) §10.3).
 
 ## 1. Conceptos: ¿qué es el dinero? (`tools/concepts-money/`)
 

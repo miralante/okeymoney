@@ -19,13 +19,11 @@
 .row { display: flex; align-items: center; gap: var(--espacio-4); flex-wrap: wrap; }
 
 /* ---- Page container ----
-   Padding inferior pensado para dejar sitio al FAB flotante
-   (.fab-flotante) que vive abajo a la derecha — no para el tabbar,
-   que se eliminó en Fase 3. */
+   Padding inferior para que el contenido respire al final del scroll. */
 .container {
   max-width: var(--contenedor-max);
   margin: 0 auto;
-  padding: var(--espacio-5) var(--espacio-4) calc(var(--tocable-lg) + var(--espacio-6));
+  padding: var(--espacio-5) var(--espacio-4) var(--espacio-6);
 }
 
 @media (min-height: 720px) {
@@ -284,7 +282,7 @@
 }
 .tab-button .icon { font-size: 28px; line-height: 1; }
 
-/* FAB "+" central (legacy del tabbar v2 — sigue en uso por si se restaura) */
+/* FAB "+" central (legacy del tabbar; la home actual no lo renderiza). */
 .fab-button {
   width: var(--tocable-lg);
   height: var(--tocable-lg);
@@ -307,41 +305,6 @@
   outline: 2px solid var(--superficie-3);
   outline-offset: 3px;
 }
-
-/* FAB flotante: vive fuera de cualquier barra, abajo a la derecha del
-   viewport. Único punto de entrada a "Apuntar un gasto" (dinero real).
-   Sustituye al FAB central del antiguo tabbar (Fase 3). */
-.fab-flotante {
-  position: fixed;
-  right: var(--espacio-4);
-  bottom: calc(var(--espacio-4) + env(safe-area-inset-bottom));
-  z-index: 60;
-  width: var(--tocable-lg);
-  height: var(--tocable-lg);
-  border-radius: 50%;
-  background: var(--acento);
-  color: var(--texto-primario);
-  border: none;
-  font-size: 40px;
-  font-weight: var(--peso-fuerte);
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: var(--sombra-3);
-  transition: transform var(--motion-rapida) var(--ease-suave),
-              box-shadow var(--motion-rapida) var(--ease-suave);
-}
-.fab-flotante:hover { transform: scale(1.05); box-shadow: var(--sombra-3); }
-.fab-flotante:active { transform: scale(0.96); }
-.fab-flotante:focus-visible {
-  outline: 2px solid var(--superficie-3);
-  outline-offset: 3px;
-  box-shadow: 0 0 0 4px var(--acento);
-}
-
-/* Mientras el wizard está abierto a pantalla completa, el FAB flotante
-   no pinta — el wizard es su propio cierre. Se activa desde app.js con
-   la clase <body class="wizard-open">. */
-body.wizard-open .fab-flotante { display: none; }
 
 /* ==========================================================================
    §3.5 Hoja / wizard
@@ -970,25 +933,6 @@ body.wizard-open .fab-flotante { display: none; }
   margin-top: var(--espacio-2);
 }
 
-/* Actividad del catálogo — distintivo de estado ✓/▶/🔒 arriba a la derecha */
-.tarjeta--activity {
-  min-height: 180px;
-}
-
-.tarjeta--activity.is-done {
-  border-color: var(--exito);
-  background: var(--acento-suave);
-}
-
-.tarjeta--activity.is-done .tarjeta__estado {
-  color: var(--exito);
-}
-
-.tarjeta--activity.is-locked {
-  opacity: 0.55;
-  pointer-events: none;
-}
-
 /* Etiqueta pequeña encima del nombre (Mi dinero · Mis metas usan esto) */
 .tarjeta__etiqueta {
   font-size: var(--texto-200);
@@ -1059,12 +1003,134 @@ body.wizard-open .fab-flotante { display: none; }
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
 }
 
-.lesson-card {
-  min-height: 190px;
-  cursor: default;
+.didactic-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
 }
 
-.lesson-card:hover { transform: translateY(-2px); }
+.learning-unit {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 0;
+  overflow: hidden;
+  background: var(--superficie-1);
+  border: 2px solid var(--acento-3-suave);
+  border-radius: var(--radio-2);
+  box-shadow: var(--sombra-1);
+}
+
+.learning-unit__lesson,
+.learning-unit__test {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--espacio-2);
+  min-height: 190px;
+  padding: var(--espacio-4);
+  text-align: center;
+}
+
+.learning-unit__lesson {
+  background: color-mix(in srgb, var(--acento-3-suave) 35%, var(--superficie-1));
+}
+
+.learning-unit__test {
+  align-items: stretch;
+  border-left: 2px dashed var(--borde);
+}
+
+.learning-unit__lesson h3 {
+  color: var(--acento-3);
+  font-size: var(--texto-400);
+  line-height: var(--linea-apretada);
+}
+
+.learning-unit__lesson p:not(.learning-unit__phase),
+.learning-unit__test > p:not(.learning-unit__phase) {
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+}
+
+.learning-unit__phase {
+  margin: 0;
+  color: var(--acento-3);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.learning-unit__test .learning-unit__phase { color: var(--acento-2); }
+
+.learning-unit__test-links {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--espacio-2);
+  width: 100%;
+  margin-top: auto;
+  padding-top: var(--espacio-2);
+}
+
+.learning-unit__test-link {
+  display: flex;
+  align-items: center;
+  min-height: var(--tocable);
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: var(--radio-1);
+  background: var(--acento-2-suave);
+  color: var(--texto-primario);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+  text-decoration: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.learning-unit__test-link:hover,
+.learning-unit__test-link:focus-visible {
+  background: var(--acento-2);
+  color: var(--texto-primario);
+}
+
+.test-index__intro {
+  margin: 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+}
+
+.test-index {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espacio-3);
+}
+
+.test-index__item {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  min-height: var(--tocable);
+  padding: var(--espacio-3);
+  background: var(--superficie-1);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-1);
+  color: var(--texto-primario);
+  text-decoration: none;
+}
+
+.test-index__item:hover,
+.test-index__item:focus-visible,
+.test-index__item.is-done {
+  border-color: var(--acento-2);
+  background: var(--acento-2-suave);
+}
+
+.test-index__icon { font-size: 30px; line-height: 1; }
+.test-index__item strong,
+.test-index__item small { display: block; }
+.test-index__item small { color: var(--texto-secundario); font-size: var(--texto-200); }
 
 .learning-block__activities {
   display: flex;
@@ -1291,6 +1357,8 @@ body.wizard-open .fab-flotante { display: none; }
   .token-summary { border-radius: var(--radio-2); align-items: flex-start; flex-wrap: wrap; }
   .token-summary__hint { width: 100%; margin-left: 0; text-align: left; }
   .learning-block__cta { width: 100%; }
+  .learning-unit { grid-template-columns: 1fr; }
+  .learning-unit__test { border-left: 0; border-top: 2px dashed var(--borde); }
 }
 
 /* ==========================================================================

@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   App.i18n.register({
-    title: 'Necesito o quiero',
+    title: '¿Lo necesitas o lo quieres?',
     metaDescription: 'Aprende a distinguir lo que necesitas de lo que deseas.',
     instruccion: '¿Esto es una necesidad, un deseo, o las dos cosas?',
     opNecesito: 'Lo necesito',

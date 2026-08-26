@@ -4,6 +4,10 @@ This index is the quick reference for Okeymoney's journey:
 
 **teach → test with Tokens → simulate with euros**.
 
+On the home page, each didactic unit contains two consecutive phases: the
+explanation first and its corresponding test immediately after it. The test
+block keeps an index and alternative entry point for every unit.
+
 **Current coverage:** 14 didactic lessons · 7 test activities · 17
 simulation entry points.
 

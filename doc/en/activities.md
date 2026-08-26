@@ -1,8 +1,8 @@
 # Activities catalogue
 
-> Okeymoney ships with **7 practice activities**, grouped into **three
-> themed sections** (see `DATA.learnThemes` in `data.js`) rendered on
-> the home catalogue and, redundantly, on the Aprender tab (see
+> Okeymoney ships with **7 practice activities**, linked from the test
+> phase of their didactic units (see `DATA.learningIndex` in `data.js`).
+> Block 2 on the home keeps an alternative index (see
 > [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)): *Conceptos básicos* (2
 > activities, the educational core), *Vida cotidiana* (4 activities,
 > increasing difficulty, simulation and practice) and *Seguridad* (1
@@ -76,14 +76,13 @@ Each case names the agent it involves (e.g. *"El bus"*, *"La farmacia"*,
 
 **Total if every activity is completed: 🔑 150,00.**
 
-Each theme is rendered as its own `<section class="learn-theme">` with
-a distinct accent color (`--acento` green / `--acento-2` blue /
-`--acento-3` amber in `assets/css/tokens.css`), Apptonomia-style —
-see [`technical.md`](technical.md) §10.3. *Conceptos básicos* is shown
-first because it is the educational core; *Vida cotidiana* is
-simulation and practice, increasing difficulty; *Seguridad* comes last
-because recognising scams is the most consequential real-world skill
-in the catalogue.
+The activities keep these three themes as pedagogical metadata, but the
+home presents them inside their didactic units. Units follow
+`DATA.didacticLessons`: *Conceptos básicos* comes first as the
+educational core, *Vida cotidiana* increases difficulty, and *Seguridad*
+closes the journey because it has the greatest practical consequence.
+The block 2 index offers an alternative way back to each unit (see
+[`technical.md`](technical.md) §10.3).
 
 ## 1. Concepts: what is money? (`tools/concepts-money/`)
 

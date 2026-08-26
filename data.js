@@ -10,7 +10,7 @@
      ("Mis metas"). The goal's name is free text typed by the person.
    - blocks / didacticLessons: the three learning layers shown on the
      home (didactic, tests with Tokens, and euro simulation).
-   - activities / learnThemes: test catalogue and theme sections — ids
+   - activities / learnThemes: test metadata and pedagogical themes — ids
      only; text and icon are en/es in strings.<locale>.js.
    ============================================================ */
 
