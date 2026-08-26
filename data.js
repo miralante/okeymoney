@@ -28,7 +28,7 @@ var DATA = {
     { id: 'choices', icon: '🧠' },
     { id: 'budget', icon: '📋' },
     { id: 'change', icon: '🧾' },
-    { id: 'saving', icon: '🐷' },
+    { id: 'saving', icon: '🪙' },
     { id: 'safety', icon: '🛡️' },
     { id: 'documents', icon: '📦' },
     { id: 'assets', icon: '📊' },

@@ -921,7 +921,7 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Mis metas — pictograma hucha, detalle con progreso de la primera meta */
+/* Mis metas — pictograma de objetivo, detalle con progreso de la primera meta */
 .tarjeta--goals .tarjeta__estado {
   background: var(--acento);
   color: var(--texto-primario);

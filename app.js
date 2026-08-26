@@ -116,7 +116,7 @@
     var stages = [
       { id: 'budget', icon: '📋', done: state.cycle.budgeted },
       { id: 'income', icon: '🫴', done: hasMovementType('income') },
-      { id: 'saving', icon: '🐷', done: hasMovementType('saving') },
+      { id: 'saving', icon: '🪙', done: hasMovementType('saving') },
       { id: 'spending', icon: '🧾', done: hasMovementType('expense') }
     ];
     wrap.innerHTML = '<div class="financial-cycle__header"><h3>' + App.i18n.t('home.cycleTitle') + '</h3><p>' + App.i18n.t('home.cycleIntro') + '</p></div>' +
