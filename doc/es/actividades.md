@@ -13,6 +13,30 @@
 > [`assets/js/activity-runtime.js`](../../assets/js/activity-runtime.js)
 > (o la variante con teclado numérico de `change-back`).
 
+## Recorrido didáctico completo
+
+El orden recomendado es **explicar → comprobar → aplicar**. Las
+actividades de test no se bloquean: la persona puede elegir libremente,
+pero la home presenta los bloques en ese orden para reducir la carga y
+facilitar la transferencia a la vida diaria.
+
+| Concepto que se explica | Test que lo comprueba | Aplicación posterior en euros |
+|---|---|---|
+| Valor de monedas y billetes | `concepts-money` | Consultar y actualizar el saldo |
+| Necesidades y deseos | `needs-vs-wants` | Decidir antes de registrar un gasto |
+| Prioridades y presupuesto | `budget-first` | Planificar una meta y revisar el saldo |
+| Comprar sin pasarse | `go-shopping` | Registrar una compra con su importe |
+| Pagar y calcular la vuelta | `change-back` | Revisar el importe antes de guardar el gasto |
+| Integrar una compra completa | `my-shopping-day` | Secuencia saldo → gasto → consecuencia visible |
+| Ahorrar para una meta | `my-shopping-day` (ronda 5) | Crear una meta y añadir dinero |
+| Seguridad ante engaños | `safe-money` | Criterio transversal antes de cualquier pago |
+
+La última columna describe la transferencia disponible hoy. El bloque de
+simulación también incluye ahora una práctica de vuelta con importes en
+euros y tres decisiones de seguridad antes de enviar dinero. Ninguna de
+las dos actividades da Tokens ni modifica el ledger: primero se ensaya,
+después se decide si se quiere registrar el gasto real.
+
 ## Los tres agentes básicos
 
 Cada caso se sitúa con uno de los **tres agentes básicos** que una
@@ -47,7 +71,7 @@ haciendo la transacción.
 | 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 6 | 🔑 12,00 |
 | 4 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
 | 5 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
-| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 4 | 🔑 60,00 |
+| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
 
 ### Tema: Seguridad (`theme: 'safety'`)
 
@@ -102,9 +126,9 @@ Seis casos, fácil → difícil.
 
 ## 6. Mi compra del día (`tools/my-shopping-day/`)
 
-La actividad final del tema *Vida cotidiana*: cuatro casos que recorren una
+La actividad final del tema *Vida cotidiana*: cinco casos que recorren una
 compra realista de principio a fin — pensar antes de salir, priorizar,
-elegir en la tienda, calcular la vuelta en la caja. La secuencia de
+elegir en la tienda, calcular la vuelta en la caja y guardar para una meta. La secuencia de
 agentes refleja la vida real: persona → empresa → empresa → banco.
 
 ## 7. Mi dinero está seguro (`tools/safe-money/`)

@@ -164,7 +164,7 @@ paso actual. Cada función de paso vuelve a generar el `innerHTML` de
 incremental del DOM, y suficientemente barato a esta escala (un puñado
 de botones y un campo por paso).
 
-Hoy existen cuatro tipos de asistente, todos construidos sobre el mismo
+Hoy existen varios tipos de asistente, todos construidos sobre el mismo
 componente reutilizable de entrada de importe (`renderAmountStep`,
 SPEC.md §6):
 
@@ -174,6 +174,9 @@ SPEC.md §6):
 | `setBalance` | solo importe | Tocar el saldo en Mi dinero |
 | `goalNew` | icono+nombre → importe objetivo | "+ Nueva meta" en Mis metas |
 | `goalAdd` | solo importe | "+ Añadir dinero" en una tarjeta de meta |
+| `income` | origen → importe | Tarjeta "Recibir dinero" |
+| `commitment` | nombre → importe | Tarjeta "Pagos previstos" |
+| `settings` | preferencias y datos | Enlace "Ajustes y datos" |
 
 ---
 
@@ -182,9 +185,8 @@ SPEC.md §6):
 Todo vive bajo una única clave de `localStorage`, `okeymoney:data` (se
 lee con `App.storage.get('data')` / `set('data', …)`), más dos claves
 pequeñas que siguen la convención de las apps hermanas: `okeymoney:locale`
-(idioma activo) y `okeymoney:prefs` (reservada para ajustes futuros —
-tamaño de texto, sonidos — todavía no expuestos en la interfaz, ver
-SPEC.md §8).
+(idioma activo) y `okeymoney:prefs` (preferencias locales, incluido el
+tamaño de texto).
 
 **Todos los importes son céntimos enteros.** Nunca euros en coma
 flotante — `0.1 + 0.2` no es `0.3` en IEEE 754, y una app de dinero no
@@ -205,18 +207,20 @@ puede permitirse ese tipo de error. `App.money.format(350)` muestra
 
   // Cada gasto y cada aportación a una meta, en el orden en que se
   // escribieron. balanceCents() = initialBalanceCents + suma(ingresos)
-  // - suma(gastos) - suma(ahorros). No existe el tipo de movimiento
-  // "ingreso" en la interfaz de la v1 (ver SPEC.md §8), pero el esquema
-  // ya lo admite para cuando se construya ese flujo.
+  // - suma(gastos) - suma(ahorros). Los ingresos se registran desde el
+  // flujo Recibir dinero y llevan sourceId (bolsillo, trabajo, regalo o devolución).
   "movements": [
     {
       "id": "m3k2j1abc",          // App.utils.uid()
       "type": "expense",          // 'expense' | 'income' | 'saving'
       "categoryId": "food",       // solo si type === 'expense'
                                    // — una de DATA.categories en data.js
+      "sourceId": null,            // solo si type === 'income'
+                                   // — una de DATA.incomeSources
       "goalId": null,             // solo si type === 'saving'
                                    // — id de la meta en `goals` de abajo
       "amountCents": 350,         // siempre positivo; `type` da el signo
+      "documentCycle": null,      // opcional: pedido-albarán-factura-pago
       "date": "2026-08-01"        // App.utils.today(), local YYYY-MM-DD
     }
   ],
@@ -235,7 +239,18 @@ puede permitirse ese tipo de error. `App.money.format(350)` muestra
       "createdDate": "2026-07-20",
       "achieved": false            // true en cuanto savedCents >= targetCents
     }
-  ]
+  ],
+
+  // Los pagos previstos son solo recordatorios. Nunca cambian balanceCents.
+  "commitments": [
+    { "id": "p1", "name": "Teléfono", "amountCents": 1500, "dueDate": "2026-09-01", "createdDate": "2026-08-25" }
+  ],
+
+  // Progreso local del ciclo presupuestar → ingresar → ahorrar → gastar.
+  "cycle": {
+    "budgeted": true,
+    "lastPlan": { "budgetCents": 3000, "itemId": "bread", "priceCents": 200, "date": "2026-08-25" }
+  }
 }
 ```
 
@@ -243,7 +258,7 @@ puede permitirse ese tipo de error. `App.money.format(350)` muestra
 // localStorage['okeymoney:locale']
 "es"   // o "en" — cadena simple, no envuelta en JSON más allá de las comillas
 
-// localStorage['okeymoney:prefs']  (reservada, la interfaz todavía no la escribe)
+// localStorage['okeymoney:prefs']  (preferencias elegidas en Ajustes y datos)
 { "textSize": "normal", "sounds": true }
 ```
 
@@ -327,6 +342,8 @@ excepciones.
 | `set` | `(key, data) → boolean` | Guarda JSON; `false` si falló |
 | `remove` | `(key) → boolean` | Borra una clave |
 | `clearAll` | `() → boolean` | Borra todas las claves `okeymoney:*` (reinicio completo) |
+| `dump` | `() → object` | Devuelve una copia portable de las claves locales |
+| `restore` | `(snapshot) → boolean` | Sustituye las claves locales por una copia validada |
 
 ### 4.5 `window.App.feedback` (`feedback.js`)
 

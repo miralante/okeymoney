@@ -80,16 +80,11 @@
 </head>
 <body data-tema="dinero">
   <!--
-    Home unificado (Fase 3 de PRODUCT-DESIGN.md + estilo visual
-    alineado con el hermano Routime): cabecera tipo catálogo
-    (idioma + marca + saludo), barra
-    de anclas a cada módulo temático y, debajo, tres tarjetas
-    grandes (Mi dinero · Mis metas · catálogo de actividades)
-    en un único scroll. Sin tabbar: el FAB flotante "Apuntar
-    un gasto" vive abajo a la derecha.
-    Los monederos de práctica (🔑) no aparecen como tarjetas
-    propias — el contador 🪙 de práctica vive en la cabecera de cada
-    el saldo de práctica; el detalle vive dentro de cada tool.
+    Home unificado (Fase 3 de PRODUCT-DESIGN.md + estética Apptonomia):
+    un único scroll con tres bloques visibles y en orden pedagógico:
+    1) didáctico, 2) tests que recompensan con Tokens y 3) simulación
+    de decisiones en euros. Las tarjetas siguen el patrón de módulos
+    grandes, bordes de color y pictogramas del resto de la suite.
   -->
   <div class="container" id="app">
 
@@ -104,35 +99,167 @@
       </div>
     </header>
 
-    <!-- Anclas a cada módulo temático del catálogo de actividades. -->
-    <nav class="anclas-modulo" aria-label="Ir a un módulo" id="anclasModulo"></nav>
+    <!-- Anclas a los tres bloques de aprendizaje. -->
+    <nav class="anclas-modulo" aria-label="Ir a un bloque" id="anclasModulo"></nav>
+
+    <!-- Guía contextual: propone una sola acción útil según el estado
+         actual, sin convertirla en obligación ni en una racha. -->
+    <section class="next-step" id="nextStep" aria-labelledby="nextStepTitle">
+      <div class="next-step__copy">
+        <p class="next-step__eyebrow" data-i18n="home.nextStep.eyebrow">Hoy</p>
+        <h2 id="nextStepTitle" data-i18n="home.nextStep.title">Tu siguiente paso</h2>
+        <p id="nextStepDetail">Empieza por contar cuánto dinero tienes ahora.</p>
+        <p class="next-step__note" data-i18n="home.nextStep.note">Puedes parar cuando quieras. Todo queda en tu dispositivo.</p>
+      </div>
+      <button type="button" class="btn next-step__action" id="nextStepAction">Anotar mi saldo</button>
+    </section>
 
     <main class="pila modulos">
 
-      <!-- Bloque 1: Mi dinero — tarjeta grande con el saldo real. -->
-      <a href="#" class="tarjeta tarjeta--money" id="tarjetaSaldo" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
-        <span class="picto" aria-hidden="true">💶</span>
-        <span class="tarjeta__etiqueta" data-i18n="home.balanceLabel">Tienes</span>
-        <span class="tarjeta__nombre" id="balanceValue">0,00 €</span>
-        <span class="tarjeta__detalle" data-i18n="home.editHint">Toca para cambiar cuánto dinero tienes</span>
-        <span class="tarjeta__estado" aria-hidden="true" id="recentesResumen"></span>
-      </a>
+      <!-- Bloque 1: contenido didáctico breve antes de cualquier prueba. -->
+      <section id="bloque-didactico" class="learning-block learning-block--didactic" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
+        <div class="learning-block__header">
+          <p class="learning-block__eyebrow">01</p>
+          <h2 data-i18n="blocks.didactic.title">Aprende paso a paso</h2>
+          <p class="learning-block__intro" data-i18n="blocks.didactic.intro">Entiende el dinero antes de practicar.</p>
+        </div>
+        <div id="didacticLessons" class="grid-tarjetas didactic-grid"></div>
+        <a class="btn btn--secundario learning-block__cta" href="#bloque-test" data-i18n="blocks.didactic.cta">Después, comprueba lo que sabes</a>
+      </section>
 
-      <!-- Bloque 2: Mis metas — tarjeta grande con hasta 3 metas en preview. -->
-      <a href="#" class="tarjeta tarjeta--goals" id="tarjetaMetas" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
-        <span class="picto" aria-hidden="true">🐷</span>
-        <span class="tarjeta__etiqueta" data-i18n="goals.title">Mis metas</span>
-        <span class="tarjeta__detalle" id="metasResumen" data-i18n="goals.empty">Todavía no tienes ninguna meta. ¡Crea la primera!</span>
-        <span class="tarjeta__estado" aria-hidden="true" id="metasCta" data-i18n="goals.newButton">+ Nueva meta</span>
-      </a>
+      <!-- Bloque 2: tests existentes, agrupados por tema y con Tokens. -->
+      <section id="bloque-test" class="learning-block learning-block--test" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
+        <div class="learning-block__header">
+          <p class="learning-block__eyebrow">02</p>
+          <h2 data-i18n="blocks.test.title">Comprueba lo que sabes</h2>
+          <p class="learning-block__intro" data-i18n="blocks.test.intro">Responde a situaciones y gana Tokens por practicar.</p>
+        </div>
+        <div class="token-summary" aria-live="polite">
+          <span class="token-summary__icon" aria-hidden="true">🪙</span>
+          <span class="token-summary__copy">
+            <span class="token-summary__label" data-i18n="blocks.test.walletLabel">Tokens de práctica</span>
+            <strong id="homeWalletBalance">0</strong>
+          </span>
+          <span class="token-summary__hint" data-i18n="blocks.test.rewardHint">Cada actividad suma Tokens una vez.</span>
+        </div>
+        <div id="testActivities" class="learning-block__activities"></div>
+      </section>
 
-      <!-- Bloque 3: catálogo de actividades de práctica, en orden temático
-           pedagógico (conceptos básicos → vida cotidiana → seguridad). Cada
-           .tarjeta dentro de un .modulo se pinta por activity-runtime.js
-           (estructura picto + nombre + detalle + estado ✓/▶/🔒). -->
-      <section id="aprende" class="modulo modulo--catalogo" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
-        <h2><span aria-hidden="true" data-i18n="home.catalogueTitle">Aprende con Okeymoney</span></h2>
-        <div id="homeActivities" class="grid-tarjetas"></div>
+      <!-- Bloque 3: simulación con el ledger local de euros. -->
+      <section id="bloque-simulacion" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
+        <div class="learning-block__header">
+          <p class="learning-block__eyebrow">03</p>
+          <h2 data-i18n="blocks.simulation.title">Simula situaciones reales con dinero</h2>
+          <p class="learning-block__intro" data-i18n="blocks.simulation.intro">Practica compras, gastos y ahorro con dinero en euros, en un espacio seguro.</p>
+        </div>
+        <div id="financialCycle" class="financial-cycle"></div>
+        <div class="grid-tarjetas simulation-grid">
+          <a href="#" class="tarjeta tarjeta--money simulation-card" id="tarjetaSaldo" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
+            <span class="picto" aria-hidden="true">💶</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.balanceTitle">Mi saldo</span>
+            <span class="tarjeta__nombre" id="balanceValue">0,00 €</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.balanceDetail">Toca para actualizar cuánto dinero tienes.</span>
+            <span class="tarjeta__estado" aria-hidden="true" id="recentesResumen"></span>
+          </a>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnNewIncome">
+            <span class="picto" aria-hidden="true">🫴</span>
+            <span class="tarjeta__etiqueta" data-i18n="income.title">Recibir dinero</span>
+            <span class="tarjeta__detalle" data-i18n="income.instruction">Anota cuándo entra dinero.</span>
+          </button>
+          <a href="#" class="tarjeta tarjeta--goals simulation-card" id="tarjetaMetas" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
+            <span class="picto" aria-hidden="true">🐷</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.goalsTitle">Mis metas</span>
+            <span class="tarjeta__detalle" id="metasResumen" data-i18n="goals.empty">Todavía no tienes ninguna meta. ¡Crea la primera!</span>
+            <span class="tarjeta__estado" aria-hidden="true" id="metasCta" data-i18n="goals.newButton">+ Nueva meta</span>
+          </a>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnNewExpenseInline">
+            <span class="picto" aria-hidden="true">🧾</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.expenseTitle">Registrar un gasto</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.expenseDetail">Practica una compra real con dinero en euros.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnPlanPurchase">
+            <span class="picto" aria-hidden="true">🛒</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.planTitle">Planifica una compra</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.planDetail">Elige un presupuesto antes de gastar.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnPurchaseLifecycle">
+            <span class="picto" aria-hidden="true">📦</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.purchaseTitle">Del pedido al pago</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.purchaseDetail">Practica pedido, albarán, factura y pago.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnDepreciationSimulation">
+            <span class="picto" aria-hidden="true">📉</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.depreciationTitle">Calcula la depreciación</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.depreciationDetail">Estima cuánto valor conserva un bien con el paso del tiempo.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnObsolescenceSimulation">
+            <span class="picto" aria-hidden="true">♻️</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.obsolescenceTitle">Decide ante la obsolescencia</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.obsolescenceDetail">Compara reparar, reutilizar o sustituir antes de gastar.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnReturnSimulation">
+            <span class="picto" aria-hidden="true">📈</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.returnTitle">Calcula la rentabilidad</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.returnDetail">Calcula cuánto puede crecer una cantidad en un ejemplo.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnRiskSimulation">
+            <span class="picto" aria-hidden="true">⚖️</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.riskTitle">Compara rentabilidad y riesgo</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.riskDetail">Mira el plazo, la liquidez y la diversificación antes de decidir.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnInvestmentSimulation">
+            <span class="picto" aria-hidden="true">🔄</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.investmentTitle">Reconoce operaciones de inversión</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.investmentDetail">Distingue comprar, vender, cobrar un rendimiento y traspasar.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnBankProductsSimulation">
+            <span class="picto" aria-hidden="true">💳</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.bankProductsTitle">Tarjetas y cuentas</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.bankProductsDetail">Descubre cuándo se usa el saldo propio, el crédito o el ahorro.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnHousingSimulation">
+            <span class="picto" aria-hidden="true">🏠</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.housingTitle">Alquiler o propiedad</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.housingDetail">Compara costes, compromisos y flexibilidad antes de decidir.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnChangeSimulation">
+            <span class="picto" aria-hidden="true">💸</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.changeTitle">Comprueba la vuelta</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.changeDetail">Paga, calcula la vuelta y comprueba el resultado.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnSafetySimulation">
+            <span class="picto" aria-hidden="true">🛡️</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.safetyTitle">Comprueba si es seguro</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.safetyDetail">Decide qué hacer antes de enviar dinero.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnRightsSimulation">
+            <span class="picto" aria-hidden="true">📄</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.rightsTitle">Conoce tus derechos</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.rightsDetail">Practica cómo reclamar y pedir comprobantes.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnCommunicationSimulation">
+            <span class="picto" aria-hidden="true">💬</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.communicationTitle">Habla claro sobre dinero</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.communicationDetail">Ensaya preguntas, límites y pedir ayuda.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnEmergencySimulation">
+            <span class="picto" aria-hidden="true">🚨</span>
+            <span class="tarjeta__etiqueta" data-i18n="blocks.simulation.emergencyTitle">Responde a un imprevisto</span>
+            <span class="tarjeta__detalle" data-i18n="blocks.simulation.emergencyDetail">Toma decisiones seguras cuando algo cambia.</span>
+          </button>
+          <button type="button" class="tarjeta simulation-card simulation-card--action" id="btnNewCommitment">
+            <span class="picto" aria-hidden="true">📌</span>
+            <span class="tarjeta__etiqueta" data-i18n="commitments.title">Pagos previstos</span>
+            <span class="tarjeta__detalle" data-i18n="commitments.detail">Apunta pagos que tendrás que recordar.</span>
+          </button>
+        </div>
+        <div class="simulation-panels">
+          <div class="movement-summary" id="movementSummary"></div>
+          <div class="movement-summary" id="commitmentsSummary"></div>
+          <div class="movement-summary" id="insightsSummary"></div>
+          <div class="movement-summary" id="financialStatement"></div>
+          <div class="movement-summary" id="financialControl"></div>
+        </div>
       </section>
 
     </main>
@@ -143,6 +270,7 @@
     <section id="screen-wizard" class="stack hidden" aria-live="polite"></section>
 
     <div class="footer-app">
+      <button type="button" class="legal-link settings-link" id="btnSettings" data-i18n="settings.openButton">Ajustes y datos</button>
       <a class="legal-link" href="legal/index.html" data-i18n="core.dataProtection">Protección de datos</a>
     </div>
 

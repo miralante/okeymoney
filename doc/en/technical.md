@@ -149,7 +149,7 @@ function re-renders `#screen-wizard`'s `innerHTML` from scratch — simpler
 to reason about than incremental DOM patching, and cheap enough at this
 scale (a handful of buttons and one input per step).
 
-Four wizard types exist today, all built from the same reusable
+Several wizard types exist today, all built from the same reusable
 amount-entry component (`renderAmountStep`, SPEC.md §6):
 
 | `wizard.type` | Steps | Where it's opened from |
@@ -158,6 +158,9 @@ amount-entry component (`renderAmountStep`, SPEC.md §6):
 | `setBalance` | amount only | Tapping the balance on Mi dinero |
 | `goalNew` | icon+name → target amount | "+ Nueva meta" on Mis metas |
 | `goalAdd` | amount only | "+ Añadir dinero" on a goal card |
+| `income` | source → amount | "Receive money" card |
+| `commitment` | name → amount | "Planned payments" card |
+| `settings` | preferences and data | "Settings and data" link |
 
 ---
 
@@ -166,8 +169,8 @@ amount-entry component (`renderAmountStep`, SPEC.md §6):
 Everything lives under one `localStorage` key, `okeymoney:data` (read
 through `App.storage.get('data')` / `set('data', …)`), plus two small
 keys shared with the sibling apps' convention: `okeymoney:locale`
-(active language) and `okeymoney:prefs` (reserved for future settings —
-text size, sounds — not yet exposed in the UI, see SPEC.md §8).
+(active language) and `okeymoney:prefs` (local preferences, including text
+size).
 
 **All amounts are integer cents.** Never floating-point euros — `0.1 +
 0.2` famously isn't `0.3` in IEEE 754, and a money app cannot afford that
@@ -186,18 +189,20 @@ class of bug. `App.money.format(350)` renders `"3,50 €"` / `"3.50 €"`.
 
   // Every expense and every goal contribution, in the order they were
   // entered. balanceCents() = initialBalanceCents + sum(income)
-  // - sum(expense) - sum(saving). There is no "income" movement type
-  // in v1 UI (see SPEC.md §8) but the schema already supports one for
-  // when that flow is built.
+  // - sum(expense) - sum(saving). Income is recorded by the receive-money
+  // flow and carries a sourceId (allowance, work, gift or refund).
   "movements": [
     {
       "id": "m3k2j1abc",          // App.utils.uid()
       "type": "expense",          // 'expense' | 'income' | 'saving'
       "categoryId": "food",       // present only when type === 'expense'
                                    // — one of data.js's DATA.categories
+      "sourceId": null,            // present only when type === 'income'
+                                   // — one of DATA.incomeSources
       "goalId": null,             // present only when type === 'saving'
                                    // — id of the goal in `goals` below
       "amountCents": 350,         // always positive; `type` gives the sign
+      "documentCycle": null,      // optional: order-delivery-invoice-payment
       "date": "2026-08-01"        // App.utils.today(), local YYYY-MM-DD
     }
   ],
@@ -215,7 +220,18 @@ class of bug. `App.money.format(350)` renders `"3,50 €"` / `"3.50 €"`.
       "createdDate": "2026-07-20",
       "achieved": false            // true once savedCents >= targetCents
     }
-  ]
+  ],
+
+  // Planned payments are reminders only. They never change balanceCents.
+  "commitments": [
+    { "id": "p1", "name": "Phone", "amountCents": 1500, "dueDate": "2026-09-01", "createdDate": "2026-08-25" }
+  ],
+
+  // Local progress for the budget → receive → save → spend cycle.
+  "cycle": {
+    "budgeted": true,
+    "lastPlan": { "budgetCents": 3000, "itemId": "bread", "priceCents": 200, "date": "2026-08-25" }
+  }
 }
 ```
 
@@ -223,7 +239,7 @@ class of bug. `App.money.format(350)` renders `"3,50 €"` / `"3.50 €"`.
 // localStorage['okeymoney:locale']
 "es"   // or "en" — plain string, not JSON-wrapped beyond the quotes
 
-// localStorage['okeymoney:prefs']  (reserved, not yet written by the UI)
+// localStorage['okeymoney:prefs']  (preferences chosen in Settings and data)
 { "textSize": "normal", "sounds": true }
 ```
 
@@ -304,6 +320,8 @@ Internal key prefix: `okeymoney:<key>`. Every function is failure-tolerant
 | `set` | `(key, data) → boolean` | Saves JSON; `false` if it failed |
 | `remove` | `(key) → boolean` | Deletes one key |
 | `clearAll` | `() → boolean` | Deletes every `okeymoney:*` key (full reset) |
+| `dump` | `() → object` | Returns a portable snapshot of local keys |
+| `restore` | `(snapshot) → boolean` | Replaces local keys with a validated snapshot |
 
 ### 4.5 `window.App.feedback` (`feedback.js`)
 

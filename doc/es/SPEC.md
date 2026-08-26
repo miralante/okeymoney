@@ -68,10 +68,12 @@ técnica expresada con dificultad.
 
 - Frases cortas, una idea por pantalla.
 - Vocabulario cotidiano (sin tecnicismos financieros ni clínicos).
-- Sin jerga financiera ni clínica ("saldo", "desviación presupuestaria",
-  "discapacidad") en nada que la persona lea.
-- El lenguaje técnico solo se permite en la documentación interna del
-  proyecto (`README.md`, `tecnico.md`, `CLAUDE.md`) y en [`legal/`](../../legal/index.html).
+- Sin jerga financiera sin explicar. Cuando la persona pide aprender
+  términos como "activo", "pasivo" o "contabilidad", aparecen junto a
+  una definición cotidiana y un ejemplo.
+- El lenguaje técnico no explicado solo se permite en la documentación
+  interna del proyecto (`README.md`, `tecnico.md`, `CLAUDE.md`) y en
+  [`legal/`](../../legal/index.html).
 - **Quien usa la app nunca debe leer nada en ella que la sitúe
   como "discapacitada", "con dificultades cognitivas" o equivalente.**
   Esto se desarrolla en §4.
@@ -110,8 +112,10 @@ técnica expresada con dificultad.
 ### 3.6 Entrenar con mini-simulaciones de la vida cotidiana
 
 A diferencia de Apptonomia, Okeymoney no tiene un catálogo de
-actividades terapéuticas: tiene **flujos reales** (registrar un gasto,
-crear una meta, añadir dinero a una meta, recontar el saldo). El
+actividades terapéuticas: tiene **flujos reales** (recibir dinero,
+registrar un gasto, crear una meta, añadir dinero a una meta, planificar
+un pago y recontar el saldo). También ofrece simulaciones seguras para
+derechos, comunicación, seguridad e imprevistos. El
 principio es el mismo, pero aplicado al producto que sí tenemos: cada
 flujo se construye como una **mini-simulación de la vida cotidiana**, una
 escena reconocible (una compra, un ahorrito para algo que se quiere)
@@ -127,6 +131,23 @@ Esto se aplica a todos los flujos que ya tiene la app:
 - **Refuerzo inmediato** (p. ej. `Añadir dinero a una meta`: la barra de
   progreso avanza en directo y la cantidad se resta del saldo de Mi
   dinero al confirmar).
+- **Ensayo reversible** (p. ej. una decisión de seguridad o una
+  reclamación): se practica la respuesta, pero no se modifica el ledger.
+- **Vida útil de los bienes**: se estima la depreciación con una fórmula
+  transparente y se decide cómo responder a la obsolescencia (reparar,
+  reutilizar o sustituir), sin registrar un gasto automáticamente.
+- **Rentabilidad y riesgo**: se calcula una ganancia hipotética y se revisa
+  si encaja con el plazo, la disponibilidad del dinero y la diversificación;
+  nunca se presenta una rentabilidad como promesa.
+- **Operaciones de inversión**: se distinguen compra o aportación,
+  venta o reembolso, cobro de rendimientos y traspaso, sin conectar con un
+  bróker ni ejecutar ninguna orden.
+- **Tarjetas y cuentas bancarias**: se diferencian débito, crédito, prepago,
+  cuenta corriente y cuenta de ahorro según de dónde sale el dinero y cuándo
+  se cobra, sin recomendar entidades ni abrir productos.
+- **Vivienda**: se comparan alquiler y propiedad revisando gastos iniciales,
+  cuotas, mantenimiento, flexibilidad y plazo, sin presentar una opción como
+  universalmente mejor.
 
 La anatomía obligatoria de un flujo de Okeymoney es:
 
@@ -222,15 +243,13 @@ confundirla con dinero real — preservando el §3.4 (privacidad y
 ausencia de datos personales) y el §3.2 (sin presión: los Tokens
 solo se suman, no se restan como castigo).
 
-#### 3.6.c Decisión de diseño: el saldo como sustituto del ingreso
+#### 3.6.c Decisión de diseño: ingresos y saldo
 
-Okeymoney **no tiene** un flujo separado de "registrar un ingreso"
-(ver §9.1). En su lugar, tocar el saldo en Mi dinero abre un asistente
-de un solo paso que **recalcula el punto de partida** para que el
-historial quede intacto. Es una **decisión de diseño priorizada**, no
-una excepción a justificar caso por caso: el saldo es la única verdad
-que el producto expone, y se mantiene siempre coherente con los
-movimientos registrados.
+Okeymoney ofrece un flujo separado de **recibir dinero** para registrar
+un ingreso real (dinero de bolsillo, trabajo, regalo o devolución). Tocar
+el saldo sigue abriendo el asistente de recuento: recalcula el punto de
+partida sin reescribir el historial. Ambos caminos escriben movimientos
+en el mismo ledger y mantienen el saldo coherente.
 
 ### 3.7 Comunicación persuasiva al servicio del aprendizaje
 
@@ -571,23 +590,19 @@ efecto directo de lo que acaba de hacer.
 Documentadas aquí para que se traten como decisiones priorizadas, no como
 carencias descubiertas por accidente:
 
-- **No hay un flujo separado de "registrar un ingreso".** Tocar el saldo
-  en Mi dinero abre un asistente "¿cuánto dinero tienes ahora?" que
-  recalcula el punto de partida para que el historial quede intacto. Un
-  flujo de ingresos dedicado (paga recibida, dinero de bolsillo) es el
-  siguiente paso natural, construido sobre el mismo componente de
-  importe.
+- **Los pagos previstos no descuentan saldo automáticamente.** La persona
+  puede anotar un pago comprometido y una fecha opcional para recordarlo;
+  la app marca las fechas pasadas, pero solo un gasto confirmado modifica
+  el ledger. Así no se crean movimientos fantasma ni cargos automáticos.
 - **No se puede retirar dinero de una meta.** Una vez aportado, el ahorro
   queda comprometido con esa meta en la v1. Necesario antes de lanzar un
   caso de uso real de "gastar de mi hucha".
-- **Todavía no hay pantalla de ajustes** (tamaño de texto, sonido
-  sí/no). `storage.js` ya lee una clave `okeymoney:prefs` igual que las
-  apps hermanas, así que añadirla después es aditivo, no una reescritura.
-- **Aprender tiene 6 actividades funcionando** (`tools/`), pero la
-  pestaña que las agrupa todavía no las expone como una cuadrícula
-  con icono + nombre + recompensa — se accede a cada una por su URL
-  directa. La cuadrícula de Aprender queda como priorised design
-  decision para una v1.x. Ver §7.4.
+- **No hay ajuste de sonido independiente todavía.** La pantalla Ajustes
+  y datos ya permite tamaño de texto, copia/restauración local y borrado
+  explícito; el sonido sigue respetando las preferencias del dispositivo.
+- **Aprender tiene 7 actividades funcionando** (`tools/`) y se exponen
+  en la cuadrícula del bloque de tests. Sus recompensas de Tokens siguen
+  separadas del ledger de euros.
 
 ### 9.4 Tienda simbólica (priorised design decision, **no implementada en v1**)
 

@@ -65,11 +65,12 @@ difficulty.
 
 - Short sentences, one idea per screen.
 - Everyday vocabulary (no jargon, no technical terms).
-- No financial or clinical jargon ("balance", "budget variance",
-  "disability") in anything the person reads.
-- Technical language is only allowed in the project's internal
-  documentation (`README.md`, `technical.md`, `CLAUDE.md`) and in
-  [`legal/`](../../legal/index.html).
+- No unexplained financial jargon. When the person asks to learn terms
+  such as "asset", "liability" or "accounting", show a plain-language
+  definition and an example beside the term.
+- Unexplained technical language is only allowed in the project's
+  internal documentation (`README.md`, `technical.md`, `CLAUDE.md`) and
+  in [`legal/`](../../legal/index.html).
 - **Whoever uses the app must never read anything in it that places
   them as "disabled", "with cognitive difficulties" or the like.**
   This is developed in §5.
@@ -107,8 +108,10 @@ difficulty.
 ### 3.6 Train through mini-simulations of everyday life
 
 Unlike Apptonomia, Okeymoney does not have a catalogue of therapeutic
-activities: it has **real flows** (register an expense, create a goal,
-add money to a goal, recount the balance). The principle is the same,
+activities: it has **real flows** (receive money, register an expense,
+create a goal, add money to a goal, plan a payment and recount the
+balance). It also offers safe simulations for rights, communication,
+safety and unexpected problems. The principle is the same,
 but applied to the product we actually have: each flow is built as a
 **mini-simulation of everyday life**, a recognisable scene (a purchase,
 saving up for something they want) in which the person makes a **real
@@ -124,6 +127,23 @@ This applies to every flow the app already has:
 - **Immediate reinforcement** (e.g. `Add money to a goal`: the progress
   bar advances live and the amount is subtracted from the Mi dinero
   balance on confirm).
+- **Reversible rehearsal** (e.g. a safety or complaint decision): the
+  person practises a response without changing the ledger.
+- **Asset life**: estimate depreciation with a transparent formula and
+  decide how to respond to obsolescence (repair, reuse or replace),
+  without automatically recording an expense.
+- **Return and risk**: calculate a hypothetical gain and check whether it
+  fits the time horizon, access to money and diversification; a return is
+  never presented as a promise.
+- **Investment operations**: distinguish buying or contributing, selling or
+  redeeming, collecting returns and transferring, without connecting to a
+  broker or executing any order.
+- **Bank cards and accounts**: distinguish debit, credit, prepaid, current
+  and savings products by where the money comes from and when it is charged,
+  without recommending providers or opening products.
+- **Housing**: compare renting and owning by reviewing upfront costs,
+  payments, maintenance, flexibility and time horizon, without presenting one
+  option as universally better.
 
 The mandatory anatomy of an Okeymoney flow is:
 
@@ -219,14 +239,13 @@ without confusing it with real money — preserving §3.4 (privacy and no
 personal data) and §3.2 (no pressure: Tokens only ever add, never
 subtract as punishment).
 
-#### 3.6.c Design decision: the balance as the income substitute
+#### 3.6.c Design decision: income and balance
 
-Okeymoney **does not** have a separate "register income" flow (see
-§9.1). Instead, tapping the balance in Mi dinero opens a one-step
-wizard that **recalculates the starting point** so history stays
-intact. This is a **prioritised design decision**, not an exception to
-justify case by case: the balance is the only truth the product
-exposes, and it always stays coherent with the movements recorded.
+Okeymoney provides a separate **receive money** flow for recording real
+income (pocket money, work, a gift or a refund). Tapping the balance still
+opens the recount wizard: it recalculates the starting point without
+rewriting history. Both paths write movements to the same ledger and keep
+the balance coherent.
 
 ### 3.7 Persuasive communication in service of learning
 
@@ -551,21 +570,19 @@ they just did.
 Documented here so they are treated as prioritised decisions, not gaps
 discovered by accident:
 
-- **No separate "register income" flow.** Tapping the balance on Mi
-  dinero opens a "how much money do you have now?" wizard that
-  recalculates the starting point so history stays intact. A dedicated
-  income flow (allowance received, pocket money) is the natural next
-  step, built on the exact same amount-step component.
+- **Planned payments do not subtract balance automatically.** A person
+  can note a committed payment with an optional date; the app marks past
+  dates, but only a confirmed expense changes the ledger. This avoids
+  phantom movements and automatic charges.
 - **No withdrawing money from a goal.** Once contributed, savings stay
   committed to that goal in v1. Needed before shipping a real "spend
   from my hucha" use case.
-- **No settings screen yet** (text size, sound on/off). `storage.js`
-  already reads an `okeymoney:prefs` key the same way the sibling apps
-  do, so adding one later is additive, not a rewrite.
-- **Aprender has 6 working activities** (`tools/`), but the tab that
-  groups them does not yet expose them as a grid with icon + name +
-  reward — each one is reached by its direct URL. The Aprender grid
-  remains a prioritised design decision for v1.x. See §7.4.
+- **No independent sound setting yet.** The Settings and data screen now
+  offers text size, local backup/restore and an explicit data reset; sound
+  still follows the device preferences.
+- **Aprender has 7 working activities** (`tools/`) and exposes them in
+  the test-block grid. Their Token rewards remain separate from the euro
+  ledger.
 
 ### 9.4 Symbolic shop (prioritised design decision, **not implemented in v1**)
 

@@ -57,7 +57,7 @@ roadmap:
 
 | Not in this roadmap | Why |
 |---|---|
-| New flows (income, withdraw from goal, settings screen) | Already prioritised in `SPEC.md` §9 as v1.x work, separate |
+| New flows (withdraw from a goal, sound settings) | Product behaviour, tracked separately in `SPEC.md` §9 |
 | New activities in `tools/` | Pedagogical, not visual — out of scope here |
 | Changing the data schema or `App.*` API | Behavioural, not visual — `technical.md` is the place |
 | Adding dark/light theme toggle | v1 is light‑only by design (principle 5 of `SPEC.md` §4) |

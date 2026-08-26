@@ -11,6 +11,29 @@
 > reuses the shared `assets/js/activity-runtime.js` Socratic loop (or
 > the numeric-keypad variant used by `change-back`).
 
+## Complete learning journey
+
+The recommended order is **explain → check → apply**. Test activities are
+not locked: people can choose freely, but the home presents the blocks in
+that order to reduce cognitive load and support transfer to everyday life.
+
+| Taught concept | Test that checks it | Later euro application |
+|---|---|---|
+| Coin and note values | `concepts-money` | Review and update the balance |
+| Needs and wants | `needs-vs-wants` | Decide before recording an expense |
+| Priorities and budget | `budget-first` | Plan a goal and review the balance |
+| Shopping without overspending | `go-shopping` | Record a purchase with its amount |
+| Paying and working out change | `change-back` | Review the amount before saving an expense |
+| A complete shopping day | `my-shopping-day` | Balance → expense → visible consequence |
+| Saving for a goal | `my-shopping-day` (round 5) | Create a goal and add money |
+| Staying safe from scams | `safe-money` | A safety check before any payment |
+
+The last column describes the transfer available today. The simulation
+block now also includes change practice with euro amounts and three safety
+decisions before sending money. Neither gives Tokens or changes the
+ledger: the person rehearses first, then chooses whether to record a real
+expense.
+
 ## The three basic agents
 
 Every case is grounded in one of the **three basic agents** a person
@@ -43,7 +66,7 @@ Each case names the agent it involves (e.g. *"El bus"*, *"La farmacia"*,
 | 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 6 | 🔑 12,00 |
 | 4 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
 | 5 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
-| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 4 | 🔑 60,00 |
+| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
 
 ### Theme: Seguridad (`theme: 'safety'`)
 
@@ -97,9 +120,10 @@ cheaper, type the change owed (`paid − cost`). The agent is always a
 
 ## 6. My shopping day (`tools/my-shopping-day/`)
 
-The final boss of the *Vida cotidiana* theme: four cases that walk through one
+The final activity of the *Vida cotidiana* theme: five cases that walk through one
 realistic shopping trip end to end — think first, prioritise what to
-buy, pick items at the shop, work out the change at the till. The
+buy, pick items at the shop, work out the change at the till, and save for
+a goal. The
 agent sequence mirrors real life: persona → empresa → empresa → banco.
 
 ## 7. My money is safe (`tools/safe-money/`)

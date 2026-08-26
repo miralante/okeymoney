@@ -1,11 +1,14 @@
-# PRODUCT-DESIGN.md — Home as catalogue, money + goals as cards
+# PRODUCT-DESIGN.md — Home in three blocks: learn, check and simulate
 
 > **This document is the source of truth for the v2 home redesign.**
 >
+> The compact content map is in [`LEARNING-INDEX.md`](LEARNING-INDEX.md).
+>
 > It defines a deliberate **architectural change** to Okeymoney: the home
-> becomes an Apptonomia-style catalogue of practice activities, while
-> the money and goals state moves to two always-visible cards on the
-> same screen. This **inverts** the "single-purpose app, not a catalog"
+> becomes an Apptonomia-style three-part journey: didactic content,
+> Token-rewarded tests, and euro simulations. Money and goals live in the
+> third block, always visible on the same screen. This **inverts** the
+> "single-purpose app, not a catalog"
 > rule that [`technical.md`](../en/technical.md) §2 and [`CLAUDE.md`](../../CLAUDE.md)
 > declared for v1 — the inversion is intentional, scoped to v2, and
 > documented here.
@@ -95,18 +98,14 @@ hiding the catalogue behind a tab.
 
 > **"Open Okeymoney and see what to do next."**
 
-The home is a single screen that tells the user, at a glance, three
-things:
+The home is a single screen that tells the user, at a glance, what to do
+next in three steps:
 
-1. **How much money I have** (Mi dinero card) and **how much I've
-   saved** (Mis metas card). Both are small, both are always visible,
-   both update live as activities and movements complete.
-2. **What's next to learn / practice**. The catalogue cards expose the
-   7 activities in pedagogical order (conceptos → vida cotidiana →
-   seguridad). A locked activity shows why; a done activity shows a
-   calm check.
-3. **A quick action**: the central FAB "+" always opens "Register an
-   expense" — the most common action, one tap from anywhere.
+1. **Learn**: short didactic cards with no score or penalty.
+2. **Check**: the 7 activities in pedagogical order (conceptos → vida
+   cotidiana → seguridad), with Tokens and calm progress checks.
+3. **Simulate**: balance, goals and expense entry in euros, plus the "+"
+   FAB as a shortcut for the everyday action.
 
 ### 2.2 Catalogue ↔ money plane, conceptually
 
@@ -124,6 +123,55 @@ There are **two planes** that must stay separate but visible together:
 The home makes this duality visible at all times: the **Mi dinero**
 card shows € + Tokens, the **Mis metas** card shows only €, and the
 **catalogue** shows the Tokens reward each activity credits.
+
+### 2.3 Three-layer home architecture
+
+The home follows one clear progression in both content and visual design:
+
+1. **Didactic block — Learn step by step.** Fourteen short cards explain
+   money value, spending choices, saving, change, safety, documents, the
+   money picture, control, asset life, return, risk, investment operations and
+   bank card and account types, and housing choices.
+   There is no score or penalty;
+   this block prepares the person to practise.
+2. **Test block — Check what you know.** It contains the seven existing
+   activities, grouped by theme. Each keeps its Socratic loop and credits
+   Tokens to the practice wallet, separate from the euro ledger.
+3. **Simulation block — Real money situations.** Balance, goals and
+   expense cards represent everyday shopping, payments and saving with
+   euro amounts. It also includes change, safety, everyday-rights,
+   money-communication, emergency-response and the order → delivery note
+   → invoice → payment cycle. It also practises a hypothetical return and
+   risk checks for time horizon, access and diversification. These are safe,
+   reversible rehearsals; only a confirmed expense writes to the local ledger,
+   with no bank or broker connection. Investment practice names buying,
+   selling, collecting returns and transferring without executing orders.
+   Banking practice compares debit, credit, prepaid, current and savings
+   products by when the money is charged, without recommending providers.
+   Housing practice compares renting and owning through upfront costs,
+   payments, maintenance, flexibility and time horizon, without imposing one
+   answer.
+
+Each block is a large section with a coloured edge, heading, orientation
+copy and rounded white cards. It uses Apptonomia's visual grammar: pill
+anchors, large pictograms, generous spacing and a single-column mobile
+layout. The stratification is navigation and presentation; Token and euro
+stores remain separate.
+
+### 2.4 Progressive support for autonomy
+
+Before the three blocks, a **Your next step** card reads only the minimum
+local state and suggests one useful action:
+
+- no balance recorded: count and save the current balance;
+- balance recorded but no goal: choose something to save for;
+- balance and goal present: record a purchase and observe the result.
+
+The suggestion is always optional. There are no streaks, urgency messages
+or penalties for stopping. This supports a simple financial routine:
+**know → decide → act → check**. Each action returns to the balance, goal
+or history so the person can see the link between a decision and its
+consequence.
 
 ---
 

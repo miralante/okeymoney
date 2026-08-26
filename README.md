@@ -44,9 +44,36 @@ goals and practice wallet always stay coherent.
 
 - 💼 **Mi dinero** — a shared-state balance dashboard (one amount,
   used everywhere).
+- 🫴 **Receive money** — record pocket money, work, gifts or refunds.
 - 🎯 **Mis metas** — savings-goals tracker with progress per goal.
 - 🧾 **Registrar un gasto** — step-by-step wizard with category,
   amount, and payment method.
+- 📚 **Recent movements** — a simple local view of income, spending
+  and saving.
+- 📌 **Planned payments** — remember dated payments and review overdue ones
+  without changing the balance automatically.
+- 🧭 **Money compass** — summarise income, spending, saving and your main
+  spending category.
+- 📦 **Purchase cycle** — practise order, delivery note, invoice and payment;
+  only payment records the expense.
+- 📊 **Money picture** — explains assets, expected liabilities, income and
+  expenses using your recorded data.
+- 📉 **Asset life** — practise depreciation and decide what to do when a
+  useful item becomes obsolete, without changing the real ledger.
+- ⚖️ **Return and risk** — calculate a hypothetical gain and compare time
+  horizon, access to money and diversification before deciding.
+- 🔄 **Investment operations** — recognise buying/contributing,
+  selling/redeeming, collecting returns and transferring between products.
+- 💳 **Bank cards and accounts** — distinguish debit, credit, prepaid,
+  current and savings products in everyday situations.
+- 🏠 **Housing choices** — compare renting and owning through costs,
+  commitments, maintenance and flexibility.
+- 📚 **Accounting and control** — record the facts, then use budget, balance
+  and commitments to decide.
+- 🧭 **Everyday autonomy** — rehearse rights, money communication and
+  emergencies without touching the real balance.
+- ⚙️ **Settings and local backups** — change text size and download or
+  restore data without an account.
 - 🛒 **Practice activities** — a catalogue of activities themed by
   Conceptos básicos / Vida cotidiana / Seguridad, each building real
   autonomy (change-back, what-do-I-need, where-to-store, etc.).

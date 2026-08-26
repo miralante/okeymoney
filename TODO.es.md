@@ -65,7 +65,7 @@ ruta:
 
 | No entra en esta hoja de ruta | Por qué |
 |---|---|
-| Flujos nuevos (ingresos, retirar de una meta, pantalla de ajustes) | Ya priorizados en `SPEC.md` §9 como trabajo v1.x, separado |
+| Flujos nuevos (retirar de una meta, ajuste de sonido) | Comportamiento de producto, se sigue por separado en `SPEC.md` §9 |
 | Actividades nuevas en `tools/` | Pedagógico, no visual — fuera de alcance aquí |
 | Cambiar el esquema de datos o la API `App.*` | Conductual, no visual — [`tecnico.md`](doc/es/tecnico.md) es el lugar |
 | Añadir interruptor de tema claro/oscuro | v1 es solo claro por diseño (principio 5 de `SPEC.md` §4) |

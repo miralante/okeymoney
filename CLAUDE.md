@@ -28,10 +28,11 @@ shell like Apptonomia/Calculia, and do not let activities in
 why.
 
 The **navigation model**, however, follows Apptonomia in v2: the home
-screen exposes the practice activities as a catalogue (three themed
-sections: Conceptos básicos / Vida cotidiana / Seguridad), with Mi
-dinero and Mis metas rendered as compact cards on the same screen
-instead of as separate tabs. This inversion of the v1
+screen is stratified into three large blocks — didactic learning, tests
+that reward Tokens, and euro simulations. The test block exposes the
+practice activities as a catalogue (three themed sections: Conceptos
+básicos / Vida cotidiana / Seguridad), while Mi dinero and Mis metas live
+as simulation cards on the same screen instead of separate tabs. This inversion of the v1
 "one single-purpose app, not a catalog" rule is intentional and
 scoped to the navigation model — the data-model rule above is
 untouched. The rationale, phases, and what does / does not change are

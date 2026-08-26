@@ -1,11 +1,14 @@
-# PRODUCT-DESIGN.md — Home como catálogo, dinero y metas como tarjetas
+# PRODUCT-DESIGN.md — Home en tres bloques: aprender, comprobar y simular
 
 > **Este documento es la fuente de verdad para el rediseño v2 de la home.**
 >
+> El mapa compacto de contenidos está en [`INDICE-APRENDIZAJE.md`](INDICE-APRENDIZAJE.md).
+>
 > Define un **cambio arquitectónico deliberado** en Okeymoney: la home
-> pasa a ser un catálogo de actividades estilo Apptonomia, mientras que
-> el estado de dinero y metas se mueve a dos tarjetas siempre visibles
-> en la misma pantalla. Esto **invierte** la regla de "app de un solo
+> pasa a ser un recorrido estilo Apptonomia con tres bloques visibles:
+> contenido didáctico, tests con recompensa en Tokens y simulación con
+> euros. El estado de dinero y metas vive en el tercer bloque, siempre
+> visible en la misma pantalla. Esto **invierte** la regla de "app de un solo
 > propósito, no catálogo" que [`technical.md`](../es/tecnico.md) §2 y
 > [`CLAUDE.md`](../../CLAUDE.md) declararon para v1 — la inversión es
 > intencionada, acotada a v2, y queda documentada aquí.
@@ -105,18 +108,13 @@ obliga a esconder el catálogo detrás de una pestaña.
 > **"Abrir Okeymoney y ver qué hacer a continuación."**
 
 La home es una sola pantalla que cuenta al usuario, de un vistazo,
-tres cosas:
+qué hacer a continuación en tres pasos:
 
-1. **Cuánto dinero tengo** (tarjeta Mi dinero) y **cuánto he
-   ahorrado** (tarjeta Mis metas). Las dos pequeñas, las dos siempre
-   visibles, las dos se actualizan en vivo según se completan
-   actividades y movimientos.
-2. **Qué toca aprender / practicar**. Las tarjetas del catálogo
-   exponen las 7 actividades en orden pedagógico (conceptos → vida
-   cotidiana → seguridad). Una actividad bloqueada muestra el porqué;
-   una completada muestra un check calmado.
-3. **Una acción rápida**: el FAB central "+" siempre abre "Registrar
-   un gasto" — la acción más común, a un tap desde cualquier sitio.
+1. **Aprender**: tarjetas didácticas breves, sin nota ni penalización.
+2. **Comprobar**: las 7 activities en orden pedagógico (conceptos → vida
+   cotidiana → seguridad), con Tokens y checks de progreso tranquilos.
+3. **Simular**: saldo, metas y registro de un gasto en euros, más el FAB
+   "+" como atajo para la acción cotidiana.
 
 ### 2.2 Catálogo ↔ plano del dinero, conceptualmente
 
@@ -134,7 +132,62 @@ Hay **dos planos** que deben estar separados pero visibles juntos:
 La home hace visible esta dualidad todo el rato: la tarjeta **Mi
 dinero** muestra € + Tokens, la tarjeta **Mis metas** muestra solo €,
 y el **catálogo** muestra la recompensa en Tokens que cada
-actividad acredita.
+  actividad acredita.
+
+### 2.3 Estratificación de la home
+
+La home implementa una progresión única y reconocible, tanto en el
+contenido como en el diseño visual:
+
+1. **Bloque didáctico — Aprende paso a paso.** Catorce tarjetas breves
+   explican el valor del dinero, las decisiones de compra, el ahorro, la
+   vuelta, la seguridad, los documentos, la foto financiera, el control,
+   la vida útil de los bienes, la rentabilidad, el riesgo y las operaciones
+   de inversión, los tipos de tarjetas y cuentas bancarias, y la vivienda.
+   No hay nota ni penalización: prepara para practicar.
+2. **Bloque de test — Comprueba lo que sabes.** Reúne las siete
+   activities existentes, agrupadas por tema. Cada actividad conserva el
+   bucle Socrático y acredita Tokens en el monedero de práctica, separado
+   del ledger de euros.
+3. **Bloque de simulación — Situaciones reales con dinero.** Las tarjetas
+   de saldo, metas y registro de gasto representan compras, pagos y ahorro
+   de la vida diaria con importes en euros. Incluye además prácticas de
+   vuelta, seguridad, derechos cotidianos, comunicación del dinero,
+   imprevistos y el ciclo documental pedido → albarán → factura → pago.
+   Son ensayos reversibles y seguros; solo el gasto confirmado escribe en
+   el ledger local y no existe conexión bancaria. La depreciación usa una
+   estimación lineal para enseñar la pérdida de valor; la obsolescencia
+   presenta decisiones de reparar, reutilizar o sustituir antes de gastar.
+   Rentabilidad y riesgo se practican con una ganancia hipotética y una
+   comparación de plazo, disponibilidad y diversificación, sin prometer resultados.
+   También se reconocen las operaciones de compra/aportación, venta/reembolso,
+   cobro de rendimientos y traspaso, sin conectar con un bróker.
+   La práctica bancaria diferencia débito, crédito, prepago, cuenta corriente
+   y cuenta de ahorro por el origen y el momento del cobro, sin recomendar
+   entidades.
+   La práctica de vivienda compara alquiler y propiedad con gastos iniciales,
+   cuotas, mantenimiento, flexibilidad y plazo, sin imponer una respuesta.
+
+Cada bloque se presenta como una sección grande con borde de color,
+encabezado, texto de orientación y tarjetas blancas redondeadas. Es la
+misma gramática visual de Apptonomia: anclas tipo píldora, pictogramas
+grandes, mucho espacio y una sola columna en móvil. La estratificación es
+de navegación y presentación; no mezcla los almacenes de Tokens y euros.
+
+### 2.4 Ayuda progresiva para la autonomía
+
+Antes de los tres bloques aparece una tarjeta **Tu siguiente paso**. Lee
+solo el estado local imprescindible y propone una acción concreta:
+
+- sin saldo anotado: contar y guardar el saldo actual;
+- con saldo pero sin meta: elegir algo para ahorrar;
+- con saldo y meta: registrar una compra y observar la consecuencia.
+
+La sugerencia es siempre opcional. No hay rachas, avisos de urgencia ni
+castigos por parar. Así la app acompaña una rutina financiera sencilla:
+**conocer → decidir → actuar → comprobar**. Cada acción vuelve al saldo,
+la meta o el historial para que la persona vea la relación entre su
+decisión y el resultado.
 
 ---
 

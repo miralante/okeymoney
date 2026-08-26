@@ -79,10 +79,54 @@
     }
   }
 
+  /**
+   * Returns a portable snapshot of every Okeymoney key, without exposing
+   * the localStorage prefix. Used by the local backup flow in the app.
+   */
+  function dump() {
+    var snapshot = {};
+    try {
+      for (var i = 0; i < localStorage.length; i++) {
+        var key = localStorage.key(i);
+        if (key && key.indexOf(PREFIX) === 0) {
+          var raw = localStorage.getItem(key);
+          try {
+            snapshot[key.slice(PREFIX.length)] = JSON.parse(raw);
+          } catch (parseError) {
+            /* locale is intentionally stored as a plain string by i18n.js. */
+            snapshot[key.slice(PREFIX.length)] = raw;
+          }
+        }
+      }
+    } catch (e) { /* return the keys collected before a storage error */ }
+    return snapshot;
+  }
+
+  /** Replaces local Okeymoney data from a previously validated snapshot. */
+  function restore(snapshot) {
+    if (!snapshot || typeof snapshot !== 'object' || Array.isArray(snapshot)) return false;
+    try {
+      clearAll();
+      Object.keys(snapshot).forEach(function (key) {
+        if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+        if (key === 'locale' && typeof snapshot[key] === 'string') {
+          localStorage.setItem(PREFIX + key, snapshot[key]);
+        } else {
+          set(key, snapshot[key]);
+        }
+      });
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   window.App.storage = {
     get: get,
     set: set,
     remove: remove,
-    clearAll: clearAll
+    clearAll: clearAll,
+    dump: dump,
+    restore: restore
   };
 })();

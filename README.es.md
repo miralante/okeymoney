@@ -45,10 +45,29 @@ mantienen coherentes.
 
 - 💼 **Mi dinero** — un panel de saldo de estado compartido (una sola
   cifra, usada en todas partes).
+- 🫴 **Recibir dinero** — anota dinero de bolsillo, trabajo, regalos o devoluciones.
 - 🎯 **Mis metas** — seguimiento de metas de ahorro con progreso por
   meta.
 - 🧾 **Registrar un gasto** — asistente paso a paso con categoría,
   importe y método de pago.
+- 📚 **Movimientos recientes** — resumen local de ingresos, gastos y ahorro.
+- 📌 **Pagos previstos** — recuerda pagos con fecha y revisa los vencidos sin descontarlos automáticamente.
+- 🧭 **Compás financiero** — resume ingresos, gastos, ahorro y la categoría donde más gastas.
+- 📦 **Ciclo de compra** — practica pedido, albarán, factura y pago; solo el pago registra el gasto.
+- 📊 **Foto financiera** — explica activos, pasivos previstos, ingresos y gastos con tus datos registrados.
+- 📉 **Vida de los activos** — practica la depreciación y decide qué hacer
+  cuando un bien queda obsoleto, sin cambiar el ledger real.
+- ⚖️ **Rentabilidad y riesgo** — calcula una ganancia hipotética y compara
+  plazo, disponibilidad del dinero y diversificación antes de decidir.
+- 🔄 **Operaciones de inversión** — distingue compra/aportación,
+  venta/reembolso, cobro de rendimientos y traspaso entre productos.
+- 💳 **Tarjetas y cuentas bancarias** — diferencia débito, crédito, prepago,
+  cuenta corriente y cuenta de ahorro en situaciones cotidianas.
+- 🏠 **Vivienda** — compara alquiler y propiedad teniendo en cuenta costes,
+  compromisos, mantenimiento y flexibilidad.
+- 📚 **Contabilidad y control** — registra los hechos y usa el presupuesto, el saldo y los compromisos para decidir.
+- 🧭 **Autonomía cotidiana** — simula derechos, comunicación del dinero e imprevistos sin tocar el saldo real.
+- ⚙️ **Ajustes y copias locales** — cambia el tamaño de texto y descarga o restaura tus datos sin cuenta.
 - 🛒 **Actividades de práctica** — un catálogo temático por Conceptos
   básicos / Vida cotidiana / Seguridad, cada una entrena una autonomía
   concreta (devolver cambio, qué-necesito-comprar, dónde-guardarlo,
