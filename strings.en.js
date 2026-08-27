@@ -105,8 +105,8 @@
         cta: 'Now, try what you have learned',
         lessonPhase: 'Phase 1 · Discover',
         testPhase: 'Phase 2 · Try it out',
-        testPhaseDetail: 'Now try this idea in an activity.',
-        testLink: 'Try: {title}',
+        testPhaseDetail: 'Ready to try it? Choose an activity and see what you know.',
+        testLink: 'Start: {title}',
         lessons: {
           moneyTitle: 'Get to know your money',
           moneyDetail: 'Learn to recognise coins, notes and what each one is worth.',

@@ -263,8 +263,8 @@ Each didactic unit contains two consecutive phases: the explanation and
 its corresponding test. The themed index is no longer duplicated as an
 independent catalogue.
 
-On desktop the two phases sit in columns; on mobile they stack to keep
-the sequence clear. Links in the second phase open the real activity at
+The two phases always appear vertically: content first, then the test.
+Links in the second phase open the real activity at
 `tools/<slug>/index.html` and show Token progress without duplicating the
 test content.
 

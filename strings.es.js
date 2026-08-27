@@ -104,9 +104,9 @@
         intro: 'Ideas sencillas para entender y manejar mejor tu dinero.',
         cta: 'Ahora, prueba lo que has aprendido',
         lessonPhase: 'Fase 1 · Descubre',
-        testPhase: 'Fase 2 · Ponlo en práctica',
-        testPhaseDetail: 'Ahora prueba esta idea con una actividad.',
-        testLink: 'Probar: {title}',
+        testPhase: 'Fase 2 · Pruébalo',
+        testPhaseDetail: '¿Te apetece probarlo? Elige una actividad y comprueba lo que sabes.',
+        testLink: 'Empezar: {title}',
         lessons: {
           moneyTitle: 'Conoce el valor de tu dinero',
           moneyDetail: 'Aprende a reconocer monedas, billetes y lo que vale cada uno.',

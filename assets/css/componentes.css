@@ -1011,7 +1011,7 @@
 
 .learning-unit {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-columns: 1fr;
   gap: 0;
   overflow: hidden;
   background: var(--superficie-1);
@@ -1038,7 +1038,7 @@
 
 .learning-unit__test {
   align-items: stretch;
-  border-left: 2px dashed var(--borde);
+  border-top: 2px dashed var(--borde);
 }
 
 .learning-unit__lesson h3 {
@@ -1357,8 +1357,6 @@
   .token-summary { border-radius: var(--radio-2); align-items: flex-start; flex-wrap: wrap; }
   .token-summary__hint { width: 100%; margin-left: 0; text-align: left; }
   .learning-block__cta { width: 100%; }
-  .learning-unit { grid-template-columns: 1fr; }
-  .learning-unit__test { border-left: 0; border-top: 2px dashed var(--borde); }
 }
 
 /* ==========================================================================

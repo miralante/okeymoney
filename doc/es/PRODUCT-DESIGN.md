@@ -281,10 +281,10 @@ Cada unidad didáctica contiene dos fases consecutivas: la explicación y
 el test correspondiente. El índice de temas ya no se duplica como un
 catálogo independiente.
 
-En escritorio las dos fases se ven en columnas; en móvil se apilan para
-conservar el orden. Los enlaces de la segunda fase llevan a la actividad
-real en `tools/<slug>/index.html`, y muestran el estado de Tokens sin
-duplicar el contenido del test.
+Las dos fases se muestran siempre en vertical: primero el contenido y,
+justo después, el test. Los enlaces de la segunda fase llevan a la
+actividad real en `tools/<slug>/index.html`, y muestran el estado de
+Tokens sin duplicar el contenido del test.
 
 ### 3.4 Barra de pestañas inferior
 
