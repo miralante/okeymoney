@@ -10,7 +10,7 @@
   "theme_color": "#0F1115",
   "icons": [
     {
-      "src": "./assets/img/icono.svg",
+      "src": "./assets/img/icono-euro.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"

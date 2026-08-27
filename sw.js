@@ -3,7 +3,7 @@
    Cache-first strategy for the app shell (works offline).
    When adding new files: add them to FILES and bump VERSION.
    ============================================================ */
-var VERSION = 'okeymoney-v51';
+var VERSION = 'okeymoney-v52';
 
 var FILES = [
   './index.html',
@@ -33,7 +33,7 @@ var FILES = [
   './assets/js/wallet.js',
   './assets/js/activity-runtime.js',
   './assets/css/activities.css',
-  './assets/img/icono.svg',
+  './assets/img/icono-euro.svg',
 
   /* Activities live in tools/<slug>/. When adding a new activity, append
      its files here AND bump VERSION so installed PWAs get the new shell. */
