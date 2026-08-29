@@ -458,7 +458,7 @@ stay available if the person wants to repeat the activity.
 
 ### 10.3 Test activities inside each unit
 
-Seven activities live under `tools/<slug>/`. Each one is a self-contained
+Eight activities live under `tools/<slug>/`. Each one is a self-contained
 folder with `index.html`, `app.js`, `strings.es.js`, `strings.en.js`,
 plus optional `data.js` and `styles.css`. All activities reuse the
 shared Socratic loop in `assets/js/activity-runtime.js`
@@ -466,13 +466,12 @@ shared Socratic loop in `assets/js/activity-runtime.js`
 custom keypad mechanic instead.
 
 Per [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), each **home** unit combines
-two consecutive phases: a didactic explanation followed by its
-corresponding test. `renderDidacticLessons()` builds these units from
+the didactic explanation with an integrated invitation to its corresponding
+test. `renderDidacticLessons()` builds these units from
 `DATA.didacticLessons` + `DATA.learningIndex`, and links each available
-test to its real `tools/<slug>/` route. The test block no longer repeats
-the catalogue: `renderTestIndex()` provides a compact index that returns
-to the unit where each test is performed. Units follow
-`DATA.didacticLessons`; the test index follows `DATA.activities`.
+test to its real `tools/<slug>/` route. The second home part gathers the
+guide to act: practical rules, the money cycle and euro simulations. Units
+follow `DATA.didacticLessons`, and each one links to its available tests.
 
 The catalogue, the per-activity reward, and the agent vocabulary are
 documented in [`activities.md`](activities.md) (catalogue of activities).

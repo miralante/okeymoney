@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ===== SEO: título, descripción, keywords, canonical, robots ===== -->
-  <title>Okeymoney — Aprende a manejar tu dinero, paso a paso</title>
+  <title>Okeymoney — Aprende a manejar tu dinero en tu día a día</title>
   <meta name="description" content="Okeymoney es una aplicación web gratuita y sin registro para aprender a manejar el dinero cotidiano: saldo, gastos, metas de ahorro y un asistente guiado para registrar gastos. Pensada para autonomía diaria. Parte de la suite Apptonomia.">
   <meta name="keywords" content="okeymoney, apptonomia, educación financiera, dinero cotidiano, autonomía personal, ahorro, gastos, easy read, lectura fácil, accesibilidad cognitiva, aplicaciones gratuitas sin registro, compras, presupuesto">
   <meta name="author" content="Apptonomia">
@@ -20,7 +20,7 @@
   <meta property="og:site_name" content="Apptonomia">
   <meta property="og:locale" content="es_ES">
   <meta property="og:locale:alternate" content="en_US">
-  <meta property="og:title" content="Okeymoney — Aprende a manejar tu dinero, paso a paso">
+  <meta property="og:title" content="Okeymoney — Aprende a manejar tu dinero en tu día a día">
   <meta property="og:description" content="Saldo, gastos, metas de ahorro y un asistente guiado para registrar gastos. Gratis y sin registro. Parte de la suite Apptonomia.">
   <meta property="og:url" content="https://okeymoney.apptonomia.uk/">
   <meta property="og:image" content="https://okeymoney.apptonomia.uk/og-image.png">
@@ -30,7 +30,7 @@
 
   <!-- ===== Twitter Card ===== -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Okeymoney — Aprende a manejar tu dinero, paso a paso">
+  <meta name="twitter:title" content="Okeymoney — Aprende a manejar tu dinero en tu día a día">
   <meta name="twitter:description" content="Saldo, gastos, metas de ahorro y un asistente guiado. Gratis y sin registro.">
   <meta name="twitter:image" content="https://okeymoney.apptonomia.uk/og-image.png">
 
@@ -59,7 +59,7 @@
         "inLanguage": ["es", "en"],
         "isAccessibleForFree": true,
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
-        "description": "Aprende a manejar el dinero cotidiano: saldo, gastos, metas de ahorro y un asistente guiado paso a paso.",
+        "description": "Aprende a manejar el dinero cotidiano: saldo, gastos, metas de ahorro y decisiones prácticas.",
         "parentOrganization": { "@id": "https://apptonomia.uk/#org" }
       },
       {
@@ -80,10 +80,9 @@
 </head>
 <body data-tema="dinero">
   <!--
-    Home unificado (Fase 3 de PRODUCT-DESIGN.md + estética Apptonomia):
-    un único scroll con tres bloques visibles y en orden pedagógico:
-    1) didáctico, 2) tests que recompensan con Tokens y 3) simulación
-    de decisiones en euros. Las tarjetas siguen el patrón de módulos
+    Home unificado: un único scroll con dos partes y en orden pedagógico:
+    1) didácticos (cada unidad incluye su test) y 2) guía para actuar,
+    con técnicas y simulaciones en euros. Las tarjetas siguen el patrón de módulos
     grandes, bordes de color y pictogramas del resto de la suite.
   -->
   <div class="container" id="app">
@@ -99,8 +98,8 @@
       </div>
     </header>
 
-    <!-- Anclas a los tres bloques de aprendizaje. -->
-    <nav class="anclas-modulo" aria-label="Ir a un bloque" id="anclasModulo"></nav>
+    <!-- Anclas a las dos partes del recorrido. -->
+    <nav class="anclas-modulo" aria-label="Ir a una parte" id="anclasModulo"></nav>
 
     <!-- Guía contextual: propone una sola acción útil según el estado
          actual, sin convertirla en obligación ni en una racha. -->
@@ -116,7 +115,7 @@
 
     <main class="pila modulos">
 
-      <!-- Bloque 1: contenido didáctico breve antes de cualquier prueba. -->
+      <!-- Parte 1: contenidos didácticos con su test inmediato. -->
       <section id="bloque-didactico" class="learning-block learning-block--didactic" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow">01</p>
@@ -124,35 +123,84 @@
           <p class="learning-block__intro" data-i18n="blocks.didactic.intro">Ideas sencillas para entender y manejar mejor tu dinero.</p>
         </div>
         <div id="didacticLessons" class="grid-tarjetas didactic-grid"></div>
-        <a class="btn btn--secundario learning-block__cta" href="#bloque-test" data-i18n="blocks.didactic.cta">Ahora, prueba lo que has aprendido</a>
+        <a class="btn btn--secundario learning-block__cta" href="#bloque-guia" data-i18n="blocks.didactic.cta">Ahora, llévalo a la práctica</a>
       </section>
 
-      <!-- Bloque 2: índice de tests; cada actividad se ejecuta dentro de su unidad. -->
-      <section id="bloque-test" class="learning-block learning-block--test" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
+      <!-- Parte 2: guía para actuar, técnicas y simulaciones con euros. -->
+      <section id="bloque-guia" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow">02</p>
-          <h2 data-i18n="blocks.test.title">Pon a prueba lo que sabes</h2>
-          <p class="learning-block__intro" data-i18n="blocks.test.intro">Cada unidad termina con una actividad. Practica con situaciones y gana Tokens.</p>
+          <h2 data-i18n="blocks.guide.title">Guía para actuar con tu dinero</h2>
+          <p class="learning-block__intro" data-i18n="blocks.guide.intro">Ideas prácticas para decidir, guardar, gastar y revisar tu dinero.</p>
         </div>
-        <div class="token-summary" aria-live="polite">
-          <span class="token-summary__icon" aria-hidden="true">🪙</span>
-          <span class="token-summary__copy">
-            <span class="token-summary__label" data-i18n="blocks.test.walletLabel">Tokens de práctica</span>
-            <strong id="homeWalletBalance">0</strong>
-          </span>
-          <span class="token-summary__hint" data-i18n="blocks.test.rewardHint">Cada actividad suma Tokens una vez.</span>
-        </div>
-        <p class="test-index__intro" data-i18n="blocks.test.indexIntro">Cada unidad tiene su propia actividad. Usa este índice para volver a la que quieras.</p>
-        <div id="testActivities" class="learning-block__activities"></div>
-      </section>
-
-      <!-- Bloque 3: simulación con el ledger local de euros. -->
-      <section id="bloque-simulacion" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
-        <div class="learning-block__header">
-          <p class="learning-block__eyebrow">03</p>
-          <h2 data-i18n="blocks.simulation.title">Simula situaciones reales con dinero</h2>
-          <p class="learning-block__intro" data-i18n="blocks.simulation.intro">Practica compras, gastos y ahorro con dinero en euros, en un espacio seguro.</p>
-        </div>
+        <aside class="guide-callout" aria-labelledby="guideTechniqueTitle">
+          <p class="learning-block__eyebrow" data-i18n="blocks.guide.techniqueEyebrow">Una técnica para empezar</p>
+          <h3 id="guideTechniqueTitle" data-i18n="blocks.guide.techniqueTitle">Reserva primero lo que necesitarás este mes</h3>
+          <p data-i18n="blocks.guide.techniqueDetail">Antes de pensar en otros gastos, aparta el dinero de vivienda, comida, transporte y recibos.</p>
+          <ol>
+            <li data-i18n="blocks.guide.techniqueStep1">Calcula cuánto necesitarás.</li>
+            <li data-i18n="blocks.guide.techniqueStep2">Guárdalo en un lugar separado.</li>
+            <li data-i18n="blocks.guide.techniqueStep3">Con lo que quede, planifica ahorro y gastos.</li>
+          </ol>
+        </aside>
+        <section class="guide-principles" aria-labelledby="guidePrinciplesTitle">
+          <div class="guide-principles__header">
+            <h3 id="guidePrinciplesTitle" data-i18n="blocks.guide.principlesTitle">Otras buenas prácticas</h3>
+            <p data-i18n="blocks.guide.principlesIntro">Pequeñas decisiones que ayudan a mantener el control.</p>
+          </div>
+          <div class="guide-principles__grid">
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">🧾</span>
+              <h4 data-i18n="blocks.guide.principles.fixedTitle">Cubre primero lo fijo</h4>
+              <p data-i18n="blocks.guide.principles.fixedDetail">Paga recibos y compromisos antes de decidir sobre otros gastos.</p>
+            </article>
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">🪙</span>
+              <h4 data-i18n="blocks.guide.principles.saveTitle">Ahorra al recibir</h4>
+              <p data-i18n="blocks.guide.principles.saveDetail">Aparta una cantidad cuando entra dinero, aunque sea pequeña.</p>
+            </article>
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">⏸️</span>
+              <h4 data-i18n="blocks.guide.principles.pauseTitle">Espera antes de comprar</h4>
+              <p data-i18n="blocks.guide.principles.pauseDetail">Para las compras no necesarias, compara y date un tiempo para decidir.</p>
+            </article>
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">✂️</span>
+              <h4 data-i18n="blocks.guide.principles.reduceTitle">Reduce lo prescindible</h4>
+              <p data-i18n="blocks.guide.principles.reduceDetail">Revisa suscripciones y pequeños gastos repetidos; quédate con lo que de verdad usas.</p>
+            </article>
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">🛟</span>
+              <h4 data-i18n="blocks.guide.principles.marginTitle">Deja un margen</h4>
+              <p data-i18n="blocks.guide.principles.marginDetail">No uses todo el saldo: guarda algo para los imprevistos.</p>
+            </article>
+            <article class="guide-principle">
+              <span class="guide-principle__icon" aria-hidden="true">🔎</span>
+              <h4 data-i18n="blocks.guide.principles.reviewTitle">Revisa con frecuencia</h4>
+              <p data-i18n="blocks.guide.principles.reviewDetail">Una vez por semana, mira qué entró, qué salió y qué viene.</p>
+            </article>
+          </div>
+        </section>
+        <section class="guide-roadmap" aria-labelledby="guideRoadmapTitle">
+          <div class="guide-roadmap__header">
+            <h3 id="guideRoadmapTitle" data-i18n="blocks.guide.roadmapTitle">Organiza, planifica y mejora</h3>
+            <p data-i18n="blocks.guide.roadmapIntro">Usa esta pequeña rutina para tomar decisiones con más calma.</p>
+          </div>
+          <div class="guide-roadmap__grid">
+            <article class="guide-roadmap__step">
+              <h4 data-i18n="blocks.guide.roadmap.organiseTitle">1. Organiza</h4>
+              <p data-i18n="blocks.guide.roadmap.organiseDetail">Apunta tus ingresos, gastos y pagos previstos. Clasifica cada gasto como necesario o prescindible.</p>
+            </article>
+            <article class="guide-roadmap__step">
+              <h4 data-i18n="blocks.guide.roadmap.planTitle">2. Planifica</h4>
+              <p data-i18n="blocks.guide.roadmap.planDetail">Reserva lo esencial del mes, fija un límite para cada tipo de gasto y elige una meta de ahorro.</p>
+            </article>
+            <article class="guide-roadmap__step">
+              <h4 data-i18n="blocks.guide.roadmap.improveTitle">3. Mejora</h4>
+              <p data-i18n="blocks.guide.roadmap.improveDetail">Revisa una vez por semana, reduce lo que no usas y ajusta el plan cuando cambien tus circunstancias.</p>
+            </article>
+          </div>
+        </section>
         <div id="financialCycle" class="financial-cycle"></div>
         <div class="grid-tarjetas simulation-grid">
           <a href="#" class="tarjeta tarjeta--money simulation-card" id="tarjetaSaldo" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">

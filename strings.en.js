@@ -25,7 +25,7 @@
       saludo: 'Hi. What do you want to do today?',
       moreGoals: '+{n} more',
       anchorAria: 'Jump to {theme}',
-      anchorNavAria: 'Jump to a block',
+      anchorNavAria: 'Jump to a part',
       balanceLabel: 'You have',
       editBalanceAria: 'Change how much money you have',
       editHint: 'Tap to change how much money you have',
@@ -63,12 +63,12 @@
       controlWarning: 'Your planned commitments are higher than your current balance. Review dates or amounts.',
       controlAction: 'Plan another purchase',
       cycleTitle: 'My money cycle',
-      cycleIntro: 'Follow this order: decide, receive, save and use your money.',
+      cycleIntro: 'Set aside what you need for the month first; then decide, save and spend.',
       cycleDone: 'Step practised',
       cycle: {
         budgetTitle: 'Budget',
-        budgetDetail: 'Decide how much you can spend.',
-        budgetAction: 'Open budget',
+        budgetDetail: 'Set aside what you need for the month first.',
+        budgetAction: 'Prepare my budget',
         incomeTitle: 'Receive',
         incomeDetail: 'Record when money comes in.',
         incomeAction: 'Record income',
@@ -88,8 +88,8 @@
         goalAction: 'Create a goal',
         expenseDetail: 'Practise a purchase and see how your balance changes.',
         expenseAction: 'Add an expense',
-        budgetDetail: 'Start by deciding how much you can spend.',
-        budgetAction: 'Prepare a budget',
+        budgetDetail: 'Start by setting aside what you will need this month.',
+        budgetAction: 'Prepare my budget',
         incomeDetail: 'Then record the money that comes in.',
         incomeAction: 'Record income',
         savingDetail: 'Now set an amount aside to save.',
@@ -102,9 +102,9 @@
       didactic: {
         title: 'Learn about your money',
         intro: 'Simple ideas to help you understand and manage your money.',
-        cta: 'Now, try what you have learned',
-        lessonPhase: 'Phase 1 · Discover',
-        testPhase: 'Phase 2 · Try it out',
+        cta: 'Now, put it into practice',
+        lessonPhase: "Today's idea",
+        testPhase: 'Optional practice',
         testPhaseDetail: 'Ready to try it? Choose an activity and see what you know.',
         testLink: 'Start: {title}',
         lessons: {
@@ -112,8 +112,10 @@
           moneyDetail: 'Learn to recognise coins, notes and what each one is worth.',
           choicesTitle: 'Choose what you need',
           choicesDetail: 'Tell apart what you need from what you feel like having.',
-          budgetTitle: 'Organise your purchases',
-          budgetDetail: 'Put what you want to buy in order before spending.',
+          budgetTitle: 'Classify and organise your spending',
+          budgetDetail: 'Separate needs from wants and put them in order before spending.',
+          beforeBuyingTitle: 'Ask four questions before buying',
+          beforeBuyingDetail: 'Check whether you need it, can afford it, can find a better option and how you will feel afterwards.',
           changeTitle: 'Pay and check your change',
           changeDetail: 'Make sure the change you get back is right.',
           savingTitle: 'Put money aside for something you want',
@@ -136,6 +138,42 @@
           bankProductsDetail: 'See when you use your own balance, credit or money you have set aside.',
           housingTitle: 'Choose where to live: rent or buy?',
           housingDetail: 'Compare costs, commitments and freedom before deciding.'
+        }
+      },
+      guide: {
+        title: 'A guide for using your money',
+        intro: 'Practical ideas for deciding, setting money aside, spending and checking your money.',
+        techniqueEyebrow: 'A money habit to start',
+        techniqueTitle: 'Set aside what you will need this month first',
+        techniqueDetail: 'Before other spending, put aside money for housing, food, transport and bills.',
+        techniqueStep1: 'Work out what you will need.',
+        techniqueStep2: 'Keep it somewhere separate.',
+        techniqueStep3: 'Use what remains to plan saving and spending.',
+        principlesTitle: 'Other good habits',
+        principlesIntro: 'Small decisions that help you stay in control.',
+        principles: {
+          fixedTitle: 'Cover fixed costs first',
+          fixedDetail: 'Pay bills and commitments before deciding about other spending.',
+          saveTitle: 'Save when money comes in',
+          saveDetail: 'Set an amount aside when money arrives, even if it is small.',
+          pauseTitle: 'Pause before buying',
+          pauseDetail: 'For non-essential purchases, compare options and give yourself time.',
+          reduceTitle: 'Cut back on extras',
+          reduceDetail: 'Review subscriptions and repeated small costs; keep what you genuinely use.',
+          marginTitle: 'Keep some margin',
+          marginDetail: 'Do not use your whole balance: keep some for surprises.',
+          reviewTitle: 'Check in regularly',
+          reviewDetail: 'Once a week, see what came in, what went out and what is next.'
+        },
+        roadmapTitle: 'Organise, plan and improve',
+        roadmapIntro: 'Use this short routine to make calmer decisions.',
+        roadmap: {
+          organiseTitle: '1. Organise',
+          organiseDetail: 'Write down income, spending and planned payments. Classify each expense as essential or optional.',
+          planTitle: '2. Plan',
+          planDetail: 'Set aside the month’s essentials, set a limit for each type of spending and choose a saving goal.',
+          improveTitle: '3. Improve',
+          improveDetail: 'Review once a week, cut back on what you do not use and adjust the plan when things change.'
         }
       },
       test: {
@@ -282,7 +320,7 @@
         planBudgetTitle: 'How much can you spend?',
         planBudgetInstruction: 'Write a budget for your purchase.',
         planChoiceTitle: 'Choose a purchase',
-        planChoiceInstruction: 'Look at the price and decide calmly.',
+        planChoiceInstruction: 'Look at the price and category, then decide calmly.',
         planRemaining: 'Afterwards you would have {balance}.',
         planOverBudget: 'This purchase is over your budget.',
         planOverBalance: 'This purchase is higher than the money you have now.',
@@ -380,8 +418,8 @@
     },
 
     expense: {
-      categoryTitle: 'What did you spend on?',
-      categoryInstruction: 'Choose a picture.',
+      categoryTitle: 'What kind of spending is it?',
+      categoryInstruction: 'Choose a category and see whether it is essential or optional.',
       amountTitle: 'How much did you spend?',
       amountInstruction: 'Write the price.',
       confirmTitle: 'Check your expense',
@@ -456,7 +494,11 @@
       transport: 'Transport',
       clothes: 'Clothes',
       health: 'Health',
-      other: 'Other'
+      other: 'Other',
+      classification: {
+        essential: 'Essential',
+        discretionary: 'Optional'
+      }
     },
 
     goals: {
@@ -499,6 +541,7 @@
         'concepts-money':  'Find out what each coin is worth',
         'needs-vs-wants':  'Do you need it or want it?',
         'budget-first':    'What is best to buy first?',
+        'before-buying':   'Four questions before buying',
         'go-shopping':     'Make your purchase',
         'change-back':     'Check your change',
         'my-shopping-day': 'Plan your shopping day',
@@ -508,6 +551,7 @@
         'concepts-money':  'Learn to recognise coins and notes by their value.',
         'needs-vs-wants':  'Think about whether something is needed or simply wanted.',
         'budget-first':    'Put your purchases in order when money is limited.',
+        'before-buying':   'Slow down impulse purchases and decide more calmly.',
         'go-shopping':     'Make a small purchase without going over budget.',
         'change-back':     'Check how much money you should get back.',
         'my-shopping-day': 'Practise everything together in a full shop.',

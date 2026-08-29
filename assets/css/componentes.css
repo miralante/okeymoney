@@ -943,9 +943,9 @@
 }
 
 /* ==========================================================================
-   §3.Z Tres bloques de aprendizaje (estética Apptonomia)
-   Cada bloque funciona como una sección reconocible del recorrido:
-   explicación → comprobación con Tokens → simulación en euros.
+   §3.Z Dos partes de aprendizaje (estética Apptonomia)
+   Cada parte funciona como una sección reconocible del recorrido:
+   unidades didácticas con test → guía y simulación en euros.
    ========================================================================== */
 .learning-block {
   display: flex;
@@ -961,7 +961,6 @@
 }
 
 .learning-block--didactic { background: color-mix(in srgb, var(--acento-3-suave) 32%, var(--superficie-1)); }
-.learning-block--test { background: color-mix(in srgb, var(--acento-2-suave) 24%, var(--superficie-1)); }
 .learning-block--simulation { background: color-mix(in srgb, var(--acento-suave) 26%, var(--superficie-1)); }
 
 .learning-block__header {
@@ -1027,7 +1026,7 @@
   align-items: center;
   justify-content: center;
   gap: var(--espacio-2);
-  min-height: 190px;
+  min-height: 0;
   padding: var(--espacio-4);
   text-align: center;
 }
@@ -1038,7 +1037,9 @@
 
 .learning-unit__test {
   align-items: stretch;
-  border-top: 2px dashed var(--borde);
+  border-top: 1px solid var(--borde);
+  background: var(--superficie-1);
+  padding-top: var(--espacio-3);
 }
 
 .learning-unit__lesson h3 {
@@ -1047,10 +1048,16 @@
   line-height: var(--linea-apretada);
 }
 
-.learning-unit__lesson p:not(.learning-unit__phase),
-.learning-unit__test > p:not(.learning-unit__phase) {
+.learning-unit__lesson p,
+.learning-unit__test-prompt {
   color: var(--texto-secundario);
   font-size: var(--texto-300);
+}
+
+.learning-unit__test-prompt {
+  margin: 0;
+  color: var(--texto-primario);
+  font-weight: var(--peso-fuerte);
 }
 
 .learning-unit__phase {
@@ -1095,71 +1102,151 @@
   color: var(--texto-primario);
 }
 
-.test-index__intro {
+.guide-callout {
+  padding: var(--espacio-4);
+  border: 2px solid var(--acento);
+  border-radius: var(--radio-2);
+  background: var(--superficie-1);
+  box-shadow: var(--sombra-1);
+}
+
+.guide-callout h3 {
+  margin: var(--espacio-1) 0 var(--espacio-2);
+  color: var(--acento);
+  font-size: var(--texto-500);
+  line-height: var(--linea-apretada);
+}
+
+.guide-callout > p:not(.learning-block__eyebrow) {
   margin: 0;
   color: var(--texto-secundario);
   font-size: var(--texto-300);
 }
 
-.test-index {
+.guide-callout ol {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espacio-2);
+  margin: var(--espacio-3) 0 0;
+  padding-left: 1.4rem;
+  color: var(--texto-primario);
+  font-size: var(--texto-300);
+}
+
+.guide-principles {
+  display: flex;
+  flex-direction: column;
   gap: var(--espacio-3);
 }
 
-.test-index__item {
-  display: flex;
-  align-items: center;
+.guide-principles__header h3 {
+  margin: 0;
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+}
+
+.guide-principles__header p {
+  margin: var(--espacio-1) 0 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+}
+
+.guide-principles__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: var(--espacio-3);
-  min-height: var(--tocable);
+}
+
+.guide-principle {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: var(--espacio-2);
+  align-items: start;
   padding: var(--espacio-3);
   background: var(--superficie-1);
   border: 1px solid var(--borde);
   border-radius: var(--radio-1);
+}
+
+.guide-principle__icon {
+  grid-row: span 2;
+  font-size: 28px;
+  line-height: 1;
+}
+
+.guide-principle h4 {
+  margin: 0;
   color: var(--texto-primario);
-  text-decoration: none;
+  font-size: var(--texto-300);
+  line-height: var(--linea-apretada);
 }
 
-.test-index__item:hover,
-.test-index__item:focus-visible,
-.test-index__item.is-done {
-  border-color: var(--acento-2);
-  background: var(--acento-2-suave);
+.guide-principle p {
+  margin: var(--espacio-1) 0 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
 }
 
-.test-index__icon { font-size: 30px; line-height: 1; }
-.test-index__item strong,
-.test-index__item small { display: block; }
-.test-index__item small { color: var(--texto-secundario); font-size: var(--texto-200); }
+.option-classification {
+  display: block;
+  margin-top: 2px;
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-medio);
+}
 
-.learning-block__activities {
+.expense-classification {
+  display: inline-block;
+  margin: 0;
+  padding: 3px 9px;
+  border-radius: var(--radio-pill);
+  background: var(--acento-3-suave);
+  color: var(--texto-primario);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+}
+
+.guide-roadmap {
   display: flex;
   flex-direction: column;
-  gap: var(--espacio-4);
+  gap: var(--espacio-3);
 }
 
-.learning-block__activities .modulo {
+.guide-roadmap__header h3 {
+  margin: 0;
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+}
+
+.guide-roadmap__header p {
+  margin: var(--espacio-1) 0 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+}
+
+.guide-roadmap__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--espacio-3);
+}
+
+.guide-roadmap__step {
   padding: var(--espacio-3);
-  background: color-mix(in srgb, var(--superficie-1) 72%, transparent);
+  border-left: 4px solid var(--acento);
+  background: var(--superficie-1);
   border-radius: var(--radio-1);
 }
 
-.token-summary {
-  display: flex;
-  align-items: center;
-  gap: var(--espacio-3);
-  padding: var(--espacio-3) var(--espacio-4);
-  background: var(--superficie-1);
-  border: 2px solid var(--acento-2);
-  border-radius: var(--radio-pill);
-  box-shadow: var(--sombra-1);
+.guide-roadmap__step h4 {
+  margin: 0;
+  color: var(--acento);
+  font-size: var(--texto-300);
 }
 
-.token-summary__icon { font-size: 30px; line-height: 1; }
-.token-summary__copy { display: flex; flex-direction: column; gap: 2px; }
-.token-summary__label { color: var(--texto-secundario); font-size: var(--texto-200); }
-.token-summary__copy strong { color: var(--texto-primario); font-size: var(--texto-500); line-height: 1; }
-.token-summary__hint { margin-left: auto; color: var(--texto-secundario); font-size: var(--texto-200); text-align: right; }
+.guide-roadmap__step p {
+  margin: var(--espacio-1) 0 0;
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
+}
 
 .simulation-card--action {
   width: 100%;
@@ -1354,8 +1441,6 @@
 
 @media (max-width: 640px) {
   .learning-block { padding: var(--espacio-4) var(--espacio-3); }
-  .token-summary { border-radius: var(--radio-2); align-items: flex-start; flex-wrap: wrap; }
-  .token-summary__hint { width: 100%; margin-left: 0; text-align: left; }
   .learning-block__cta { width: 100%; }
 }
 

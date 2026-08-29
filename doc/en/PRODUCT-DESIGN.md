@@ -1,13 +1,13 @@
-# PRODUCT-DESIGN.md — Home in three blocks: learn, check and simulate
+# PRODUCT-DESIGN.md — Home in two parts: didactic and guide to act
 
 > **This document is the source of truth for the v2 home redesign.**
 >
 > The compact content map is in [`LEARNING-INDEX.md`](LEARNING-INDEX.md).
 >
 > It defines a deliberate **architectural change** to Okeymoney: the home
-> becomes an Apptonomia-style three-part journey: didactic content,
-> Token-rewarded tests, and euro simulations. Money and goals live in the
-> third block, always visible on the same screen. This **inverts** the
+> becomes an Apptonomia-style two-part journey: didactic content (with
+> integrated tests) and a guide to act through euro simulations. Money and
+> goals live in the second part, always visible on the same screen. This **inverts** the
 > "single-purpose app, not a catalog"
 > rule that [`technical.md`](../en/technical.md) §2 and [`CLAUDE.md`](../../CLAUDE.md)
 > declared for v1 — the inversion is intentional, scoped to v2, and
@@ -42,13 +42,10 @@ hiding the catalogue behind a tab.
 
 ### 1.2 What v2 changes
 
-- **The home stops being a tab and becomes a catalogue-first screen.**
-  The hero of the home is the Apptonomia-style grid of activities,
-  grouped into three themed sections in pedagogical order:
-  1. Conceptos básicos — what money is, need vs want.
-  2. Vida cotidiana — budget, shopping, change, full shopping day.
-  3. Seguridad — scam awareness (one activity, shown last because it
-     is the highest-stakes practical skill).
+- **The home stops being a tab and becomes a two-part screen.** The first
+  part presents didactic units grouped by topic and difficulty; every unit
+  includes its immediate test. The second part gathers the guide to act and
+  euro simulations.
 - **The real money state moves to a compact "Mi dinero" card** at the
   top of the home (above the catalogue), not behind a tab.
 - **The goals state moves to a compact "Mis metas" card** below "Mi
@@ -73,7 +70,7 @@ hiding the catalogue behind a tab.
 - **Accessibility rules** (`SPEC.md` §3.5), **language policy** (es
   source of truth, en parity, [`I18N.md`](I18N.md)), **dark theme**,
   **privacy-by-default** — all unchanged.
-- **The 7 activities themselves** stay at the same paths
+- **The 8 activities themselves** stay at the same paths
   (`tools/<slug>/`). Only their grouping on the home changes order.
 
 ### 1.4 Out of scope (explicit non-goals)
@@ -96,13 +93,12 @@ hiding the catalogue behind a tab.
 > **"Open Okeymoney and see what to do next."**
 
 The home is a single screen that tells the user, at a glance, what to do
-next in three steps:
+next in two parts:
 
-1. **Learn**: short didactic cards with no score or penalty.
-2. **Check**: the 7 activities in pedagogical order (conceptos → vida
-   cotidiana → seguridad), with Tokens and calm progress checks.
-3. **Simulate**: balance, goals and expense entry in euros, with the
-   action available directly in this block.
+1. **Didactic**: short units, each with its immediate test and no score or
+   penalty.
+2. **Guide to act**: practical rules, balance, goals and simulations with
+   euro amounts.
 
 ### 2.2 Catalogue ↔ money plane, conceptually
 
@@ -118,25 +114,25 @@ There are **two planes** that must stay separate but visible together:
   Tokens by practising).
 
 The home makes this duality visible at all times: the **Mi dinero**
-card shows € + Tokens, the **Mis metas** card shows only €, and the
-**catalogue** shows the Tokens reward each activity credits.
+card shows € + Tokens, the **Mis metas** card shows only €, and each test
+shows the Tokens reward it credits.
 
-### 2.3 Three-layer home architecture
+### 2.3 Two-part home architecture
 
 The home follows one clear progression in both content and visual design:
 
-1. **Didactic block — Learn step by step.** Fourteen short cards explain
+1. **Didactic part — Learn about your money.** Fifteen short units explain
    money value, spending choices, saving, change, safety, documents, the
    money picture, control, asset life, return, risk, investment operations and
    bank card and account types, and housing choices.
    Each unit contains the explanation and its corresponding test phase
    immediately after it. There is no score or penalty;
    this block prepares the person to practise.
-2. **Test block — Check what you know.** It shows an index of the seven
-   existing activities and returns to each unit. The test runs inside its
-   unit, keeps its Socratic loop and credits Tokens to the practice wallet,
-   separate from the euro ledger.
-3. **Simulation block — Real money situations.** Balance, goals and
+2. **Guide to act — Real money situations.** It gathers principles and good
+   habits (cover fixed costs, save when money arrives, cut back on extras,
+   keep some margin and review regularly), plus the money cycle and simulation cards. The guide groups these instructions into three moments:
+   organise, plan and improve. The practice wallet stays separate from the
+   euro ledger. Balance, goals and
    expense cards represent everyday shopping, payments and saving with
    euro amounts. It also includes change, safety, everyday-rights,
    money-communication, emergency-response and the order → delivery note
@@ -151,7 +147,7 @@ The home follows one clear progression in both content and visual design:
    payments, maintenance, flexibility and time horizon, without imposing one
    answer.
 
-Each block is a large section with a coloured edge, heading, orientation
+Each part is a large section with a coloured edge, heading, orientation
 copy and rounded white cards. It uses Apptonomia's visual grammar: pill
 anchors, large pictograms, generous spacing and a single-column mobile
 layout. The stratification is navigation and presentation; Token and euro
@@ -159,7 +155,7 @@ stores remain separate.
 
 ### 2.4 Progressive support for autonomy
 
-Before the three blocks, a **Your next step** card reads only the minimum
+Before the two parts, a **Your next step** card reads only the minimum
 local state and suggests one useful action:
 
 - no balance recorded: count and save the current balance;
@@ -259,14 +255,10 @@ A compact card listing goals with their progress bars:
 
 ### 3.3 Didactic unit with an integrated test
 
-Each didactic unit contains two consecutive phases: the explanation and
-its corresponding test. The themed index is no longer duplicated as an
-independent catalogue.
-
-The two phases always appear vertically: content first, then the test.
-Links in the second phase open the real activity at
-`tools/<slug>/index.html` and show Token progress without duplicating the
-test content.
+Each didactic unit is a single card: it shows the explanation followed
+directly by an invitation linking to its corresponding test. The themed
+index is no longer duplicated as an independent catalogue, and there is no
+separate second-phase panel.
 
 ### 3.4 Bottom tab bar
 
@@ -304,9 +296,9 @@ This keeps the **max-3-level navigation rule**
 
 ## 4. Unit and test content (level 0)
 
-### 4.1 The 7 activities and their units
+### 4.1 The 8 activities and their units
 
-The 7 activities already documented in [`activities.md`](activities.md)
+The 8 activities already documented in [`activities.md`](activities.md)
 are assigned to didactic units through `DATA.learningIndex`. The table
 keeps their themes and difficulty order:
 
@@ -315,25 +307,26 @@ keeps their themes and difficulty order:
 | Conceptos básicos | 1 | `concepts-money` | ¿Qué es el dinero? / What is money? | 5,00 |
 | Conceptos básicos | 2 | `needs-vs-wants` | Necesito o quiero / Need or want | 8,00 |
 | Vida cotidiana | 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | 12,00 |
-| Vida cotidiana | 4 | `go-shopping` | Ir a la tienda / Go shopping | 20,00 |
-| Vida cotidiana | 5 | `change-back` | Calcular la vuelta / Working out change | 30,00 |
-| Vida cotidiana | 6 | `my-shopping-day` | Mi compra del día / My shopping day | 60,00 |
-| Seguridad | 7 | `safe-money` | Mi dinero está seguro / My money is safe | 15,00 |
+| Vida cotidiana | 4 | `before-buying` | Cuatro preguntas antes de comprar / Four questions before buying | 10,00 |
+| Vida cotidiana | 5 | `go-shopping` | Ir a la tienda / Go shopping | 20,00 |
+| Vida cotidiana | 6 | `change-back` | Calcular la vuelta / Working out change | 30,00 |
+| Vida cotidiana | 7 | `my-shopping-day` | Mi compra del día / My shopping day | 60,00 |
+| Seguridad | 8 | `safe-money` | Mi dinero está seguro / My money is safe | 15,00 |
 
-Same total reward (🔷 150,00 if everything is completed) as in v1.
+The total reward is now 🔷 160,00 when all 8 activities are completed.
 
 ### 4.2 Journey accents
 
 The didactic phase uses the warm accent and the test phase uses the blue
-accent; block 2 reuses blue for its index. Showing both phases in one
+accent; the guide to act uses the green accent. Showing both phases in one
 unit makes the learn → check order visible.
 
-### 4.3 Unit and index rendering
+### 4.3 Unit and guide rendering
 
-`renderDidacticLessons()` generates the units and their test links;
-`renderTestIndex()` generates the alternative index in block 2. Both
-renderers consume the same `DATA.learningIndex` relationship, and
-`scripts/check.js` verifies that every unit has a test and a valid route.
+`renderDidacticLessons()` generates the units and their test links; the
+guide to act renders alongside the money cycle and euro simulations. Both
+consume the same `DATA.learningIndex` relationship, and `scripts/check.js`
+verifies that every unit has a test and a valid route.
 
 ---
 
@@ -453,7 +446,7 @@ elements.
 | `TODO.md` | **Update** | The visual redesign done in v1.1 (already shipped) is referenced; v2 navigation work is a separate, scoped effort. |
 | `CLAUDE.md` | **Update** | Add a note that the "no catalogue" rule is inverted for the *navigation model* in v2; the data-layer rule still holds. |
 | `doc/en/technical.md` | **Update** | §2 reframes the "single-purpose app" rationale: data layer stays shared, navigation becomes catalogue-first. |
-| `doc/en/activities.md` | **Update** | Regroup the table into the three v2 themes (`concepts` / `daily` / `safety`); the catalogue of 7 activities itself is unchanged. |
+| `doc/en/activities.md` | **Update** | Regroup the table into the three v2 themes (`concepts` / `daily` / `safety`); the catalogue now contains 8 activities. |
 | `sw.js` | **Bump VERSION + FILES** | Same pattern as v1.1 visual redesign. |
 
 ---
@@ -511,7 +504,7 @@ v2 ships when **all four phases** are done and:
 1. The home renders cards + catalogue in one vertical scroll, dark
    theme active, WCAG AA contrast.
 2. There is no floating button: expense entry lives in simulation.
-3. The 7 activities are reachable from the home catalogue.
+3. The 8 activities are reachable from the home catalogue.
 4. The Mi dinero card, Mis metas card, history view, goals view,
    register-expense wizard, create-goal wizard, and add-money-to-goal
    wizard all keep working end-to-end with the existing data schema.

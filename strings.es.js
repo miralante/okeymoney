@@ -25,7 +25,7 @@
       saludo: 'Hola. ¿Qué quieres hacer hoy?',
       moreGoals: '+{n} más',
       anchorAria: 'Ir a {theme}',
-      anchorNavAria: 'Ir a un bloque',
+      anchorNavAria: 'Ir a una parte',
       balanceLabel: 'Tienes',
       editBalanceAria: 'Cambiar cuánto dinero tienes',
       editHint: 'Toca para cambiar cuánto dinero tienes',
@@ -63,12 +63,12 @@
       controlWarning: 'Tus compromisos previstos superan el saldo actual. Revisa fechas o importes.',
       controlAction: 'Planificar otra compra',
       cycleTitle: 'Mi ciclo financiero',
-      cycleIntro: 'Sigue este orden: decide, recibe, guarda y usa tu dinero.',
+      cycleIntro: 'Primero reserva lo necesario para el mes; después decide, ahorra y gasta.',
       cycleDone: 'Paso practicado',
       cycle: {
         budgetTitle: 'Presupuestar',
-        budgetDetail: 'Decide cuánto puedes gastar.',
-        budgetAction: 'Abrir presupuesto',
+        budgetDetail: 'Reserva primero lo necesario para el mes.',
+        budgetAction: 'Preparar mi presupuesto',
         incomeTitle: 'Ingresar',
         incomeDetail: 'Anota cuándo entra dinero.',
         incomeAction: 'Registrar un ingreso',
@@ -88,8 +88,8 @@
         goalAction: 'Crear una meta',
         expenseDetail: 'Practica una compra y mira cómo cambia tu saldo.',
         expenseAction: 'Registrar un gasto',
-        budgetDetail: 'Empieza decidiendo cuánto puedes gastar.',
-        budgetAction: 'Preparar un presupuesto',
+        budgetDetail: 'Empieza por reservar lo que necesitarás este mes.',
+        budgetAction: 'Preparar mi presupuesto',
         incomeDetail: 'Después, anota el dinero que entra.',
         incomeAction: 'Registrar un ingreso',
         savingDetail: 'Ahora separa una cantidad para ahorrar.',
@@ -102,9 +102,9 @@
       didactic: {
         title: 'Aprende sobre tu dinero',
         intro: 'Ideas sencillas para entender y manejar mejor tu dinero.',
-        cta: 'Ahora, prueba lo que has aprendido',
-        lessonPhase: 'Fase 1 · Descubre',
-        testPhase: 'Fase 2 · Pruébalo',
+        cta: 'Ahora, llévalo a la práctica',
+        lessonPhase: 'Idea para hoy',
+        testPhase: 'Práctica opcional',
         testPhaseDetail: '¿Te apetece probarlo? Elige una actividad y comprueba lo que sabes.',
         testLink: 'Empezar: {title}',
         lessons: {
@@ -112,8 +112,10 @@
           moneyDetail: 'Aprende a reconocer monedas, billetes y lo que vale cada uno.',
           choicesTitle: 'Elige lo que necesitas',
           choicesDetail: 'Distingue entre lo que necesitas y lo que te apetece.',
-          budgetTitle: 'Organiza tus compras',
-          budgetDetail: 'Ordena lo que quieres comprar antes de gastar.',
+          budgetTitle: 'Clasifica y organiza tus gastos',
+          budgetDetail: 'Separa necesidades y deseos, y ordénalos antes de gastar.',
+          beforeBuyingTitle: 'Hazte cuatro preguntas antes de comprar',
+          beforeBuyingDetail: 'Comprueba si lo necesitas, si puedes pagarlo, si hay una opción mejor y cómo te sentirás después.',
           changeTitle: 'Paga y comprueba tu cambio',
           changeDetail: 'Mira que la vuelta que recibes sea correcta.',
           savingTitle: 'Guarda dinero para algo que quieres',
@@ -136,6 +138,42 @@
           bankProductsDetail: 'Descubre cuándo usas tu saldo, un crédito o dinero que has reservado.',
           housingTitle: 'Elige dónde vivir: ¿alquilar o comprar?',
           housingDetail: 'Compara gastos, compromisos y libertad antes de decidir.'
+        }
+      },
+      guide: {
+        title: 'Guía para actuar con tu dinero',
+        intro: 'Ideas prácticas para decidir, guardar, gastar y revisar tu dinero.',
+        techniqueEyebrow: 'Una técnica para empezar',
+        techniqueTitle: 'Reserva primero lo que necesitarás este mes',
+        techniqueDetail: 'Antes de pensar en otros gastos, aparta el dinero de vivienda, comida, transporte y recibos.',
+        techniqueStep1: 'Calcula cuánto necesitarás.',
+        techniqueStep2: 'Guárdalo en un lugar separado.',
+        techniqueStep3: 'Con lo que quede, planifica ahorro y gastos.',
+        principlesTitle: 'Otras buenas prácticas',
+        principlesIntro: 'Pequeñas decisiones que ayudan a mantener el control.',
+        principles: {
+          fixedTitle: 'Cubre primero lo fijo',
+          fixedDetail: 'Paga recibos y compromisos antes de decidir sobre otros gastos.',
+          saveTitle: 'Ahorra al recibir',
+          saveDetail: 'Aparta una cantidad cuando entra dinero, aunque sea pequeña.',
+          pauseTitle: 'Espera antes de comprar',
+          pauseDetail: 'Para las compras no necesarias, compara y date un tiempo para decidir.',
+          reduceTitle: 'Reduce lo prescindible',
+          reduceDetail: 'Revisa suscripciones y pequeños gastos repetidos; quédate con lo que de verdad usas.',
+          marginTitle: 'Deja un margen',
+          marginDetail: 'No uses todo el saldo: guarda algo para los imprevistos.',
+          reviewTitle: 'Revisa con frecuencia',
+          reviewDetail: 'Una vez por semana, mira qué entró, qué salió y qué viene.'
+        },
+        roadmapTitle: 'Organiza, planifica y mejora',
+        roadmapIntro: 'Usa esta pequeña rutina para tomar decisiones con más calma.',
+        roadmap: {
+          organiseTitle: '1. Organiza',
+          organiseDetail: 'Apunta tus ingresos, gastos y pagos previstos. Clasifica cada gasto como necesario o prescindible.',
+          planTitle: '2. Planifica',
+          planDetail: 'Reserva lo esencial del mes, fija un límite para cada tipo de gasto y elige una meta de ahorro.',
+          improveTitle: '3. Mejora',
+          improveDetail: 'Revisa una vez por semana, reduce lo que no usas y ajusta el plan cuando cambien tus circunstancias.'
         }
       },
       test: {
@@ -282,7 +320,7 @@
         planBudgetTitle: '¿Cuánto puedes gastar?',
         planBudgetInstruction: 'Escribe un presupuesto para tu compra.',
         planChoiceTitle: 'Elige una compra',
-        planChoiceInstruction: 'Mira el precio y decide con calma.',
+        planChoiceInstruction: 'Mira el precio, su categoría y decide con calma.',
         planRemaining: 'Después te quedarían {balance}.',
         planOverBudget: 'Esta compra supera tu presupuesto.',
         planOverBalance: 'Esta compra supera el dinero que tienes ahora.',
@@ -380,8 +418,8 @@
     },
 
     expense: {
-      categoryTitle: '¿En qué gastaste?',
-      categoryInstruction: 'Elige un dibujo.',
+      categoryTitle: '¿Qué tipo de gasto es?',
+      categoryInstruction: 'Elige una categoría y mira si es necesario o prescindible.',
       amountTitle: '¿Cuánto gastaste?',
       amountInstruction: 'Escribe el precio.',
       confirmTitle: 'Revisa tu gasto',
@@ -456,7 +494,11 @@
       transport: 'Transporte',
       clothes: 'Ropa',
       health: 'Salud',
-      other: 'Otros'
+      other: 'Otros',
+      classification: {
+        essential: 'Necesario',
+        discretionary: 'Prescindible'
+      }
     },
 
     goals: {
@@ -499,6 +541,7 @@
         'concepts-money':  'Descubre cuánto vale cada moneda',
         'needs-vs-wants':  '¿Lo necesitas o lo quieres?',
         'budget-first':    '¿Qué te conviene comprar primero?',
+        'before-buying':   'Cuatro preguntas antes de comprar',
         'go-shopping':     'Haz tu compra',
         'change-back':     'Comprueba tu cambio',
         'my-shopping-day': 'Organiza tu compra del día',
@@ -508,6 +551,7 @@
         'concepts-money':  'Aprende a reconocer monedas y billetes por su valor.',
         'needs-vs-wants':  'Piensa si algo te hace falta o simplemente te apetece.',
         'budget-first':    'Ordena tus compras cuando el dinero es limitado.',
+        'before-buying':   'Frena las compras impulsivas y decide con más calma.',
         'go-shopping':     'Haz una compra pequeña sin salirte del presupuesto.',
         'change-back':     'Comprueba cuánto dinero deben devolverte al pagar.',
         'my-shopping-day': 'Practica todo junto en una compra completa.',

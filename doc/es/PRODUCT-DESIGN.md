@@ -1,13 +1,13 @@
-# PRODUCT-DESIGN.md — Home en tres bloques: aprender, comprobar y simular
+# PRODUCT-DESIGN.md — Home en dos partes: didácticos y guía para actuar
 
 > **Este documento es la fuente de verdad para el rediseño v2 de la home.**
 >
 > El mapa compacto de contenidos está en [`INDICE-APRENDIZAJE.md`](INDICE-APRENDIZAJE.md).
 >
 > Define un **cambio arquitectónico deliberado** en Okeymoney: la home
-> pasa a ser un recorrido estilo Apptonomia con tres bloques visibles:
-> contenido didáctico, tests con recompensa en Tokens y simulación con
-> euros. El estado de dinero y metas vive en el tercer bloque, siempre
+> pasa a ser un recorrido estilo Apptonomia con dos partes visibles:
+> contenidos didácticos (con tests integrados) y una guía para actuar con
+> simulaciones en euros. El estado de dinero y metas vive en la segunda parte,
 > visible en la misma pantalla. Esto **invierte** la regla de "app de un solo
 > propósito, no catálogo" que [`technical.md`](../es/tecnico.md) §2 y
 > [`CLAUDE.md`](../../CLAUDE.md) declararon para v1 — la inversión es
@@ -28,7 +28,7 @@ v1 sale con tres pestañas inferiores:
 - **Mi dinero** — el dashboard: saldo, historial, chip del monedero
   de práctica.
 - **Mis metas** — lista de metas de ahorro + flujos de crear y añadir.
-- **Aprender** — el catálogo de 7 actividades de práctica, agrupado en
+- **Aprender** — el catálogo de 8 actividades de práctica, agrupado en
   dos secciones temáticas (Aprende a gestionar tu dinero / Mantén tu
   dinero a salvo), según [`actividades.md`](actividades.md).
 
@@ -43,15 +43,10 @@ obliga a esconder el catálogo detrás de una pestaña.
 
 ### 1.2 Qué cambia en v2
 
-- **La home deja de ser una pestaña y pasa a ser una pantalla con
-  catálogo primero.** El héroe de la home es la rejilla Apptonomia
-  de actividades, agrupadas en tres secciones temáticas en orden
-  pedagógico:
-  1. Conceptos básicos — qué es el dinero, necesito o quiero.
-  2. Vida cotidiana — presupuesto, ir a la tienda, calcular la vuelta,
-     día completo de compras.
-  3. Seguridad — awareness de estafas (una actividad, mostrada la
-     última porque es la habilidad práctica con mayor riesgo).
+- **La home deja de ser una pestaña y pasa a ser una pantalla con dos
+  partes.** La primera presenta las unidades didácticas, agrupadas por
+  dificultad y tema; cada unidad incluye su test inmediato. La segunda
+  reúne la guía para actuar y las simulaciones en euros.
 - **El estado del dinero real se mueve a una tarjeta "Mi dinero"
   compacta** en la parte superior de la home (encima del catálogo),
   no detrás de una pestaña.
@@ -82,7 +77,7 @@ obliga a esconder el catálogo detrás de una pestaña.
 - **Reglas de accesibilidad** ([`SPEC.md`](../es/SPEC.md) §3.5),
   **política de idioma** (es fuente de verdad, paridad en, [`I18N.md`](I18N.md)),
   **tema oscuro**, **privacidad por defecto** — todo sin cambios.
-- **Las 7 activities** se quedan en sus mismos paths
+- **Las 8 activities** se quedan en sus mismos paths
   (`tools/<slug>/`). Solo cambia el orden en que se agrupan en la
   home.
 
@@ -106,13 +101,12 @@ obliga a esconder el catálogo detrás de una pestaña.
 > **"Abrir Okeymoney y ver qué hacer a continuación."**
 
 La home es una sola pantalla que cuenta al usuario, de un vistazo,
-qué hacer a continuación en tres pasos:
+qué hacer a continuación en dos partes:
 
-1. **Aprender**: tarjetas didácticas breves, sin nota ni penalización.
-2. **Comprobar**: las 7 activities en orden pedagógico (conceptos → vida
-   cotidiana → seguridad), con Tokens y checks de progreso tranquilos.
-3. **Simular**: saldo, metas y registro de un gasto en euros, con la
-   acción disponible directamente en este bloque.
+1. **Didácticos**: unidades breves, cada una con su test inmediato y sin
+   nota ni penalización.
+2. **Guía para actuar**: reglas prácticas, saldo, metas y simulaciones
+   con dinero en euros.
 
 ### 2.2 Catálogo ↔ plano del dinero, conceptualmente
 
@@ -129,15 +123,14 @@ Hay **dos planos** que deben estar separados pero visibles juntos:
 
 La home hace visible esta dualidad todo el rato: la tarjeta **Mi
 dinero** muestra € + Tokens, la tarjeta **Mis metas** muestra solo €,
-y el **catálogo** muestra la recompensa en Tokens que cada
-  actividad acredita.
+y cada test muestra la recompensa en Tokens que acredita.
 
 ### 2.3 Estratificación de la home
 
 La home implementa una progresión única y reconocible, tanto en el
 contenido como en el diseño visual:
 
-1. **Bloque didáctico — Aprende paso a paso.** Catorce tarjetas breves
+1. **Parte didáctica — Aprende sobre tu dinero.** Quince unidades breves
    explican el valor del dinero, las decisiones de compra, el ahorro, la
    vuelta, la seguridad, los documentos, la foto financiera, el control,
    la vida útil de los bienes, la rentabilidad, el riesgo y las operaciones
@@ -145,11 +138,13 @@ contenido como en el diseño visual:
    Cada unidad contiene la explicación y, a continuación, la fase de test
    correspondiente.
    No hay nota ni penalización: prepara para practicar.
-2. **Bloque de test — Comprueba lo que sabes.** Muestra un índice de las
-   siete activities existentes y devuelve a cada unidad. El test se ejecuta
-   dentro de la unidad, conserva el bucle Socrático y acredita Tokens en el
-   monedero de práctica, separado del ledger de euros.
-3. **Bloque de simulación — Situaciones reales con dinero.** Las tarjetas
+2. **Guía para actuar — Situaciones reales con dinero.** Reúne principios y
+   buenas prácticas (cubrir primero lo fijo, ahorrar al recibir, reducir lo
+   prescindible, dejar margen y revisar con frecuencia), además del ciclo financiero y las tarjetas de
+   simulación. La guía ordena estas indicaciones en tres momentos: organizar,
+   planificar y mejorar. El monedero
+   de práctica sigue separado del ledger de euros.
+   Las tarjetas
    de saldo, metas y registro de gasto representan compras, pagos y ahorro
    de la vida diaria con importes en euros. Incluye además prácticas de
    vuelta, seguridad, derechos cotidianos, comunicación del dinero,
@@ -168,7 +163,7 @@ contenido como en el diseño visual:
    La práctica de vivienda compara alquiler y propiedad con gastos iniciales,
    cuotas, mantenimiento, flexibilidad y plazo, sin imponer una respuesta.
 
-Cada bloque se presenta como una sección grande con borde de color,
+Cada parte se presenta como una sección grande con borde de color,
 encabezado, texto de orientación y tarjetas blancas redondeadas. Es la
 misma gramática visual de Apptonomia: anclas tipo píldora, pictogramas
 grandes, mucho espacio y una sola columna en móvil. La estratificación es
@@ -176,7 +171,7 @@ de navegación y presentación; no mezcla los almacenes de Tokens y euros.
 
 ### 2.4 Ayuda progresiva para la autonomía
 
-Antes de los tres bloques aparece una tarjeta **Tu siguiente paso**. Lee
+Antes de las dos partes aparece una tarjeta **Tu siguiente paso**. Lee
 solo el estado local imprescindible y propone una acción concreta:
 
 - sin saldo anotado: contar y guardar el saldo actual;
@@ -277,14 +272,10 @@ Una tarjeta compacta con la lista de metas y sus barras de progreso:
 
 ### 3.3 Unidad didáctica con test integrado
 
-Cada unidad didáctica contiene dos fases consecutivas: la explicación y
-el test correspondiente. El índice de temas ya no se duplica como un
-catálogo independiente.
-
-Las dos fases se muestran siempre en vertical: primero el contenido y,
-justo después, el test. Los enlaces de la segunda fase llevan a la
-actividad real en `tools/<slug>/index.html`, y muestran el estado de
-Tokens sin duplicar el contenido del test.
+Cada unidad didáctica es una tarjeta única: muestra la explicación y,
+justo después, una invitación con el enlace al test correspondiente. El
+índice de temas ya no se duplica como un catálogo independiente ni hay una
+segunda fase visual separada.
 
 ### 3.4 Barra de pestañas inferior
 
@@ -323,9 +314,9 @@ Esto mantiene intacta la **regla de navegación máximo 3 niveles**
 
 ## 4. Contenido de unidades y tests (nivel 0)
 
-### 4.1 Las 7 activities y sus unidades
+### 4.1 Las 8 activities y sus unidades
 
-Las 7 activities ya documentadas en [`actividades.md`](actividades.md)
+Las 8 activities ya documentadas en [`actividades.md`](actividades.md)
 se asignan a las unidades didácticas mediante `DATA.learningIndex`.
 La tabla conserva sus temas y orden de dificultad:
 
@@ -334,24 +325,25 @@ La tabla conserva sus temas y orden de dificultad:
 | Conceptos básicos | 1 | `concepts-money` | ¿Qué es el dinero? / What is money? | 5,00 |
 | Conceptos básicos | 2 | `needs-vs-wants` | Necesito o quiero / Need or want | 8,00 |
 | Vida cotidiana | 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | 12,00 |
-| Vida cotidiana | 4 | `go-shopping` | Ir a la tienda / Go shopping | 20,00 |
-| Vida cotidiana | 5 | `change-back` | Calcular la vuelta / Working out change | 30,00 |
-| Vida cotidiana | 6 | `my-shopping-day` | Mi compra del día / My shopping day | 60,00 |
-| Seguridad | 7 | `safe-money` | Mi dinero está seguro / My money is safe | 15,00 |
+| Vida cotidiana | 4 | `before-buying` | Cuatro preguntas antes de comprar / Four questions before buying | 10,00 |
+| Vida cotidiana | 5 | `go-shopping` | Ir a la tienda / Go shopping | 20,00 |
+| Vida cotidiana | 6 | `change-back` | Calcular la vuelta / Working out change | 30,00 |
+| Vida cotidiana | 7 | `my-shopping-day` | Mi compra del día / My shopping day | 60,00 |
+| Seguridad | 8 | `safe-money` | Mi dinero está seguro / My money is safe | 15,00 |
 
-Misma recompensa total (🔷 150,00 si se completa todo) que en v1.
+La recompensa total pasa a 🔷 160,00 al completar las 8 actividades.
 
 ### 4.2 Acentos del recorrido
 
 La fase didáctica usa el acento cálido y la fase de test el acento azul;
-el bloque 2 reutiliza el azul para su índice. La relación visual de
-ambas fases dentro de una unidad hace visible el orden enseñar → testear.
+la guía para actuar usa el acento verde. La relación visual de ambas fases
+dentro de una unidad hace visible el orden enseñar → testear.
 
-### 4.3 Renderizado de unidades e índice
+### 4.3 Renderizado de unidades y guía
 
 `renderDidacticLessons()` genera las unidades y sus enlaces de test;
-`renderTestIndex()` genera el índice alternativo del bloque 2. Ambos
-renderers consumen la misma relación `DATA.learningIndex`, y
+la guía para actuar se renderiza junto al ciclo financiero y las
+simulaciones en euros. Ambos consumen la relación `DATA.learningIndex`, y
 `scripts/check.js` comprueba que ninguna unidad queda sin test ni ruta.
 
 ---
@@ -478,7 +470,7 @@ hace es introducir un nuevo shell `site/` — la home sigue en
 | `TODO.md` | **Actualizar** | El rediseño visual hecho en v1.1 (ya entregado) se referencia; el trabajo de navegación v2 es un esfuerzo separado y acotado. |
 | `CLAUDE.md` | **Actualizar** | Añadir nota de que la regla "no catálogo" se invierte para el *modelo de navegación* en v2; la regla de capa de datos sigue vigente. |
 | `doc/en/technical.md` | **Actualizar** | §2 reencuadra la justificación de "app de un solo propósito": la capa de datos sigue compartida, la navegación pasa a ser catálogo primero. |
-| `doc/es/actividades.md` | **Actualizar** | Reagrupar la tabla en los tres temas v2 (`concepts` / `daily` / `safety`); el catálogo de 7 actividades en sí no cambia. |
+| `doc/es/actividades.md` | **Actualizar** | Reagrupar la tabla en los tres temas v2 (`concepts` / `daily` / `safety`); el catálogo ahora contiene 8 actividades. |
 | `sw.js` | **Subir VERSION + FILES** | Mismo patrón que el rediseño visual v1.1. |
 
 ---
@@ -540,7 +532,7 @@ v2 se entrega cuando **las cuatro fases** están hechas y:
 1. La home renderiza tarjetas + catálogo en un único scroll vertical,
    tema oscuro activo, contraste WCAG AA.
 2. No hay botón flotante: el registro de gasto está en simulación.
-3. Las 7 activities son accesibles desde el catálogo de la home.
+3. Las 8 activities son accesibles desde el catálogo de la home.
 4. La tarjeta Mi dinero, la tarjeta Mis metas, la vista de historial,
    la vista de metas, el wizard de Registrar un gasto, el wizard de
    crear meta y el wizard de añadir dinero a meta siguen funcionando

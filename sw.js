@@ -3,7 +3,7 @@
    Cache-first strategy for the app shell (works offline).
    When adding new files: add them to FILES and bump VERSION.
    ============================================================ */
-var VERSION = 'okeymoney-v52';
+var VERSION = 'okeymoney-v59';
 
 var FILES = [
   './index.html',
@@ -49,6 +49,10 @@ var FILES = [
   './tools/budget-first/app.js',
   './tools/budget-first/strings.es.js',
   './tools/budget-first/strings.en.js',
+  './tools/before-buying/index.html',
+  './tools/before-buying/app.js',
+  './tools/before-buying/strings.es.js',
+  './tools/before-buying/strings.en.js',
   './tools/go-shopping/index.html',
   './tools/go-shopping/app.js',
   './tools/go-shopping/strings.es.js',

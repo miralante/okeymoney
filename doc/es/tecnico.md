@@ -500,14 +500,13 @@ reutilizan el bucle socrático compartido de
 numérico.
 
 Según [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md), cada unidad de la
-**página de inicio** combina dos fases consecutivas: explicación
-didáctica y test correspondiente. `renderDidacticLessons()` construye
-esas unidades desde `DATA.didacticLessons` + `DATA.learningIndex`, y
+**página de inicio** combina la explicación con una invitación integrada al
+test correspondiente. `renderDidacticLessons()` construye esas unidades desde
+`DATA.didacticLessons` + `DATA.learningIndex`, y
 enlaza cada test disponible con su ruta real en `tools/<slug>/`.
-El bloque 2 ya no duplica el catálogo: `renderTestIndex()` muestra un
-índice compacto que devuelve a la unidad donde se realiza cada test.
-Las unidades se ordenan según `DATA.didacticLessons`; el índice de tests
-respeta el orden de `DATA.activities`.
+La segunda parte de la home reúne la guía para actuar: reglas prácticas,
+el ciclo financiero y las simulaciones en euros. Las unidades se ordenan
+según `DATA.didacticLessons` y cada una enlaza con sus tests disponibles.
 
 El catálogo, la recompensa de cada actividad y el vocabulario de
 agentes están documentados en

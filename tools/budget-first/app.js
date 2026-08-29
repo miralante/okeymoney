@@ -42,7 +42,19 @@
         escenaHtml: '<p>📚 12 € · 🎧 50 € · 🚌 1,50 €</p>',
         opciones: ['opLibro', 'opAuriculares', 'opTransporte'],
         correctaIndex: 2,
-        pistaKey: 'b6pista', explicacionKey: 'b6expl' }
+        pistaKey: 'b6pista', explicacionKey: 'b6expl' },
+      { id: 'b7',
+        instruccionKey: 'b7instr',
+        escenaHtml: '<p>🏠 30 € · 🍿 8 € · 🚌 1,50 €</p>',
+        opciones: ['opAlquiler', 'opCine', 'opBus'],
+        correctaIndex: 0,
+        pistaKey: 'b7pista', explicacionKey: 'b7expl' },
+      { id: 'b8',
+        instruccionKey: 'b8instr',
+        escenaHtml: '<p>💊 7 € · 🥦 6 € · 🎮 12 €</p>',
+        opciones: ['opMedicamento', 'opComida', 'opJuego'],
+        correctaIndex: 2,
+        pistaKey: 'b8pista', explicacionKey: 'b8expl' }
     ]
   });
 })();

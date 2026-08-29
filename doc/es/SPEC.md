@@ -600,8 +600,8 @@ carencias descubiertas por accidente:
 - **No hay ajuste de sonido independiente todavía.** La pantalla Ajustes
   y datos ya permite tamaño de texto, copia/restauración local y borrado
   explícito; el sonido sigue respetando las preferencias del dispositivo.
-- **Aprender tiene 7 actividades funcionando** (`tools/`) y se exponen
-  en la cuadrícula del bloque de tests. Sus recompensas de Tokens siguen
+- **Aprender tiene 8 actividades funcionando** (`tools/`) y se exponen
+  dentro de las unidades didácticas. Sus recompensas de Tokens siguen
   separadas del ledger de euros.
 
 ### 9.4 Tienda simbólica (priorised design decision, **no implementada en v1**)

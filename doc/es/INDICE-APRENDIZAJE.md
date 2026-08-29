@@ -2,43 +2,45 @@
 
 Este índice es la referencia rápida del recorrido de Okeymoney:
 
-**enseñar → testear con Tokens → simular con euros**.
+**didácticos (explicar → testear) → guía para actuar con euros**.
 
-En la portada, cada unidad didáctica contiene dos fases consecutivas: primero
-la explicación y a continuación el test correspondiente. El bloque 2 conserva
-un índice de los tests y un acceso alternativo a cada unidad.
+En la portada, cada unidad didáctica muestra la explicación y justo después
+una invitación con el enlace a su test correspondiente. La segunda parte
+reúne las reglas prácticas, el ciclo financiero y las simulaciones en euros.
 
-**Cobertura actual:** 14 contenidos didácticos · 7 actividades de test ·
-17 entradas de simulación.
+**Cobertura actual:** 15 contenidos didácticos · 8 actividades de test ·
+18 entradas de simulación.
 
-| Orden | Contenido enseñado | Test con Tokens | Simulación posterior |
+| Orden | Contenido enseñado | Test con Tokens | Aplicación en la guía |
 |---:|---|---|---|
 | 1 | Valor de monedas y billetes | `concepts-money` + ronda 1 de `my-shopping-day` | Consultar y actualizar el saldo |
 | 2 | Necesidades y deseos | `needs-vs-wants` + ronda 2 de `my-shopping-day` | Decidir antes de registrar un gasto |
 | 3 | Prioridades y presupuesto | `budget-first`, `go-shopping` + ronda 3 de `my-shopping-day` | Planificar una compra y revisar el gasto |
-| 4 | Pagar y calcular la vuelta | `change-back` + ronda 4 de `my-shopping-day` | Simulación de vuelta con importes en euros |
-| 5 | Ahorrar para una meta | ronda 5 de `my-shopping-day` | Crear una meta y añadir dinero |
-| 6 | Seguridad ante engaños | `safe-money` | Simulación de Bizum, SMS y petición urgente |
-| 7 | Pedido, albarán, factura y pago | `go-shopping` | Ciclo de compra: solo el pago modifica el ledger |
-| 8 | Activo, pasivo, ingresos y gastos | `concepts-money` + `budget-first` | Foto financiera: lo que tienes, debes, recibes y gastas |
-| 9 | Contabilidad y control | `concepts-money` + `budget-first` | Controlar compromisos y comparar una compra con su presupuesto |
-| 10 | Depreciación de activos y obsolescencia | `concepts-money` + `budget-first` | Calcular el valor que conserva un bien y decidir si reparar, reutilizar o sustituir |
-| 11 | Rentabilidad y riesgo | `concepts-money` + `budget-first` | Calcular una ganancia hipotética y elegir según plazo, liquidez y diversificación |
-| 12 | Operaciones de inversión | `concepts-money` + `budget-first` | Distinguir compra/aportación, venta/reembolso, cobro de rendimiento y traspaso |
-| 13 | Tipos de tarjetas y cuentas bancarias | `concepts-money` + `budget-first` | Diferenciar débito, crédito, prepago, cuenta corriente y cuenta de ahorro |
-| 14 | Vivienda: alquiler o propiedad | `concepts-money` + `budget-first` | Comparar gastos iniciales, cuota, mantenimiento, flexibilidad y plazo |
+| 4 | Preguntas antes de comprar | `before-buying` | Parar, comparar y decidir sin compras impulsivas |
+| 5 | Pagar y calcular la vuelta | `change-back` + ronda 4 de `my-shopping-day` | Simulación de vuelta con importes en euros |
+| 6 | Ahorrar para una meta | ronda 5 de `my-shopping-day` | Crear una meta y añadir dinero |
+| 7 | Seguridad ante engaños | `safe-money` | Simulación de Bizum, SMS y petición urgente |
+| 8 | Pedido, albarán, factura y pago | `go-shopping` | Ciclo de compra: solo el pago modifica el ledger |
+| 9 | Activo, pasivo, ingresos y gastos | `concepts-money` + `budget-first` | Foto financiera: lo que tienes, debes, recibes y gastas |
+| 10 | Contabilidad y control | `concepts-money` + `budget-first` | Controlar compromisos y comparar una compra con su presupuesto |
+| 11 | Depreciación de activos y obsolescencia | `concepts-money` + `budget-first` | Calcular el valor que conserva un bien y decidir si reparar, reutilizar o sustituir |
+| 12 | Rentabilidad y riesgo | `concepts-money` + `budget-first` | Calcular una ganancia hipotética y elegir según plazo, liquidez y diversificación |
+| 13 | Operaciones de inversión | `concepts-money` + `budget-first` | Distinguir compra/aportación, venta/reembolso, cobro de rendimiento y traspaso |
+| 14 | Tipos de tarjetas y cuentas bancarias | `concepts-money` + `budget-first` | Diferenciar débito, crédito, prepago, cuenta corriente y cuenta de ahorro |
+| 15 | Vivienda: alquiler o propiedad | `concepts-money` + `budget-first` | Comparar gastos iniciales, cuota, mantenimiento, flexibilidad y plazo |
 
 ## Orden de las actividades
 
-La secuencia oficial del bloque de tests es:
+La secuencia oficial de actividades de test es:
 
 1. `concepts-money`
 2. `needs-vs-wants`
 3. `budget-first`
-4. `go-shopping`
-5. `change-back`
-6. `my-shopping-day`
-7. `safe-money`
+4. `before-buying`
+5. `go-shopping`
+6. `change-back`
+7. `my-shopping-day`
+8. `safe-money`
 
 La actividad integradora `my-shopping-day` aparece después de las
 habilidades parciales y añade el ahorro como quinta ronda. `safe-money`

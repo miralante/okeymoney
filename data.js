@@ -8,25 +8,25 @@
      per screen).
    - goalIcons: icon choices offered when creating a new savings goal
      ("Mis metas"). The goal's name is free text typed by the person.
-   - blocks / didacticLessons: the three learning layers shown on the
-     home (didactic, tests with Tokens, and euro simulation).
+   - blocks / didacticLessons: the two learning parts shown on the home
+     (didactic content with tests, and a guide to act with euro practice).
    - activities / learnThemes: test metadata and pedagogical themes — ids
      only; text and icon are en/es in strings.<locale>.js.
    ============================================================ */
 
 var DATA = {
-  /* The home is intentionally stratified: explain first, check learning
-     second, then let the person rehearse real euro decisions. */
+  /* The home has two clear parts: didactic content (with its test) and a
+     practical guide for acting with real-euro decisions. */
   blocks: [
     { id: 'didactic', accent: 'acento-3' },
-    { id: 'test', accent: 'acento-2' },
-    { id: 'simulation', accent: 'acento' }
+    { id: 'guide', accent: 'acento' }
   ],
 
   didacticLessons: [
     { id: 'money', icon: '💶' },
     { id: 'choices', icon: '🧠' },
     { id: 'budget', icon: '📋' },
+    { id: 'beforeBuying', icon: '🛒' },
     { id: 'change', icon: '🧾' },
     { id: 'saving', icon: '🪙' },
     { id: 'safety', icon: '🛡️' },
@@ -46,6 +46,7 @@ var DATA = {
     { id: 'money', testSlugs: ['concepts-money', 'my-shopping-day'], simulationCards: ['balance'] },
     { id: 'choices', testSlugs: ['needs-vs-wants', 'my-shopping-day'], simulationCards: ['plan', 'expense'] },
     { id: 'budget', testSlugs: ['budget-first', 'go-shopping', 'my-shopping-day'], simulationCards: ['plan', 'expense'] },
+    { id: 'beforeBuying', testSlugs: ['before-buying'], simulationCards: ['plan', 'expense'] },
     { id: 'change', testSlugs: ['change-back', 'my-shopping-day'], simulationCards: ['change'] },
     { id: 'saving', testSlugs: ['my-shopping-day'], simulationCards: ['goals'] },
     { id: 'safety', testSlugs: ['safe-money'], simulationCards: ['safety', 'rights', 'communication', 'emergency'] },
@@ -182,12 +183,12 @@ var DATA = {
   ],
 
   categories: [
-    { id: 'food', icon: '🍎' },
-    { id: 'fun', icon: '🎮' },
-    { id: 'transport', icon: '🚌' },
-    { id: 'clothes', icon: '👕' },
-    { id: 'health', icon: '❤️' },
-    { id: 'other', icon: '🧩' }
+    { id: 'food', icon: '🍎', classification: 'essential' },
+    { id: 'fun', icon: '🎮', classification: 'discretionary' },
+    { id: 'transport', icon: '🚌', classification: 'essential' },
+    { id: 'clothes', icon: '👕', classification: 'discretionary' },
+    { id: 'health', icon: '❤️', classification: 'essential' },
+    { id: 'other', icon: '🧩', classification: 'discretionary' }
   ],
 
   goalIcons: ['🎮', '⚽', '🚲', '📱', '🎧', '👟', '📚', '🎁'],
@@ -209,6 +210,7 @@ var DATA = {
     { slug: 'concepts-money',  href: 'tools/concepts-money/index.html',  icon: '💰', available: true, theme: 'concepts' },
     { slug: 'needs-vs-wants',  href: 'tools/needs-vs-wants/index.html',  icon: '🤔', available: true, theme: 'concepts' },
     { slug: 'budget-first',    href: 'tools/budget-first/index.html',    icon: '📋', available: true, theme: 'daily' },
+    { slug: 'before-buying',   href: 'tools/before-buying/index.html',   icon: '🛒', available: true, theme: 'daily' },
     { slug: 'go-shopping',     href: 'tools/go-shopping/index.html',     icon: '🛒', available: true, theme: 'daily' },
     { slug: 'change-back',     href: 'tools/change-back/index.html',     icon: '💸', available: true, theme: 'daily' },
     { slug: 'my-shopping-day', href: 'tools/my-shopping-day/index.html', icon: '🌟', available: true, theme: 'daily' },

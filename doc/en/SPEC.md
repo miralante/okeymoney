@@ -580,8 +580,8 @@ discovered by accident:
 - **No independent sound setting yet.** The Settings and data screen now
   offers text size, local backup/restore and an explicit data reset; sound
   still follows the device preferences.
-- **Aprender has 7 working activities** (`tools/`) and exposes them in
-  the test-block grid. Their Token rewards remain separate from the euro
+- **Aprender has 8 working activities** (`tools/`) and exposes them
+  inside the didactic units. Their Token rewards remain separate from the euro
   ledger.
 
 ### 9.4 Symbolic shop (prioritised design decision, **not implemented in v1**)

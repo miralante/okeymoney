@@ -1,11 +1,11 @@
 # Catálogo de actividades
 
-> Okeymoney incluye **7 actividades de práctica**, enlazadas desde la
+> Okeymoney incluye **8 actividades de práctica**, enlazadas desde la
 > fase de test de sus unidades didácticas (ver `DATA.learningIndex` en
-> `data.js`). El bloque 2 de la portada conserva un índice de acceso
-> alternativo (ver [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)):
+> `data.js`). La segunda parte de la portada reúne la guía para actuar
+> y las simulaciones (ver [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)):
 > *Conceptos básicos* (2 actividades, el núcleo educativo), *Vida
-> cotidiana* (4 actividades, de menor a mayor dificultad, simulación y
+> cotidiana* (5 actividades, de menor a mayor dificultad, simulación y
 > práctica) y *Seguridad* (1 actividad, la última porque es la
 > habilidad práctica de mayor consecuencia real). Cada actividad es una
 > carpeta `tools/<slug>/` independiente que reutiliza el bucle
@@ -68,26 +68,27 @@ haciendo la transacción.
 
 | # | Slug | Título (es / en) | Agentes | Casos | Recompensa (okeys) |
 |---|---|---|---|---|---|
-| 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 6 | 🔑 12,00 |
-| 4 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
-| 5 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
-| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
+| 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 8 | 🔑 12,00 |
+| 4 | `before-buying` | Cuatro preguntas antes de comprar / Four questions before buying | persona | 4 | 🔑 10,00 |
+| 5 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
+| 6 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
+| 7 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
 
 ### Tema: Seguridad (`theme: 'safety'`)
 
 | # | Slug | Título (es / en) | Agentes | Casos | Recompensa (okeys) |
 |---|---|---|---|---|---|
-| 7 | `safe-money` | Mi dinero está seguro / My money is safe | — (escenarios de estafa) | 6 | 🔑 15,00 |
+| 8 | `safe-money` | Mi dinero está seguro / My money is safe | — (escenarios de estafa) | 6 | 🔑 15,00 |
 
-**Total al completar todas: 🔑 150,00.**
+**Total al completar todas: 🔑 160,00.**
 
 Las actividades mantienen esos tres temas como metadatos pedagógicos,
 pero la portada las presenta dentro de cada unidad didáctica. Las
 unidades siguen el orden de `DATA.didacticLessons`; *Conceptos básicos*
 va primero por ser el núcleo educativo, *Vida cotidiana* aumenta la
 dificultad y *Seguridad* cierra el recorrido por su mayor consecuencia
-práctica. El índice del bloque 2 ofrece un acceso alternativo a cada
-unidad (ver [`tecnico.md`](tecnico.md) §10.3).
+práctica. La guía para actuar ofrece el contexto práctico y las
+simulaciones de cada unidad (ver [`tecnico.md`](tecnico.md) §10.3).
 
 ## 1. Conceptos: ¿qué es el dinero? (`tools/concepts-money/`)
 
@@ -106,9 +107,16 @@ porque esta decisión es personal.
 ## 3. ¿Qué compro primero? (`tools/budget-first/`)
 
 Con un presupuesto pequeño y tres o cuatro compras candidatas, decidir
-cuál comprar **primero**. El agente cambia según el caso (familia,
-farmacia, bus, banco) para que el alumno practique priorización bajo
-restricciones reales.
+cuál comprar **primero** y reconocer gastos fijos o prescindibles. El agente
+cambia según el caso (familia, farmacia, bus, banco) para que el alumno
+practique clasificación y priorización bajo restricciones reales. Ocho casos.
+
+## 3.1 Cuatro preguntas antes de comprar (`tools/before-buying/`)
+
+Esta unidad adapta, con redacción propia y situaciones sencillas, la técnica
+de las cuatro preguntas para frenar compras impulsivas descrita en
+[Preahorro](https://preahorro.com/como-ahorrar/4-preguntas-que-debes-hacerte-antes-de-comprar-cualquier-cosa/).
+Practica comprobar necesidad, deuda, alternativas de precio y utilidad futura.
 
 ## 4. Ir a la tienda (`tools/go-shopping/`)
 

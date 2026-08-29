@@ -1,10 +1,10 @@
 # Activities catalogue
 
-> Okeymoney ships with **7 practice activities**, linked from the test
+> Okeymoney ships with **8 practice activities**, linked from the test
 > phase of their didactic units (see `DATA.learningIndex` in `data.js`).
-> Block 2 on the home keeps an alternative index (see
+> The second home part is the guide to act and its simulations (see
 > [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)): *Conceptos básicos* (2
-> activities, the educational core), *Vida cotidiana* (4 activities,
+> activities, the educational core), *Vida cotidiana* (5 activities,
 > increasing difficulty, simulation and practice) and *Seguridad* (1
 > activity, shown last because it is the highest-stakes practical
 > skill). Each activity is a standalone `tools/<slug>/` folder that
@@ -63,26 +63,27 @@ Each case names the agent it involves (e.g. *"El bus"*, *"La farmacia"*,
 
 | # | Slug | Title (es / en) | Agents | Cases | Reward (okeys) |
 |---|---|---|---|---|---|
-| 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 6 | 🔑 12,00 |
-| 4 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
-| 5 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
-| 6 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
+| 3 | `budget-first` | ¿Qué compro primero? / What do I buy first? | persona, empresa, banco | 8 | 🔑 12,00 |
+| 4 | `before-buying` | Cuatro preguntas antes de comprar / Four questions before buying | persona | 4 | 🔑 10,00 |
+| 5 | `go-shopping` | Ir a la tienda / Go shopping | persona, empresa, banco | 8 | 🔑 20,00 |
+| 6 | `change-back` | Calcular la vuelta / Working out change | empresa | 6 | 🔑 30,00 |
+| 7 | `my-shopping-day` | Mi compra del día / My shopping day | persona, empresa, banco | 5 | 🔑 60,00 |
 
 ### Theme: Seguridad (`theme: 'safety'`)
 
 | # | Slug | Title (es / en) | Agents | Cases | Reward (okeys) |
 |---|---|---|---|---|---|
-| 7 | `safe-money` | Mi dinero está seguro / My money is safe | — (scam scenarios) | 6 | 🔑 15,00 |
+| 8 | `safe-money` | Mi dinero está seguro / My money is safe | — (scam scenarios) | 6 | 🔑 15,00 |
 
-**Total if every activity is completed: 🔑 150,00.**
+**Total if every activity is completed: 🔑 160,00.**
 
 The activities keep these three themes as pedagogical metadata, but the
 home presents them inside their didactic units. Units follow
 `DATA.didacticLessons`: *Conceptos básicos* comes first as the
 educational core, *Vida cotidiana* increases difficulty, and *Seguridad*
 closes the journey because it has the greatest practical consequence.
-The block 2 index offers an alternative way back to each unit (see
-[`technical.md`](technical.md) §10.3).
+The guide to act provides the practical context and simulations for each
+unit (see [`technical.md`](technical.md) §10.3).
 
 ## 1. Concepts: what is money? (`tools/concepts-money/`)
 
@@ -101,9 +102,17 @@ decision is personal.
 ## 3. What do I buy first? (`tools/budget-first/`)
 
 Given a small budget and three to four candidate purchases, choose
-which one to buy **first**. The agent changes per case (family, pharmacy,
-bus, bank) so the learner practices prioritisation under realistic
-constraints.
+which one to buy **first** and recognise fixed or optional expenses. The
+agent changes per case (family, pharmacy, bus, bank) so the learner
+practices classification and prioritisation under realistic constraints.
+Eight cases.
+
+## 3.1 Four questions before buying (`tools/before-buying/`)
+
+This unit uses original wording and simple situations to adapt the four-question
+technique for slowing impulse purchases described by
+[Preahorro](https://preahorro.com/como-ahorrar/4-preguntas-que-debes-hacerte-antes-de-comprar-cualquier-cosa/).
+It practises checking need, debt, price alternatives and future usefulness.
 
 ## 4. Go shopping (`tools/go-shopping/`)
 

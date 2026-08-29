@@ -1,7 +1,7 @@
 /* ==========================================================================
    Okeymoney — App logic
-   Single-page app: one long home scroll (didactic → tests → euro simulation)
-   de actividades), sharing one ledger in localStorage, plus a full-screen
+   Single-page app: one long home scroll (didactic units → action guide)
+   sharing one ledger in localStorage, plus a full-screen
    step-by-step wizard reused by every flow that asks for an amount
    (register an expense, set how much money you have, set a goal's price,
    add money to a goal). Expense entry lives in the simulation block.
@@ -55,6 +55,11 @@
     return DATA.categories.filter(function (c) { return c.id === id; })[0];
   }
 
+  function categoryClassificationLabel(category) {
+    if (!category || !category.classification) return '';
+    return App.i18n.t('categories.classification.' + category.classification);
+  }
+
   function goalById(id) {
     return state.goals.filter(function (g) { return g.id === id; })[0];
   }
@@ -81,8 +86,8 @@
   }
 
   /* ---------- Home (single long scroll, estilo Apptonomia) ----------
-     The presentation is explicitly stratified: didactic explanations,
-     token-rewarded tests, then simulations using the euro ledger. */
+     The presentation has two clear parts: didactic units (each followed
+     by its token-rewarded test), then a guide with euro simulations. */
   function renderHome() {
     var saludo = $('#saludo');
     if (saludo) saludo.textContent = App.i18n.t('home.saludo');
@@ -94,16 +99,12 @@
 
     var balEl = $('#balanceValue');
     if (balEl) balEl.textContent = App.money.format(balanceCents());
-    var walletEl = $('#homeWalletBalance');
-    if (walletEl && App.wallet) walletEl.textContent = App.money.formatPractice(App.wallet.balance());
-
     renderMetasResumen();
     renderMovementSummary();
     renderCommitments();
     renderInsights();
     renderFinancialStatement();
     renderFinancialControl();
-    renderTestIndex($('#testActivities'));
   }
 
   function hasMovementType(type) {
@@ -318,14 +319,14 @@
     action.dataset.nextAction = mode;
   }
 
-  /* Pinta la barra de anclas a los tres bloques de la home. */
+  /* Pinta la barra de anclas a las dos partes de la home. */
   function renderModuleAnchors() {
     var wrap = $('#anclasModulo');
     if (!wrap) return;
     wrap.innerHTML = '';
     DATA.blocks.forEach(function (block, index) {
       var a = document.createElement('a');
-      a.href = '#bloque-' + (block.id === 'simulation' ? 'simulacion' : block.id);
+      a.href = '#bloque-' + (block.id === 'guide' ? 'guia' : block.id);
       a.className = 'ancla-modulo';
       a.style.setProperty('--acento', getComputedStyle(document.documentElement).getPropertyValue('--' + block.accent).trim());
       var label = App.i18n.t('blocks.' + block.id + '.title');
@@ -360,14 +361,12 @@
       }).join('');
       unit.innerHTML =
         '<div class="learning-unit__lesson">' +
-          '<p class="learning-unit__phase">' + App.i18n.t('blocks.didactic.lessonPhase') + '</p>' +
           '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
           '<h3 id="unidad-' + lesson.id + '-title">' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title') + '</h3>' +
           '<p>' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Detail') + '</p>' +
         '</div>' +
         '<div class="learning-unit__test">' +
-          '<p class="learning-unit__phase">' + App.i18n.t('blocks.didactic.testPhase') + '</p>' +
-          '<p>' + App.i18n.t('blocks.didactic.testPhaseDetail') + '</p>' +
+          '<p class="learning-unit__test-prompt">' + App.i18n.t('blocks.didactic.testPhaseDetail') + '</p>' +
           (testLinks ? '<div class="learning-unit__test-links">' + testLinks + '</div>' : '') +
         '</div>';
       wrap.appendChild(unit);
@@ -587,35 +586,9 @@
     });
   }
 
-  /* The test block is now an index, not a second copy of the activities.
-     Each real test runs inside its didactic unit; these links jump back to
-     that unit so the learner keeps the sequence visible. */
-  function renderTestIndex(wrap) {
-    if (!wrap) return;
-    wrap.innerHTML = '';
-    var list = document.createElement('div');
-    list.className = 'test-index';
-    DATA.activities.forEach(function (activity) {
-      var lesson = DATA.learningIndex.filter(function (row) {
-        return Array.isArray(row.testSlugs) && row.testSlugs.indexOf(activity.slug) !== -1;
-      })[0];
-      if (!lesson) return;
-      var status = App.wallet.activityStatus(activity.slug);
-      var link = document.createElement('a');
-      link.className = 'test-index__item' + (status && status.done ? ' is-done' : '');
-      link.href = '#unidad-' + lesson.id;
-      link.innerHTML = '<span class="test-index__icon" aria-hidden="true">' +
-        (status && status.done ? '✓' : activity.icon) + '</span>' +
-        '<span><strong>' + App.i18n.t('learn.activityTitle.' + activity.slug) + '</strong>' +
-        '<small>' + App.i18n.t('blocks.test.indexHint') + '</small></span>';
-      list.appendChild(link);
-    });
-    wrap.appendChild(list);
-  }
-
   function renderLearn() {
-    /* Deprecated en Fase 3: la pestaña Aprender se ha integrado al home
-       como bloque #bloque-test. No queda nada
+    /* Deprecated: la pestaña Aprender se ha integrado al home
+       como parte #bloque-didactico. No queda nada
        que pintar aquí, pero conservamos la función vacía por si código
        viejo (tests, tools externos) la sigue invocando. */
   }
@@ -732,7 +705,7 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'btn-option';
-      btn.innerHTML = '<span class="icon" aria-hidden="true">' + c.icon + '</span><span>' + App.i18n.t('categories.' + c.id) + '</span>';
+      btn.innerHTML = '<span class="icon" aria-hidden="true">' + c.icon + '</span><span>' + App.i18n.t('categories.' + c.id) + '</span><small class="option-classification">' + App.utils.escapeHtml(categoryClassificationLabel(c)) + '</small>';
       btn.addEventListener('click', function () {
         wizard.categoryId = c.id;
         wizard.step = 2;
@@ -773,6 +746,7 @@
       '<div class="card center">' +
       '<span style="font-size:48px" aria-hidden="true">' + category.icon + '</span>' +
       '<p><strong>' + App.i18n.t('categories.' + category.id) + '</strong></p>' +
+      '<p class="expense-classification">' + App.utils.escapeHtml(categoryClassificationLabel(category)) + '</p>' +
       '<p style="font-size:32px;font-weight:800">' + App.money.format(wizard.amountCents) + '</p>' +
       '<p class="money-after">' + afterCopy + '</p>' +
       warning +
@@ -1306,8 +1280,11 @@
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'btn-option';
+      var itemCategory = categoryById(item.categoryId);
+      var itemClassification = categoryClassificationLabel(itemCategory);
       btn.innerHTML = '<span class="icon" aria-hidden="true">' + item.icon + '</span><span>' +
-        App.i18n.t('blocks.simulation.planItems.' + item.id) + '</span>';
+        App.i18n.t('blocks.simulation.planItems.' + item.id) + '</span>' +
+        (itemClassification ? '<small class="option-classification">' + App.utils.escapeHtml(itemClassification) + '</small>' : '');
       btn.addEventListener('click', function () {
         wizard.selectedItem = item;
         state.cycle.lastPlan = {
