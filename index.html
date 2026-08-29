@@ -81,8 +81,8 @@
 <body data-tema="dinero">
   <!--
     Home unificado: un único scroll con dos partes y en orden pedagógico:
-    1) didácticos (cada unidad incluye su test) y 2) guía para actuar,
-    con técnicas y simulaciones en euros. Las tarjetas siguen el patrón de módulos
+    1) didácticos (cada unidad incluye su test) y 2) simulación,
+    con guía práctica y decisiones en euros. Las tarjetas siguen el patrón de módulos
     grandes, bordes de color y pictogramas del resto de la suite.
   -->
   <div class="container" id="app">
@@ -101,18 +101,6 @@
     <!-- Anclas a las dos partes del recorrido. -->
     <nav class="anclas-modulo" aria-label="Ir a una parte" id="anclasModulo"></nav>
 
-    <!-- Guía contextual: propone una sola acción útil según el estado
-         actual, sin convertirla en obligación ni en una racha. -->
-    <section class="next-step" id="nextStep" aria-labelledby="nextStepTitle">
-      <div class="next-step__copy">
-        <p class="next-step__eyebrow" data-i18n="home.nextStep.eyebrow">Hoy</p>
-        <h2 id="nextStepTitle" data-i18n="home.nextStep.title">Tu siguiente paso</h2>
-        <p id="nextStepDetail">Empieza por contar cuánto dinero tienes ahora.</p>
-        <p class="next-step__note" data-i18n="home.nextStep.note">Puedes parar cuando quieras. Todo queda en tu dispositivo.</p>
-      </div>
-      <button type="button" class="btn next-step__action" id="nextStepAction">Anotar mi saldo</button>
-    </section>
-
     <main class="pila modulos">
 
       <!-- Parte 1: contenidos didácticos con su test inmediato. -->
@@ -123,16 +111,26 @@
           <p class="learning-block__intro" data-i18n="blocks.didactic.intro">Ideas sencillas para entender y manejar mejor tu dinero.</p>
         </div>
         <div id="didacticLessons" class="grid-tarjetas didactic-grid"></div>
-        <a class="btn btn--secundario learning-block__cta" href="#bloque-guia" data-i18n="blocks.didactic.cta">Ahora, llévalo a la práctica</a>
+        <a class="btn btn--secundario learning-block__cta" href="#bloque-simulacion" data-i18n="blocks.didactic.cta">Ahora, llévalo a la práctica</a>
       </section>
 
-      <!-- Parte 2: guía para actuar, técnicas y simulaciones con euros. -->
-      <section id="bloque-guia" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
+      <!-- Parte 2: simulación y guía para actuar con euros. -->
+      <section id="bloque-simulacion" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow">02</p>
-          <h2 data-i18n="blocks.guide.title">Guía para actuar con tu dinero</h2>
-          <p class="learning-block__intro" data-i18n="blocks.guide.intro">Ideas prácticas para decidir, guardar, gastar y revisar tu dinero.</p>
+          <h2 data-i18n="blocks.simulation.title">Simula situaciones reales con dinero</h2>
+          <p class="learning-block__intro" data-i18n="blocks.simulation.intro">Practica compras, gastos y ahorro con dinero en euros, en un espacio seguro.</p>
         </div>
+        <!-- Orientación contextual: queda dentro de la sección de simulación. -->
+        <section class="next-step" id="nextStep" aria-labelledby="nextStepTitle">
+          <div class="next-step__copy">
+            <p class="next-step__eyebrow" data-i18n="home.nextStep.eyebrow">Hoy</p>
+            <h3 id="nextStepTitle" data-i18n="home.nextStep.title">Tu siguiente paso</h3>
+            <p id="nextStepDetail">Empieza por contar cuánto dinero tienes ahora.</p>
+            <p class="next-step__note" data-i18n="home.nextStep.note">Puedes parar cuando quieras. Todo queda en tu dispositivo.</p>
+          </div>
+          <button type="button" class="btn next-step__action" id="nextStepAction">Anotar mi saldo</button>
+        </section>
         <aside class="guide-callout" aria-labelledby="guideTechniqueTitle">
           <p class="learning-block__eyebrow" data-i18n="blocks.guide.techniqueEyebrow">Una técnica para empezar</p>
           <h3 id="guideTechniqueTitle" data-i18n="blocks.guide.techniqueTitle">Reserva primero lo que necesitarás este mes</h3>

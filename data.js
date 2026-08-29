@@ -9,17 +9,17 @@
    - goalIcons: icon choices offered when creating a new savings goal
      ("Mis metas"). The goal's name is free text typed by the person.
    - blocks / didacticLessons: the two learning parts shown on the home
-     (didactic content with tests, and a guide to act with euro practice).
+   (didactic content with tests, and simulation/action practice in euros).
    - activities / learnThemes: test metadata and pedagogical themes — ids
      only; text and icon are en/es in strings.<locale>.js.
    ============================================================ */
 
 var DATA = {
-  /* The home has two clear parts: didactic content (with its test) and a
-     practical guide for acting with real-euro decisions. */
+  /* The home has two clear parts: didactic content (with its test) and
+     simulation/action practice with real-euro decisions. */
   blocks: [
     { id: 'didactic', accent: 'acento-3' },
-    { id: 'guide', accent: 'acento' }
+    { id: 'simulation', accent: 'acento' }
   ],
 
   didacticLessons: [

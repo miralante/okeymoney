@@ -1,4 +1,4 @@
-# PRODUCT-DESIGN.md — Home in two parts: didactic and guide to act
+# PRODUCT-DESIGN.md — Home in two parts: didactic and simulation
 
 > **This document is the source of truth for the v2 home redesign.**
 >
@@ -6,7 +6,7 @@
 >
 > It defines a deliberate **architectural change** to Okeymoney: the home
 > becomes an Apptonomia-style two-part journey: didactic content (with
-> integrated tests) and a guide to act through euro simulations. Money and
+> integrated tests) and a simulation section with practical euro guidance. Money and
 > goals live in the second part, always visible on the same screen. This **inverts** the
 > "single-purpose app, not a catalog"
 > rule that [`technical.md`](../en/technical.md) §2 and [`CLAUDE.md`](../../CLAUDE.md)
@@ -44,7 +44,7 @@ hiding the catalogue behind a tab.
 
 - **The home stops being a tab and becomes a two-part screen.** The first
   part presents didactic units grouped by topic and difficulty; every unit
-  includes its immediate test. The second part gathers the guide to act and
+  includes its immediate test. The second part gathers practical guidance and
   euro simulations.
 - **The real money state moves to a compact "Mi dinero" card** at the
   top of the home (above the catalogue), not behind a tab.
@@ -318,13 +318,13 @@ The total reward is now 🔷 160,00 when all 8 activities are completed.
 ### 4.2 Journey accents
 
 The didactic phase uses the warm accent and the test phase uses the blue
-accent; the guide to act uses the green accent. Showing both phases in one
-unit makes the learn → check order visible.
+accent; the simulation section uses the green accent. Keeping the link in the same
+card makes the next step visible without creating a separate phase.
 
 ### 4.3 Unit and guide rendering
 
 `renderDidacticLessons()` generates the units and their test links; the
-guide to act renders alongside the money cycle and euro simulations. Both
+simulation section renders alongside the money cycle and euro simulations. Both
 consume the same `DATA.learningIndex` relationship, and `scripts/check.js`
 verifies that every unit has a test and a valid route.
 

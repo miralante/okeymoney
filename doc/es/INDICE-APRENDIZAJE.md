@@ -2,7 +2,7 @@
 
 Este índice es la referencia rápida del recorrido de Okeymoney:
 
-**didácticos (explicar → testear) → guía para actuar con euros**.
+**didácticos (explicar → testear) → simulación con euros**.
 
 En la portada, cada unidad didáctica muestra la explicación y justo después
 una invitación con el enlace a su test correspondiente. La segunda parte

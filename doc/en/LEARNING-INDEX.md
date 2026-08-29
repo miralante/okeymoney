@@ -2,7 +2,7 @@
 
 This index is the quick reference for Okeymoney's journey:
 
-**didactic (teach → test) → guide to act with euros**.
+**didactic (teach → test) → simulation with euros**.
 
 On the home page, each didactic unit shows the explanation followed directly
 by an invitation and link to its corresponding test. The second

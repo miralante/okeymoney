@@ -1,4 +1,4 @@
-# PRODUCT-DESIGN.md — Home en dos partes: didácticos y guía para actuar
+# PRODUCT-DESIGN.md — Home en dos partes: didácticos y simulación
 
 > **Este documento es la fuente de verdad para el rediseño v2 de la home.**
 >
@@ -6,7 +6,7 @@
 >
 > Define un **cambio arquitectónico deliberado** en Okeymoney: la home
 > pasa a ser un recorrido estilo Apptonomia con dos partes visibles:
-> contenidos didácticos (con tests integrados) y una guía para actuar con
+> contenidos didácticos (con tests integrados) y una sección de simulación con
 > simulaciones en euros. El estado de dinero y metas vive en la segunda parte,
 > visible en la misma pantalla. Esto **invierte** la regla de "app de un solo
 > propósito, no catálogo" que [`technical.md`](../es/tecnico.md) §2 y
@@ -46,7 +46,7 @@ obliga a esconder el catálogo detrás de una pestaña.
 - **La home deja de ser una pestaña y pasa a ser una pantalla con dos
   partes.** La primera presenta las unidades didácticas, agrupadas por
   dificultad y tema; cada unidad incluye su test inmediato. La segunda
-  reúne la guía para actuar y las simulaciones en euros.
+  reúne la guía práctica y las simulaciones en euros.
 - **El estado del dinero real se mueve a una tarjeta "Mi dinero"
   compacta** en la parte superior de la home (encima del catálogo),
   no detrás de una pestaña.
@@ -105,7 +105,7 @@ qué hacer a continuación en dos partes:
 
 1. **Didácticos**: unidades breves, cada una con su test inmediato y sin
    nota ni penalización.
-2. **Guía para actuar**: reglas prácticas, saldo, metas y simulaciones
+2. **Simulación**: reglas prácticas, saldo, metas y simulaciones
    con dinero en euros.
 
 ### 2.2 Catálogo ↔ plano del dinero, conceptualmente
@@ -138,7 +138,7 @@ contenido como en el diseño visual:
    Cada unidad contiene la explicación y, a continuación, la fase de test
    correspondiente.
    No hay nota ni penalización: prepara para practicar.
-2. **Guía para actuar — Situaciones reales con dinero.** Reúne principios y
+2. **Simulación — Situaciones reales con dinero.** Reúne principios y
    buenas prácticas (cubrir primero lo fijo, ahorrar al recibir, reducir lo
    prescindible, dejar margen y revisar con frecuencia), además del ciclo financiero y las tarjetas de
    simulación. La guía ordena estas indicaciones en tres momentos: organizar,
@@ -336,13 +336,13 @@ La recompensa total pasa a 🔷 160,00 al completar las 8 actividades.
 ### 4.2 Acentos del recorrido
 
 La fase didáctica usa el acento cálido y la fase de test el acento azul;
-la guía para actuar usa el acento verde. La relación visual de ambas fases
-dentro de una unidad hace visible el orden enseñar → testear.
+la sección de simulación usa el acento verde. El enlace aparece dentro de la misma
+tarjeta, justo después de la explicación, para que el siguiente paso sea claro.
 
 ### 4.3 Renderizado de unidades y guía
 
 `renderDidacticLessons()` genera las unidades y sus enlaces de test;
-la guía para actuar se renderiza junto al ciclo financiero y las
+la sección de simulación se renderiza junto al ciclo financiero y las
 simulaciones en euros. Ambos consumen la relación `DATA.learningIndex`, y
 `scripts/check.js` comprueba que ninguna unidad queda sin test ni ruta.
 

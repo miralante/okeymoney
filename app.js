@@ -326,7 +326,7 @@
     wrap.innerHTML = '';
     DATA.blocks.forEach(function (block, index) {
       var a = document.createElement('a');
-      a.href = '#bloque-' + (block.id === 'guide' ? 'guia' : block.id);
+      a.href = '#bloque-' + (block.id === 'simulation' ? 'simulacion' : block.id);
       a.className = 'ancla-modulo';
       a.style.setProperty('--acento', getComputedStyle(document.documentElement).getPropertyValue('--' + block.accent).trim());
       var label = App.i18n.t('blocks.' + block.id + '.title');

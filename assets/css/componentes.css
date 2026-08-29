@@ -808,7 +808,8 @@
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
-.next-step h2 {
+.next-step h2,
+.next-step h3 {
   margin: 0;
   color: var(--texto-primario);
   font-size: var(--texto-500);
