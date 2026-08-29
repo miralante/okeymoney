@@ -40,6 +40,17 @@
 }
 .opcion-btn:disabled { cursor: default; }
 
+/* Keep recognition practice connected to the real goal: knowing the
+   balance and checking a payment. */
+.actividad-objetivo {
+  margin: 0 0 var(--espacio-3);
+  padding: var(--espacio-3) var(--espacio-4);
+  border-left: 3px solid var(--acento);
+  background: var(--acento-suave);
+  color: var(--texto-secundario);
+  border-radius: 0 var(--radio-2) var(--radio-2) 0;
+}
+
 .pista {
   background: rgba(192, 86, 33, 0.12);      /* aliento transparente (light) */
   color: var(--aliento);

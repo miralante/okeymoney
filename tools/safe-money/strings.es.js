@@ -4,6 +4,7 @@
   App.i18n.register({
     title: 'Protege tu dinero',
     metaDescription: 'Aprende a reconocer transferencias erróneas y estafas, y cómo actuar.',
+    objetivo: 'Objetivo: detectar riesgos y elegir una acción segura antes de mover dinero.',
     instruccion: 'Lee la situación y elige qué harías.',
 
     /* Common scenario verbs (the scene prompts) */
@@ -20,6 +21,7 @@
     opGastar: '💸 Lo gasto en algo que quiero',
     opDevolver: '↩️ Lo devuelvo al número que me escribió',
     opAvisar: '🗣️ Cuelgo y aviso a mi familia',
+    opSeguirLlamada: '🗣️ Sigo hablando para comprobar que es el banco',
     opCortar: '🚫 Cuelgo y no digo mis claves',
     opDecirClaves: '🔑 Digo mis claves para "verificarme"',
     opPinchar: '🔗 Pincho en el enlace para ver qué dice',

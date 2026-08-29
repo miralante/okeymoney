@@ -538,7 +538,7 @@
         safety: 'Safety'
       },
       activityTitle: {
-        'concepts-money':  'Find out what each coin is worth',
+        'concepts-money':  'Count your money with confidence',
         'needs-vs-wants':  'Do you need it or want it?',
         'budget-first':    'What is best to buy first?',
         'before-buying':   'Four questions before buying',
@@ -548,7 +548,7 @@
         'safe-money':      'Keep your money safe'
       },
       activityDesc: {
-        'concepts-money':  'Learn to recognise coins and notes by their value.',
+        'concepts-money':  'Recognise coins and notes to count your balance and pay safely.',
         'needs-vs-wants':  'Think about whether something is needed or simply wanted.',
         'budget-first':    'Put your purchases in order when money is limited.',
         'before-buying':   'Slow down impulse purchases and decide more calmly.',

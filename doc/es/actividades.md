@@ -61,7 +61,7 @@ haciendo la transacción.
 
 | # | Slug | Título (es / en) | Agentes | Casos | Recompensa (okeys) |
 |---|---|---|---|---|---|
-| 1 | `concepts-money` | ¿Qué es el dinero? / What is money? | — (identificación de objetos) | 8 | 🔑 5,00 |
+| 1 | `concepts-money` | Cuenta tu dinero sin dudas / Count your money with confidence | — (identificación de valores) | 8 | 🔑 12,00 |
 | 2 | `needs-vs-wants` | Necesito o quiero / Need or want | persona | 8 | 🔑 8,00 |
 
 ### Tema: Vida cotidiana (`theme: 'daily'`)
@@ -80,7 +80,7 @@ haciendo la transacción.
 |---|---|---|---|---|---|
 | 8 | `safe-money` | Mi dinero está seguro / My money is safe | — (escenarios de estafa) | 6 | 🔑 15,00 |
 
-**Total al completar todas: 🔑 160,00.**
+**Total al completar todas: 🔑 167,00.**
 
 Las actividades mantienen esos tres temas como metadatos pedagógicos,
 pero la portada las presenta dentro de cada unidad didáctica. Las
@@ -90,11 +90,12 @@ dificultad y *Seguridad* cierra el recorrido por su mayor consecuencia
 práctica. La guía para actuar ofrece el contexto práctico y las
 simulaciones de cada unidad (ver [`tecnico.md`](tecnico.md) §10.3).
 
-## 1. Conceptos: ¿qué es el dinero? (`tools/concepts-money/`)
+## 1. Conceptos: cuenta tu dinero sin dudas (`tools/concepts-money/`)
 
-Identificar monedas y billetes por su valor. Cada caso muestra un token
-visual (renderizado por `App.money.createToken()`) y pregunta *"¿cuánto
-vale?"*, con tres opciones de múltiplo elección. Enseña el **CATALOG** de
+**Objetivo:** reconocer el valor de cada moneda o billete para poder sumar
+el saldo y comprobar un pago. Cada caso muestra un token visual
+(renderizado por `App.money.createToken()`) y pregunta cuánto añade a tu
+saldo, con tres opciones expresadas en euros. Enseña el **CATALOG** de
 [`assets/js/money.js`](../../assets/js/money.js): 5c, 10c, 20c, 50c, 1 €,
 2 €, 5 €, 10 €, 20 €, 50 €.
 

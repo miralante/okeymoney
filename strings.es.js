@@ -538,7 +538,7 @@
         safety: 'Seguridad'
       },
       activityTitle: {
-        'concepts-money':  'Descubre cuánto vale cada moneda',
+        'concepts-money':  'Cuenta tu dinero sin dudas',
         'needs-vs-wants':  '¿Lo necesitas o lo quieres?',
         'budget-first':    '¿Qué te conviene comprar primero?',
         'before-buying':   'Cuatro preguntas antes de comprar',
@@ -548,7 +548,7 @@
         'safe-money':      'Protege tu dinero'
       },
       activityDesc: {
-        'concepts-money':  'Aprende a reconocer monedas y billetes por su valor.',
+        'concepts-money':  'Reconoce monedas y billetes para contar tu saldo y pagar con seguridad.',
         'needs-vs-wants':  'Piensa si algo te hace falta o simplemente te apetece.',
         'budget-first':    'Ordena tus compras cuando el dinero es limitado.',
         'before-buying':   'Frena las compras impulsivas y decide con más calma.',

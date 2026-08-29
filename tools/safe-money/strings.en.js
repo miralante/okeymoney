@@ -4,6 +4,7 @@
   App.i18n.register({
     title: 'Keep your money safe',
     metaDescription: 'Learn to spot erroneous transfers and scams, and how to act.',
+    objetivo: 'Goal: spot risks and choose a safe action before moving money.',
     instruccion: 'Read the situation and choose what you would do.',
 
     s1instr: 'You got an unexpected Bizum of 50 €. What do you do?',
@@ -18,6 +19,7 @@
     opGastar: '💸 I spend it on something I want',
     opDevolver: '↩️ I send it back to the number that wrote me',
     opAvisar: '🗣️ I hang up and tell my family',
+    opSeguirLlamada: '🗣️ I keep talking to check that it is really the bank',
     opCortar: '🚫 I hang up and I do not share my passwords',
     opDecirClaves: '🔑 I share my passwords to "verify" myself',
     opPinchar: '🔗 I tap the link to see what it says',

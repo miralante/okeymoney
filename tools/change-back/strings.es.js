@@ -3,6 +3,7 @@
   App.i18n.register({
     title: 'Comprueba tu cambio',
     metaDescription: 'Aprende a calcular cuánto te tienen que devolver al pagar.',
+    objetivo: 'Objetivo: calcular la diferencia entre lo que pagas y el precio.',
     instruccion: 'Escribe cuánto te tienen que devolver.',
     shopMercadona: 'Mercadona', shopPanaderia: 'La panadería', shopFarmacia: 'La farmacia', shopTienda: 'La tienda de ropa',
     pistaResta: 'Resta: lo que pagas menos lo que vale la compra.',

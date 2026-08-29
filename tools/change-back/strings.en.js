@@ -3,6 +3,7 @@
   App.i18n.register({
     title: 'Check your change',
     metaDescription: 'Learn to calculate how much change you should get.',
+    objetivo: 'Goal: calculate the difference between what you pay and the price.',
     instruccion: 'Type how much change you should get.',
     shopMercadona: 'Supermarket', shopPanaderia: 'Bakery', shopFarmacia: 'Pharmacy', shopTienda: 'Clothes shop',
     pistaResta: 'Subtract: what you pay minus what the purchase costs.',

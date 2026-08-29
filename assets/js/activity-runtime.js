@@ -46,6 +46,7 @@
    * @param {string} [opts.sceneMode]   'html' (default) | 'money-token' | 'keypad'
    * @param {function} [opts.checkAnswer]  (value, current) => boolean — para keypad
    * @param {function} [opts.explainAnswer] (current) => string   — para keypad
+   * @param {function} [opts.formatOption] (value, current) => string — etiqueta de opción
    */
   function run(opts) {
     var cases = [];
@@ -242,7 +243,11 @@
         btn.type = 'button';
         btn.className = 'opcion-btn';
         var label = current.opciones[optIdx];
-        btn.textContent = typeof label === 'string' ? App.i18n.t(label) : label;
+        if (typeof opts.formatOption === 'function') {
+          btn.textContent = opts.formatOption(label, current);
+        } else {
+          btn.textContent = typeof label === 'string' ? App.i18n.t(label) : label;
+        }
         btn.setAttribute('data-idx', String(optIdx));
         btn.addEventListener('click', function () { onAnswer(btn, optIdx, current); });
         opciones.appendChild(btn);

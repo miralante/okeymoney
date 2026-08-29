@@ -17,7 +17,7 @@
         instruccionKey: 'd1instr',
         sceneMode: 'money-token', cents: 1000,
         opciones: ['op1e', 'op5e', 'op10e'],
-        correctaIndex: 1,
+        correctaIndex: 2,
         pistaKey: 'd1pista', explicacionKey: 'd1expl' },
       { id: 'd2',
         instruccionKey: 'd2instr',

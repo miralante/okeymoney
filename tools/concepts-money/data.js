@@ -1,6 +1,6 @@
 /* ==========================================================================
    tools/concepts-money/data.js
-   Catalog of Socratic cases for "¿Qué es el dinero?".
+   Catalog of Socratic cases for "Cuenta tu dinero sin dudas".
    8 cases per locale, drawn from the official App.money catalog:
      - es: euro coins and banknotes (5 cts … 50 €)
      - en: US coins and banknotes (1¢ … $100)

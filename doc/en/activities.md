@@ -56,7 +56,7 @@ Each case names the agent it involves (e.g. *"El bus"*, *"La farmacia"*,
 
 | # | Slug | Title (es / en) | Agents | Cases | Reward (okeys) |
 |---|---|---|---|---|---|
-| 1 | `concepts-money` | ¿Qué es el dinero? / What is money? | — (object identification) | 8 | 🔑 5,00 |
+| 1 | `concepts-money` | Cuenta tu dinero sin dudas / Count your money with confidence | — (value recognition) | 8 | 🔑 12,00 |
 | 2 | `needs-vs-wants` | Necesito o quiero / Need or want | persona | 8 | 🔑 8,00 |
 
 ### Theme: Vida cotidiana (`theme: 'daily'`)
@@ -75,7 +75,7 @@ Each case names the agent it involves (e.g. *"El bus"*, *"La farmacia"*,
 |---|---|---|---|---|---|
 | 8 | `safe-money` | Mi dinero está seguro / My money is safe | — (scam scenarios) | 6 | 🔑 15,00 |
 
-**Total if every activity is completed: 🔑 160,00.**
+**Total if every activity is completed: 🔑 167,00.**
 
 The activities keep these three themes as pedagogical metadata, but the
 home presents them inside their didactic units. Units follow
@@ -85,11 +85,12 @@ closes the journey because it has the greatest practical consequence.
 The guide to act provides the practical context and simulations for each
 unit (see [`technical.md`](technical.md) §10.3).
 
-## 1. Concepts: what is money? (`tools/concepts-money/`)
+## 1. Concepts: count your money with confidence (`tools/concepts-money/`)
 
-Identify coins and banknotes by value. Each case shows a visual token
-(rendered by `App.money.createToken()`) and asks *"how much is this?"*,
-with three amount options. Teaches the **CATALOG** from
+**Goal:** recognise each coin or banknote so you can add it to a balance
+and check a payment. Each case shows a visual token (rendered by
+`App.money.createToken()`) and asks how much it adds to your balance, with
+three options formatted in the active currency. Teaches the **CATALOG** from
 [`assets/js/money.js`](../../assets/js/money.js): 5c, 10c, 20c, 50c, 1 €,
 2 €, 5 €, 10 €, 20 €, 50 €.
 

@@ -43,7 +43,7 @@
         id: 'sm4',
         instruccionKey: 's4instr',
         escenaHtml: '<p>📞 "Hola, soy de tu banco.<br>Necesito tus claves<br>para proteger tu cuenta."</p>',
-        opciones: ['opCortar', 'opDecirClaves', 'opAvisar'],
+        opciones: ['opCortar', 'opDecirClaves', 'opSeguirLlamada'],
         correctaIndex: 0,
         pistaKey: 's4pista',
         explicacionKey: 's4expl'

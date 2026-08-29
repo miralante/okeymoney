@@ -3,6 +3,7 @@
   App.i18n.register({
     title: 'Organiza tu compra del día',
     metaDescription: 'Practica todo junto en una compra completa: pensar, priorizar, comprar, calcular la vuelta y ahorrar.',
+    objetivo: 'Objetivo: preparar, priorizar, comprar, comprobar y guardar dinero.',
     instruccion: 'Cinco pasos para una compra completa.',
     shopTu: 'Tú', shopMercadona: 'El supermercado', shopFarmacia: 'La farmacia', shopBanco: 'El banco',
     opLlevar: 'Hago una lista y llevo dinero justo',

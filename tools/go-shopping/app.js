@@ -9,7 +9,7 @@
     casos: [
       { id: 's1',
         instruccionKey: 's1instr',
-        escenaHtml: '<p>Presupuesto: 6 €</p><p>🥖 2 € &nbsp; 🍎 1 € &nbsp; 🧃 1,50 € &nbsp; 🎮 20 €</p>',
+        escenaHtml: '<p>Presupuesto: 3 €</p><p>🥖 2 € &nbsp; 🍎 1 € &nbsp; 🧃 1,50 € &nbsp; 🎮 20 €</p>',
         opciones: ['opPanManzana', 'opPanJugo', 'opFrutaJuego'],
         correctaIndex: 0,
         pistaKey: 's1pista', explicacionKey: 's1expl' },
@@ -27,7 +27,7 @@
         pistaKey: 's3pista', explicacionKey: 's3expl' },
       { id: 's4',
         instruccionKey: 's4instr',
-        escenaHtml: '<p>Presupuesto: 15 €</p><p>🎧 25 € &nbsp; 💊 4 € &nbsp; 🍎 3 € &nbsp; 📚 9 €</p>',
+        escenaHtml: '<p>Presupuesto: 13 €</p><p>🎧 25 € &nbsp; 💊 4 € &nbsp; 🍎 5 € &nbsp; 📚 9 €</p>',
         opciones: ['opMediLibro', 'opAuricularesFruta', 'opFrutaLibro'],
         correctaIndex: 0,
         pistaKey: 's4pista', explicacionKey: 's4expl' },
@@ -51,9 +51,9 @@
         pistaKey: 's7pista', explicacionKey: 's7expl' },
       { id: 's8',
         instruccionKey: 's8instr',
-        escenaHtml: '<p>Presupuesto: 30 €</p><p>🧥 25 € &nbsp; 🎧 50 € &nbsp; 🩹 2 € &nbsp; 🍞 2 €</p>',
+        escenaHtml: '<p>Presupuesto: 25 €</p><p>🧥 25 € &nbsp; 🎧 50 € &nbsp; 🩹 2 € &nbsp; 🍞 2 €</p>',
         opciones: ['opAbrigoTiritas2', 'opPanAuriculares', 'opTiritasPan'],
-        correctaIndex: 0,
+        correctaIndex: 2,
         pistaKey: 's8pista', explicacionKey: 's8expl' }
     ]
   });

@@ -3,6 +3,7 @@
   App.i18n.register({
     title: 'Four questions before buying',
     metaDescription: 'Learn to pause and think before buying.',
+    objetivo: 'Goal: slow down an impulse purchase and decide with four questions.',
     instruccion: 'Pause and think before deciding.',
     opNeed: 'Yes, I need it', opWant: 'No, it is a want', opNotSure: "I'm not sure yet",
     opBuyNow: 'Buy it now', opBorrow: 'Borrow money', opWait: 'Wait and review it',

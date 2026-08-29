@@ -3,6 +3,7 @@
   App.i18n.register({
     title: 'Plan your shopping day',
     metaDescription: 'Practise everything together in a full shop: think, prioritise, buy, work out change and save.',
+    objetivo: 'Goal: prepare, prioritise, buy, check the change and save money.',
     instruccion: 'Five steps for a full shop.',
     shopTu: 'You', shopMercadona: 'Supermarket', shopFarmacia: 'Pharmacy', shopBanco: 'Bank',
     opLlevar: 'I make a list and bring just enough money',
