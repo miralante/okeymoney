@@ -64,7 +64,7 @@
     }
   }
 
-  /** Deletes every 'okeymoney:*' key (full reset, used by /legal/ and settings). */
+  /** Deletes every 'okeymoney:*' key (full reset, used by /legal/ and /config/). */
   function clearAll() {
     try {
       var toDelete = [];

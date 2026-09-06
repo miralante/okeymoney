@@ -68,6 +68,7 @@
      Sin pestañas (Fase 3): el home es un único scroll. El único "salto"
      real es ocultar el home para mostrar el wizard a pantalla completa. */
   var wizard = null; /* { type, step, ...fields } while a wizard is open */
+  var openLessonId = lessonFromHash(); /* selected topic in the home catalogue */
 
   function openWizard(w) {
     wizard = w;
@@ -86,8 +87,8 @@
   }
 
   /* ---------- Home (single long scroll, estilo Apptonomia) ----------
-     The presentation has two clear parts: didactic units (each followed
-     by its token-rewarded test), then a guide with euro simulations. */
+     The presentation has three clear parts: everyday situations, actions
+     with money, and practical ideas for caring for it. */
   function renderHome() {
     var saludo = $('#saludo');
     if (saludo) saludo.textContent = App.i18n.t('home.saludo');
@@ -96,8 +97,9 @@
     renderNextStep();
     renderDidacticLessons($('#didacticLessons'));
     renderFinancialCycle();
+    renderSimulationCatalog();
 
-    var balEl = $('#balanceValue');
+    var balEl = $('#simulationBalanceValue');
     if (balEl) balEl.textContent = App.money.format(balanceCents());
     renderMetasResumen();
     renderMovementSummary();
@@ -319,57 +321,207 @@
     action.dataset.nextAction = mode;
   }
 
-  /* Pinta la barra de anclas a las dos partes de la home. */
+  /* Pinta la barra de anclas a las tres partes de la home. */
   function renderModuleAnchors() {
     var wrap = $('#anclasModulo');
     if (!wrap) return;
     wrap.innerHTML = '';
-    DATA.blocks.forEach(function (block, index) {
+    DATA.blocks.forEach(function (block) {
       var a = document.createElement('a');
-      a.href = '#bloque-' + (block.id === 'simulation' ? 'simulacion' : block.id);
+      a.href = '#' + block.anchor;
       a.className = 'ancla-modulo';
       a.style.setProperty('--acento', getComputedStyle(document.documentElement).getPropertyValue('--' + block.accent).trim());
       var label = App.i18n.t('blocks.' + block.id + '.title');
       a.textContent = label;
       a.setAttribute('aria-label', App.i18n.t('home.anchorNavAria') + ': ' + label);
-      a.dataset.blockNumber = String(index + 1);
       wrap.appendChild(a);
     });
   }
 
-  /* Short, non-graded explanations that prepare the person for the test
-     activities. The cards deliberately stay static and low-pressure. */
+  function lessonFromHash() {
+    var id = window.location.hash.replace(/^#unidad-/, '');
+    return lessonById(id) ? id : null;
+  }
+
+  function focusLesson(element) {
+    if (!element) return;
+    element.setAttribute('tabindex', '-1');
+    element.focus({ preventScroll: true });
+    element.scrollIntoView({ behavior: App.utils.reducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  function lessonById(id) {
+    return DATA.learningPath.filter(function (lesson) { return lesson.id === id; })[0];
+  }
+
+  function learningIndexById(id) {
+    return DATA.learningPath.filter(function (row) { return row.id === id; })[0];
+  }
+
+  function activitiesForUnit(unit) {
+    return unit ? DATA.activities.filter(function (activity) {
+      return activity.unitId === unit.id && activity.available;
+    }) : [];
+  }
+
+  function simulationById(id) {
+    return DATA.simulations.filter(function (simulation) { return simulation.id === id; })[0];
+  }
+
+  function openSimulation(id) {
+    var simulation = simulationById(id);
+    if (!simulation) return;
+    if (simulation.action === 'balance') {
+      openWizard({ type: 'setBalance', step: 1, amountCents: Math.max(balanceCents(), 0) });
+    } else if (simulation.action === 'goals') {
+      if (!state.goals.length) openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
+      else openWizard({ type: 'goalAdd', step: 1, goalId: state.goals[0].id, amountCents: 0 });
+    } else if (simulation.action === 'income') {
+      openWizard({ type: 'income', step: 1, sourceId: null, amountCents: 0 });
+    } else if (simulation.action === 'expense') {
+      openExpenseWizard();
+    } else if (simulation.action === 'plan') {
+      openWizard({ type: 'planBudget', step: 1, budgetCents: 0, selectedItem: null });
+    } else if (simulation.action === 'purchase') {
+      openWizard({ type: 'purchaseLifecycle', scenarioIndex: 0, stage: 0 });
+    } else if (simulation.action === 'commitment') {
+      openWizard({ type: 'commitment', step: 1, name: '', dueDate: '', amountCents: 0 });
+    } else if (simulation.action === 'change') {
+      openWizard({ type: 'changeSimulation', index: 0 });
+    } else {
+      openWizard({ type: simulation.action + 'Simulation', index: 0 });
+    }
+  }
+
+  function renderSimulationCatalog() {
+    var wrap = $('#simulationCatalog');
+    if (!wrap) return;
+    var groupKeys = ['organise', 'buy', 'check'];
+    wrap.innerHTML = '';
+    groupKeys.forEach(function (groupKey, groupIndex) {
+      var group = DATA.simulations.filter(function (simulation) { return simulation.group === groupKey; });
+      if (!group.length) return;
+      var heading = document.createElement('p');
+      heading.className = 'simulation-grid__group-title';
+      heading.textContent = App.i18n.t('blocks.simulation.groups.' + groupKey);
+      if (groupIndex === 0) heading.classList.add('simulation-grid__group-title--first');
+      wrap.appendChild(heading);
+      group.forEach(function (simulation) {
+        var card = document.createElement('button');
+        card.type = 'button';
+        card.id = 'simulation-card-' + simulation.id;
+        card.className = 'tarjeta simulation-card simulation-card--action' + (simulation.advanced ? ' simulation-card--advanced' : '') +
+          (simulation.variant === 'money' ? ' tarjeta--money' : '') + (simulation.variant === 'goals' ? ' tarjeta--goals' : '');
+        card.dataset.simulationId = simulation.id;
+        card.style.setProperty('--acento', 'var(--' + simulation.accent + ')');
+        card.style.setProperty('--acento-suave', 'var(--' + simulation.accent + '-suave)');
+        var detail = App.i18n.t(simulation.detailKey);
+        var extra = '';
+        if (simulation.variant === 'money') {
+          extra = '<span class="tarjeta__nombre" id="simulationBalanceValue">' + App.money.format(balanceCents()) + '</span>' +
+            '<span class="tarjeta__estado" aria-hidden="true" id="recentesResumen"></span>';
+        } else if (simulation.variant === 'goals') {
+          extra = '<span class="tarjeta__estado" id="simulationGoalsCta"></span>';
+        }
+        card.innerHTML = '<span class="picto" aria-hidden="true">' + simulation.icon + '</span>' +
+          '<span class="tarjeta__etiqueta">' + App.utils.escapeHtml(App.i18n.t(simulation.titleKey)) + '</span>' +
+          extra +
+          '<span class="tarjeta__detalle"' + (simulation.variant === 'goals' ? ' id="simulationGoalsSummary"' : '') + '>' + App.utils.escapeHtml(detail) + '</span>';
+        wrap.appendChild(card);
+      });
+    });
+  }
+
+  function lessonTestLinks(lessonId) {
+    var lessonIndex = learningIndexById(lessonId);
+    var tests = activitiesForUnit(lessonIndex);
+    var links = tests.map(function (activity) {
+      var title = App.i18n.t('learn.activityTitle.' + activity.slug);
+      var label = App.i18n.t('blocks.path.activityLink').replace('{title}', title);
+      var status = App.wallet.activityStatus(activity.slug);
+      var stateGlyph = status && status.done ? '✓ ' : '';
+      return '<a class="learning-unit__test-link" href="' + App.utils.escapeHtml(activity.href) + '">' +
+        (stateGlyph ? '<span aria-hidden="true">' + stateGlyph + '</span>' : '') + App.utils.escapeHtml(label) + '</a>';
+    }).join('');
+    return '<div class="learning-unit__test-links">' + links + '</div>';
+  }
+
+  function renderLessonDetail(detail, lesson) {
+    var title = App.i18n.t('blocks.path.units.' + lesson.id + '.title');
+    var body = App.i18n.t('blocks.path.units.' + lesson.id + '.body');
+    var testLinks = lessonTestLinks(lesson.id);
+    detail.classList.remove('hidden');
+    detail.innerHTML =
+      '<button type="button" class="back-link lesson-detail__back" id="lessonDetailBack">' +
+        App.i18n.t('blocks.didactic.detailBack') + '</button>' +
+      '<div class="lesson-detail__header">' +
+        '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
+        '<h3 id="lessonDetailTitle">' + App.utils.escapeHtml(title) + '</h3>' +
+        '<p class="lesson-detail__body">' + App.utils.escapeHtml(body) + '</p>' +
+      '</div>' +
+      '<div class="lesson-detail__practice">' +
+        '<p class="learning-unit__phase">' + App.i18n.t('blocks.path.practicePhase') + '</p>' +
+        (testLinks || '') +
+      '</div>';
+    detail.setAttribute('aria-labelledby', 'lessonDetailTitle');
+    detail.querySelector('#lessonDetailBack').addEventListener('click', function () {
+      openLessonId = null;
+      history.replaceState(null, '', '#bloque-didactico');
+      renderDidacticLessons($('#didacticLessons'));
+      var card = $('#unidad-' + lesson.id);
+      if (card) { card.focus({ preventScroll: true }); card.scrollIntoView({ block: 'nearest' }); }
+    });
+  }
+
+  /* The home is a short path: each unit opens its idea and the small
+     activities that practise it. Advanced simulations stay in the actions
+     part of the home and are not mixed into this learning decision. */
   function renderDidacticLessons(wrap) {
     if (!wrap) return;
+    var detail = $('#lessonDetail');
+    if (openLessonId) {
+      var selected = lessonById(openLessonId);
+      if (!selected || !detail) {
+        openLessonId = null;
+      } else {
+        wrap.classList.add('hidden');
+        renderLessonDetail(detail, selected);
+        return;
+      }
+    }
+    wrap.classList.remove('hidden');
+    if (detail) {
+      detail.classList.add('hidden');
+      detail.innerHTML = '';
+      detail.removeAttribute('aria-labelledby');
+    }
     wrap.innerHTML = '';
-    DATA.didacticLessons.forEach(function (lesson) {
-      var unit = document.createElement('article');
-      unit.className = 'learning-unit';
-      unit.id = 'unidad-' + lesson.id;
-      unit.setAttribute('aria-labelledby', 'unidad-' + lesson.id + '-title');
-      var lessonIndex = DATA.learningIndex.filter(function (row) { return row.id === lesson.id; })[0];
-      var tests = lessonIndex && Array.isArray(lessonIndex.testSlugs) ? lessonIndex.testSlugs.map(function (slug) {
-        return DATA.activities.filter(function (activity) { return activity.slug === slug && activity.available; })[0];
-      }).filter(Boolean) : [];
-      var testLinks = tests.map(function (activity) {
-        var title = App.i18n.t('learn.activityTitle.' + activity.slug);
-        var label = App.i18n.t('blocks.didactic.testLink').replace('{title}', title);
+    DATA.learningPath.forEach(function (lesson) {
+      var unit = learningIndexById(lesson.id) || lesson;
+      var activities = activitiesForUnit(unit);
+      var completed = activities.filter(function (activity) {
         var status = App.wallet.activityStatus(activity.slug);
-        var stateGlyph = status && status.done ? '✓' : '▶';
-        return '<a class="learning-unit__test-link" href="' + App.utils.escapeHtml(activity.href) + '">' +
-          '<span aria-hidden="true">' + stateGlyph + '</span> ' + App.utils.escapeHtml(label) + '</a>';
-      }).join('');
-      unit.innerHTML =
-        '<div class="learning-unit__lesson">' +
-          '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
-          '<h3 id="unidad-' + lesson.id + '-title">' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title') + '</h3>' +
-          '<p>' + App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Detail') + '</p>' +
-        '</div>' +
-        '<div class="learning-unit__test">' +
-          '<p class="learning-unit__test-prompt">' + App.i18n.t('blocks.didactic.testPhaseDetail') + '</p>' +
-          (testLinks ? '<div class="learning-unit__test-links">' + testLinks + '</div>' : '') +
-        '</div>';
-      wrap.appendChild(unit);
+        return status && status.done;
+      }).length;
+      var card = document.createElement('button');
+      var title = App.i18n.t('blocks.path.units.' + lesson.id + '.title');
+      card.type = 'button';
+      card.className = 'tarjeta topic-card';
+      card.id = 'unidad-' + lesson.id;
+      card.setAttribute('aria-labelledby', 'unidad-' + lesson.id + '-title');
+      card.innerHTML =
+        '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
+        '<span class="topic-card__title" id="unidad-' + lesson.id + '-title">' + App.utils.escapeHtml(title) + '</span>' +
+        '<span class="topic-card__detail">' + App.utils.escapeHtml(App.i18n.t('blocks.path.units.' + lesson.id + '.detail')) + '</span>' +
+        '<span class="topic-card__progress">' + App.utils.escapeHtml(App.i18n.t('blocks.didactic.activityProgress').replace('{done}', String(completed)).replace('{total}', String(activities.length))) + '</span>' +
+        '<span class="topic-card__action">' + App.i18n.t('blocks.didactic.openLink') + ' →</span>';
+      card.addEventListener('click', function () {
+        openLessonId = lesson.id;
+        history.pushState(null, '', '#unidad-' + lesson.id);
+        renderDidacticLessons(wrap);
+        focusLesson($('#lessonDetailTitle'));
+      });
+      wrap.appendChild(card);
     });
   }
 
@@ -378,8 +530,8 @@
      muestra la primera meta con su porcentaje y el sufijo "+N más"
      si hay más. */
   function renderMetasResumen() {
-    var detalle = $('#metasResumen');
-    var cta = $('#metasCta');
+    var detalle = $('#simulationGoalsSummary');
+    var cta = $('#simulationGoalsCta');
     if (!detalle || !cta) return;
     if (!state.goals.length) {
       detalle.textContent = App.i18n.t('goals.empty');
@@ -400,32 +552,6 @@
     cta.textContent = '+ ' + App.i18n.t('goals.addButton').replace('+ ', '');
   }
 
-  /* Click en la tarjeta "Mi dinero" → abre el wizard para fijar el
-     saldo. La tarjeta sigue siendo un <a> para tener semántica de
-     enlace, pero navegamos a wizard en lugar de a otra página. */
-  var tarjetaSaldo = $('#tarjetaSaldo');
-  if (tarjetaSaldo) {
-    tarjetaSaldo.addEventListener('click', function (e) {
-      e.preventDefault();
-      openWizard({ type: 'setBalance', step: 1, amountCents: Math.max(balanceCents(), 0) });
-    });
-  }
-
-  /* Click en la tarjeta "Mis metas" → si no hay metas, abre el
-     wizard de nueva meta; si hay, abre el wizard de añadir dinero
-     a la primera meta (atajo rápido). */
-  var tarjetaMetas = $('#tarjetaMetas');
-  if (tarjetaMetas) {
-    tarjetaMetas.addEventListener('click', function (e) {
-      e.preventDefault();
-      if (!state.goals.length) {
-        openWizard({ type: 'goalNew', step: 1, name: '', icon: DATA.goalIcons[0], targetCents: 0 });
-      } else {
-        openWizard({ type: 'goalAdd', step: 1, goalId: state.goals[0].id, amountCents: 0 });
-      }
-    });
-  }
-
   function openExpenseWizard(prefill) {
     var hasPrefill = prefill && prefill.categoryId;
     openWizard({
@@ -436,75 +562,14 @@
     });
   }
 
-  var inlineExpense = $('#btnNewExpenseInline');
-  if (inlineExpense) inlineExpense.addEventListener('click', openExpenseWizard);
-  var newIncome = $('#btnNewIncome');
-  if (newIncome) newIncome.addEventListener('click', function () {
-    openWizard({ type: 'income', step: 1, sourceId: null, amountCents: 0 });
-  });
-  var newCommitment = $('#btnNewCommitment');
-  if (newCommitment) newCommitment.addEventListener('click', function () {
-    openWizard({ type: 'commitment', step: 1, name: '', dueDate: '', amountCents: 0 });
-  });
-  var planPurchase = $('#btnPlanPurchase');
-  if (planPurchase) {
-    planPurchase.addEventListener('click', function () {
-      openWizard({ type: 'planBudget', step: 1, budgetCents: 0, selectedItem: null });
-    });
-  }
-  var purchaseLifecycle = $('#btnPurchaseLifecycle');
-  if (purchaseLifecycle) purchaseLifecycle.addEventListener('click', function () {
-    openWizard({ type: 'purchaseLifecycle', scenarioIndex: 0, stage: 0 });
-  });
-  var depreciationSimulation = $('#btnDepreciationSimulation');
-  if (depreciationSimulation) depreciationSimulation.addEventListener('click', function () {
-    openWizard({ type: 'depreciationSimulation', index: 0 });
-  });
-  var obsolescenceSimulation = $('#btnObsolescenceSimulation');
-  if (obsolescenceSimulation) obsolescenceSimulation.addEventListener('click', function () {
-    openWizard({ type: 'obsolescenceSimulation', index: 0 });
-  });
-  var returnSimulation = $('#btnReturnSimulation');
-  if (returnSimulation) returnSimulation.addEventListener('click', function () {
-    openWizard({ type: 'returnSimulation', index: 0 });
-  });
-  var riskSimulation = $('#btnRiskSimulation');
-  if (riskSimulation) riskSimulation.addEventListener('click', function () {
-    openWizard({ type: 'riskSimulation', index: 0 });
-  });
-  var investmentSimulation = $('#btnInvestmentSimulation');
-  if (investmentSimulation) investmentSimulation.addEventListener('click', function () {
-    openWizard({ type: 'investmentSimulation', index: 0 });
-  });
-  var bankProductsSimulation = $('#btnBankProductsSimulation');
-  if (bankProductsSimulation) bankProductsSimulation.addEventListener('click', function () {
-    openWizard({ type: 'bankProductsSimulation', index: 0 });
-  });
-  var housingSimulation = $('#btnHousingSimulation');
-  if (housingSimulation) housingSimulation.addEventListener('click', function () {
-    openWizard({ type: 'housingSimulation', index: 0 });
+  var simulationCatalog = $('#simulationCatalog');
+  if (simulationCatalog) simulationCatalog.addEventListener('click', function (event) {
+    var card = event.target.closest('[data-simulation-id]');
+    if (card) openSimulation(card.getAttribute('data-simulation-id'));
   });
   var settingsButton = $('#btnSettings');
   if (settingsButton) settingsButton.addEventListener('click', function () {
     openWizard({ type: 'settings' });
-  });
-  var changeSimulation = $('#btnChangeSimulation');
-  if (changeSimulation) {
-    changeSimulation.addEventListener('click', function () {
-      openWizard({ type: 'changeSimulation', index: 0 });
-    });
-  }
-  var safetySimulation = $('#btnSafetySimulation');
-  if (safetySimulation) {
-    safetySimulation.addEventListener('click', function () {
-      openWizard({ type: 'safetySimulation', index: 0 });
-    });
-  }
-  ['rights', 'communication', 'emergency'].forEach(function (simulationId) {
-    var button = $('#btn' + simulationId.charAt(0).toUpperCase() + simulationId.slice(1) + 'Simulation');
-    if (button) button.addEventListener('click', function () {
-      openWizard({ type: simulationId + 'Simulation', index: 0 });
-    });
   });
   var nextStepAction = $('#nextStepAction');
   if (nextStepAction) {
@@ -877,6 +942,19 @@
     });
   }
 
+  function continueSimulation(total, render, zone) {
+    var activeWizard = wizard;
+    var buttons = Array.prototype.slice.call($('#screen-wizard').querySelectorAll('button'));
+    buttons.forEach(function (button) {
+      if (button.closest('.keypad') || button.id === 'wizNext') button.disabled = true;
+    });
+    App.feedback.lockUntilAck([], zone, function () {
+      if (wizard !== activeWizard) return;
+      if (wizard.index + 1 >= total) closeWizard();
+      else { wizard.index += 1; render(); }
+    });
+  }
+
   /* ---------- Euro simulation: check change (no Tokens, no ledger write) ---------- */
   function renderChangeSimulation() {
     var scenario = DATA.changeScenarios[wizard.index];
@@ -903,13 +981,7 @@
           $('#wizSimFeedback').textContent = App.i18n.t('blocks.simulation.simulationCorrect');
           $('#wizSimFeedback').className = 'feedback success';
         }
-        if (wizard.index + 1 >= DATA.changeScenarios.length) {
-          setTimeout(function () {
-            App.feedback.celebrate(App.i18n.t('blocks.simulation.simulationFinished'), function () { closeWizard(); });
-          }, 450);
-        } else {
-          setTimeout(function () { wizard.index += 1; renderChangeSimulation(); }, 650);
-        }
+        continueSimulation(DATA.changeScenarios.length, function () { renderChangeSimulation(); }, $('#wizSimFeedback'));
       }
     });
   }
@@ -947,13 +1019,7 @@
           $('#wizSimFeedback').textContent = App.i18n.t('blocks.simulation.simulationCorrect');
           $('#wizSimFeedback').className = 'feedback success';
         }
-        if (wizard.index + 1 >= DATA.depreciationScenarios.length) {
-          setTimeout(function () {
-            App.feedback.celebrate(App.i18n.t('blocks.simulation.simulationFinished'), function () { closeWizard(); });
-          }, 450);
-        } else {
-          setTimeout(function () { wizard.index += 1; renderDepreciationSimulation(); }, 650);
-        }
+        continueSimulation(DATA.depreciationScenarios.length, function () { renderDepreciationSimulation(); }, $('#wizSimFeedback'));
       }
     });
   }
@@ -988,13 +1054,7 @@
           $('#wizSimFeedback').textContent = App.i18n.t('blocks.simulation.simulationCorrect');
           $('#wizSimFeedback').className = 'feedback success';
         }
-        if (wizard.index + 1 >= DATA.returnScenarios.length) {
-          setTimeout(function () {
-            App.feedback.celebrate(App.i18n.t('blocks.simulation.simulationFinished'), function () { closeWizard(); });
-          }, 450);
-        } else {
-          setTimeout(function () { wizard.index += 1; renderReturnSimulation(); }, 650);
-        }
+        continueSimulation(DATA.returnScenarios.length, function () { renderReturnSimulation(); }, $('#wizSimFeedback'));
       }
     });
   }
@@ -1031,13 +1091,7 @@
         feedback.textContent = App.i18n.t('blocks.simulation.simulationCorrect');
         feedback.className = 'feedback success';
         App.feedback.success();
-        if (wizard.index + 1 >= total) {
-          setTimeout(function () {
-            App.feedback.celebrate(App.i18n.t('blocks.simulation.simulationFinished'), function () { closeWizard(); });
-          }, 450);
-        } else {
-          setTimeout(function () { wizard.index += 1; renderSafetySimulation(); }, 650);
-        }
+        continueSimulation(total, function () { renderSafetySimulation(); }, feedback);
       });
       grid.appendChild(btn);
     });
@@ -1081,13 +1135,7 @@
         feedback.textContent = App.i18n.t('blocks.simulation.simulationCorrect');
         feedback.className = 'feedback success';
         App.feedback.success();
-        if (wizard.index + 1 >= total) {
-          setTimeout(function () {
-            App.feedback.celebrate(App.i18n.t('blocks.simulation.simulationFinished'), function () { closeWizard(); });
-          }, 450);
-        } else {
-          setTimeout(function () { wizard.index += 1; renderChoiceSimulation(groupId); }, 650);
-        }
+        continueSimulation(total, function () { renderChoiceSimulation(groupId); }, feedback);
       });
       grid.appendChild(btn);
     });
@@ -1329,10 +1377,11 @@
     wireChrome(null);
 
     var grid = $('#iconGrid');
-    DATA.goalIcons.forEach(function (icon) {
+    DATA.goalIcons.slice(0, 6).forEach(function (icon, index) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'btn-option';
+      btn.setAttribute('aria-label', App.i18n.t('goals.iconLabel').replace('{n}', String(index + 1)));
       btn.setAttribute('aria-pressed', String(icon === wizard.icon));
       btn.innerHTML = '<span class="icon" aria-hidden="true">' + icon + '</span>';
       btn.addEventListener('click', function () {
@@ -1487,7 +1536,7 @@
     App.i18n.SUPPORTED.forEach(function (loc) {
       var btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'btn-audio';
+      btn.className = 'btn-idioma';
       btn.id = 'btnLang' + loc.toUpperCase();
       btn.setAttribute('data-locale', loc);
       btn.setAttribute('aria-pressed', String(active === loc));
@@ -1502,8 +1551,17 @@
   /* ---------- Boot ---------- */
   App.i18n.apply();
   renderHome();
+  if (openLessonId) focusLesson($('#lessonDetailTitle'));
+  window.addEventListener('hashchange', function () {
+    openLessonId = lessonFromHash();
+    renderDidacticLessons($('#didacticLessons'));
+    if (openLessonId) focusLesson($('#lessonDetailTitle'));
+  });
+  window.addEventListener('pageshow', function (event) {
+    if (event.persisted) renderHome();
+  });
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js').catch(function () {});
+    navigator.serviceWorker.register('sw.js?build=72', { updateViaCache: 'none' }).catch(function () {});
   }
 })();

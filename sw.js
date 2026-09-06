@@ -3,9 +3,21 @@
    Cache-first strategy for the app shell (works offline).
    When adding new files: add them to FILES and bump VERSION.
    ============================================================ */
-var VERSION = 'okeymoney-v64';
+var VERSION = 'okeymoney-v99';
 
 var FILES = [
+  './tools/monthly-payments/index.html',
+  './tools/monthly-payments/app.js',
+  './tools/monthly-payments/strings.es.js',
+  './tools/monthly-payments/strings.en.js',
+  './tools/compare-prices/index.html',
+  './tools/compare-prices/app.js',
+  './tools/compare-prices/strings.es.js',
+  './tools/compare-prices/strings.en.js',
+  './tools/save-step-by-step/index.html',
+  './tools/save-step-by-step/app.js',
+  './tools/save-step-by-step/strings.es.js',
+  './tools/save-step-by-step/strings.en.js',
   './index.html',
   './offline.html',
   './manifest.json',
@@ -18,6 +30,15 @@ var FILES = [
   './legal/styles.css',
   './legal/strings.es.js',
   './legal/strings.en.js',
+  './config/index.html',
+  './config/app.js',
+  './config/styles.css',
+  './config/strings.es.js',
+  './config/strings.en.js',
+  './about/index.html',
+  './about/styles.css',
+  './about/strings.es.js',
+  './about/strings.en.js',
   './assets/css/tokens.css',
   './assets/css/base.css',
   './assets/css/componentes.css',
@@ -68,7 +89,14 @@ var FILES = [
   './tools/safe-money/index.html',
   './tools/safe-money/app.js',
   './tools/safe-money/strings.es.js',
-  './tools/safe-money/strings.en.js'
+  './tools/safe-money/strings.en.js',
+
+  /* Public landing site/. Added when /site/ was created; bump VERSION
+     so installed PWAs refetch the shell and pick the new files. */
+  './site/index.html',
+  './site/styles.css',
+  './site/strings.es.js',
+  './site/strings.en.js'
 ];
 
 self.addEventListener('install', function (event) {
@@ -100,10 +128,14 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('fetch', function (event) {
   if (event.request.method !== 'GET') return;
+  /* localhost is the live development environment. Do not let an old
+     app-shell cache hide source changes while testing there. */
+  var isLocalDevelopment = self.location.hostname === 'localhost' ||
+    self.location.hostname === '127.0.0.1';
   event.respondWith(
-    caches.match(event.request).then(function (cached) {
+    (isLocalDevelopment ? Promise.resolve(null) : caches.match(event.request)).then(function (cached) {
       if (cached) return cached;
-      return fetch(event.request).then(function (r) {
+      return fetch(event.request, isLocalDevelopment ? { cache: 'no-store' } : undefined).then(function (r) {
         /* Also cache new same-origin resources — but never cache a
            redirect. Safari (and the Fetch spec) rejects a top-level
            navigation served by a SW that carries a Location header

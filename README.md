@@ -1,4 +1,4 @@
-# Okeymoney 💰
+﻿# Okeymoney 💰
 
 > 🌐 **Other languages:** [Español](README.es.md)
 >
@@ -6,9 +6,9 @@
 
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![No dependencies](https://img.shields.io/badge/dependencies-none-success.svg)](#-features)
-[![Static site](https://img.shields.io/badge/build-none-informational.svg)](#-quick-start)
+[![Static site](https://img.shields.io/badge/build-none-informational.svg)](#-features)
 [![PWA](https://img.shields.io/badge/PWA-installable-5A0FC8.svg)](manifest.json)
-[![i18n](https://img.shields.io/badge/i18n-es%20%7C%20en-yellow.svg)](#-documentation)
+[![i18n](https://img.shields.io/badge/i18n-es%20%7C%20en-yellow.svg)](#-project-documentation-bilingual)
 [![CI](https://img.shields.io/badge/CI-node%20scripts%2Fcheck.js-blue.svg)](.github/workflows/validate.yml)
 
 A free, static, dependency-free app that teaches **personal finance and
@@ -37,46 +37,47 @@ checking your balance. No accounts, no telemetry.
 
 ## ✨ Features
 
-Okeymoney is a **single shared-state app**: Mi dinero, Mis metas and
-Registrar un gasto read and write the same `localStorage` ledger
-(`okeymoney:data` + `okeymoney:practiceWallet`), so the balance,
-goals and practice wallet always stay coherent.
+Okeymoney is a **single shared-state app**: My Money, My Goals and
+Record an Expense read and write the same `localStorage` ledger
+(`okeymoney:data` + `okeymoney:practiceWallet`), so balance, goals and
+practice wallet always stay coherent.
 
-- 💼 **Mi dinero** — a shared-state balance dashboard (one amount,
+- 💼 **My Money** — a shared-state balance dashboard (one amount,
   used everywhere).
 - 🫴 **Receive money** — record pocket money, work, gifts or refunds.
-- 🎯 **Mis metas** — savings-goals tracker with progress per goal.
-- 🧾 **Registrar un gasto** — step-by-step wizard with category,
+- 🎯 **My Goals** — savings-goals tracker with progress per goal.
+- 🧾 **Record an expense** — step-by-step wizard with category,
   amount, and payment method.
 - 📚 **Recent movements** — a simple local view of income, spending
   and saving.
-- 📌 **Planned payments** — remember dated payments and review overdue ones
-  without changing the balance automatically.
-- 🧭 **Money compass** — summarise income, spending, saving and your main
-  spending category.
-- 📦 **Purchase cycle** — practise order, delivery note, invoice and payment;
-  only payment records the expense.
-- 📊 **Money picture** — explains assets, expected liabilities, income and
-  expenses using your recorded data.
-- 📉 **Asset life** — practise depreciation and decide what to do when a
-  useful item becomes obsolete, without changing the real ledger.
-- ⚖️ **Return and risk** — calculate a hypothetical gain and compare time
-  horizon, access to money and diversification before deciding.
+- 📌 **Planned payments** — remember dated payments and review overdue
+  ones without changing the balance automatically.
+- 🧭 **Money compass** — summarise income, spending, saving and your
+  main spending category.
+- 📦 **Purchase cycle** — practise order, delivery note, invoice and
+  payment; only payment records the expense.
+- 📊 **Money picture** — explains assets, expected liabilities, income
+  and expenses using your recorded data.
+- 📉 **Asset life** — practise depreciation and decide what to do when
+  a useful item becomes obsolete, without changing the real ledger.
+- ⚖️ **Return and risk** — calculate a hypothetical gain and compare
+  time horizon, access to money and diversification before deciding.
 - 🔄 **Investment operations** — recognise buying/contributing,
-  selling/redeeming, collecting returns and transferring between products.
+  selling/redeeming, collecting returns and transferring between
+  products.
 - 💳 **Bank cards and accounts** — distinguish debit, credit, prepaid,
   current and savings products in everyday situations.
 - 🏠 **Housing choices** — compare renting and owning through costs,
   commitments, maintenance and flexibility.
-- 📚 **Accounting and control** — record the facts, then use budget, balance
-  and commitments to decide.
+- 📚 **Accounting and control** — record the facts, then use budget,
+  balance and commitments to decide.
 - 🧭 **Everyday autonomy** — rehearse rights, money communication and
   emergencies without touching the real balance.
 - ⚙️ **Settings and local backups** — change text size and download or
   restore data without an account.
-- 🛒 **Practice activities** — a catalogue of activities themed by
-  Conceptos básicos / Vida cotidiana / Seguridad, each building real
-  autonomy (change-back, what-do-I-need, where-to-store, etc.).
+- 🛒 **Practice activities** — a catalogue themed by Basics / Everyday
+  Life / Safety, each building real autonomy (change-back,
+  what-do-I-need, where-to-store, etc.).
 - 🪶 **Zero runtime dependencies** — pure HTML/CSS/JS, no build.
 - 🌐 **Bilingual** — Spanish (default) and English.
 - 🔒 **Privacy by default** — no accounts, no cookies, no analytics:
@@ -93,14 +94,17 @@ goals and practice wallet always stay coherent.
 |---|---|---|---|
 | 👤 **End user** (typical user profile) | Practices personal finance and everyday autonomy | Opens the app in a browser; doesn't read or write code | The app |
 | ❤️ **Support / family** | Helps an end user set up the balance and goals | Initializes the ledger with the user's starting amount and goals; guides the first expense registration | [`CONTRIBUTING.md`](CONTRIBUTING.md) (the "Support" section) |
-| 💻 **Build / developer** | Maintains the shared ledger and the catalogue | Edits `app.js`, the per-activity data, and the catalogue-first home (see [`doc/en/PRODUCT-DESIGN.md`](doc/en/PRODUCT-DESIGN.md)) | [`CLAUDE.md`](CLAUDE.md) |
+| 💻 **Build / developer** | Maintains the shared ledger and the catalogue | Edits `app.js`, the per-activity data, and the catalogue-first home (see [`doc/en/spec.md`](doc/en/spec.md) §§6–7) | [`CLAUDE.md`](CLAUDE.md) |
 
-For the full role description in context (with the rest of the
-sibling suite), see [`CLAUDE.md`](CLAUDE.md).
+See [`doc/en/roles.md`](doc/en/roles.md) for the full role description
+and the trio-vs-pair-vs-sole patterns across the apps of the suite.
 
 ---
 
 ## 📚 Project documentation (bilingual)
+
+All project documentation lives in the `doc/` folder plus a few files
+at the repository root:
 
 | Language | Entry point |
 |---|---|
@@ -109,15 +113,23 @@ sibling suite), see [`CLAUDE.md`](CLAUDE.md).
 
 | Topic | Document |
 |---|---|
-| Product, audience, accessibility rules | [`doc/en/SPEC.md`](doc/en/SPEC.md) · [`doc/es/SPEC.md`](doc/es/SPEC.md) |
+| Product, audience, accessibility rules | [`doc/en/spec.md`](doc/en/spec.md) · [`doc/es/spec.md`](doc/es/spec.md) |
 | Architecture, data schema and technical reference | [`doc/en/technical.md`](doc/en/technical.md) · [`doc/es/tecnico.md`](doc/es/tecnico.md) |
-| Multilingual architecture + recipe to add a language | [`doc/en/I18N.md`](doc/en/I18N.md) · [`doc/es/I18N.md`](doc/es/I18N.md) |
-| **v2 home redesign (catalogue-first home + cards)** | [`doc/en/PRODUCT-DESIGN.md`](doc/en/PRODUCT-DESIGN.md) · [`doc/es/PRODUCT-DESIGN.md`](doc/es/PRODUCT-DESIGN.md) |
+| Multilingual architecture + recipe to add a language | [`doc/en/i18n.md`](doc/en/i18n.md) · [`doc/es/i18n.md`](doc/es/i18n.md) |
+| **v2 home (catalogue-first home + cards)** | [`doc/en/spec.md`](doc/en/spec.md) §§6–7 · [`doc/en/activities.md`](doc/en/activities.md) |
 | Activities catalogue (themes, agents, mechanics) | [`doc/en/activities.md`](doc/en/activities.md) · [`doc/es/actividades.md`](doc/es/actividades.md) |
 | Visual redesign roadmap (shipped in v1.1) | [`TODO.md`](TODO.md) · [`TODO.es.md`](TODO.es.md) |
 | AI agent operational workflow | [`CLAUDE.md`](CLAUDE.md) |
 
-Project history lives in `git log`; no external roadmap is maintained.
+### 📄 Other repo documents
+
+| Document | Audience |
+|---|---|
+| [`CONTRIBUTING.md`](CONTRIBUTING.md) | Anyone who wants to contribute (family, therapists, devs) |
+| `CLAUDE.md` | AI agents: operational workflow, coordination and approvals |
+| [`CLOUDFLARE.md`](CLOUDFLARE.md) | Canonical Cloudflare Workers deploy guide for the suite (Okeymoney + Apptonomia + Calculia, Memofun, Sinonimia, Teclatlon) |
+| Project history | Lives in `git log`; no external roadmap is maintained |
+| `doc/en/i18n.md` / `doc/es/i18n.md` | Details of the ES/EN multilanguage system |
 
 ---
 
@@ -126,7 +138,7 @@ Project history lives in `git log`; no external roadmap is maintained.
 Okeymoney grows by adding **practice activities** under
 `tools/<slug>/` and by adding **categories / goals / screens** to the
 shared ledger. Each change must respect the **single-ledger
-invariant**: Mi dinero, Mis metas and Registrar un gasto all read and
+invariant**: My Money, My Goals and Record an Expense all read and
 write the same `okeymoney:data` ledger — do not split it, do not
 introduce a `site/` + `tools/<slug>/` shell like Apptonomia/Calculia,
 and do not let activities in `tools/<slug>/` read each other's storage
@@ -136,11 +148,15 @@ To add a new practice activity:
 
 1. Create `tools/<slug>/` with `index.html`, `app.js`, `strings.es.js`,
    `strings.en.js` (and `data.js` if the activity needs preset data).
-2. Add the slug to the home catalogue in `index.html` (under the right
-   themed section: Conceptos básicos / Vida cotidiana / Seguridad).
+2. Register the slug in root `DATA.activities` (`data.js`) with a valid
+   `unitId` and its theme. The home generates the card automatically.
 3. Register the slug in `manifest.json` for the install prompt (if it
    has its own icon) and in the `tools/INDEX` if there is one.
 4. Bump `VERSION` in `sw.js` (e.g. `okeymoney-vN` → `okeymoney-vN+1`).
+
+To add a simulation, register an entry in `DATA.simulations` with an
+`id`, `unitId`, group, i18n keys and action. Touch `app.js` only when
+the mechanic is new.
 
 To expand the **shared ledger** (a new category, a new screen, a new
 goal default), edit the schema in
@@ -175,25 +191,15 @@ If you touched any file listed in `sw.js` `FILES`, also bump
 
 Okeymoney is a fully static site (HTML/CSS/JS, no build step), so it
 ships directly to **[Cloudflare Workers (static assets)](https://developers.cloudflare.com/workers/static-assets/)**
-through its built-in GitHub integration — there is no custom GitHub
-Actions workflow. The HTTP security headers live in
-[`_headers`](_headers), the offline fallback in
+through its built-in GitHub integration. The HTTP security headers
+live in [`_headers`](_headers), the offline fallback in
 [`offline.html`](offline.html), and the project metadata in
 [`wrangler.toml`](wrangler.toml). See [`CLOUDFLARE.md`](CLOUDFLARE.md)
 for the full runbook (rebuild, rollback, custom domain, credential
 rotation).
 
-Pull requests automatically get a preview URL — no extra workflow is
-needed.
-
----
-
-## 🤝 Contributing
-
-Issues and pull requests are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md)
-for the workflow (and [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md) for the
-Spanish version). All participants are expected to follow
-[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+Pull requests automatically get a preview URL on
+`*.<account-subdomain>.workers.dev` — no extra workflow is needed.
 
 ---
 
@@ -231,37 +237,38 @@ that mimics Cloudflare's behaviour for previews).
 
 ## 🙏 Credits
 
-Okeymoney's **shared-ledger** data model follows Teclatlon (a sibling
+Okeymoney's **shared-ledger** data model follows Teclatlon (an app of the suite
 project in the suite): one `localStorage` ledger read and written by
 every flow that touches the balance, goals or wallet, so they always
 stay coherent — see [`doc/en/technical.md`](doc/en/technical.md) §2
 for the rationale and the schema.
 
-The **catalogue-first home** (three themed sections: Conceptos
-básicos / Vida cotidiana / Seguridad) was redesigned in v2 — the
-rationale, phases, and what does / does not change are captured in
-[`doc/en/PRODUCT-DESIGN.md`](doc/en/PRODUCT-DESIGN.md) (and its
-Spanish mirror [`doc/es/PRODUCT-DESIGN.md`](doc/es/PRODUCT-DESIGN.md)).
+The **catalogue-first home** presents five short units and a euro-
+simulation catalogue. Activities retain three themes as metadata. Its
+navigation and scope are in [`doc/en/spec.md`](doc/en/spec.md) §§6–7;
+the catalogue and its expansion contract are in
+[`doc/en/activities.md`](doc/en/activities.md).
 
 ---
 
-## 🧩 Sibling projects
+## 🌐 The Miralante suite — projects in the suite
 
-This project is one of a small group of sibling projects that share
+Okeymoney is one of **six apps** in the **Miralante** suite, sharing
 the same author, the same accessibility-first / no-backend philosophy
-and the same Cloudflare deploy story. **Apptonomia is the main project**;
-the others (Calculia, Okeymoney, Sinonimia, Teclatlon, Routime) were
-spun out of it or built next to it on the same stack.
+and the same deploy story. Apptonomia, on top of being an app itself,
+also acts as the **landing portal** that introduces the whole suite.
+None of the seven repos is the "main" one — they are peers; this is
+just the original product this group grew out of.
 
 | Project | What it is | Repository |
 |---|---|---|
-| **Apptonomia** *(main)* | Activities for routines and daily-life skills (designed for our typical user profile) | [github.com/miralante/apptonomia](https://github.com/miralante/apptonomia) |
-| Calculia | Math and logical reasoning | [github.com/miralante/calculia](https://github.com/miralante/calculia) |
-| Memofun | Flashcards built around meaningful learning | [github.com/miralante/memofun](https://github.com/miralante/memofun) |
-| Okeymoney | Personal finance and everyday autonomy | [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) |
-| Routime | Activities for routines and daily-life skills | [github.com/miralante/routime](https://github.com/miralante/routime) |
-| Sinonimia | Easy-read dictionary | [github.com/miralante/sinonimia](https://github.com/miralante/sinonimia) |
-| Teclatlon | Touch-typing with a physical keyboard | [github.com/miralante/teclatlon](https://github.com/miralante/teclatlon) |
+| **Apptonomia** *(portal — landing only, no app)* | Landing page that introduces the Miralante suite (not a runtime app) | [github.com/miralante/apptonomia](https://github.com/miralante/apptonomia) |
+| [Calculia](https://calculia.apptonomia.uk/) | Math and logical reasoning | [github.com/miralante/calculia](https://github.com/miralante/calculia) |
+| [Memofun](https://memofun.apptonomia.uk/) | Flashcards built around meaningful learning | [github.com/miralante/memofun](https://github.com/miralante/memofun) |
+| [Okeymoney](https://okeymoney.apptonomia.uk/) | Personal finance and everyday autonomy | [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) |
+| [Routime](https://routime.apptonomia.uk/) | Activities for routines and daily-life skills | [github.com/miralante/routime](https://github.com/miralante/routime) |
+| [Sinonimia](https://sinonimia.apptonomia.uk/) | Easy-read dictionary | [github.com/miralante/sinonimia](https://github.com/miralante/sinonimia) |
+| [Teclatlon](https://teclatlon.apptonomia.uk/) | Touch-typing with a physical keyboard | [github.com/miralante/teclatlon](https://github.com/miralante/teclatlon) |
 
 The canonical Cloudflare / deploy guide for the group lives in
 [Apptonomia's `CLOUDFLARE.md`](https://github.com/miralante/apptonomia/blob/master/CLOUDFLARE.md).
@@ -269,3 +276,7 @@ This repo uses the **Workers + static assets** model (`wrangler.toml`
 + `[assets]`), which is a different shape than Apptonomia/Teclatlon's
 classic Pages model — see [`CLOUDFLARE.md`](CLOUDFLARE.md) for the
 local runbook.
+
+## More about this project
+
+- [About this project](https://okeymoney.apptonomia.uk/about/)

@@ -10,6 +10,118 @@
    and would not belong in the shared components layer.
    ========================================================================== */
 
+/* --------------------------------------------------------------------------
+   Activity page composition
+
+   The activity is a focused decision screen, not a dense form. The shared
+   rhythm below applies to every tool so the explanation, example, question
+   and choices read as separate moments.
+   -------------------------------------------------------------------------- */
+.actividad {
+  --acento: var(--acento-3);
+  --acento-suave: var(--acento-3-suave);
+  max-width: var(--contenedor-lectura);
+  padding-top: var(--espacio-7);
+}
+
+.actividad .tool-header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  column-gap: var(--espacio-4);
+  row-gap: var(--espacio-5);
+  margin-bottom: var(--espacio-7);
+}
+
+.actividad .tool-header .back-link {
+  width: auto;
+  min-height: var(--tocable);
+  padding: 0;
+  background: transparent;
+  border-color: transparent;
+  color: var(--acento);
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+}
+
+.actividad .tool-header .back-link:hover {
+  border-color: transparent;
+  color: var(--texto-primario);
+}
+
+.actividad .tool-header h1 {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  max-width: 18ch;
+  font-size: clamp(2.25rem, 5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.actividad .tool-header .practice-tokens {
+  min-height: var(--tocable);
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--acento-suave);
+}
+
+.actividad .tool-header .practice-tokens::before {
+  content: "🔑";
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.actividad-objetivo {
+  margin: 0 0 var(--espacio-7);
+  padding: var(--espacio-4) var(--espacio-5);
+  border-left: 4px solid var(--acento);
+  background: color-mix(in srgb, var(--acento-suave) 58%, var(--superficie-1));
+  color: var(--texto-secundario);
+  border-radius: 0 var(--radio-3) var(--radio-3) 0;
+  font-size: var(--texto-400);
+  line-height: var(--linea-base);
+}
+
+.actividad .instruccion {
+  max-width: var(--contenedor-lectura);
+  margin: var(--espacio-7) auto var(--espacio-4);
+  color: var(--texto-primario);
+  font-size: var(--texto-500);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+  text-align: center;
+}
+
+.actividad > .escena {
+  min-height: calc(var(--tocable-xl) + var(--espacio-8));
+  margin: 0;
+  padding: var(--espacio-7) var(--espacio-6);
+  border-color: transparent;
+  border-radius: var(--radio-3);
+  box-shadow: var(--sombra-2);
+}
+
+.actividad > .escena > p {
+  margin: var(--espacio-2) 0;
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+  line-height: var(--linea-base);
+}
+
+.actividad > .opciones {
+  display: grid;
+  gap: var(--espacio-4);
+  margin: var(--espacio-6) auto 0;
+}
+
+.actividad > .opciones .btn,
+.actividad > .opciones .opcion-btn {
+  width: 100%;
+}
+
+.actividad .actividad-cta .btn {
+  max-width: var(--contenedor-lectura);
+}
+
 /* Activity option button — only the .correcta / .animo state colours
    remain, which encode Socratic feedback per activity (Apptonomia-style
    state colours, not a generic component). The shared .btn component
@@ -40,15 +152,111 @@
 }
 .opcion-btn:disabled { cursor: default; }
 
-/* Keep recognition practice connected to the real goal: knowing the
-   balance and checking a payment. */
-.actividad-objetivo {
+/* The activity opens with a short explanation and example before the
+   understanding check. Keep this block visually separate from the choices. */
+.actividad-didactica {
+  width: 100%;
+  max-width: var(--contenedor-lectura);
+  margin: 0 auto;
+  text-align: left;
+}
+.actividad-didactica h2 {
   margin: 0 0 var(--espacio-3);
-  padding: var(--espacio-3) var(--espacio-4);
-  border-left: 3px solid var(--acento);
-  background: var(--acento-suave);
+  color: var(--acento);
+  font-size: var(--texto-500);
+  line-height: var(--linea-apretada);
+}
+.actividad-didactica > p:not(.actividad-didactica__example) {
+  margin: 0;
   color: var(--texto-secundario);
+  font-size: var(--texto-400);
+  line-height: var(--linea-base);
+}
+.actividad-didactica__example {
+  margin: var(--espacio-5) 0 0;
+  padding: var(--espacio-4) var(--espacio-5);
+  border-left: 4px solid var(--acento);
+  background: var(--superficie-2);
   border-radius: 0 var(--radio-2) var(--radio-2) 0;
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+  line-height: var(--linea-base);
+}
+.actividad-didactica__example strong {
+  color: var(--acento);
+}
+.actividad-presentacion {
+  margin-top: var(--espacio-6);
+  padding-top: var(--espacio-5);
+  border-top: 1px solid var(--borde);
+}
+.actividad-presentacion__title {
+  margin: 0 0 var(--espacio-4);
+  color: var(--texto-primario);
+  font-size: var(--texto-300);
+  font-weight: var(--peso-fuerte);
+}
+.actividad-presentacion__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+  gap: var(--espacio-4);
+  align-items: start;
+}
+.actividad-presentacion__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
+  text-align: center;
+}
+.actividad-dinero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--espacio-4);
+  max-width: var(--contenedor-lectura);
+}
+.actividad-equivalente,
+.actividad-cambio__amount {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-3);
+}
+.actividad-equivalente__label,
+.actividad-cambio__label {
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+  font-weight: var(--peso-fuerte);
+}
+.actividad-cambio {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--espacio-7);
+}
+.actividad-cambio__amount + .actividad-cambio__amount {
+  position: relative;
+}
+.actividad-cambio__amount + .actividad-cambio__amount::before {
+  content: "−";
+  position: absolute;
+  left: calc(var(--espacio-7) * -0.75);
+  top: 50%;
+  color: var(--texto-tenue);
+  font-size: var(--texto-500);
+  font-weight: var(--peso-medio);
+}
+.actividad-didactica__start {
+  display: block;
+  width: min(100%, var(--contenedor-lectura));
+  min-height: var(--tocable-lg);
+  margin: var(--espacio-6) auto 0;
+  font-size: var(--texto-400);
 }
 
 .pista {
@@ -63,9 +271,34 @@
 .actividad-cta {
   display: flex;
   justify-content: center;
-  margin-top: var(--espacio-4);
+  margin-top: var(--espacio-7);
+}
+
+@media (max-width: 640px) {
+  .actividad {
+    padding-top: var(--espacio-6);
+  }
+
+  .actividad .tool-header {
+    row-gap: var(--espacio-4);
+    margin-bottom: var(--espacio-6);
+  }
+
+  .actividad .tool-header h1 {
+    font-size: clamp(2.1rem, 10vw, 2.75rem);
+  }
+
+  .actividad > .escena {
+    padding: var(--espacio-6) var(--espacio-4);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .opcion-btn:active { transform: none; }
+}
+
+/* Quiet orientation, using the existing suite typography and spacing. */
+.actividad-progress {
+  font-weight: var(--peso-fuerte);
+  margin-block: var(--espacio-4);
 }

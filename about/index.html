@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="es" data-i18n-title="pageTitle">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Okeymoney — Presentación del proyecto</title>
+  <!-- Hidden route: not linked from the main menu and should not be indexed.
+       Aimed at anyone who wants to know what Okeymoney is: families,
+       professionals, journalists, funders or new contributors. -->
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Okeymoney: una aplicación de finanzas personales para que las personas con discapacidad intelectual practiquen el manejo del dinero por sí mismas.">
+  <meta name="theme-color" content="#FAF7F2">
+  <link rel="icon" href="../assets/img/icono-euro.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/componentes.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container about">
+    <header class="cabecera-about">
+      <div class="idioma-selector" role="group" aria-label="Elegir idioma">
+        <button type="button" class="btn-idioma" id="btnIdiomaEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
+        <button type="button" class="btn-idioma" id="btnIdiomaEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
+      </div>
+      <p class="aviso-ruta" data-i18n="routeNotice">Esta página no se enlaza desde la aplicación. Solo se llega
+        escribiendo la dirección.</p>
+      <img src="../assets/img/icono-euro.svg" alt="" width="80" height="80" class="logo-about">
+      <h1>Okeymoney</h1>
+      <p class="lema" data-i18n="tagline">Una aplicación para la autonomía.</p>
+      <p class="entradilla"><span data-i18n="lead1">Okeymoney es una </span><strong data-i18n="leadStrong">aplicación web de finanzas personales</strong><span data-i18n="lead2"> pensada para que las personas con discapacidad intelectual practiquen por sí mismas
+        el manejo del dinero cotidiano, sin presión y con respeto a su privacidad.</span></p>
+
+      <nav class="indice" aria-label="Índice de la presentación">
+        <a href="#origen" data-i18n="navOrigin">El origen</a>
+        <a href="#principios" data-i18n="navPrinciples">Los principios</a>
+        <a href="#tecnologia" data-i18n="navTech">Cómo está hecha</a>
+        <a href="#areas" data-i18n="navAreas">Las áreas de trabajo</a>
+        <a href="#hermanos" data-i18n="navSiblings">Proyectos hermanos</a>
+        <a href="#autoria" data-i18n="navAuthorship">Quiénes la hacen</a>
+        <a href="#colaborar" data-i18n="navCollaborate">Cómo ayudar</a>
+      </nav>
+    </header>
+
+    <main class="pila">
+
+      <section id="origen" class="card">
+        <h2 data-i18n="originTitle">El origen</h2>
+        <p><span data-i18n="originP1a">Okeymoney nace de una pregunta que se repite al final de cada sesión de
+          terapia ocupacional: </span><em data-i18n="originP1em">¿qué pasa entre una sesión y la siguiente?</em></p>
+        <p data-i18n="originP2">La persona con discapacidad intelectual practica con su terapeuta en consulta, pero
+          después está sola en casa, en el colegio o en su tiempo libre. Queríamos una
+          herramienta que respetase esa autonomía, que diese seguridad a las familias y que
+          sirviese a la terapeuta como complemento entre sesiones, no como sustituto.</p>
+        <p data-i18n="originP3">Esta aplicación es el resultado: 8 actividades autónomas, todas en Lectura Fácil,
+          todas accesibles, todas pensadas para que la persona usuaria pueda usarlas a su
+          propio ritmo.</p>
+      </section>
+
+      <section id="principios" class="pila">
+        <h2 data-i18n="principlesTitle">Los principios que no negociamos</h2>
+        <p data-i18n="principlesIntro">Estas ideas están escritas primero en el código y después en los textos. Si una
+          decisión las rompe, esa decisión está mal.</p>
+
+        <div class="principios-grid">
+          <article class="card principio" style="--acento: var(--accent);">
+            <h3 data-i18n="principleAutonomyTitle">🤲 Autonomía real</h3>
+            <p data-i18n="principleAutonomyText">La persona usuaria puede usar la aplicación sin un profesional al lado. Si
+              necesita ayuda constante, algo no está bien resuelto.</p>
+          </article>
+
+          <article class="card principio" style="--acento: var(--accent-2);">
+            <h3 data-i18n="principleNoPressureTitle">🚫 Sin presión</h3>
+            <p data-i18n="principleNoPressureText">Nada de cronómetros, ni "game over", ni puntuaciones negativas. El error se
+              responde con ánimo y se puede reintentar sin límite.</p>
+          </article>
+
+          <article class="card principio" style="--acento: var(--mod-safe);">
+            <h3 data-i18n="principlePrivacyTitle">🔒 Privacidad por defecto</h3>
+            <p data-i18n="principlePrivacyText">Sin registro, sin cookies, sin analítica, sin cuentas. Todo el progreso se
+              guarda únicamente en el dispositivo de la persona.</p>
+          </article>
+
+          <article class="card principio" style="--acento: var(--mod-learn);">
+            <h3 data-i18n="principleEasyReadTitle">📖 Lectura Fácil</h3>
+            <p data-i18n="principleEasyReadText">Frases cortas, una idea por frase, vocabulario cotidiano. Cero tecnicismos en
+              la interfaz que ve la persona usuaria.</p>
+          </article>
+
+          <article class="card principio" style="--acento: var(--color-success);">
+            <h3 data-i18n="principleAccessibilityTitle">♿ Accesibilidad universal</h3>
+            <p data-i18n="principleAccessibilityText">Botones grandes, alto contraste, audio solo cuando la gamificación o el diseño de la actividad lo requiera (p. ej. escuchar la pregunta en voz alta), navegación
+              completa por teclado, y respeto al modo de pocas animaciones del sistema.</p>
+          </article>
+
+          <article class="card principio" style="--acento: var(--color-encourage);">
+            <h3 data-i18n="principleSoberTechTitle">🧱 Tecnología sobria</h3>
+            <p data-i18n="principleSoberTechText">HTML, CSS y JavaScript sin frameworks. Funciona sin internet y se puede
+              instalar como aplicación. Código abierto, en un repositorio público.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="tecnologia" class="card">
+        <h2 data-i18n="techTitle">Cómo está hecha</h2>
+        <p><span data-i18n="techIntro1">Okeymoney es una aplicación web instalable (PWA) compuesta por más de
+          </span><strong data-i18n="techIntroStrong">15 páginas HTML estáticas</strong><span data-i18n="techIntro2">: una landing, 8 actividades y rutas
+          ocultas para familias, profesionales y mantenimiento.</span></p>
+        <ul>
+          <li><strong data-i18n="techItem1Label">Sin servidor propio</strong>: <span data-i18n="techItem1Text">es un conjunto de archivos servidos por
+            un hosting estático. No hay backend, ni bases de datos, ni API propia.</span></li>
+          <li><strong data-i18n="techItem2Label">Funciona sin conexión</strong>: <span data-i18n="techItem2Text">una vez instalada, abre aunque no haya
+            internet gracias al service worker y al caché local.</span></li>
+          <li><strong><span data-i18n="techItem3Label">Persistencia solo en</span> <code>localStorage</code></strong>: <span data-i18n="techItem3Text">el progreso
+            (estrellas, niveles completados, registro de monedero) vive en el navegador del
+            dispositivo. Nunca se envía a ningún sitio.</span></li>
+          <li><strong data-i18n="techItem4Label">Sin frameworks ni build step</strong>: <span data-i18n="techItem4Text1">JavaScript clásico compatible
+            con navegadores antiguos y con el protocolo</span> <code>file://</code><span data-i18n="techItem4Text2">. Pensado para
+            que un técnico novel pueda leer y modificar una actividad sin sorpresas.</span></li>
+          <li><strong data-i18n="techItem5Label">Código abierto (licencia MIT)</strong>: <span data-i18n="techItem5Text">cualquiera puede leerlo,
+            auditarlo y proponer mejoras. Las decisiones de producto están escritas en
+            este repositorio, no en presentaciones cerradas.</span></li>
+          <li><strong data-i18n="techItem6Label">Internacionalización desde el inicio</strong>: <span data-i18n="techItem6Text">cada texto vive en un
+            archivo por idioma. Hoy Okeymoney está disponible en español de España e inglés.</span></li>
+          <li><strong data-i18n="techItem7Label">Dependencias externas: ninguna</strong><span data-i18n="techItem7Text">, excepto la descarga de las
+            fuentes tipográficas Atkinson Hyperlegible y Nunito (usadas por su alta
+            legibilidad).</span></li>
+        </ul>
+      </section>
+
+      <section id="areas" class="card">
+        <h2 data-i18n="areasTitle">Las áreas de trabajo</h2>
+        <p><span data-i18n="areasIntro1">Las 8 actividades se agrupan en </span><strong data-i18n="areasIntroStrong">seis módulos de autonomía financiera</strong><span data-i18n="areasIntro2">, cada
+          uno con su color identificativo. Una actividad puede entrenar más de un área
+          (por ejemplo, Ir a comprar mezcla reconocer precios con pagar), pero siempre
+          aparece una sola vez en el menú, en su módulo principal.</span></p>
+
+        <div class="areas-grid">
+          <article class="area" style="--acento: var(--accent);">
+            <h3 data-i18n="areaConceptsTitle">💡 Conceptos del dinero</h3>
+            <p data-i18n="areaConceptsText">Reconocer monedas y billetes, entender valor, ahorro y gasto.</p>
+            <p class="area-cifra" data-i18n="areaConceptsCount">1 actividad</p>
+          </article>
+
+          <article class="area" style="--acento: var(--accent-2);">
+            <h3 data-i18n="areaNeedsTitle">🛒 Necesidades y deseos</h3>
+            <p data-i18n="areaNeedsText">Distinguir lo que necesito de lo que me apetece.</p>
+            <p class="area-cifra" data-i18n="areaNeedsCount">1 actividad</p>
+          </article>
+
+          <article class="area" style="--acento: var(--mod-learn);">
+            <h3 data-i18n="areaBudgetTitle">📊 Presupuesto</h3>
+            <p data-i18n="areaBudgetText">Planificar cuánto puedo gastar y cuánto voy a guardar.</p>
+            <p class="area-cifra" data-i18n="areaBudgetCount">1 actividad</p>
+          </article>
+
+          <article class="area" style="--acento: var(--mod-safe);">
+            <h3 data-i18n="areaBeforeBuyingTitle">🤔 Antes de comprar</h3>
+            <p data-i18n="areaBeforeBuyingText">Comparar precios, esperar, comprobar si me conviene.</p>
+            <p class="area-cifra" data-i18n="areaBeforeBuyingCount">1 actividad</p>
+          </article>
+
+          <article class="area" style="--acento: var(--color-success);">
+            <h3 data-i18n="areaShoppingTitle">🛍️ Ir a comprar</h3>
+            <p data-i18n="areaShoppingText">Ir a la tienda, elegir productos y pagar.</p>
+            <p class="area-cifra" data-i18n="areaShoppingCount">2 actividades</p>
+          </article>
+
+          <article class="area" style="--acento: var(--color-encourage);">
+            <h3 data-i18n="areaSafeTitle">🔐 Dinero seguro</h3>
+            <p data-i18n="areaSafeText">Proteger la tarjeta, detectar timos, no dar datos por teléfono.</p>
+            <p class="area-cifra" data-i18n="areaSafeCount">1 actividad</p>
+          </article>
+        </div>
+
+        <p class="nota-cifras"><span data-i18n="areasNote1">Total: </span><strong data-i18n="areasNoteStrong">8 actividades</strong><span data-i18n="areasNote2">, organizadas para que
+          la persona elija por interés, no por obligación. El orden del menú no es un
+          itinerario: cada persona hace su propio camino.</span></p>
+      </section>
+
+      <section id="hermanos" class="card">
+        <h2 data-i18n="siblingsTitle">Proyectos hermanos</h2>
+        <p data-i18n="siblingsIntro">Okeymoney es uno más de un pequeño grupo de proyectos hermanos: mismo equipo,
+          misma filosofía de accesibilidad y sin servidor propio. Cada uno es un servicio
+          independiente, con su propio dominio, al que se puede llegar desde aquí.</p>
+        <div class="siblings-grid">
+          <a class="sibling" href="https://routime.miralante.workers.dev" target="_blank" rel="noopener noreferrer">
+            <span class="picto" aria-hidden="true">🌿</span>
+            <span class="sibling-texto">
+              <span class="nombre" data-i18n="siblingRoutimeName">Routime</span>
+              <span class="detalle" data-i18n="siblingRoutimeText">Rutinas y autonomía del día a día.</span>
+            </span>
+            <span class="flecha-externa" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="siblingLinkHint">Se abre en una pestaña nueva.</span>
+          </a>
+          <a class="sibling" href="https://calculia.miralante.workers.dev" target="_blank" rel="noopener noreferrer">
+            <span class="picto" aria-hidden="true">🔢</span>
+            <span class="sibling-texto">
+              <span class="nombre" data-i18n="siblingCalculiaName">Calculia</span>
+              <span class="detalle" data-i18n="siblingCalculiaText">Cálculo y razonamiento lógico.</span>
+            </span>
+            <span class="flecha-externa" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="siblingLinkHint">Se abre en una pestaña nueva.</span>
+          </a>
+          <a class="sibling" href="https://memofun.miralante.workers.dev" target="_blank" rel="noopener noreferrer">
+            <span class="picto" aria-hidden="true">🧠</span>
+            <span class="sibling-texto">
+              <span class="nombre" data-i18n="siblingMemofunName">Memofun</span>
+              <span class="detalle" data-i18n="siblingMemofunText">Memoria y atención.</span>
+            </span>
+            <span class="flecha-externa" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="siblingLinkHint">Se abre en una pestaña nueva.</span>
+          </a>
+          <a class="sibling" href="https://sinonimia.miralante.workers.dev" target="_blank" rel="noopener noreferrer">
+            <span class="picto" aria-hidden="true">📖</span>
+            <span class="sibling-texto">
+              <span class="nombre" data-i18n="siblingSinonimiaName">Sinonimia</span>
+              <span class="detalle" data-i18n="siblingSinonimiaText">Diccionario en lectura fácil.</span>
+            </span>
+            <span class="flecha-externa" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="siblingLinkHint">Se abre en una pestaña nueva.</span>
+          </a>
+          <a class="sibling" href="https://teclatlon.miralante.workers.dev" target="_blank" rel="noopener noreferrer">
+            <span class="picto" aria-hidden="true">⌨️</span>
+            <span class="sibling-texto">
+              <span class="nombre" data-i18n="siblingTeclatlonName">Teclatlon</span>
+              <span class="detalle" data-i18n="siblingTeclatlonText">Mecanografía con el teclado físico.</span>
+            </span>
+            <span class="flecha-externa" aria-hidden="true">↗</span>
+            <span class="sr-only" data-i18n="siblingLinkHint">Se abre en una pestaña nueva.</span>
+          </a>
+        </div>
+      </section>
+
+      <section id="autoria" class="card">
+        <h2 data-i18n="authorshipTitle">Quiénes la hacen</h2>
+        <p><span data-i18n="authorshipP1a">Okeymoney es una iniciativa de </span><strong>The Naked Frame</strong><span data-i18n="authorshipP1b">, un estudio
+          independiente que trabaja en proyectos abiertos con impacto social y educativo.</span></p>
+        <p data-i18n="authorshipP2">La aplicación se construye con la participación de personas con discapacidad
+          intelectual, familias, terapeutas ocupacionales y profesorado, que prueban cada
+          cambio y revisan el contenido antes de que llegue a producción.</p>
+        <p data-i18n="authorshipP3">El código, el texto y las decisiones se publican en abierto para que cualquier
+          persona o equipo pueda auditarlos, aprender de ellos y adaptarlos a otros
+          contextos.</p>
+      </section>
+
+      <section id="colaborar" class="card">
+        <h2 data-i18n="collaborateTitle">Cómo ayudar</h2>
+        <p data-i18n="collaborateIntro">Okeymoney es un proyecto abierto. Hay formas de colaborar que no requieren
+          programar:</p>
+        <ul>
+          <li><strong data-i18n="collaborateItem1Label">Probar y compartir feedback</strong>: <span data-i18n="collaborateItem1Text">las familias, terapeutas y
+            personas usuarias que prueban la aplicación y cuentan qué funciona y qué no,
+            son la pieza clave del proyecto. Los errores de Lectura Fácil, los tonos poco
+            amables y las actividades que cuesta entender se detectan usándolas.</span></li>
+          <li><strong data-i18n="collaborateItem2Label">Proponer actividades</strong>: <span data-i18n="collaborateItem2Text">si una habilidad financiera cotidiana
+            no está cubierta o se trabaja de una forma mejorable, se puede proponer una
+            actividad nueva. La descripción didáctica la valida un profesional antes de
+            pasar a código.</span></li>
+          <li><strong data-i18n="collaborateItem3Label">Revisar contenido</strong>: <span data-i18n="collaborateItem3Text">traducciones, ejemplos culturalmente
+            adecuados, explicaciones accesibles. La interfaz que ve la persona usuaria es
+            en Lectura Fácil y se beneficia especialmente de ojos ajenos.</span></li>
+          <li><strong data-i18n="collaborateItem4Label">Contribuir código</strong>: <span data-i18n="collaborateItem4Text">el repositorio es público. Cambios
+            pequeños (un icono, una traducción, una corrección de estilo) y grandes
+            (actividades nuevas, accesibilidad, soporte para más idiomas) se aceptan
+            siempre que respeten los principios del proyecto.</span></li>
+          <li><strong data-i18n="collaborateItem5Label">Difundir</strong>: <span data-i18n="collaborateItem5Text">contar que existe. Muchas familias, profesionales
+            y centros no saben que hay herramientas como esta hasta que alguien se la
+            enseña.</span></li>
+        </ul>
+        <p><span data-i18n="collaborateOutro1">Toda la documentación necesaria para empezar está en los archivos</span>
+          <code>CONTRIBUTING.md</code> <span data-i18n="collaborateOutro3">y</span> <code>doc/</code>
+          <span data-i18n="collaborateOutro4">del repositorio.</span></p>
+      </section>
+
+    </main>
+
+    <footer class="pie-about">
+      <a class="btn btn-secundario" href="../index.html" data-i18n="footerActivities">Ir a las actividades</a>
+      <a class="btn btn-secundario" href="../legal/index.html" data-i18n="core.dataProtection">Protección de datos</a>
+    </footer>
+  </div>
+
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/i18n.js"></script>
+  <script src="strings.es.js"></script>
+  <script src="strings.en.js"></script>
+  <script>
+    (function () {
+      'use strict';
+      function paintLanguageSelector() {
+        var active = App.i18n.locale();
+        document.getElementById('btnIdiomaEs').setAttribute('aria-pressed', String(active === 'es'));
+        document.getElementById('btnIdiomaEn').setAttribute('aria-pressed', String(active === 'en'));
+      }
+      document.getElementById('btnIdiomaEs').addEventListener('click', function () { App.i18n.setLocale('es'); });
+      document.getElementById('btnIdiomaEn').addEventListener('click', function () { App.i18n.setLocale('en'); });
+      paintLanguageSelector();
+    })();
+  </script>
+  <script>
+    /* Register the SW from this entry point so it is active for any later
+       navigation, matching what the tools and index pages already do. */
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('../sw.js').catch(function () {});
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+# Okeymoney — Dinero del día a día
+
+> Aplicación web gratuita y sin registro para organizar el dinero del día a día: saldo, gastos, metas de ahorro y decisiones antes de comprar.
+
+## What it is
+
+- Un cuaderno digital donde practicar con dinero ficticio: registrar un gasto, llevar un saldo, plantearse una meta de ahorro y decidir antes de comprar.
+- Diseñada con lectura fácil, contraste alto y pasos cortos para que cada flujo se complete sin prisas.
+- Gratuita, sin registro y con todos los datos guardados en el navegador.
+- Pensada para practicar autonomía diaria con el dinero, no para mover dinero real.
+
+## What it is not
+
+- No es un banco, ni una app de pagos, ni un asesor financiero: no mueve dinero real.
+- No usa IA generativa en tiempo de ejecución: ninguna página llama a una API externa.
+- No envía datos a un servidor: todo el saldo, los gastos y las metas viven en el navegador.
+- No conecta con cuentas reales: la práctica se hace con un saldo ficticio que se puede reiniciar.
+
+## Resources
+
+- [Portal Apptonomia](https://apptonomia.uk/) — Página de inicio de la suite.
+- [Calculia](https://calculia.apptonomia.uk/) — Cálculo y razonamiento lógico.
+- [Routime](https://routime.apptonomia.uk/) — Actividades cotidianas.
+- [Okeymoney](https://okeymoney.apptonomia.uk/) — Esta aplicación.
+- [Sinonimia](https://sinonimia.apptonomia.uk/) — Diccionario en lectura fácil.
+- [Memofun](https://memofun.apptonomia.uk/) — Tarjetas de estudio.
+- [Teclatlon](https://teclatlon.apptonomia.uk/) — Mecanografía con el teclado del ordenador.
+
+## License
+
+MIT (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0.

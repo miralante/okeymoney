@@ -1,0 +1,138 @@
+/* Landing pública de Okeymoney — secciones simples en una sola columna.
+   Lo común está en assets/css/ (tokens, base, components). */
+
+.idioma-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio);
+  justify-content: center;
+}
+
+.btn-idioma {
+  min-height: var(--boton-min);
+  min-width: 64px;
+  padding: 0 var(--espacio);
+  font-family: var(--fuente);
+  font-size: var(--texto-base);
+  font-weight: 700;
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 3px solid var(--color-borde);
+  border-radius: var(--radio);
+  cursor: pointer;
+}
+
+.btn-idioma:hover { border-color: var(--color-foco); }
+
+.btn-idioma[aria-pressed="true"] {
+  border-color: var(--color-foco);
+  background: var(--color-superficie);
+}
+
+/* Anclas de sección: acceso directo sin hacer scroll largo.
+   Enlaces normales (funcionan con teclado y sin JS); el scroll suave
+   global de assets/css/base.css ya respeta prefers-reduced-motion. */
+.anclas-modulo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--espacio);
+  justify-content: center;
+  padding: var(--espacio) 0;
+}
+
+.ancla-modulo {
+  display: flex;
+  align-items: center;
+  min-height: var(--boton-min);
+  padding: 8px var(--espacio);
+  font-family: var(--fuente);
+  font-size: var(--texto-pequeno);
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--color-texto);
+  background: var(--color-superficie);
+  border: 3px solid var(--acento);
+  border-radius: var(--radio);
+}
+
+.ancla-modulo:hover,
+.ancla-modulo:focus-visible {
+  background: var(--acento);
+  color: #FFFFFF;
+}
+
+.cabecera {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: var(--espacio-grande) 0;
+}
+
+.logo { margin: 0 auto; }
+
+.cabecera h1 { color: var(--color-texto); }
+
+.saludo {
+  font-size: var(--texto-grande);
+  font-weight: 700;
+}
+
+.centrado-fila { justify-content: center; }
+
+.modulos { gap: 40px; margin-top: var(--espacio); }
+
+/* Cada sección define --acento y --acento-suave en su style="" */
+.modulo h2 {
+  color: var(--acento);
+  border-left: 8px solid var(--acento);
+  padding-left: 12px;
+  margin-bottom: var(--espacio);
+}
+
+.modulo p {
+  font-size: var(--texto-base);
+  line-height: 1.6;
+  margin-bottom: var(--espacio);
+}
+
+/* Tarjeta CTA: botón grande que lleva al index.html raíz (la app) */
+.tarjeta-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--boton-min);
+  padding: var(--espacio) var(--espacio-grande);
+  font-family: var(--fuente);
+  font-size: var(--texto-grande);
+  font-weight: 800;
+  text-decoration: none;
+  text-align: center;
+  color: #FFFFFF;
+  background: var(--acento);
+  border: 3px solid var(--acento);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+  transition: transform 0.15s ease;
+}
+
+.tarjeta-cta:hover {
+  transform: scale(1.03);
+}
+
+.tarjeta-cta:focus-visible {
+  outline: 3px solid var(--color-foco);
+  outline-offset: 2px;
+}
+
+/* Lista de pasos / accesibilidad */
+.pasos {
+  margin: 0;
+  padding-left: var(--espacio-grande);
+}
+
+.pasos li {
+  font-size: var(--texto-base);
+  line-height: 1.6;
+  margin-bottom: 8px;
+}

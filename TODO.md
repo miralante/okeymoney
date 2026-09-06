@@ -3,7 +3,7 @@
 > **Living document.** This file is the single source of truth for the
 > visual redesign of Okeymoney: what we are changing, why, in which order,
 > and how we know each phase is done. It does **not** redefine product or
-> accessibility rules — those still live in [`doc/en/SPEC.md`](doc/en/SPEC.md).
+> accessibility rules — those still live in [`doc/en/spec.md`](doc/en/spec.md).
 >
 > Conventions follow the Apptonomia documentation standard (numbered
 > sections, declared simplifications, explicit non-goals).
@@ -17,9 +17,9 @@
 A **plan** for the visual redesign of Okeymoney: the v1 implementation
 ships with a minimal stylesheet (`styles.css`, ~200 lines, light theme,
 hardcoded hex values, no design tokens, no modular CSS). The interface is
-usable but **visually inconsistent with the sibling apps** (Apptonomia,
-Calculia, Teclatlon), which already have a dark, calm, accent‑on‑neutral
-design language. This document captures:
+usable but **visually inconsistent with the other apps of the suite**
+(Apptonomia, Calculia, Teclatlon), which already have a dark, calm,
+accent‑on‑neutral design language. This document captures:
 
 - The target look and feel (tokens, components, layout).
 - The phased migration plan that keeps the app working at every step.
@@ -27,7 +27,7 @@ design language. This document captures:
 
 ### 1.2 What it isn't
 
-- **Not a replacement for `doc/en/SPEC.md`.** Product rules, audience,
+- **Not a replacement for `doc/en/spec.md`.** Product rules, audience,
   non‑negotiable constraints, modules and the Register‑an‑expense flow
   are unchanged. If this document ever contradicts `SPEC.md`,
   `SPEC.md` wins.
@@ -39,7 +39,7 @@ design language. This document captures:
 
 ### 1.3 Why now
 
-The sibling apps already converged on a calm, accent‑driven
+The other apps of the suite already converged on a calm, accent‑driven
 visual language. Okeymoney is the outlier. Migrating now means:
 
 - A coherent cross‑app feel (the family badge at the bottom of every
@@ -69,7 +69,7 @@ roadmap:
 
 ## 2. Target visual language
 
-The redesign aligns Okeymoney with the sibling apps. The target is **one
+The redesign aligns Okeymoney with the other apps of the suite. The target is **one
 look**, fully captured as design tokens, applied through a small set of
 reusable components. Specific values come from analysing Apptonomia,
 Calculia and Teclatlon; the rationale below is the consensus that emerged
@@ -389,7 +389,7 @@ should look **identical** at the end of this phase.
 
 ### 5.2 Phase 2 — Surfaces, type, components (the visible change)
 
-**Goal:** the app looks like the sibling apps. Every component from §3
+**Goal:** the app looks like the other apps of the suite. Every component from §3
 is in `componentes.css`; every page uses them via class names only.
 
 - Implement every component in §3 in `assets/css/componentes.css`.
@@ -445,7 +445,7 @@ implementation in hand, not before.
 ### D1. Keep light theme in v1.1 or flip to dark now?
 
 - **Decision pending.** `SPEC.md` §4.5 says "light theme by default".
-  The sibling apps are dark. Two options:
+  The other apps of the suite are dark. Two options:
   - **(a) Flip to dark now.** Matches the family. Requires a one‑line
     update to `SPEC.md` §4.5 ("the v1 default is dark, with high
     contrast; light tokens stay declared for future toggles").
@@ -503,7 +503,8 @@ has been walked through on the live `http://localhost:8080/` server.
   5.1.1 fixed.
 - ✅ **Phase 2 done, variant B → variant A (dark theme active).**
   Decision D1 **inverted** from option (b) to **option (a) — dark
-  surface active**, matching the sibling apps' design language.
+  surface active**, matching the other apps of the suite's design
+  language.
   SPEC.md §4.5 updated accordingly ("Dark theme by default").
   Contrast verified: `#F2F4F8` on `#161A21` = 14.6 : 1 (AAA),
   `#B7BDC9` on `#161A21` = 8.4 : 1 (AAA), `#7B8294` on `#161A21`

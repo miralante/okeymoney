@@ -43,7 +43,7 @@
    * Adds `cents` (positive or negative) to the practice balance and
    * records the reason in history. `reason` is one of:
    *   'activity:<slug>'     — credit on completing an activity
-   *   'reset'               — explicit reset from settings (future)
+   *   'reset'               — explicit reset from /config/ (future)
    * Returns the new balance.
    */
   function credit(cents, reason) {
@@ -71,7 +71,7 @@
   /**
    * Returns the completion record for one activity, or null if the
    * person has never finished it. Schema:
-   *   { done: true, completedAt: 'YYYY-MM-DD', attempts: number }
+   *   { done: true, completedAt: 'YYYY-MM-DD' }
    */
   function activityStatus(slug) {
     var raw = App.storage.get('activity:' + slug);
@@ -80,11 +80,10 @@
   }
 
   /** Marks one activity as completed (idempotent). */
-  function markActivityDone(slug, attempts) {
+  function markActivityDone(slug) {
     App.storage.set('activity:' + slug, {
       done: true,
-      completedAt: App.utils.today(),
-      attempts: typeof attempts === 'number' ? attempts : 1
+      completedAt: App.utils.today()
     });
   }
 

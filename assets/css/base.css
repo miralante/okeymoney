@@ -100,3 +100,6 @@ a { color: var(--acento); }
     scroll-behavior: auto !important;
   }
 }
+
+/* Author display rules must respect native visibility semantics. */
+[hidden] { display: none !important; }

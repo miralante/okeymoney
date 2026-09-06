@@ -8,56 +8,56 @@
      per screen).
    - goalIcons: icon choices offered when creating a new savings goal
      ("Mis metas"). The goal's name is free text typed by the person.
-   - blocks / didacticLessons: the two learning parts shown on the home
-   (didactic content with tests, and simulation/action practice in euros).
+   - blocks / learningPath / simulations: the home structure and its
+     declarative content catalogues.
    - activities / learnThemes: test metadata and pedagogical themes — ids
      only; text and icon are en/es in strings.<locale>.js.
    ============================================================ */
 
 var DATA = {
-  /* The home has two clear parts: didactic content (with its test) and
-     simulation/action practice with real-euro decisions. */
+  /* The home has three clear parts: everyday situations, actions with the
+     person's money, and practical ideas for caring for it. */
   blocks: [
-    { id: 'didactic', accent: 'acento-3' },
-    { id: 'simulation', accent: 'acento' }
+    { id: 'didactic', accent: 'acento-3', anchor: 'bloque-didactico' },
+    { id: 'simulation', accent: 'acento', anchor: 'bloque-simulacion' },
+    { id: 'guide', accent: 'acento-2', anchor: 'bloque-cuidado' }
   ],
 
-  didacticLessons: [
-    { id: 'money', icon: '💶' },
-    { id: 'choices', icon: '🧠' },
-    { id: 'budget', icon: '📋' },
-    { id: 'beforeBuying', icon: '🛒' },
-    { id: 'change', icon: '🧾' },
-    { id: 'saving', icon: '🪙' },
-    { id: 'safety', icon: '🛡️' },
-    { id: 'documents', icon: '📦' },
-    { id: 'assets', icon: '📊' },
-    { id: 'accounting', icon: '📚' },
-    { id: 'assetLifecycle', icon: '📉' },
-    { id: 'returnRisk', icon: '⚖️' },
-    { id: 'investmentOperations', icon: '🔄' },
-    { id: 'bankProducts', icon: '💳' },
-    { id: 'housing', icon: '🏠' }
+  /* Five short units keep the learning path visible at a glance. Activities
+     and simulations point back to a unit with `unitId`, so adding content
+     never requires editing the home markup. */
+  learningPath: [
+    { id: 'money', icon: '💶', steps: ['moneyStep1', 'moneyStep2', 'moneyStep3'], exampleKey: 'moneyExample' },
+    { id: 'choices', icon: '🧠', steps: ['choicesStep1', 'choicesStep2', 'choicesStep3'], exampleKey: 'choicesExample' },
+    { id: 'budget', icon: '📋', steps: ['budgetStep1', 'budgetStep2', 'budgetStep3'], exampleKey: 'budgetExample' },
+    { id: 'change', icon: '🧾', steps: ['changeStep1', 'changeStep2', 'changeStep3'], exampleKey: 'changeExample' },
+    { id: 'safety', icon: '🛡️', steps: ['safetyStep1', 'safetyStep2', 'safetyStep3'], exampleKey: 'safetyExample' }
   ],
 
-  /* Source-of-truth index for the explain → check → apply sequence.
-     Keep testSlugs in the same pedagogical order as DATA.activities. */
-  learningIndex: [
-    { id: 'money', testSlugs: ['concepts-money', 'my-shopping-day'], simulationCards: ['balance'] },
-    { id: 'choices', testSlugs: ['needs-vs-wants', 'my-shopping-day'], simulationCards: ['plan', 'expense'] },
-    { id: 'budget', testSlugs: ['budget-first', 'go-shopping', 'my-shopping-day'], simulationCards: ['plan', 'expense'] },
-    { id: 'beforeBuying', testSlugs: ['before-buying'], simulationCards: ['plan', 'expense'] },
-    { id: 'change', testSlugs: ['change-back', 'my-shopping-day'], simulationCards: ['change'] },
-    { id: 'saving', testSlugs: ['my-shopping-day'], simulationCards: ['goals'] },
-    { id: 'safety', testSlugs: ['safe-money'], simulationCards: ['safety', 'rights', 'communication', 'emergency'] },
-    { id: 'documents', testSlugs: ['go-shopping'], simulationCards: ['purchaseLifecycle'] },
-    { id: 'assets', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['snapshot'] },
-    { id: 'accounting', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['control'] },
-    { id: 'assetLifecycle', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['depreciation', 'obsolescence'] },
-    { id: 'returnRisk', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['return', 'risk'] },
-    { id: 'investmentOperations', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['investment'] },
-    { id: 'bankProducts', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['bankProducts'] },
-    { id: 'housing', testSlugs: ['concepts-money', 'budget-first'], simulationCards: ['housing'] }
+  /* Home simulation cards. The catalogue owns presentation metadata; the
+     `action` value is the stable hand-off to the existing wizard dispatcher.
+     A new card therefore needs one data entry and, only for a new behaviour,
+     one dispatcher implementation in app.js. */
+  simulations: [
+    { id: 'balance', unitId: 'money', icon: '💶', group: 'organise', accent: 'acento', titleKey: 'blocks.simulation.balanceTitle', detailKey: 'blocks.simulation.balanceDetail', action: 'balance', variant: 'money' },
+    { id: 'income', unitId: 'money', icon: '🫴', group: 'organise', accent: 'acento', titleKey: 'income.title', detailKey: 'income.instruction', action: 'income' },
+    { id: 'goals', unitId: 'money', icon: '🎯', group: 'organise', accent: 'acento-2', titleKey: 'blocks.simulation.goalsTitle', detailKey: 'goals.empty', action: 'goals', variant: 'goals' },
+    { id: 'expense', unitId: 'choices', icon: '🧾', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.expenseTitle', detailKey: 'blocks.simulation.expenseDetail', action: 'expense' },
+    { id: 'plan', unitId: 'choices', icon: '🛒', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.planTitle', detailKey: 'blocks.simulation.planDetail', action: 'plan' },
+    { id: 'purchase', unitId: 'choices', icon: '📦', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.purchaseTitle', detailKey: 'blocks.simulation.purchaseDetail', action: 'purchase' },
+    { id: 'commitment', unitId: 'budget', icon: '📌', group: 'check', accent: 'acento-3', titleKey: 'commitments.title', detailKey: 'commitments.detail', action: 'commitment' },
+    { id: 'depreciation', unitId: 'budget', icon: '📉', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.depreciationTitle', detailKey: 'blocks.simulation.depreciationDetail', action: 'depreciation' },
+    { id: 'obsolescence', unitId: 'budget', icon: '♻️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.obsolescenceTitle', detailKey: 'blocks.simulation.obsolescenceDetail', action: 'obsolescence' },
+    { id: 'return', unitId: 'change', icon: '📈', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.returnTitle', detailKey: 'blocks.simulation.returnDetail', action: 'return' },
+    { id: 'risk', unitId: 'change', icon: '⚖️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.riskTitle', detailKey: 'blocks.simulation.riskDetail', action: 'risk' },
+    { id: 'investment', unitId: 'change', icon: '🔄', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.investmentTitle', detailKey: 'blocks.simulation.investmentDetail', action: 'investment' },
+    { id: 'bankProducts', unitId: 'change', icon: '💳', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.bankProductsTitle', detailKey: 'blocks.simulation.bankProductsDetail', action: 'bankProducts' },
+    { id: 'housing', unitId: 'change', icon: '🏠', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.housingTitle', detailKey: 'blocks.simulation.housingDetail', action: 'housing' },
+    { id: 'change', unitId: 'change', icon: '💸', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.changeTitle', detailKey: 'blocks.simulation.changeDetail', action: 'change' },
+    { id: 'safety', unitId: 'safety', icon: '🛡️', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.safetyTitle', detailKey: 'blocks.simulation.safetyDetail', action: 'safety' },
+    { id: 'rights', unitId: 'safety', icon: '📄', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.rightsTitle', detailKey: 'blocks.simulation.rightsDetail', action: 'rights' },
+    { id: 'communication', unitId: 'safety', icon: '💬', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.communicationTitle', detailKey: 'blocks.simulation.communicationDetail', action: 'communication' },
+    { id: 'emergency', unitId: 'safety', icon: '🚨', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.emergencyTitle', detailKey: 'blocks.simulation.emergencyDetail', action: 'emergency' }
   ],
 
   /* Euro simulations apply the concepts without Tokens or hidden writes to
@@ -193,10 +193,10 @@ var DATA = {
 
   goalIcons: ['🎮', '⚽', '🚲', '📱', '🎧', '👟', '📚', '🎁'],
 
-  /* Activities shown in the home catalogue (PRODUCT-DESIGN.md §4.1) and
+  /* Activities shown in the home catalogue (SPEC.md §7.4) and
      the "Aprender" tab (same renderer), grouped by `theme` and, within a
      theme, ordered from most educational to most practical. Each entry:
-     { slug, href, icon, theme }. `available: false` activities render
+     { slug, unitId, href, icon, theme }. `available: false` activities render
      locked with a "coming soon" badge so the user sees the full roadmap
      without bumping into broken links.
 
@@ -207,18 +207,21 @@ var DATA = {
      - 'safety':   recognising scams and fraud — the highest-stakes
        practical skill, kept last on purpose. */
   activities: [
-    { slug: 'concepts-money',  href: 'tools/concepts-money/index.html',  icon: '💰', available: true, theme: 'concepts' },
-    { slug: 'needs-vs-wants',  href: 'tools/needs-vs-wants/index.html',  icon: '🤔', available: true, theme: 'concepts' },
-    { slug: 'budget-first',    href: 'tools/budget-first/index.html',    icon: '📋', available: true, theme: 'daily' },
-    { slug: 'before-buying',   href: 'tools/before-buying/index.html',   icon: '🛒', available: true, theme: 'daily' },
-    { slug: 'go-shopping',     href: 'tools/go-shopping/index.html',     icon: '🛒', available: true, theme: 'daily' },
-    { slug: 'change-back',     href: 'tools/change-back/index.html',     icon: '💸', available: true, theme: 'daily' },
-    { slug: 'my-shopping-day', href: 'tools/my-shopping-day/index.html', icon: '🌟', available: true, theme: 'daily' },
-    { slug: 'safe-money',      href: 'tools/safe-money/index.html',      icon: '🛡️', available: true, theme: 'safety' }
+{ slug: 'concepts-money',  unitId: 'money', href: 'tools/concepts-money/index.html',  icon: '💰', available: true, theme: 'concepts' },
+    { slug: 'needs-vs-wants',  unitId: 'choices', href: 'tools/needs-vs-wants/index.html',  icon: '🤔', available: true, theme: 'concepts' },
+    { slug: 'budget-first',    unitId: 'budget', href: 'tools/budget-first/index.html',    icon: '📋', available: true, theme: 'daily' },
+    { slug: 'before-buying',   unitId: 'choices', href: 'tools/before-buying/index.html',   icon: '🛒', available: true, theme: 'daily' },
+    { slug: 'go-shopping',     unitId: 'budget', href: 'tools/go-shopping/index.html',     icon: '🛒', available: true, theme: 'daily' },
+    { slug: 'change-back',     unitId: 'change', href: 'tools/change-back/index.html',     icon: '💸', available: true, theme: 'daily' },
+    { slug: 'my-shopping-day', unitId: 'change', href: 'tools/my-shopping-day/index.html', icon: '🌟', available: true, theme: 'daily' },
+    { slug: 'save-step-by-step', unitId: 'money', href: 'tools/save-step-by-step/index.html', icon: '🎯', available: true, theme: 'daily' },
+    { slug: 'compare-prices', unitId: 'choices', href: 'tools/compare-prices/index.html', icon: '🏷️', available: true, theme: 'daily' },
+    { slug: 'monthly-payments', unitId: 'budget', href: 'tools/monthly-payments/index.html', icon: '📅', available: true, theme: 'daily' },
+    { slug: 'safe-money',      unitId: 'safety', href: 'tools/safe-money/index.html',      icon: '🛡️', available: true, theme: 'safety' }
   ],
 
   /* Section headers painted above each theme's activity cards, in fixed
-     pedagogical display order (PRODUCT-DESIGN.md §4.2). `accent` names
+     pedagogical display order (SPEC.md §7.4). `accent` names
      the tokens.css pair (--<accent> / --<accent>-suave) the section sets
      locally so its heading and cards re-color without extra CSS. */
   learnThemes: [

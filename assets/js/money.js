@@ -1,9 +1,7 @@
 /* ==========================================================================
    Okeymoney — Shared visual money (multi-currency, locale-driven)
 
-   Real wallet amounts are formatted per the active locale's currency:
-     - es → euros   (€)
-     - en → US dollars ($)
+   Real wallet amounts always use euros; locale changes wording and decimal separators.
 
    The Practice wallet keeps its fictitious "Tokens" currency, regardless
    of locale (the practice plane is intentionally separated from the real
@@ -28,6 +26,8 @@
       major: 'euro',
       majorPlural: 'euros',
       minor: 'céntimos',
+      minorSingular: 'céntimo',
+      minorSymbol: 'c',
       and: 'y',
       symbol: '€'
     },
@@ -35,44 +35,40 @@
       name: 'token',
       plural: 'tokens',
       sub: 'subtokens',
-      symbol: '🪙'
+      symbol: '🔑'
     }
   }, 'es');
   App.i18n.register({
     money: {
-      major: 'dollar',
-      majorPlural: 'dollars',
+      major: 'euro',
+      majorPlural: 'euros',
       minor: 'cents',
+      minorSingular: 'cent',
+      minorSymbol: '¢',
       and: 'and',
-      symbol: '$'
+      symbol: '€'
     },
     practice: {
       name: 'token',
       plural: 'tokens',
       sub: 'subtokens',
-      symbol: '🪙'
+      symbol: '🔑'
     }
   }, 'en');
 
   var CATALOG = [
-    { cents: 1,     css: 'money-c1us',  currencies: ['en'] },
+    { cents: 1,     css: 'money-c1cent', currencies: ['es', 'en'] },
+    { cents: 2,     css: 'money-c2cent', currencies: ['es', 'en'] },
     { cents: 5,     css: 'money-c5',    currencies: ['es', 'en'] },
     { cents: 10,    css: 'money-c10',   currencies: ['es', 'en'] },
-    { cents: 20,    css: 'money-c20',   currencies: ['es'] },
-    { cents: 25,    css: 'money-c25us', currencies: ['en'] },
+    { cents: 20,    css: 'money-c20',   currencies: ['es', 'en'] },
     { cents: 50,    css: 'money-c50',   currencies: ['es', 'en'] },
-    { cents: 100,   css: 'money-c1',    currencies: ['es'] },
-    { cents: 100,   css: 'money-d1us',  currencies: ['en'] },
-    { cents: 200,   css: 'money-c2',    currencies: ['es'] },
-    { cents: 500,   css: 'money-n5',    currencies: ['es'] },
-    { cents: 500,   css: 'money-n5us',  currencies: ['en'] },
-    { cents: 1000,  css: 'money-n10',   currencies: ['es'] },
-    { cents: 1000,  css: 'money-n10us', currencies: ['en'] },
-    { cents: 2000,  css: 'money-n20',   currencies: ['es'] },
-    { cents: 2000,  css: 'money-n20us', currencies: ['en'] },
-    { cents: 5000,  css: 'money-n50',   currencies: ['es'] },
-    { cents: 5000,  css: 'money-n50us', currencies: ['en'] },
-    { cents: 10000, css: 'money-n100us', currencies: ['en'] }
+    { cents: 100,   css: 'money-c1',    currencies: ['es', 'en'] },
+    { cents: 200,   css: 'money-c2',    currencies: ['es', 'en'] },
+    { cents: 500,   css: 'money-n5',    currencies: ['es', 'en'] },
+    { cents: 1000,  css: 'money-n10',   currencies: ['es', 'en'] },
+    { cents: 2000,  css: 'money-n20',   currencies: ['es', 'en'] },
+    { cents: 5000,  css: 'money-n50',   currencies: ['es', 'en'] },
   ];
 
   function info(cents, loc) {
@@ -90,7 +86,7 @@
   function label(cents) {
     var sym = App.i18n.t('money.symbol') || '€';
     if (cents >= 100) return sym + ' ' + (cents / 100);
-    return String(cents);
+    return String(cents) + ' ' + (App.i18n.t('money.minorSymbol') || 'c');
   }
 
   var DECIMAL_SEP = { es: ',', en: '.' };
@@ -106,7 +102,7 @@
   function formatPractice(cents) {
     var loc = App.i18n.locale();
     var sep = DECIMAL_SEP[loc] || DECIMAL_SEP[App.i18n.DEFAULT_LOCALE] || ',';
-    var symbol = (App.i18n.t('practice.symbol') || '🪙') + ' ';
+    var symbol = (App.i18n.t('practice.symbol') || '🔑') + ' ';
     return symbol + (cents / 100).toFixed(2).replace('.', sep);
   }
 
@@ -125,7 +121,8 @@
     var c = cents % 100;
     var majorKey = e === 1 ? 'money.major' : 'money.majorPlural';
     var majorText = e + ' ' + App.i18n.t(majorKey);
-    var minorText = c + ' ' + App.i18n.t('money.minor');
+    var minorKey = c === 1 ? 'money.minorSingular' : 'money.minor';
+    var minorText = c + ' ' + App.i18n.t(minorKey);
     if (e && c) return majorText + ' ' + App.i18n.t('money.and') + ' ' + minorText;
     if (e) return majorText;
     return minorText;
@@ -137,6 +134,7 @@
     if (!d) d = info(cents, 'es');
     var el = document.createElement('span');
     el.className = 'money-token ' + kindFromCss(d.css) + ' ' + d.css;
+    el.setAttribute('data-value', String(cents));
     el.textContent = label(cents);
     el.setAttribute('role', 'img');
     el.setAttribute('aria-label', spoken(cents));

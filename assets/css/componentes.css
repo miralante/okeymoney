@@ -102,8 +102,6 @@
 
 @media (min-height: 720px) {
   .btn {
-    min-height: 40px;
-    min-width: 40px;
     padding: 6px var(--espacio-5);
     font-size: var(--texto-300);
     border-width: 2px;
@@ -164,8 +162,10 @@
   margin: 0 auto;
 }
 
-.keypad__tecla {
+.keypad__tecla,
+.keypad-key {
   min-height: var(--tocable-xl);
+  min-width: var(--tocable-xl);
   font-size: var(--texto-600);
   font-weight: var(--peso-fuerte);
   background: var(--superficie-1);
@@ -176,9 +176,12 @@
   transition: background var(--motion-rapida) var(--ease-suave),
               transform var(--motion-rapida) var(--ease-suave);
 }
-.keypad__tecla:hover { background: var(--superficie-2); }
-.keypad__tecla:active { transform: scale(0.97); }
-.keypad__tecla:focus-visible {
+.keypad__tecla:hover,
+.keypad-key:hover { background: var(--superficie-2); }
+.keypad__tecla:active,
+.keypad-key:active { transform: scale(0.97); }
+.keypad__tecla:focus-visible,
+.keypad-key:focus-visible {
   outline: 2px solid var(--superficie-3);
   outline-offset: 3px;
   box-shadow: 0 0 0 4px var(--acento);
@@ -192,6 +195,48 @@
   color: var(--aliento);
 }
 
+/* Dynamic choice buttons used by the amount wizards and euro simulations.
+   Keep the touch target and visual hierarchy in the shared component layer. */
+.option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--espacio-4);
+}
+
+.btn-option {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-3);
+  width: 100%;
+  min-height: var(--tocable);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio-2);
+  background: var(--superficie-1);
+  color: var(--texto-primario);
+  font: inherit;
+  font-weight: var(--peso-medio);
+  text-align: left;
+  cursor: pointer;
+}
+
+.btn-option:hover,
+.btn-option:focus-visible,
+.btn-option[aria-pressed="true"] {
+  border-color: var(--acento);
+  background: var(--acento-suave);
+}
+
+.btn-option:focus-visible {
+  outline: 2px solid var(--superficie-3);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px var(--acento);
+}
+
+.btn-option:disabled { opacity: 0.55; cursor: default; }
+.btn-option .icon { flex: 0 0 auto; font-size: 28px; line-height: 1; }
+.option-classification { display: block; color: var(--texto-secundario); font-size: var(--texto-200); }
+
 .amount-display {
   font-size: var(--texto-700);
   font-weight: var(--peso-fuerte);
@@ -200,6 +245,134 @@
   text-align: center;
   padding: var(--espacio-4) 0;
   min-height: var(--tocable-xl);
+}
+
+/* Money pieces used by the learning activities and the change preview. */
+.money-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: var(--tocable);
+  min-height: var(--tocable);
+  padding: var(--espacio-2);
+  color: var(--texto-primario);
+  font-size: var(--texto-300);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
+  box-shadow: var(--sombra-1);
+}
+.money-token.coin {
+  width: var(--tocable);
+  height: var(--tocable);
+  border: 3px solid var(--borde-fuerte);
+  border-radius: 50%;
+  background: var(--superficie-3);
+}
+.money-token.note {
+  min-width: var(--tocable-xl);
+  min-height: var(--tocable);
+  border: 2px solid var(--acento);
+  border-radius: var(--radio-1);
+  background: var(--acento-suave);
+}
+
+/* Euro denomination colours: keep the visual cue and the text label together. */
+.money-token.money-c1cent,
+.money-token.money-c2cent,
+.money-token.money-c5 {
+  border-color: #8a4f21;
+  background: #b87333;
+  color: #ffffff;
+}
+.money-token.money-c1us {
+  border-color: #8a4f21;
+  background: #b87333;
+  color: #ffffff;
+}
+.money-token.money-c5us,
+.money-token.money-c10us,
+.money-token.money-c25us,
+.money-token.money-c50us {
+  border-color: #747474;
+  background: #b8b8b8;
+  color: var(--texto-primario);
+}
+.money-token.money-d1us {
+  border-color: #8f7118;
+  background: #c9a227;
+  color: var(--texto-primario);
+}
+.money-token.money-c10,
+.money-token.money-c20,
+.money-token.money-c50 {
+  border-color: #9a6b16;
+  background: #d9a441;
+  color: var(--texto-primario);
+}
+.money-token.money-c1 {
+  border-color: #9a6b16;
+  background: radial-gradient(circle, #d7d7d7 0 57%, #d9a441 58% 100%);
+  color: var(--texto-primario);
+}
+.money-token.money-c2 {
+  border-color: #747474;
+  background: radial-gradient(circle, #d9a441 0 57%, #b8b8b8 58% 100%);
+  color: var(--texto-primario);
+}
+.money-token.money-n5 {
+  border-color: #737373;
+  background: #b8b8b8;
+  color: var(--texto-primario);
+}
+.money-token.money-n10 {
+  border-color: #7b2525;
+  background: #a83232;
+  color: #ffffff;
+}
+.money-token.money-n20 {
+  border-color: #32658e;
+  background: #75add5;
+  color: var(--texto-primario);
+}
+.money-token.money-n50 {
+  border-color: #9a5b1b;
+  background: #e49448;
+  color: var(--texto-primario);
+}
+.money-token.money-n5us,
+.money-token.money-n10us,
+.money-token.money-n20us,
+.money-token.money-n50us,
+.money-token.money-n100us {
+  border-color: #35633b;
+  background: #6f9f63;
+  color: var(--texto-primario);
+}
+.money-token.token-grande.coin {
+  width: var(--tocable-xl);
+  height: var(--tocable-xl);
+  font-size: var(--texto-400);
+}
+.money-token.token-grande.note {
+  min-width: calc(var(--tocable-xl) + var(--espacio-6));
+  min-height: var(--tocable-lg);
+  font-size: var(--texto-400);
+}
+.money-amount {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--tocable-xl);
+  min-height: var(--tocable-lg);
+  padding: var(--espacio-3) var(--espacio-4);
+  border: 2px solid var(--borde);
+  border-radius: var(--radio-1);
+  background: var(--superficie-2);
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+  line-height: 1;
 }
 
 /* Money-table (preview de monedas/billetes bajo el keypad) */
@@ -850,7 +1023,7 @@
 /* ---- Grid de tarjetas grandes ---- */
 .grid-tarjetas {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
   gap: var(--espacio-4);
 }
 
@@ -886,8 +1059,33 @@
 }
 
 .tarjeta .picto {
+  flex: 0 0 auto;
+  max-width: 100%;
   font-size: 48px;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-variant-emoji: emoji;
   line-height: 1;
+}
+
+/* Flex items keep their min-content width by default. That makes a long
+   title or description escape the card instead of wrapping inside it. */
+.tarjeta > * {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.tarjeta__etiqueta,
+.tarjeta__nombre,
+.tarjeta__detalle,
+.topic-card__unit,
+.topic-card__title,
+.topic-card__detail,
+.topic-card__progress,
+.topic-card__action {
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+  word-break: normal;
 }
 
 .tarjeta .nombre {
@@ -944,9 +1142,9 @@
 }
 
 /* ==========================================================================
-   §3.Z Dos partes de aprendizaje (estética Apptonomia)
+   §3.Z Tres partes de producto (estética Apptonomia)
    Cada parte funciona como una sección reconocible del recorrido:
-   unidades didácticas con test → guía y simulación en euros.
+   situaciones cotidianas → acciones con dinero → ideas para cuidarlo.
    ========================================================================== */
 .learning-block {
   display: flex;
@@ -963,6 +1161,7 @@
 
 .learning-block--didactic { background: color-mix(in srgb, var(--acento-3-suave) 32%, var(--superficie-1)); }
 .learning-block--simulation { background: color-mix(in srgb, var(--acento-suave) 26%, var(--superficie-1)); }
+.learning-block--guide { background: color-mix(in srgb, var(--acento-2-suave) 26%, var(--superficie-1)); }
 
 .learning-block__header {
   display: flex;
@@ -1000,10 +1199,86 @@
 
 .didactic-grid,
 .simulation-grid {
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
 }
 
 .didactic-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  gap: var(--espacio-4);
+}
+
+.simulation-grid__group-title {
+  grid-column: 1 / -1;
+  margin: var(--espacio-2) 0 calc(var(--espacio-1) * -1);
+  padding-top: var(--espacio-2);
+  border-top: 2px solid var(--acento-suave);
+  color: var(--acento);
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+}
+
+.simulation-grid__group-title:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+/* Keep optional, more demanding simulations after the everyday path on
+   wide screens and on mobile. */
+.simulation-card--advanced { order: 3; }
+
+.topic-card {
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-height: 210px;
+  text-align: left;
+  appearance: none;
+  font: inherit;
+  cursor: pointer;
+}
+
+.topic-card .picto {
+  margin-bottom: var(--espacio-2);
+}
+
+.topic-card__title {
+  color: var(--acento-3);
+  font-size: var(--texto-400);
+  font-weight: var(--peso-fuerte);
+  line-height: var(--linea-apretada);
+}
+
+.topic-card__detail {
+  color: var(--texto-secundario);
+  font-size: var(--texto-300);
+  line-height: var(--linea-normal, 1.4);
+}
+
+.topic-card__unit,
+.topic-card__progress {
+  color: var(--texto-secundario);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-medio);
+}
+
+.topic-card__unit {
+  order: -1;
+  color: var(--acento-3);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.topic-card__progress { margin-top: auto; }
+
+.topic-card__action {
+  padding-top: var(--espacio-3);
+  color: var(--acento-3);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+}
+
+.guide-content {
   display: flex;
   flex-direction: column;
   gap: var(--espacio-4);
@@ -1103,6 +1378,125 @@
   color: var(--texto-primario);
 }
 
+.lesson-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-4);
+  padding: var(--espacio-4);
+  background: var(--superficie-1);
+  border: 2px solid var(--acento-3-suave);
+  border-radius: var(--radio-2);
+  box-shadow: var(--sombra-1);
+  scroll-margin-top: var(--espacio-4);
+}
+
+.lesson-detail__back {
+  align-self: flex-start;
+}
+
+.lesson-detail__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--espacio-2);
+  text-align: center;
+}
+
+.lesson-detail__header .picto {
+  font-size: 56px;
+  line-height: 1;
+}
+
+.lesson-detail__header h3 {
+  margin: 0;
+  color: var(--acento-3);
+  font-size: var(--texto-500);
+  line-height: var(--linea-apretada);
+}
+
+.lesson-detail__body {
+  max-width: 66ch;
+  margin: 0;
+  color: var(--texto-primario);
+  font-size: var(--texto-400);
+  line-height: var(--linea-normal, 1.5);
+}
+
+.lesson-detail__explanation {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  padding: var(--espacio-4);
+  border: 1px solid var(--acento-3-suave);
+  border-radius: var(--radio-1);
+  background: color-mix(in srgb, var(--acento-3-suave) 28%, var(--superficie-1));
+}
+
+.lesson-detail__explanation h4 {
+  margin: 0;
+  color: var(--acento-3);
+  font-size: var(--texto-400);
+}
+
+.lesson-detail__steps {
+  display: grid;
+  gap: var(--espacio-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lesson-detail__steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--espacio-2);
+  color: var(--texto-primario);
+  font-size: var(--texto-300);
+  line-height: var(--linea-normal, 1.5);
+}
+
+.lesson-detail__step-number {
+  display: inline-grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--acento-3);
+  color: var(--superficie-1);
+  font-weight: var(--peso-fuerte);
+}
+
+.lesson-detail__example {
+  padding: var(--espacio-3);
+  border-left: 4px solid var(--acento-2);
+  border-radius: var(--radio-1);
+  background: var(--superficie-1);
+}
+
+.lesson-detail__example p { margin: 0; }
+
+.lesson-detail__example-label {
+  margin-bottom: var(--espacio-1) !important;
+  color: var(--acento-2);
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.lesson-detail__practice {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding-top: var(--espacio-3);
+  border-top: 1px solid var(--borde);
+}
+
+.lesson-detail__practice .learning-unit__test-link {
+  font-size: var(--texto-300);
+}
+
 .guide-callout {
   padding: var(--espacio-4);
   border: 2px solid var(--acento);
@@ -1168,9 +1562,15 @@
   border-radius: var(--radio-1);
 }
 
+.guide-principle > * {
+  min-width: 0;
+}
+
 .guide-principle__icon {
   grid-row: span 2;
   font-size: 28px;
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-variant-emoji: emoji;
   line-height: 1;
 }
 
@@ -1383,6 +1783,18 @@
   font: inherit;
   text-align: left;
   cursor: pointer;
+}
+
+.financial-cycle__step strong,
+.financial-cycle__step small {
+  width: 100%;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.financial-cycle__icon {
+  font-family: "Segoe UI Emoji", "Apple Color Emoji", "Noto Color Emoji", sans-serif;
+  font-variant-emoji: emoji;
 }
 .financial-cycle__step:hover,
 .financial-cycle__step:focus-visible { border-color: var(--acento); background: var(--acento-suave); }

@@ -26,8 +26,28 @@
       strings.<locale>.js: it passes checks 1-6 silently, then renders
       as the raw key text in the browser, because t() returns the key
       itself on a lookup miss (see assets/js/i18n.js t()).
-   8. Activity route and learning-index integrity: every available activity
-      points to an existing page and every didactic lesson has a mapped test.
+   8. Content catalog integrity: every available activity points to an
+      existing page, every unit has an activity, and simulations point to
+      valid units and known actions.
+   9. _redirects stays within Cloudflare's per-file limits
+      (https://developers.cloudflare.com/pages/configuration/redirects/):
+      a maximum of 2 000 static redirects and 100 dynamic
+      (placeholder) redirects per file — 2 100 in total. If the file
+      is absent (the common case for projects that have no redirects)
+      the check is skipped: zero is valid.
+  10. _headers stays within Cloudflare's per-file limit of 100
+      header rules per file
+      (https://developers.cloudflare.com/pages/configuration/headers/).
+      A "rule" is one path-glob block (the glob line followed by
+      indented header lines), so the wildcards of `/assets/*` plus
+      its two Cache-Control lines count as one rule each, not three.
+      If the file is absent the check is skipped.
+  11. No shipped file exceeds Cloudflare Pages' 25 MB per-file
+      limit. Recursively walks the repo, excluding `.git/`,
+      `node_modules/`, `.claude/` (graphify skill + agent settings,
+      never uploaded), and `graphify-out*` (build artifacts). Warns
+      at 20 MB (still legal but worth a nudge) and fails at 25 MB
+      (Cloudflare will reject the deploy).
    Output: list of failures with the exact file. Exit code 1 if there
    are any, "OK (N checks)" otherwise.
    ============================================================ */
@@ -40,6 +60,7 @@ var execFileSync = require('child_process').execFileSync;
 
 var ROOT = path.join(__dirname, '..');
 var failures = [];
+var warnings = [];
 var checks = 0;
 
 function rel(p) {
@@ -268,7 +289,7 @@ userFacingTargets.forEach(function (file) {
       hit = content.indexOf(term.toLowerCase()) !== -1;
     }
     if (hit) {
-      failures.push(rel(file) + ': contains "' + term + '" — no page visible to the user may mention disability, occupational therapy, or minors (see doc/en/SPEC.md §4)');
+      failures.push(rel(file) + ': contains "' + term + '" — no page visible to the user may mention disability, occupational therapy, or minors (see doc/en/spec.md §4)');
     }
   });
 });
@@ -357,7 +378,10 @@ headersContent.split('\n').filter(function (line) {
     var re = /<script\s+[^>]*\bsrc=(["'])([^"']+)\1[^>]*>\s*<\/script>/g;
     var m;
     while ((m = re.exec(src)) !== null) {
-      if (!/^https?:\/\//i.test(m[2])) out.push(m[2]);
+      if (!/^https?:\/\//i.test(m[2])) {
+        /* Ignore cache-busting query strings when resolving the local file. */
+        out.push(m[2].split(/[?#]/)[0]);
+      }
     }
     return out;
   }
@@ -469,7 +493,7 @@ headersContent.split('\n').filter(function (line) {
   targets.forEach(checkDomain);
 })();
 
-/* --- 8. Activity routes and didactic → test pairing --- */
+/* --- 8. Content catalog integrity --- */
 (function checkActivityRoutes() {
   checks += 1;
   var sandbox = {};
@@ -481,27 +505,181 @@ headersContent.split('\n').filter(function (line) {
     return;
   }
   var data = sandbox.DATA || {};
+  var rootEs = extractDictFromStrings(path.join(ROOT, 'strings.es.js')) || {};
+  var rootEn = extractDictFromStrings(path.join(ROOT, 'strings.en.js')) || {};
+  function hasKey(dict, key) {
+    return String(key || '').split('.').reduce(function (value, part) {
+      return value && Object.prototype.hasOwnProperty.call(value, part) ? value[part] : null;
+    }, dict) !== null;
+  }
+  var units = data.learningPath || [];
+  var unitIds = {};
+  units.forEach(function (unit) {
+    if (!unit || !unit.id) return;
+    if (unitIds[unit.id]) failures.push('data.js: duplicate learning unit ' + unit.id);
+    unitIds[unit.id] = true;
+  });
+  var activitySlugs = {};
   (data.activities || []).forEach(function (activity) {
+    if (!activity || !activity.slug) return;
+    if (activitySlugs[activity.slug]) failures.push('data.js: duplicate activity ' + activity.slug);
+    activitySlugs[activity.slug] = true;
+    if (!activity.unitId || !unitIds[activity.unitId]) {
+      failures.push('data.js: activity ' + activity.slug + ' points to missing unit ' + activity.unitId);
+    }
     if (!activity.available) return;
     var target = path.join(ROOT, String(activity.href || '').replace(/^\.\//, ''));
     if (!activity.href || !fs.existsSync(target)) {
       failures.push('data.js: activity ' + activity.slug + ' points to a missing route ' + activity.href);
     }
   });
-  (data.didacticLessons || []).forEach(function (lesson) {
-    var row = (data.learningIndex || []).filter(function (item) { return item.id === lesson.id; })[0];
-    if (!row || !Array.isArray(row.testSlugs) || !row.testSlugs.length) {
-      failures.push('data.js: didactic lesson ' + lesson.id + ' has no mapped test');
+  units.forEach(function (lesson) {
+    var row = lesson;
+    var activities = (data.activities || []).filter(function (activity) {
+      return activity.unitId === row.id && activity.available;
+    });
+    if (!activities.length) {
+      failures.push('data.js: learning unit ' + lesson.id + ' has no mapped activity');
       return;
     }
-    row.testSlugs.forEach(function (slug) {
-      var activity = (data.activities || []).filter(function (item) { return item.slug === slug && item.available; })[0];
-      if (!activity) failures.push('data.js: didactic lesson ' + lesson.id + ' maps to unavailable test ' + slug);
-    });
+    if (!Array.isArray(row.steps) || row.steps.length !== 3) {
+      failures.push('data.js: learning unit ' + lesson.id + ' must have exactly 3 explanation steps');
+    }
+    if (!row.exampleKey) {
+      failures.push('data.js: learning unit ' + lesson.id + ' has no explanation example');
+    }
+  });
+  var simulationIds = {};
+  var allowedGroups = { organise: true, buy: true, check: true };
+  var allowedActions = {
+    balance: true, income: true, goals: true, expense: true, plan: true,
+    purchase: true, commitment: true, depreciation: true, obsolescence: true,
+    return: true, risk: true, investment: true, bankProducts: true,
+    housing: true, change: true, safety: true, rights: true,
+    communication: true, emergency: true
+  };
+  (data.simulations || []).forEach(function (simulation) {
+    if (!simulation || !simulation.id) return;
+    if (simulationIds[simulation.id]) failures.push('data.js: duplicate simulation ' + simulation.id);
+    simulationIds[simulation.id] = true;
+    if (!simulation.unitId || !unitIds[simulation.unitId]) failures.push('data.js: simulation ' + simulation.id + ' points to missing unit ' + simulation.unitId);
+    if (!allowedGroups[simulation.group]) failures.push('data.js: simulation ' + simulation.id + ' has unknown group ' + simulation.group);
+    if (!allowedActions[simulation.action]) failures.push('data.js: simulation ' + simulation.id + ' has unknown action ' + simulation.action);
+    if (!simulation.titleKey || !simulation.detailKey) failures.push('data.js: simulation ' + simulation.id + ' needs titleKey and detailKey');
+    if (!hasKey(rootEs, simulation.titleKey) || !hasKey(rootEn, simulation.titleKey)) failures.push('data.js: simulation ' + simulation.id + ' has an unregistered titleKey');
+    if (!hasKey(rootEs, simulation.detailKey) || !hasKey(rootEn, simulation.detailKey)) failures.push('data.js: simulation ' + simulation.id + ' has an unregistered detailKey');
   });
 })();
+/* --- 9. _redirects stays within Cloudflare's per-file limits
+   (https://developers.cloudflare.com/pages/configuration/redirects/):
+   a maximum of 2 000 static redirects and 100 dynamic (placeholder)
+   redirects per file — 2 100 in total. If the file is absent (the
+   common case for projects that have no redirects at all) the check
+   is skipped: zero is valid. Cloudflare parses the file line-by-line
+   and counts entries, not bytes, so the check counts entries.
+
+   - Static: a non-comment, non-blank line with a redirect code
+     (301/302/303/307/308) at the end OR a proxy entry (`200`). The
+     `301`/`302`/`303`/`307`/`308` codes all sit at the end of the
+     line in Cloudflare's syntax (`/from /to 301`).
+   - Dynamic: a redirect line containing a `:placeholder$` token
+     (e.g. `/news/:slug$ /blog/:slug 301`), per the Cloudflare docs'
+     "Dynamic redirects" section. */
+var REDIRECTS_FILE = path.join(ROOT, '_redirects');
+if (fs.existsSync(REDIRECTS_FILE)) {
+  checks += 1;
+  var redirLines = fs.readFileSync(REDIRECTS_FILE, 'utf8').split('\n');
+  var staticCount = 0;
+  var dynamicCount = 0;
+  redirLines.forEach(function (line) {
+    var trimmed = line.trim();
+    if (!trimmed || trimmed.charAt(0) === '#') return;
+    var isStatic = /\s(?:200|301|302|303|307|308)\s*$/.test(trimmed) && !/:\w+\$/.test(trimmed);
+    var isDynamic = /:\w+\$/.test(trimmed);
+    if (isStatic) staticCount += 1;
+    else if (isDynamic) dynamicCount += 1;
+  });
+  var REDIR_STATIC_LIMIT = 2000;
+  var REDIR_DYNAMIC_LIMIT = 100;
+  if (staticCount > REDIR_STATIC_LIMIT) {
+    failures.push('_redirects: ' + staticCount + ' static redirects, max is ' + REDIR_STATIC_LIMIT +
+      ' (Cloudflare Pages rejects the file)');
+  }
+  if (dynamicCount > REDIR_DYNAMIC_LIMIT) {
+    failures.push('_redirects: ' + dynamicCount + ' dynamic redirects, max is ' + REDIR_DYNAMIC_LIMIT +
+      ' (Cloudflare Pages rejects the file)');
+  }
+}
+
+/* --- 10. _headers stays within Cloudflare's per-file limit of 100
+   header rules per file
+   (https://developers.cloudflare.com/pages/configuration/headers/).
+   A "rule" is one path-glob block: the glob line plus the indented
+   header lines that follow it. We count both the path-glob line AND
+   the header lines individually because Cloudflare's published limit
+   of 100 applies to the total number of lines in `_headers`
+   (path-glob lines + header lines), per the wording at
+   https://developers.cloudflare.com/pages/configuration/headers/. The
+   7 currently shipped suites all stay well under 100 either way. */
+var HEADERS_FILE = path.join(ROOT, '_headers');
+if (fs.existsSync(HEADERS_FILE)) {
+  checks += 1;
+  var headersLines = fs.readFileSync(HEADERS_FILE, 'utf8').split('\n');
+  var ruleCount = 0;
+  for (var i = 0; i < headersLines.length; i++) {
+    var hLine = headersLines[i];
+    var hTrim = hLine.trim();
+    if (!hTrim || hTrim.charAt(0) === '#') continue;
+    if (hLine.charAt(0) === '/' && !/^\/.*:/.test(hLine)) {
+      ruleCount += 1;
+      continue;
+    }
+    if (/^[A-Za-z][\w-]*:\s/.test(hLine)) ruleCount += 1;
+  }
+  var HEADERS_RULE_LIMIT = 100;
+  if (ruleCount > HEADERS_RULE_LIMIT) {
+    failures.push('_headers: ' + ruleCount + ' rule lines (path-globs + headers), max is ' +
+      HEADERS_RULE_LIMIT + ' (Cloudflare Pages rejects the file)');
+  }
+}
+
+/* --- 11. No shipped file exceeds Cloudflare Pages' 25 MB per-file
+   limit (https://developers.cloudflare.com/pages/limits/). Warns at
+   20 MB (legal but worth a nudge) and fails at 25 MB. Only walks
+   files that actually deploy: `.git/`, `node_modules/`, `.claude/`
+   (graphify skill + agent settings, never uploaded), and
+   `graphify-out*` (build artifacts) are excluded. */
+var FILE_SIZE_WARN_MB = 20;
+var FILE_SIZE_FAIL_MB = 25;
+var fileSizeExcluded = ['.git', 'node_modules', '.claude', 'graphify-out', 'graphify-out-meta'];
+(function walkForLargeFiles(dir) {
+  if (!fs.existsSync(dir)) return;
+  fs.readdirSync(dir, { withFileTypes: true }).forEach(function (entry) {
+    if (fileSizeExcluded.indexOf(entry.name) !== -1) return;
+    var full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      walkForLargeFiles(full);
+    } else if (entry.isFile()) {
+      checks += 1;
+      var size = fs.statSync(full).size;
+      var sizeMb = size / (1024 * 1024);
+      if (sizeMb >= FILE_SIZE_FAIL_MB) {
+        failures.push(rel(full) + ': weighs ' + sizeMb.toFixed(2) + ' MB, max per file is ' +
+          FILE_SIZE_FAIL_MB + ' MB (Cloudflare Pages rejects the deploy)');
+      } else if (sizeMb >= FILE_SIZE_WARN_MB) {
+        warnings.push(rel(full) + ': weighs ' + sizeMb.toFixed(2) + ' MB, max per file is ' +
+          FILE_SIZE_FAIL_MB + ' MB (warning: still legal, getting close)');
+      }
+    }
+  });
+})(ROOT);
 
 /* --- Result --- */
+if (warnings.length) {
+  console.log('WARNINGS (' + warnings.length + ') - non-blocking, see https://developers.cloudflare.com/pages/limits/ (25 MB per-file limit):');
+  warnings.forEach(function (w) { console.log('  - ' + w); });
+  console.log('');
+}
 if (failures.length) {
   console.log('FAILURES (' + failures.length + '):');
   failures.forEach(function (f) { console.log('  - ' + f); });

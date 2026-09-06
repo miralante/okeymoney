@@ -2,14 +2,17 @@
    Okeymoney — Activity runtime (shared core for tools/<slug>/)
    Exposes window.App.activity.run(opts), a generic Socratic loop used by
    every practice activity. Activities only need to provide:
-     - DATA.casos             — array of { id, scene: <html>, opciones: [...]
+     - DATA.casos             — array of { id, sceneHtml/escenaHtml: <html>,
+                                  opciones: [...]
                                   or { paidCents, costCents, agenteName } for
                                   sceneMode 'keypad' }
      - a strings.<locale>.js   with the keys the runtime asks for
      - a DOM with #escena, #opciones, #pista, #feedback, #practiceTokens,
        #btnReiniciar (and #wizAmount/#wizPreview for 'keypad' mode)
 
-   On completion, credits the practice wallet via App.wallet and marks
+   Before the cases, it shows a short didactic explanation and example. The
+   person then starts the cases as a separate understanding check. On
+   completion, credits the practice wallet via App.wallet and marks
    the activity done (idempotent: second run does not double-credit).
    See doc/en/technical.md §10 for the contract.
 
@@ -18,6 +21,12 @@
                         correctaIndex is 0..2. Pintado en #opciones.
      'money-token'    — caso.cents is a number; pinta un token en #escena.
                         opciones as in 'html'.
+     'money-bundle'   — caso.pieces is an array of denominations; paints
+                        several pieces for a counting question.
+     'money-equivalent' — caso.targetCents is the value to match; options
+                        can describe alternative groups of pieces.
+     'money-change'   — caso.paidCents and caso.costCents show a payment and
+                        a price; options contain possible change amounts.
      'keypad'         — caso.paidCents/costCents define una resta. El
                         runtime pinta un keypad numérico dentro de
                         #opciones + display grande + botón "Comprobar".
@@ -43,10 +52,12 @@
    * @param {string} opts.slug          Activity id (used for wallet + status)
    * @param {number} opts.rewardCents   Tokens credited on first completion
    * @param {Array}  opts.casos         Array of case objects (see header)
-   * @param {string} [opts.sceneMode]   'html' (default) | 'money-token' | 'keypad'
+   * @param {string} [opts.sceneMode]   'html' (default) | money modes | 'keypad'
    * @param {function} [opts.checkAnswer]  (value, current) => boolean — para keypad
    * @param {function} [opts.explainAnswer] (current) => string   — para keypad
    * @param {function} [opts.formatOption] (value, current) => string — etiqueta de opción
+   * @param {boolean} [opts.shuffleCases]  false keeps the learning order
+   * @param {Array} [opts.moneyPresentation] denominations shown before cases
    */
   function run(opts) {
     var cases = [];
@@ -54,6 +65,87 @@
     var attemptsOnCurrent = 0;
     var totalAttempts = 0;
     var resolved = false;
+    var answerLocked = false;
+
+    function focusScene() {
+      var scene = $('#escena');
+      if (scene) { scene.setAttribute('tabindex', '-1'); scene.focus(); }
+    }
+
+    function clearFeedback() {
+      var pista = $('#pista');
+      var feedback = $('#feedback');
+      if (pista) {
+        pista.hidden = true;
+        pista.textContent = '';
+      }
+      if (feedback) {
+        feedback.textContent = '';
+        feedback.className = 'feedback';
+      }
+    }
+
+    function renderDidactic() {
+      var escena = $('#escena');
+      var opciones = $('#opciones');
+      var instruction = $('#instruccion');
+      var btnReiniciar = $('#btnReiniciar');
+      if (!escena || !opciones) return;
+
+      clearFeedback();
+      var progress = $('#activityProgress');
+      if (progress) progress.hidden = true;
+      resolved = false;
+      if (btnReiniciar) btnReiniciar.hidden = true;
+      if (instruction) {
+        instruction.textContent = '';
+        instruction.hidden = true;
+      }
+
+      escena.innerHTML =
+        '<div class="actividad-didactica">' +
+          '<h2>' + App.utils.escapeHtml(App.i18n.t('didacticTitle')) + '</h2>' +
+          '<p>' + App.utils.escapeHtml(App.i18n.t('didacticBody')) + '</p>' +
+          '<p class="actividad-didactica__example"><strong>' +
+            App.utils.escapeHtml(App.i18n.t('didacticExampleLabel')) +
+            ':</strong> ' + App.utils.escapeHtml(App.i18n.t('didacticExample')) + '</p>' +
+        '</div>';
+      if (opts.moneyPresentation && opts.moneyPresentation.length) {
+        var presentation = document.createElement('div');
+        presentation.className = 'actividad-presentacion';
+        var presentationTitle = document.createElement('p');
+        presentationTitle.className = 'actividad-presentacion__title';
+        presentationTitle.textContent = App.i18n.t(opts.presentationLabelKey || 'didacticTitle');
+        presentation.appendChild(presentationTitle);
+        var presentationList = document.createElement('div');
+        presentationList.className = 'actividad-presentacion__list';
+        opts.moneyPresentation.forEach(function (cents) {
+          var item = document.createElement('div');
+          item.className = 'actividad-presentacion__item';
+          var token = App.money.createToken(cents);
+          item.appendChild(token);
+          var label = document.createElement('span');
+          var info = App.money.info(cents);
+          var isBanknote = info && /^money-n/.test(info.css);
+          var unitKey = isBanknote ? 'banknote' : 'coin';
+          label.textContent = '1 ' + App.i18n.t(unitKey) + ' ' +
+            App.i18n.t(isBanknote ? 'banknoteOfValue' : 'coinOfValue') + ' ' +
+            App.money.spoken(cents);
+          item.appendChild(label);
+          presentationList.appendChild(item);
+        });
+        presentation.appendChild(presentationList);
+        escena.querySelector('.actividad-didactica').appendChild(presentation);
+      }
+      opciones.innerHTML =
+        '<button type="button" class="btn actividad-didactica__start" id="btnStartActivity">' +
+          App.utils.escapeHtml(App.i18n.t('didacticContinue')) +
+        '</button>';
+      $('#btnStartActivity').addEventListener('click', function () {
+        renderCurrentCase();
+        focusScene();
+      });
+    }
 
     function refreshWalletChip() {
       /* Indicador de tokens de práctica (esquina superior derecha de
@@ -89,7 +181,7 @@
       if (previewEl && App.money.breakdown) {
         App.money.paintTokens(previewEl, App.money.breakdown(value));
       }
-      if (submitBtn) submitBtn.disabled = value <= 0;
+      if (submitBtn) submitBtn.disabled = value < 0;
     }
 
     function renderKeypad(onSubmit) {
@@ -155,22 +247,57 @@
       });
 
       paintKeypad(0);
-      submitEl.addEventListener('click', function () {
+      submitEl.onclick = function () {
         if (submitEl.disabled) return;
         onSubmit(value);
+      };
+    }
+
+    function renderMoneyGroup(container, pieces, className) {
+      var group = document.createElement('div');
+      group.className = className || 'actividad-dinero';
+      (pieces || []).forEach(function (cents) {
+        var token = App.money.createToken(cents);
+        token.classList.add('token-grande');
+        group.appendChild(token);
       });
+      container.appendChild(group);
+    }
+
+    function renderMoneyAmount(container, labelKey, cents) {
+      var block = document.createElement('div');
+      block.className = 'actividad-cambio__amount';
+      var label = document.createElement('span');
+      label.className = 'actividad-cambio__label';
+      label.textContent = App.i18n.t(labelKey);
+      block.appendChild(label);
+      var token;
+      if (App.money.info(cents)) {
+        token = App.money.createToken(cents);
+        token.classList.add('token-grande');
+      } else {
+        token = document.createElement('span');
+        token.className = 'money-amount token-grande';
+        token.textContent = App.money.format(cents);
+        token.setAttribute('role', 'img');
+        token.setAttribute('aria-label', App.money.spoken(cents));
+      }
+      block.appendChild(token);
+      container.appendChild(block);
     }
 
     function renderCurrentCase() {
+      answerLocked = false;
       var current = cases[currentIndex];
+      var progress = $('#activityProgress');
+      if (progress) {
+        progress.hidden = false;
+        progress.textContent = App.i18n.t('core.situationProgress')
+          .replace('{current}', String(currentIndex + 1)).replace('{total}', String(cases.length));
+      }
       var escena = $('#escena');
       var opciones = $('#opciones');
-      var pista = $('#pista');
-      var feedback = $('#feedback');
-      pista.hidden = true;
-      pista.textContent = '';
-      feedback.textContent = '';
-      feedback.className = 'feedback';
+      clearFeedback();
       escena.innerHTML = '';
       opciones.innerHTML = '';
       var submitEl = $('#wizSubmit');
@@ -180,13 +307,17 @@
          current.sceneMode (ej.: my-shopping-day mezcla money-token con
          opciones HTML en una sola actividad). */
       var sceneMode = current.sceneMode || opts.sceneMode || 'html';
+      var sceneMarkup = current.sceneHtml || current.escenaHtml;
 
       var instruction = $('#instruccion');
       if (instruction) {
+        instruction.hidden = false;
         if (sceneMode === 'keypad') {
           instruction.textContent = App.i18n.t('instruccion');
         } else if (current.instruccionKey) {
           instruction.textContent = App.i18n.t(current.instruccionKey);
+        } else {
+          instruction.textContent = App.i18n.t('instruccion');
         }
       }
 
@@ -194,13 +325,32 @@
         var token = App.money.createToken(current.cents);
         token.classList.add('token-grande');
         escena.appendChild(token);
+      } else if (sceneMode === 'money-bundle') {
+        renderMoneyGroup(escena, current.pieces);
+      } else if (sceneMode === 'money-equivalent') {
+        var equivalentTarget = document.createElement('div');
+        equivalentTarget.className = 'actividad-equivalente';
+        var targetLabel = document.createElement('span');
+        targetLabel.className = 'actividad-equivalente__label';
+      targetLabel.textContent = App.i18n.t(current.targetLabelKey || 'didacticTitle');
+        equivalentTarget.appendChild(targetLabel);
+        var targetToken = App.money.createToken(current.targetCents);
+        targetToken.classList.add('token-grande');
+        equivalentTarget.appendChild(targetToken);
+        escena.appendChild(equivalentTarget);
+      } else if (sceneMode === 'money-change') {
+        var changeScene = document.createElement('div');
+        changeScene.className = 'actividad-cambio';
+        renderMoneyAmount(changeScene, current.paidLabelKey || 'didacticTitle', current.paidCents);
+        renderMoneyAmount(changeScene, current.priceLabelKey || 'didacticTitle', current.costCents);
+        escena.appendChild(changeScene);
       } else if (sceneMode === 'keypad') {
         /* La "escena" para keypad: pintamos la pregunta (pagas con X, la
            compra vale Y) y el monedero visual de cada cantidad. Si la
-           actividad provee current.sceneHtml, lo respetamos; si no,
+           actividad provee sceneHtml o escenaHtml, lo respetamos; si no,
            montamos la escena a partir de paidCents/costCents. */
-        if (current.sceneHtml) {
-          escena.innerHTML = current.sceneHtml;
+        if (sceneMarkup) {
+          escena.innerHTML = sceneMarkup;
         } else {
           escena.innerHTML = '';
           var lbl1 = document.createElement('span');
@@ -223,8 +373,12 @@
         renderKeypad(function (value) { onKeypadAnswer(value, current); });
         attemptsOnCurrent = 0;
         return;
-      } else if (current.sceneHtml) {
-        escena.innerHTML = current.sceneHtml;
+      } else if (sceneMarkup) {
+        escena.innerHTML = sceneMarkup;
+      } else if (current.sceneKey) {
+        var sceneText = document.createElement('p');
+        sceneText.textContent = App.i18n.t(current.sceneKey);
+        escena.appendChild(sceneText);
       } else if (current.promptKey) {
         var prompt = document.createElement('p');
         prompt.className = 'instruccion-interna';
@@ -232,6 +386,12 @@
         escena.appendChild(prompt);
       }
 
+      if (current.agente && current.agenteName) {
+        var agent = document.createElement('p');
+        agent.className = 'agente';
+        agent.textContent = ({persona: '👤', empresa: '🏪', banco: '🏦'}[current.agente] || '👤') + ' ' + App.i18n.t(current.agenteName);
+        escena.appendChild(agent);
+      }
       var optionIndices = [];
       for (var oi = 0; oi < current.opciones.length; oi += 1) {
         optionIndices.push(oi);
@@ -257,24 +417,19 @@
     }
 
     function onAnswer(btn, chosenIdx, current) {
+      if (answerLocked) return;
       var pista = $('#pista');
       var feedback = $('#feedback');
       var allBtns = $$('#opciones .opcion-btn');
 
       if (chosenIdx === current.correctaIndex) {
         btn.classList.add('correcta');
+        if (current.explicacionKey) { pista.hidden = false; pista.textContent = App.i18n.t(current.explicacionKey); }
         allBtns.forEach(function (b) { b.disabled = true; });
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
         App.feedback.success();
-        setTimeout(function () {
-          currentIndex += 1;
-          if (currentIndex >= cases.length) {
-            finishActivity();
-          } else {
-            renderCurrentCase();
-          }
-        }, 700);
+        offerContinue();
         return;
       }
 
@@ -294,17 +449,11 @@
         });
         pista.hidden = false;
         pista.textContent = App.i18n.t(current.explicacionKey || current.pistaKey || 'pistaSigue');
-        setTimeout(function () {
-          currentIndex += 1;
-          if (currentIndex >= cases.length) {
-            finishActivity();
-          } else {
-            renderCurrentCase();
-          }
-        }, 1800);
+        offerContinue();
       } else {
         pista.hidden = false;
         pista.textContent = App.i18n.t(current.pistaKey || 'pistaSigue');
+        App.feedback.lockUntilAck(allBtns, feedback);
       }
     }
 
@@ -312,6 +461,7 @@
        acierto → 700 ms y avanza; 1er fallo → pista; 2º fallo → explicación
        con la respuesta correcta visible y avanza. */
     function onKeypadAnswer(value, current) {
+      if (answerLocked) return;
       var pista = $('#pista');
       var feedback = $('#feedback');
       var submitBtn = $('#wizSubmit');
@@ -325,14 +475,7 @@
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
         App.feedback.success();
-        setTimeout(function () {
-          currentIndex += 1;
-          if (currentIndex >= cases.length) {
-            finishActivity();
-          } else {
-            renderCurrentCase();
-          }
-        }, 700);
+        offerContinue();
         return;
       }
 
@@ -347,22 +490,36 @@
         pista.textContent = typeof opts.explainAnswer === 'function'
           ? opts.explainAnswer(current)
           : (App.i18n.t('core.challenge.hint') || '');
-        setTimeout(function () {
-          currentIndex += 1;
-          if (currentIndex >= cases.length) {
-            finishActivity();
-          } else {
-            renderCurrentCase();
-          }
-        }, 1800);
+        offerContinue();
       } else {
         pista.hidden = false;
         pista.textContent = App.i18n.t('core.challenge.hintSubtract') || App.i18n.t('core.challenge.hint') || '';
+        App.feedback.lockUntilAck($$('#opciones .keypad-key'), feedback, function () {
+          if (submitBtn) submitBtn.disabled = false;
+        });
       }
+    }
+
+    function offerContinue() {
+      answerLocked = true;
+      $$('#opciones button').forEach(function (b) { b.disabled = true; });
+      var submit = $('#wizSubmit');
+      if (submit) submit.disabled = true;
+      var feedback = $('#feedback');
+      App.feedback.lockUntilAck([], feedback, function () {
+        currentIndex += 1;
+        if (currentIndex >= cases.length) finishActivity();
+        else {
+          renderCurrentCase();
+          focusScene();
+        }
+      });
     }
 
     function finishActivity() {
       resolved = true;
+      var progress = $('#activityProgress');
+      if (progress) progress.hidden = true;
       var escena = $('#escena');
       var opciones = $('#opciones');
       var pista = $('#pista');
@@ -370,6 +527,8 @@
       var btnReiniciar = $('#btnReiniciar');
       escena.innerHTML = '';
       opciones.innerHTML = '';
+      var instruction = $('#instruccion');
+      if (instruction) instruction.hidden = true;
       pista.hidden = true;
       feedback.textContent = '';
       feedback.className = 'feedback';
@@ -388,7 +547,7 @@
       var already = App.wallet.activityStatus(opts.slug);
       if (!already || !already.done) {
         App.wallet.credit(opts.rewardCents, 'activity:' + opts.slug);
-        App.wallet.markActivityDone(opts.slug, totalAttempts);
+        App.wallet.markActivityDone(opts.slug);
         feedback.textContent = App.i18n.t('completado') + ' +' +
           App.money.formatPractice(opts.rewardCents);
         feedback.className = 'feedback success';
@@ -398,11 +557,21 @@
         feedback.className = 'feedback';
       }
       refreshWalletChip();
+      var transfer = document.createElement('p');
+      transfer.textContent = App.i18n.t(opts.transferKey || 'objetivo');
+      escena.appendChild(transfer);
+      var back = document.querySelector('.tool-header .back-link');
+      if (back) {
+        var returnLink = back.cloneNode(true);
+        returnLink.className = 'btn';
+        opciones.appendChild(returnLink);
+      }
       btnReiniciar.hidden = false;
+      focusScene();
     }
 
     function init() {
-      cases = shuffle(opts.casos.slice());
+      cases = opts.shuffleCases === false ? opts.casos.slice() : shuffle(opts.casos.slice());
       currentIndex = 0;
       attemptsOnCurrent = 0;
       totalAttempts = 0;
@@ -411,7 +580,7 @@
       var btnReiniciar = $('#btnReiniciar');
       if (btnReiniciar) {
         btnReiniciar.addEventListener('click', function () {
-          cases = shuffle(opts.casos.slice());
+          cases = opts.shuffleCases === false ? opts.casos.slice() : shuffle(opts.casos.slice());
           currentIndex = 0;
           attemptsOnCurrent = 0;
           totalAttempts = 0;
@@ -420,13 +589,21 @@
              finishActivity(); lo recuperamos para el nuevo round. */
           var submitEl = $('#wizSubmit');
           if (submitEl) submitEl.style.display = '';
-          renderCurrentCase();
+          renderDidactic();
+          $('#btnStartActivity').focus();
         });
       }
 
+      var progress = document.createElement('p');
+      progress.id = 'activityProgress';
+      progress.className = 'actividad-progress';
+      progress.hidden = true;
+      progress.setAttribute('role', 'status');
+      var scene = $('#escena');
+      scene.parentNode.insertBefore(progress, scene);
       refreshWalletChip();
       App.i18n.apply();
-      renderCurrentCase();
+      renderDidactic();
     }
 
     if (document.readyState === 'loading') {

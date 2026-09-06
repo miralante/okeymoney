@@ -3,9 +3,14 @@
   'use strict';
   App.i18n.register({
     title: 'Protege tu dinero',
-    metaDescription: 'Aprende a reconocer transferencias erróneas y estafas, y cómo actuar.',
-    objetivo: 'Objetivo: detectar riesgos y elegir una acción segura antes de mover dinero.',
+    metaDescription: 'Reconoce transferencias extrañas y estafas, y decide cómo actuar.',
+    objetivo: 'Cuando algo no cuadra, detecta el riesgo antes de mover dinero.',
     instruccion: 'Lee la situación y elige qué harías.',
+    didacticTitle: 'Para si algo parece raro',
+    didacticBody: 'No compartas claves ni códigos. Comprueba quién pide tu dinero.',
+    didacticExampleLabel: 'Ejemplo',
+    didacticExample: 'Si recibes un SMS urgente, no abras el enlace. Llama a tu banco.',
+    didacticContinue: 'Probar situaciones',
 
     /* Common scenario verbs (the scene prompts) */
     s1instr: 'Te ha llegado un Bizum de 50 € que no esperabas. ¿Qué haces?',
@@ -42,18 +47,18 @@
     s6pista: 'Las gangas demasiado buenas suelen ser una trampa. Mejor quedar en persona y pagar seguro.',
 
     /* Explanations — second mistake */
-    s1expl: 'No gastes ese dinero ni lo devuelvas tú al número que te ha escrito: avisa a tu banco. Ellos localizarán al dueño real y lo devolverán si es un error. Si lo gastas, podrías tener que devolverlo de tu bolsillo.',
-    s2expl: 'Llama a tu banco cuanto antes, en horario o al teléfono de incidencias 24h. Cuanto antes avises, más fácil es recuperar el dinero o bloquear la operación.',
-    s3expl: 'Los bancos nunca te envían enlaces por SMS para "verificar" nada. Es phishing: borra el mensaje y, si dudas, llama tú al banco con el número de la tarjeta.',
-    s4expl: 'El banco de verdad ya sabe tu nombre, tu DNI y tu número de cuenta. Nadie necesita tus claves para "verificarte": cuelga y avisa a tu familia o al banco oficial.',
-    s5expl: 'Aunque la historia parezca real, es muy habitual que alguien suplante a un familiar. Cuelga y llama tú a esa persona por el número que ya tenías: si no te localiza esa persona, era mentira.',
-    s6expl: 'En compras entre particulares, paga siempre en persona y por métodos que se puedan anular (nunca transferencia directa a un desconocido). Una ganga enorme que "se agota" suele ser la señal de una estafa.',
+    s1expl: 'No gastes ese dinero. No lo devuelvas al número que te ha escrito. Avisa a tu banco. Si lo gastas, quizá tengas que devolverlo tú.',
+    s2expl: 'Avisa a tu banco cuanto antes. Así será más fácil recuperar el dinero o parar el pago.',
+    s3expl: 'Los bancos no envían enlaces por SMS para comprobar tus datos. Borra el mensaje. Si dudas, llama tú al banco con el número de tu tarjeta.',
+    s4expl: 'Tu banco ya tiene tus datos. No necesita tus claves. Cuelga y llama tú al banco con su número oficial.',
+    s5expl: 'Puede que no sea tu familiar. Cuelga y llama tú a esa persona con el número que ya tenías.',
+    s6expl: 'En una compra a otra persona, queda en un lugar seguro y no envíes dinero por adelantado. Una oferta demasiado buena puede ser una estafa.',
 
     /* Generic */
     pistaSigue: 'Vuelve a leer la situación con calma.',
     completado: '¡Muy bien! Ya sabes cuidar tu dinero.',
-    reiniciar: '↻ Jugar otra vez',
+    reiniciar: '↻ Volver a hacerlo',
     fallo: 'Casi. Vuelve a leer la situación con calma.',
-    yaCompletada: 'Ya has terminado esta actividad.'
+    yaCompletada: 'Ya has hecho esta situación. Puedes volver a hacerla.'
   }, 'es');
 })();

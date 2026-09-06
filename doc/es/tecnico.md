@@ -366,8 +366,8 @@ bastante cortos como para no necesitarlo, según la regla 4 de SPEC.md
 
 ## 5. Internacionalización
 
-Referencia completa: [`doc/es/I18N.md`](I18N.md) (y su espejo
-[`doc/en/I18N.md`](../en/I18N.md)). La versión corta: un archivo por
+Referencia completa: [`doc/es/i18n.md`](I18N.md) (y su espejo
+[`doc/en/i18n.md`](../en/I18N.md)). La versión corta: un archivo por
 idioma (`strings.es.js` / `strings.en.js`), ambos cargados de forma
 síncrona (sin `document.write`, así `App.i18n.register` siempre corre antes
 de que `data.js`/`app.js` lean texto). `es` es el idioma por defecto y la
@@ -1052,3 +1052,18 @@ demás en el mismo PR.
 ---
 
 
+
+## Práctica ampliada
+
+Las 11 actividades incluyen tres recorridos nuevos, con seis situaciones cada uno. Cada recorrido avanza de identificar una cantidad a comparar y decidir. Cada actividad nueva acredita 12 Tokens una sola vez. El total del catálogo es 210 Tokens.
+
+- `save-step-by-step`: Ahorra para una meta.
+- `compare-prices`: Compara antes de pagar.
+- `monthly-payments`: Organiza tus pagos.
+
+Las pistas y explicaciones permanecen hasta pulsar «Entendido». No hay avance por tiempo. Al terminar se recuerda cómo usar lo aprendido. Las actividades no guardan intentos y no modifican el saldo en euros.
+
+
+### Navegación de situaciones
+
+Los enlaces de vuelta de cada ejercicio usan `#unidad-<unitId>`. La portada restaura el tema desde esa dirección y permite volver al catálogo o usar el historial del navegador. El runtime anuncia «Situación X de Y», enfoca la escena al avanzar y ofrece volver al tema al terminar. Las pistas devuelven el foco a una opción habilitada.

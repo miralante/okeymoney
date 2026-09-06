@@ -4,7 +4,7 @@
 > rediseño visual de Okeymoney: qué cambiamos, por qué, en qué orden y
 > cómo sabemos que cada fase está terminada. **No** redefine reglas de
 > producto ni de accesibilidad — esas siguen en
-> [`doc/es/SPEC.md`](doc/es/SPEC.md).
+> [`doc/es/spec.md`](doc/es/spec.md).
 >
 > Las convenciones siguen el estándar de documentación de Apptonomia
 > (secciones numeradas, simplificaciones declaradas, no‑objetivos
@@ -20,8 +20,8 @@ Un **plan** para el rediseño visual de Okeymoney: la implementación v1
 sale con una hoja de estilos mínima (`styles.css`, ~200 líneas, tema
 claro, valores hex hardcodeados, sin tokens de diseño, sin CSS
 modular). La interfaz es usable pero **visualmente inconsistente con
-las apps hermanas** (Apptonomia, Calculia, Teclatlon), que ya comparten
-un lenguaje visual calmado, con acento sobre neutro. Este
+las otras apps de la suite** (Apptonomia, Calculia, Teclatlon), que ya
+comparten un lenguaje visual calmado, con acento sobre neutro. Este
 documento recoge:
 
 - El aspecto objetivo (tokens, componentes, layout).
@@ -31,7 +31,7 @@ documento recoge:
 
 ### 1.2 Qué no es
 
-- **No sustituye a [`doc/es/SPEC.md`](doc/es/SPEC.md).** Las reglas de
+- **No sustituye a [`doc/es/spec.md`](doc/es/spec.md).** Las reglas de
   producto, audiencia, restricciones innegociables, módulos y el flujo
   de Registrar un gasto no cambian. Si este documento entra en
   contradicción con `SPEC.md`, gana `SPEC.md`.
@@ -45,9 +45,9 @@ documento recoge:
 
 ### 1.3 Por qué ahora
 
-Las apps hermanas ya convergieron en un lenguaje visual calmado
-y dirigido por un acento. Okeymoney es la excepción. Migrar ahora
-significa:
+Las otras apps de la suite ya convergieron en un lenguaje visual
+calmado y dirigido por un acento. Okeymoney es la excepción. Migrar
+ahora significa:
 
 - Coherencia visual entre apps (la insignia familiar al pie de cada
   pantalla deja de ser el único hilo de diseño).
@@ -77,11 +77,11 @@ ruta:
 
 ## 2. Lenguaje visual objetivo
 
-El rediseño alinea Okeymoney con las apps hermanas. El objetivo es **un
-solo aspecto**, capturado completamente como tokens de diseño, aplicado
-mediante un conjunto pequeño de componentes reutilizables. Los valores
-concretos vienen de analizar Apptonomia, Calculia y Teclatlon; la
-fundamentación de abajo es el consenso que salió de esa revisión.
+El rediseño alinea Okeymoney con las otras apps de la suite. El objetivo
+es **un solo aspecto**, capturado completamente como tokens de diseño,
+aplicado mediante un conjunto pequeño de componentes reutilizables. Los
+valores concretos vienen de analizar Apptonomia, Calculia y Teclatlon;
+la fundamentación de abajo es el consenso que salió de esa revisión.
 
 ### 2.1 Principios (solo capa visual)
 
@@ -405,9 +405,9 @@ app debe verse **idéntica** al final de esta fase.
 
 ### 5.2 Fase 2 — Superficies, tipo, componentes (el cambio visible)
 
-**Objetivo:** la app se ve como las apps hermanas. Cada componente de
-§3 está en `componentes.css`; cada página los usa solo mediante
-nombres de clase.
+**Objetivo:** la app se ve como las otras apps de la suite. Cada
+componente de §3 está en `componentes.css`; cada página los usa solo
+mediante nombres de clase.
 
 - Implementar cada componente de §3 en `assets/css/componentes.css`.
 - Migrar `index.html` a los nombres de clase de componente; cambiar la
@@ -466,7 +466,7 @@ la mano, no antes.
 ### D1. ¿Mantener tema claro en v1.1 o pasar a oscuro ya?
 
 - **Decisión pendiente.** `SPEC.md` §4.5 dice "tema claro por defecto".
-  Las apps hermanas son oscuras. Dos opciones:
+  Las otras apps de la suite son oscuras. Dos opciones:
   - **(a) Pasar a oscuro ya.** Coincide con la familia. Requiere
     actualizar una línea de `SPEC.md` §4.5 ("el v1 por defecto es
     oscuro, con alto contraste; los tokens claros quedan declarados
@@ -531,7 +531,7 @@ recorrido en el servidor en vivo `http://localhost:8080/`.
 - ✅ **Fase 2 terminada, variante B → variante A (tema oscuro activo).**
   Decisión D1 **invertida** de la opción (b) a la **opción (a) —
   superficie oscura activa**, alineada con el lenguaje de diseño de
-  las apps hermanas. `SPEC.md` §4.5 actualizado en consecuencia
+  las otras apps de la suite. `SPEC.md` §4.5 actualizado en consecuencia
   ("Tema oscuro por defecto"). Contraste verificado: `#F2F4F8` sobre
   `#161A21` = 14,6 : 1 (AAA), `#B7BDC9` sobre `#161A21` = 8,4 : 1
   (AAA), `#7B8294` sobre `#161A21` = 4,6 : 1 (AA). Los 10

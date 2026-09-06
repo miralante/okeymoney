@@ -1,11 +1,12 @@
 # Catálogo de actividades
 
-> Okeymoney incluye **8 actividades de práctica**, enlazadas desde la
-> fase de test de sus unidades didácticas (ver `DATA.learningIndex` en
-> `data.js`). La segunda parte de la portada reúne la guía para actuar
-> y las simulaciones (ver [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md)):
+> Okeymoney incluye **5 unidades didácticas y 11 actividades de práctica**.
+> La portada muestra primero las cinco unidades; dentro de cada una se
+> enlazan las actividades que ayudan a practicarla (ver `DATA.learningPath`
+> en `data.js`). La portada separa las situaciones, las acciones con dinero
+> y las ideas para cuidarlo en tres partes grandes (ver [`SPEC.md`](SPEC.md) §7):
 > *Conceptos básicos* (2 actividades, el núcleo educativo), *Vida
-> cotidiana* (5 actividades, de menor a mayor dificultad, simulación y
+> cotidiana* (8 actividades, de menor a mayor dificultad, simulación y
 > práctica) y *Seguridad* (1 actividad, la última porque es la
 > habilidad práctica de mayor consecuencia real). Cada actividad es una
 > carpeta `tools/<slug>/` independiente que reutiliza el bucle
@@ -15,27 +16,48 @@
 
 ## Recorrido didáctico completo
 
-El orden recomendado es **explicar → comprobar → aplicar**. Las
-actividades de test no se bloquean: la persona puede elegir libremente,
-pero la home presenta los bloques en ese orden para reducir la carga y
-facilitar la transferencia a la vida diaria.
+El orden recomendado es **explicar → practicar → aplicar**. Las
+actividades no se bloquean: la persona puede repetirlas o elegir otra,
+pero la portada presenta una sola ruta de cinco unidades para reducir la
+carga y facilitar la transferencia a la vida diaria.
 
-| Concepto que se explica | Test que lo comprueba | Aplicación posterior en euros |
+Cada actividad empieza con una explicación breve y un ejemplo. Después,
+la persona pulsa **Probar situaciones** y responde a los casos. Así la
+actividad comprueba si puede usar la idea, en lugar de mostrar directamente
+un cuestionario.
+
+| Unidad | Idea principal | Actividades | Aplicación posterior en euros |
 |---|---|---|
-| Valor de monedas y billetes | `concepts-money` | Consultar y actualizar el saldo |
-| Necesidades y deseos | `needs-vs-wants` | Decidir antes de registrar un gasto |
-| Prioridades y presupuesto | `budget-first` | Planificar una meta y revisar el saldo |
-| Comprar sin pasarse | `go-shopping` | Registrar una compra con su importe |
-| Pagar y calcular la vuelta | `change-back` | Revisar el importe antes de guardar el gasto |
-| Integrar una compra completa | `my-shopping-day` | Secuencia saldo → gasto → consecuencia visible |
-| Ahorrar para una meta | `my-shopping-day` (ronda 5) | Crear una meta y añadir dinero |
-| Seguridad ante engaños | `safe-money` | Criterio transversal antes de cualquier pago |
+| 1. Cuenta tu dinero | Monedas, billetes y saldo | `concepts-money` | Consultar y actualizar el saldo |
+| 2. Elige antes de comprar | Necesidades, deseos y pausa | `needs-vs-wants`, `before-buying` | Decidir antes de registrar un gasto |
+| 3. Organiza tu compra | Prioridades y presupuesto | `budget-first`, `go-shopping` | Planificar una compra y una meta |
+| 4. Paga y comprueba | Vuelta y compra completa | `change-back`, `my-shopping-day` | Revisar el importe y ahorrar |
+| 5. Protege tu dinero | Mensajes, llamadas y peticiones extrañas | `safe-money` | Comprobar la seguridad antes de pagar |
 
 La última columna describe la transferencia disponible hoy. El bloque de
 simulación también incluye ahora una práctica de vuelta con importes en
 euros y tres decisiones de seguridad antes de enviar dinero. Ninguna de
 las dos actividades da Tokens ni modifica el ledger: primero se ensaya,
 después se decide si se quiere registrar el gasto real.
+
+## Relación ampliable entre unidades, actividades y simulaciones
+
+La relación se declara una sola vez en `data.js`: cada entrada de
+`DATA.activities` y `DATA.simulations` lleva un `unitId` que apunta a una
+entrada de `DATA.learningPath`. La home genera las tarjetas desde esos
+catálogos; no se añaden actividades ni simulaciones escribiendo HTML a
+mano. Para ampliar el contenido:
+
+1. Añade o ajusta una unidad en `DATA.learningPath` si hace falta.
+2. Registra cada actividad en `DATA.activities` con su `unitId` y ruta.
+3. Registra cada simulación en `DATA.simulations` con su `unitId`, grupo,
+   claves de idioma y acción.
+4. Añade las cadenas en español e inglés y ejecuta
+   `node scripts/check.js`.
+
+El verificador detecta ids duplicados, unidades sin actividad, referencias
+a unidades inexistentes, rutas rotas y acciones de simulación que la app no
+conoce. Así se puede crecer sin romper el recorrido visible.
 
 ## Los tres agentes básicos
 
@@ -61,8 +83,8 @@ haciendo la transacción.
 
 | # | Slug | Título (es / en) | Agentes | Casos | Recompensa (okeys) |
 |---|---|---|---|---|---|
-| 1 | `concepts-money` | Cuenta tu dinero sin dudas / Count your money with confidence | — (identificación de valores) | 8 | 🔑 12,00 |
-| 2 | `needs-vs-wants` | Necesito o quiero / Need or want | persona | 8 | 🔑 8,00 |
+| 1 | `concepts-money` | Cuenta tu dinero / Count your money | — (monedas y billetes) | 29 | 🔑 12,00 |
+| 2 | `needs-vs-wants` | Necesito o quiero / Need or want | persona | 30 | 🔑 8,00 |
 
 ### Tema: Vida cotidiana (`theme: 'daily'`)
 
@@ -80,30 +102,35 @@ haciendo la transacción.
 |---|---|---|---|---|---|
 | 8 | `safe-money` | Mi dinero está seguro / My money is safe | — (escenarios de estafa) | 6 | 🔑 15,00 |
 
-**Total al completar todas: 🔑 167,00.**
+**Total al completar todas: 🔑 210,00.**
 
 Las actividades mantienen esos tres temas como metadatos pedagógicos,
 pero la portada las presenta dentro de cada unidad didáctica. Las
-unidades siguen el orden de `DATA.didacticLessons`; *Conceptos básicos*
+unidades siguen el orden de `DATA.learningPath`; *Conceptos básicos*
 va primero por ser el núcleo educativo, *Vida cotidiana* aumenta la
 dificultad y *Seguridad* cierra el recorrido por su mayor consecuencia
-práctica. La guía para actuar ofrece el contexto práctico y las
-simulaciones de cada unidad (ver [`tecnico.md`](tecnico.md) §10.3).
+práctica. La segunda parte de la portada ofrece el contexto práctico y las
+simulaciones de cada unidad; la tercera reúne ideas para cuidar el dinero
+(ver [`tecnico.md`](tecnico.md) §10.3).
 
-## 1. Conceptos: cuenta tu dinero sin dudas (`tools/concepts-money/`)
+## 1. Conceptos: cuenta tu dinero (`tools/concepts-money/`)
 
-**Objetivo:** reconocer el valor de cada moneda o billete para poder sumar
-el saldo y comprobar un pago. Cada caso muestra un token visual
-(renderizado por `App.money.createToken()`) y pregunta cuánto añade a tu
-saldo, con tres opciones expresadas en euros. Enseña el **CATALOG** de
-[`assets/js/money.js`](../../assets/js/money.js): 5c, 10c, 20c, 50c, 1 €,
-2 €, 5 €, 10 €, 20 €, 50 €.
+**Objetivo:** reconocer monedas y billetes, contar varias piezas, formar
+valores equivalentes y calcular la vuelta. Primero se presentan los
+valores. Después hay 29 casos ordenados de lo más sencillo a lo más
+complejo. Cada caso muestra piezas visuales (renderizadas por
+`App.money.createToken()`) y ofrece tres opciones.
 
 ## 2. Necesito o quiero (`tools/needs-vs-wants/`)
 
-Clasifica ocho objetos cotidianos: ¿el objeto es una necesidad, un
-deseo, o las dos cosas? El agente es siempre **Tú** o **Tu familia**,
-porque esta decisión es personal.
+Clasifica 30 situaciones cotidianas: ¿lo necesitas, lo quieres, o necesitas
+una cosa y eliges algo extra? Hay casos de comida, vivienda, salud, pagos,
+transporte, ocio, servicios y compras en las que una necesidad se mezcla con
+una elección personal. Cada situación explica qué problema aparece si falta
+la compra y qué parte puede ser solo una preferencia. El agente es siempre
+**Tú** o **Tu familia**, porque esta decisión es personal. El primer fallo
+activa una pregunta para ayudarte a pensar; el segundo muestra la explicación
+y la respuesta correcta.
 
 ## 3. ¿Qué compro primero? (`tools/budget-first/`)
 
@@ -190,3 +217,13 @@ movimientos **completamente independiente** del saldo real de Mi dinero:
 ambos saldos en pantalla (Mi dinero muestra los dos; Aprender muestra
 el de práctica) y entiende que lo que gana practicando no afecta a su
 dinero real.
+
+## Práctica ampliada
+
+Las 11 actividades incluyen tres recorridos nuevos, con seis situaciones cada uno. Cada recorrido avanza de identificar una cantidad a comparar y decidir. Cada actividad nueva acredita 12 Tokens una sola vez. El total del catálogo es 210 Tokens.
+
+- `save-step-by-step`: Ahorra para una meta.
+- `compare-prices`: Compara antes de pagar.
+- `monthly-payments`: Organiza tus pagos.
+
+Las pistas y explicaciones permanecen hasta pulsar «Entendido». No hay avance por tiempo. Al terminar se recuerda cómo usar lo aprendido. Las actividades no guardan intentos y no modifican el saldo en euros.

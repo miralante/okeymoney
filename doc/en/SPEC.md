@@ -11,11 +11,18 @@ disabilities: knowing how much money you have, spending it consciously,
 saving towards something you want, and (in a future version) practising
 common money situations like working out change.
 
-Okeymoney is a sibling of [Apptonomia](https://apptonomia.pages.dev),
+Okeymoney is one of the apps of the [Miralante](https://apptonomia.uk)
+suite, alongside [Apptonomia](https://apptonomia.pages.dev),
 [Calculia](../../../calculia) and [Teclatlon](../../../teclatlon): same
 accessibility-first design language (Easy Reading, no pressure, high
 contrast, large touch targets), same zero-backend static-PWA stack, applied
 to a new domain — money, not therapy activities in general.
+
+Okeymoney helps people know how much money they have, tell apart what they
+need from what can wait, organise payments and spending, save towards a goal,
+buy more calmly and protect themselves from scams or unusual requests. It is
+not a bank, financial adviser, clinical assessment or competitive game. It
+does not execute payments, transfers or investments.
 
 ## 2. Audience
 
@@ -24,6 +31,19 @@ manage their own money, and anyone who benefits from Easy Reading,
 no-pressure pacing and predictable, uncluttered screens: children,
 beginners, older adults. Usable **autonomously**, without a professional or
 family member operating the device for them.
+
+### 2.1 Product objectives
+
+Okeymoney should:
+
+1. support autonomy in small money decisions;
+2. make amounts, purchases, payments, saving and requests for money easier
+   to understand;
+3. transfer learning to everyday situations;
+4. provide clear language, one idea at a time and understandable support;
+5. let people make mistakes, ask for help and try again without fear;
+6. show what will happen before a decision is confirmed;
+7. turn each exercise into a recognisable and useful practice.
 
 ## 3. Non-negotiable constraints (product)
 
@@ -119,6 +139,12 @@ decision** and sees its **immediate consequence** in the safe space of
 the app (their balance, their goal, their history).
 
 This applies to every flow the app already has:
+
+In `tools/` activities, the person first sees a short explanation with an
+everyday example. They then press **Try situations** and answer cases to
+check their understanding. The explanation prepares the decision; the
+activity checks whether they can use it, without turning the screen into a
+course lesson.
 
 - **Scene + decision** (e.g. `Register an expense`: "what did you
   spend on?" → 6 large categories).
@@ -297,6 +323,46 @@ The default tone in Okeymoney is **calm and predictable**: the person
 manages their money because the app makes it easy, not because we are
 pushing them.
 
+### 3.8 Product presentation: manage your money better
+
+The internal foundation is learning and practice, but the interface must
+not feel like a course. It should feel like a money tool for real life:
+close, useful and easy to start.
+
+- The main entry is called **See**, not "Learn".
+- The home is organised into three large sections inside **Your money**:
+  **Your money, every day**, **What you can do with your money**, and **More
+  ideas for caring for your money**. The first shows everyday situations; the
+  second gathers actions for noting, preparing and reviewing money; the third
+  offers practical advice for making better decisions.
+- Buttons use familiar, low-friction verbs: **See**, **Try**, **Note**,
+  **Organise**, **Check** and **Protect**. Each topic opens with **See**;
+  the concrete situation starts with **Try**.
+- The interface does not show "unit", "lesson", "test" or "activity" as
+  its navigation frame. Those names may remain in ids, catalogues and
+  internal code so the technical contract does not break.
+- Copy starts with the decision or outcome that matters in everyday life,
+  then explains the idea needed. Every card makes clear what the person can
+  do with their money.
+- Cards have no visible numbering (no "Topic 1", "Topic 2" or equivalent
+  sequence). They start with a value proposition or a recognisable situation;
+  the visual order must not look like a syllabus.
+- Titles must say which everyday problem the card helps solve. Prefer direct
+  phrases such as "Count how much money you have", "Do not run out of money"
+  or "Make sure you get the right change". Avoid metaphors and abstract
+  formulas such as "Your starting point" or "See and decide".
+- Do not add labels that merely describe the screen without helping someone
+  use it, such as "What to do in this situation". The title should lead
+  directly to one context sentence and the next action.
+- Each view should have one main idea. If the title and context already
+  explain the situation, remove lists, summaries or messages that repeat it.
+
+The financial angle is practical, not commercial: use balance, budget,
+saving, payments, purchases and safety. The tone may be attractive and
+benefit-led, but it never uses pressure, promises of returns, false urgency
+or aggressive sales language. Easy reading, autonomy and the communication
+rules in §3.7 remain in force.
+
 ## 4. Design principles
 
 These principles **rule over any other decision**. If a task conflicts
@@ -383,7 +449,7 @@ Where it applies and where it doesn't:
 This rule is checked automatically: `node scripts/check.js` fails if
 any of those terms show up in the files the end user sees.
 
-### 5.1 Public-facing wording: "usuario/a tipo" euphemism
+### 5.1 Public-facing wording: "persona tipo" euphemism
 
 When presenting Okeymoney to **the general public** (press, talks,
 public READMEs that anyone can read, the metaproject landing at
@@ -391,8 +457,8 @@ public READMEs that anyone can read, the metaproject landing at
 **"intellectual disability" / "discapacidad intelectual"** must not be
 used as a way to describe the audience of the app — even when the
 surrounding text would otherwise be public. The accepted euphemism for
-that audience in those surfaces is **"usuario/a tipo"** (plural
-"usuarios/as tipo"), used as a generic profile marker, not as a label
+that audience in those surfaces is **"persona tipo"** (plural
+"personas tipo"), used as a generic profile marker, not as a label
 for any real person.
 
 Where the euphemism applies and where it doesn't:
@@ -401,9 +467,9 @@ Where the euphemism applies and where it doesn't:
   without authentication: `README.md`, `README.es.md`, the portal at
   `apptonomia.uk`, public talks, social media copy, press notes,
   marketing material. In these surfaces, refer to the audience as
-  "el/la usuario/a tipo" or "usuarios/as tipo" of the app.
+  "la persona tipo" or "las personas tipo" of the app.
 - **Does NOT apply** to this repo's internal documentation
-  (`CLAUDE.md`, `doc/en/SPEC.md`, `doc/es/SPEC.md`, `technical.md`,
+  (`CLAUDE.md`, `doc/en/spec.md`, `doc/es/spec.md`, `technical.md`,
   [`roles.md`](roles.md), `CONTRIBUTING.md`, `CONTRIBUTING.es.md`) —
   those files are read by maintainers and contributors, and
   "intellectual disability" / "discapacidad intelectual" remains the
@@ -415,7 +481,7 @@ Where the euphemism applies and where it doesn't:
   procedure related to disability): that is content, not labelling of
   an audience.
 - **Does NOT apply** to the UI of the app itself: §5 above continues
-  to forbid **any** mention, including "usuario/a tipo", in
+  to forbid **any** mention, including "persona tipo", in
   `index.html`, `app.js`, `styles.css`, `strings.<locale>.js`,
   `legal/`, and any other user-facing surface. The euphemism is for
   the outside world, not for what the visitor reads on the site.
@@ -423,15 +489,16 @@ Where the euphemism applies and where it doesn't:
 Rationale: presenting the project's real objective in maintainer docs
 is useful and necessary; presenting it in marketing or landing
 surfaces is neither necessary nor respectful of the audience —
-"usuario/a tipo" lets public material describe what the app is for
+"persona tipo" lets public material describe what the app is for
 (who the typical profile is) without publicly naming a clinical group.
 
 ## 6. Navigation shape (max 3 levels, always predictable)
 
-- **Level 0 — tabs**: a fixed bottom bar with exactly three destinations
-  (Mi dinero / Mis metas / Aprender) plus a big "+" button in the same
-  fixed position that always opens "Register an expense". The bar never
-  changes shape or position.
+- **Level 0 — home with three parts**: one scrolling screen with an anchor
+  bar leading to **Your money, every day**, **What you can do with your money**
+  and **More ideas for caring for your money**. All three belong to the same
+  **Your money** space and separate situations, actions and advice without
+  creating new screens.
 - **Level 1 — a step-by-step wizard**: opened from level 0 (register an
   expense, create a goal, add money to a goal, change how much money you
   have). Every step shows dots for progress, a "← Back" to the previous
@@ -470,38 +537,36 @@ The flagship three-step flow (fully specified in `technical.md` §6, and
 already implemented in `app.js`): pick a category, enter the price,
 confirm and save. See §8 below for the exact rationale of each step.
 
-### 7.4 Aprender (Learn) — practice plane
+### 7.4 Everyday situations — practice plane
 
-The Aprender tab opens the product's **library of practice
-activities**. Each activity (`tools/<slug>/`) is a mini-simulation of
-an everyday money situation, built on the Socratic pattern from
-§3.6.1: anchored question → decision → correct/reinforcement, or
-first mistake → hint, second mistake → explanation, always with a
-transfer at the end.
+The home presents five topics about **everyday decisions**. Each topic
+explains what is needed and groups one or two situations (`tools/<slug>`)
+to try it. The person does not need to understand the difference between a
+catalogue, a lesson and a test: first see the topic, then look at the example,
+and finally try a situation.
 
-Activities are grouped into **themed sections** (Apptonomia-style: a
-heading with a distinct accent color per theme), shown in a fixed
-order from the most educational theme to the most practical one:
+The recommended order is:
 
-**Theme: Learn to manage your money** — the core progression, concept
-→ practice, increasing difficulty:
+1. **Count your money** — recognise coins, notes and your balance.
+2. **Choose before buying** — tell needs and wants apart and pause before
+   an impulse purchase.
+3. **Organise your shop** — prioritise and check what fits a budget.
+4. **Pay and check** — work out change and practise a full purchase.
+5. **Keep your money safe** — recognise unusual messages, calls and requests.
 
-| Slug | Activity | Reward (Tokens 🔑) |
-|---|---|---|
-| `concepts-money` | What is money? (identify coins and banknotes) | +5,00 |
-| `needs-vs-wants` | Need or want | +8,00 |
-| `budget-first` | What do I buy first? (prioritise within a budget) | +12,00 |
-| `go-shopping` | Going to the shop (pick the pair that fits the budget) | +20,00 |
-| `change-back` | Working out change | +30,00 |
-| `my-shopping-day` | My shopping day (integrating: coin + need/want + budget + change) | +60,00 |
+Activities remain independent and can be repeated. The table keeps the
+technical catalogue and shows where each activity belongs:
 
-**Theme: Keep your money safe** — real-world scam awareness, shown
-last because it is the highest-stakes practical skill in the
-catalogue:
-
-| Slug | Activity | Reward (Tokens 🔑) |
-|---|---|---|
-| `safe-money` | My money is safe (erroneous transfers and scams: phishing, fake bank call, urgent Bizum impersonating a family member, fake resale listing) | +15,00 |
+| Unit | Slug | Activity | Reward (Tokens 🔑) |
+|---|---|---|---|
+| 1 | `concepts-money` | Count your money | +5,00 |
+| 2 | `needs-vs-wants` | Need or want | +8,00 |
+| 2 | `before-buying` | Four questions before buying | +10,00 |
+| 3 | `budget-first` | What do I buy first? | +12,00 |
+| 3 | `go-shopping` | Going to the shop | +20,00 |
+| 4 | `change-back` | Working out change | +30,00 |
+| 4 | `my-shopping-day` | My shopping day | +60,00 |
+| 5 | `safe-money` | My money is safe | +15,00 |
 
 Each activity credits Tokens **once per person**
 (`App.wallet.markActivityDone`, idempotent). Repeating it does not
@@ -516,7 +581,25 @@ from the `rewardCents` field in its `data.js` and is formatted with
 > `strings.<locale>.js`. Keeping es/en parity on those keys is
 > mandatory (`scripts/check.js`).
 
-#### 7.4.1 Practice plane: Tokens
+#### 7.4.1 Content expansion contract
+
+The home is fed by three catalogues in `data.js`, without duplicating their
+relations in HTML:
+
+- `DATA.learningPath` defines the units and their explanations.
+- `DATA.activities` defines each independent activity and links it to a unit
+  through `unitId`.
+- `DATA.simulations` defines each euro-simulation card, also with `unitId`,
+  group, i18n keys and action.
+
+`#simulationCatalog` is only the mount point. The app generates its cards
+and delegates clicks to the wizard dispatcher. Expanding the catalogue does
+not require editing `index.html`: add a record, its strings in both locales,
+and the service-worker files. If a new mechanic is introduced, implement its
+renderer in `app.js` as well. The checker validates ids, relations, routes
+and known actions.
+
+#### 7.4.2 Practice plane: Tokens
 
 Okeymoney exposes, below the € coin/banknote preview in Mi dinero, a
 card with the person's **Tokens balance** (formatted with
@@ -640,3 +723,39 @@ UI is bilingual (`es`/`en`); `es` is the default and the source of truth
 when a key is missing. Product content changes (categories, screen copy,
 goal icons) must ship in both languages — see `technical.md` §5. Code
 (identifiers, comments, commit messages) is always English.
+
+## 11. Success criteria
+
+Okeymoney works when a person can:
+
+1. explain a basic money idea in their own words;
+2. recognise that idea in a simple test;
+3. apply it in an everyday situation;
+4. check the consequence of their decision;
+5. repeat the process without fear of making a mistake.
+
+Success is not completing many screens. It is for a learned idea to help
+someone make a slightly safer decision outside the app.
+
+## 12. What Okeymoney does and does not do
+
+| Okeymoney does | Okeymoney does not do |
+|---|---|
+| Explains money concepts in plain language. | It does not teach finance as an abstract school subject. |
+| Presents one situation and one decision at a time. | It does not fill the screen with several decisions or instructions. |
+| Gives a hint and explanation when needed. | It does not punish mistakes or reveal the answer before an attempt. |
+| Lets people practise purchases, payments, saving and safety. | It does not execute payments, transfers or investments. |
+| Shows the consequence of a confirmed action. | It does not change money without clear confirmation. |
+| Helps prepare real everyday decisions. | It does not replace a bank, adviser or support person. |
+| Keeps learning individual and pressure-free. | It does not use rankings, competition, false urgency, streaks or fear of loss. |
+| Protects trust and privacy. | It does not request personal data in order to learn or turn use into advertising. |
+
+## Expanded practice
+
+The 11 activities include three new paths, with six situations each. Each path moves from identifying an amount to comparing and deciding. Each new activity credits 12 Tokens once. The catalogue total is 210 Tokens.
+
+- `save-step-by-step`: Save towards a goal.
+- `compare-prices`: Compare before paying.
+- `monthly-payments`: Organise your payments.
+
+Hints and explanations remain until the person selects “Got it”. There is no timed progression. Completion connects learning to everyday use. Activities do not store attempts or change the euro balance.

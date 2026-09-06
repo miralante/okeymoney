@@ -1,61 +1,120 @@
-/* ==========================================================================
+/* ========================================================================
    tools/concepts-money/data.js
-   Catalog of Socratic cases for "Cuenta tu dinero sin dudas".
-   8 cases per locale, drawn from the official App.money catalog:
-     - es: euro coins and banknotes (5 cts … 50 €)
-     - en: US coins and banknotes (1¢ … $100)
-   Each case: a token (cents) + three options (only one correct) +
-   correctaIndex derived from the token amount (so adding/removing
-   options never desyncs the index), plus a hint key resolved against
-   strings.<locale>.js (`pistaMonedas`, `pistaBilletes`).
-   ========================================================================== */
+   Ordered cases for "Cuenta tu dinero".
+
+   The activity moves from recognising one denomination, to adding pieces,
+   to making equivalent values, and finally to finding change. The same
+   learning steps use the active locale's coin and banknote catalogue.
+   ======================================================================== */
 (function () {
   'use strict';
 
-  function buildCasos(spec) {
-    return spec.map(function (entry) {
-      var opciones = entry.opciones.slice();
-      var correctaIndex = opciones.indexOf(entry.cents);
-      return {
-        id: entry.id,
-        cents: entry.cents,
-        opciones: opciones,
-        correctaIndex: correctaIndex,
-        pistaKey: entry.pistaKey
-      };
-    });
+  function recognition(id, cents, opciones) {
+    return {
+      id: id,
+      sceneMode: 'money-token',
+      cents: cents,
+      opciones: opciones,
+      correctaIndex: opciones.indexOf(cents),
+      instruccionKey: 'valueQuestion',
+      pistaKey: 'pistaMira',
+      explicacionKey: 'explicaValor'
+    };
+  }
+
+  function count(id, pieces, opciones) {
+    var total = pieces.reduce(function (sum, cents) { return sum + cents; }, 0);
+    return {
+      id: id,
+      sceneMode: 'money-bundle',
+      pieces: pieces,
+      opciones: opciones,
+      correctaIndex: opciones.indexOf(total),
+      instruccionKey: 'countQuestion',
+      pistaKey: 'pistaCuenta',
+      explicacionKey: 'explicaCuenta'
+    };
+  }
+
+  function equivalent(id, targetCents, opciones) {
+    return {
+      id: id,
+      sceneMode: 'money-equivalent',
+      targetCents: targetCents,
+      opciones: opciones,
+      correctaIndex: 0,
+      targetLabelKey: 'equivalentTarget',
+      instruccionKey: 'equivalentQuestion',
+      pistaKey: 'pistaEquivalente',
+      explicacionKey: 'explicaEquivalente'
+    };
+  }
+
+  function pieces(values) {
+    return { pieces: values };
+  }
+
+  function change(id, paidCents, costCents, opciones) {
+    var total = paidCents - costCents;
+    return {
+      id: id,
+      sceneMode: 'money-change',
+      paidCents: paidCents,
+      costCents: costCents,
+      opciones: opciones,
+      correctaIndex: opciones.indexOf(total),
+      paidLabelKey: 'changePaid',
+      priceLabelKey: 'changePrice',
+      instruccionKey: 'changeQuestion',
+      pistaKey: 'pistaCambio',
+      explicacionKey: 'explicaCambio'
+    };
   }
 
   var CASOS = {
-    es: buildCasos([
-      { id: 'es-5',   cents: 5,    opciones: [5, 10, 50],       pistaKey: 'pistaMonedas' },
-      { id: 'es-20',  cents: 20,   opciones: [10, 20, 50],      pistaKey: 'pistaMonedas' },
-      { id: 'es-50',  cents: 50,   opciones: [5, 50, 100],      pistaKey: 'pistaMonedas' },
-      { id: 'es-100', cents: 100,  opciones: [50, 100, 200],    pistaKey: 'pistaMonedas' },
-      { id: 'es-500', cents: 500,  opciones: [200, 500, 1000],  pistaKey: 'pistaBilletes' },
-      { id: 'es-1k',  cents: 1000, opciones: [500, 1000, 2000], pistaKey: 'pistaBilletes' },
-      { id: 'es-2k',  cents: 2000, opciones: [1000, 2000, 5000], pistaKey: 'pistaBilletes' },
-      { id: 'es-5k',  cents: 5000, opciones: [2000, 5000, 10000], pistaKey: 'pistaBilletes' }
-    ]),
-    en: buildCasos([
-      { id: 'en-1',   cents: 1,    opciones: [1, 5, 25],         pistaKey: 'pistaMonedas' },
-      { id: 'en-10',  cents: 10,   opciones: [5, 10, 25],        pistaKey: 'pistaMonedas' },
-      { id: 'en-25',  cents: 25,   opciones: [10, 25, 50],       pistaKey: 'pistaMonedas' },
-      { id: 'en-100', cents: 100,  opciones: [50, 100, 500],     pistaKey: 'pistaMonedas' },
-      { id: 'en-500', cents: 500,  opciones: [100, 500, 1000],   pistaKey: 'pistaBilletes' },
-      { id: 'en-1k',  cents: 1000, opciones: [500, 1000, 2000],  pistaKey: 'pistaBilletes' },
-      { id: 'en-2k',  cents: 2000, opciones: [1000, 2000, 5000], pistaKey: 'pistaBilletes' },
-      { id: 'en-5k',  cents: 5000, opciones: [2000, 5000, 10000], pistaKey: 'pistaBilletes' }
-    ])
+    es: [
+      /* 1. Reconocer monedas y billetes. */
+      recognition('es-1', 1, [1, 2, 5]),
+      recognition('es-2', 2, [1, 2, 5]),
+      recognition('es-5', 5, [2, 5, 10]),
+      recognition('es-10', 10, [5, 10, 20]),
+      recognition('es-20', 20, [10, 20, 50]),
+      recognition('es-50', 50, [20, 50, 100]),
+      recognition('es-100', 100, [50, 100, 200]),
+      recognition('es-200', 200, [100, 200, 500]),
+      recognition('es-500', 500, [200, 500, 1000]),
+      recognition('es-1k', 1000, [500, 1000, 2000]),
+
+      /* 2. Contar varias piezas, de menor a mayor. */
+      count('es-count-1', [1, 1], [1, 2, 5]),
+      count('es-count-2', [5, 5], [5, 10, 20]),
+      count('es-count-3', [10, 20], [20, 30, 50]),
+      count('es-count-4', [20, 50], [50, 70, 100]),
+      count('es-count-5', [50, 50, 100], [100, 150, 200]),
+      count('es-count-6', [100, 200], [200, 300, 500]),
+      count('es-count-7', [500, 200, 100], [500, 800, 1000]),
+      count('es-count-8', [1000, 500, 200], [1000, 1700, 2000]),
+
+      /* 3. Formar el mismo valor con otras piezas. */
+      equivalent('es-eq-1', 20, [pieces([10, 10]), pieces([5, 5, 5]), pieces([20, 5])]),
+      equivalent('es-eq-2', 50, [pieces([20, 20, 10]), pieces([20, 20]), pieces([50, 10])]),
+      equivalent('es-eq-3', 100, [pieces([50, 50]), pieces([20, 20, 20, 20]), pieces([50, 20, 20])]),
+      equivalent('es-eq-4', 200, [pieces([100, 100]), pieces([50, 50, 50]), pieces([100, 50, 20])]),
+      equivalent('es-eq-5', 500, [pieces([200, 200, 100]), pieces([200, 200]), pieces([100, 100, 100])]),
+
+      /* 4. Calcular la vuelta, primero con monedas y luego con billetes. */
+      change('es-change-1', 100, 50, [50, 20, 100]),
+      change('es-change-2', 200, 100, [100, 50, 200]),
+      change('es-change-3', 500, 200, [300, 200, 500]),
+      change('es-change-4', 1000, 600, [400, 300, 500]),
+      change('es-change-5', 2000, 800, [1200, 1000, 1500]),
+      change('es-change-6', 5000, 1700, [3300, 3000, 5000])
+    ]
   };
 
-  /* rewardCents is 1200 (12,00 tokens) in both locales. The practice
-     wallet formatter renders it with the active locale's symbol (🪙 in
-     both) and decimal separator (, in es, . in en). */
-  var REWARD_CENTS = 1200;
-
+  /* rewardCents is 1200 (12,00 tokens) in both locales. */
   window.DATA = {
-    casos: CASOS[App.i18n.locale()] || CASOS.es,
-    rewardCents: REWARD_CENTS
+    casos: CASOS.es,
+    rewardCents: 1200
   };
 })();

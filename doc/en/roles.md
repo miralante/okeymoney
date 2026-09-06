@@ -1,13 +1,14 @@
 # Project roles
 
 Okeymoney has **three differentiated roles**, same as the rest of the
-sibling family (Apptonomia, Calculia, Memofun, Sinonimia, Teclatlon):
+apps of the Miralante suite (Apptonomia, Calculia, Memofun, Sinonimia,
+Teclatlon):
 
 | Role | Who they are | How they participate | Where they look first |
 |---|---|---|---|
 | 👤 **End user** (someone with an intellectual or developmental disability learning personal finance, and in particular people who benefit from Easy Reading) | Practices the balance, goals, and expense registration | Opens `index.html` in a browser and uses the app autonomously. **Doesn't read code**, doesn't touch the ledger directly. | The app — nothing else to read |
 | ❤️ **Support**: family, caregiver, support professional | Initializes the ledger and accompanies the first expenses | Sets the starting balance and the first savings goals in `Mi dinero` / `Mis metas`; accompanies the first expense registration in `Registrar un gasto`; supervises progress over time. | [`CONTRIBUTING.md`](../../CONTRIBUTING.md) (the "Support" section) |
-| 💻 **Build**: developer | Maintains the shared ledger and the catalogue | Edits `app.js`, the per-activity data, and the catalogue-first home described in [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md); runs [`scripts/check.js`](../../scripts/check.js), bumps `VERSION` in `sw.js`, and deploys. | [`CLAUDE.md`](../../CLAUDE.md) · [`technical.md`](technical.md) |
+| 💻 **Build**: developer | Maintains the shared ledger and the catalogue | Edits `app.js`, the per-activity data, and the catalogue-first home described in [`SPEC.md`](SPEC.md) §6–§7; runs [`scripts/check.js`](../../scripts/check.js), bumps `VERSION` in `sw.js`, and deploys. | [`CLAUDE.md`](../../CLAUDE.md) · [`technical.md`](technical.md) |
 
 > 💡 The end user is always someone who benefits from Easy Reading, no
 > pressure, and uncluttered screens — see [`SPEC.md`](SPEC.md) §2.
@@ -25,7 +26,7 @@ sibling family (Apptonomia, Calculia, Memofun, Sinonimia, Teclatlon):
 | ❤️ Support professional setting up the ledger for the first time | [`README.md`](../../README.md) (the "Preparing / Expanding content" section) |
 | ❤️ Support person reporting a missing category or unclear wording | [`CONTRIBUTING.md`](../../CONTRIBUTING.md) (the "Support" section) |
 | 🤔 Just want to understand what Okeymoney is | [`README.md`](../../README.md) |
-| 💻 Developer | [`CLAUDE.md`](../../CLAUDE.md) · [`technical.md`](technical.md) · [`PRODUCT-DESIGN.md`](PRODUCT-DESIGN.md) |
+| 💻 Developer | [`CLAUDE.md`](../../CLAUDE.md) · [`technical.md`](technical.md) · [`SPEC.md`](SPEC.md) |
 
 ## 🤝 A small, focused project
 

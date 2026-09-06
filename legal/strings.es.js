@@ -1,30 +1,57 @@
+/* ============================================================
+   Okeymoney — Textos de Protección de datos (ES)
+   Language-specific file. Loaded conditionally from index.html
+   based on App.i18n.locale().
+   ============================================================ */
 (function () {
   'use strict';
+
   App.i18n.register({
-    pageTitle: 'Protección de datos',
-    metaDescription: 'Okeymoney: qué datos guarda, dónde y por qué. Sin registro, sin cookies, sin analítica.',
-    tagline: 'Sin registro. Sin cookies. Sin analítica.',
-    lead: 'Okeymoney no pide tus datos personales. Todo lo que guarda vive únicamente en este dispositivo. Aquí explicamos, en detalle, qué guardamos y por qué.',
-    responsibleTitle: 'Quién trata tus datos',
-    responsibleP1: 'Okeymoney es una aplicación desarrollada de forma independiente. No hay ningún servidor propio que reciba o almacene tus datos: la aplicación es un conjunto de páginas estáticas que se ejecutan en tu navegador, en tu propio dispositivo.',
-    dataTitle: 'Qué guardamos y por qué',
-    dataP1: 'Okeymoney funciona sin cuentas, sin cookies y sin analítica: no sabemos quién eres ni cómo usas la aplicación.',
-    dataP2: 'Lo único que se guarda vive en el localStorage de tu navegador, en tu propio dispositivo, y nunca se envía a ningún servidor:',
-    dataItem1Label: 'Tu dinero',
-    dataItem1Text: 'cuánto dinero dijiste que tenías y los gastos que has apuntado (dibujo y precio).',
-    dataItem2Label: 'Tus metas',
-    dataItem2Text: 'el nombre y el precio de lo que quieres conseguir, y cuánto dinero has guardado para ello.',
-    dataItem3Label: 'Idioma',
-    dataItem3Text: 'si eliges español o inglés.',
-    dataP3: 'Nunca guardamos: tu nombre, contraseñas, ni datos que permitan identificarte fuera de este dispositivo.',
-    dataP4: 'Esta información se guarda mientras no se borre, y sirve únicamente para que tus cuentas no se pierdan al cerrar la aplicación.',
-    rightsTitle: 'Tus derechos y cómo ejercerlos',
-    rightsP1: 'Como todo lo guardado está en tu dispositivo y no en un servidor, tú tienes el control directo: puedes verlo, cambiarlo o borrarlo en cualquier momento, sin pedírnoslo a nosotros.',
-    rightsP2: 'Para borrarlo, borra los datos de navegación de tu navegador para este sitio, desde su configuración.',
-    rightsLinkApp: 'Ir a Okeymoney',
-    contactTitle: 'Cambios y contacto',
-    contactP1: 'Esta página puede actualizarse si cambia la aplicación.',
-    contactP2: 'Última actualización: 1 de agosto de 2026.',
-    footerApp: 'Ir a Okeymoney'
+    "pageTitle": 'Protección de datos',
+    "tagline": 'Sin registro. Sin cookies. Sin analítica.',
+    "lead": 'Okeymoney no pide tus datos personales. Todo lo que guarda vive únicamente en este dispositivo. Aquí explicamos, en detalle, qué guardamos y por qué.',
+
+    "navResponsible": 'Quién trata tus datos',
+    "navData": 'Qué guardamos',
+    "navRights": 'Tus derechos',
+    "navMinors": 'Todas las edades',
+    "navContact": 'Cambios y contacto',
+
+    "responsibleTitle": 'Quién trata tus datos',
+    "responsibleP1a": 'Okeymoney es una iniciativa de ',
+    "responsibleP1b": ', un estudio independiente que desarrolla y mantiene la aplicación. No hay ningún servidor propio que reciba o almacene tus datos: la aplicación es un conjunto de páginas estáticas que se ejecutan en tu navegador.',
+    "responsibleP2a": 'El código fuente completo es público y auditable en el ',
+    "responsibleP2Link": 'repositorio de GitHub',
+    "responsibleP2b": '. Cualquier pregunta sobre esta página puede plantearse abriendo un issue allí.',
+
+    "dataTitle": 'Qué guardamos y por qué',
+    "dataP1": 'Okeymoney funciona sin cuentas, sin cookies y sin analítica: no sabemos quién eres ni cómo usas la aplicación.',
+    "dataP2": 'Lo único que se guarda vive en el localStorage de tu navegador, en tu propio dispositivo, y nunca se envía a ningún servidor:',
+    "dataItem1Label": 'Progreso del juego',
+    "dataItem1Text": 'las estrellas ganadas, los niveles completados y los registros del monedero (cantidad, gastos y metas).',
+    "dataItem2Label": 'Idioma elegido',
+    "dataItem2Text": 'para no tener que elegirlo de nuevo cada vez que abres la aplicación.',
+    "dataItem3Label": 'Ajustes de accesibilidad y juego',
+    "dataItem3Text": 'tamaño del texto, tema, modo foco, lectura fácil y otros ajustes del panel.',
+    "dataP3": 'Nunca guardamos: nombre, contraseñas, datos bancarios reales, fallos, tiempo empleado, número de intentos, comparaciones con otras personas ni historiales de uso detallados.',
+    "dataP4": 'Esta información se guarda mientras no se borre, y sirve únicamente para que el progreso no se pierda al cerrar la aplicación.',
+
+    "rightsTitle": 'Tus derechos y cómo ejercerlos',
+    "rightsP1": 'Como todo lo guardado está en tu dispositivo y no en un servidor, tú tienes el control directo: puedes verlo, cambiarlo o borrarlo en cualquier momento, sin pedírnoslo a nosotros.',
+    "rightsP2": 'Para consultarlo o borrarlo, entra en la propia aplicación y usa el botón de "Borrar mis datos", o bien borra los datos de navegación de tu navegador para este sitio, desde su configuración.',
+    "rightsLinkApp": 'Ir a Okeymoney',
+
+    "minorsTitle": 'Todas las edades y capacidades',
+    "minorsP1": 'Okeymoney está pensada para que la use de forma autónoma cualquier persona, sin importar su edad ni sus capacidades, incluidos quienes están aprendiendo a manejar su dinero cotidiano por primera vez.',
+    "minorsP2": 'Como la aplicación no recoge datos personales en ningún servidor, no es necesario el consentimiento de nadie para tratar datos: no hay ningún tratamiento que autorizar. Sí recomendamos la supervisión habitual que una familia o un profesional haga sobre el uso de cualquier dispositivo.',
+
+    "contactTitle": 'Cambios y contacto',
+    "contactP1": 'Esta página puede actualizarse si cambia la aplicación. El historial de cambios es público en el repositorio de GitHub.',
+    "contactP2": 'Última actualización: 30 de agosto de 2026.',
+    "contactP3a": 'Para preguntas sobre esta página, abre un issue en el ',
+    "contactP3Link": 'repositorio de GitHub',
+    "contactP3b": '.',
+
+    "footerActivities": 'Ir a las actividades'
   }, 'es');
 })();

@@ -3,9 +3,14 @@
   'use strict';
   App.i18n.register({
     title: 'Keep your money safe',
-    metaDescription: 'Learn to spot erroneous transfers and scams, and how to act.',
-    objetivo: 'Goal: spot risks and choose a safe action before moving money.',
+    metaDescription: 'Spot unusual transfers and scams, and decide how to act.',
+    objetivo: 'When something does not add up, spot the risk before moving money.',
     instruccion: 'Read the situation and choose what you would do.',
+    didacticTitle: 'Stop if something looks strange',
+    didacticBody: 'Do not share passwords or codes. Check who wants your money.',
+    didacticExampleLabel: 'Example',
+    didacticExample: 'If you get an urgent text, do not open the link. Call your bank.',
+    didacticContinue: 'Try situations',
 
     s1instr: 'You got an unexpected Bizum of 50 €. What do you do?',
     s2instr: 'You sent 100 € to the wrong number by mistake. What do you do?',
@@ -38,17 +43,17 @@
     s5pista: 'Even if it sounds urgent, first check it really is who they say, another way.',
     s6pista: 'Deals that look too good are usually a trap. Better to meet in person and pay safely.',
 
-    s1expl: 'Do not spend the money and do not send it back to the number that paid you: tell your bank. They will find the real owner and return it if it was a mistake. If you spend it, you may have to pay it back yourself.',
-    s2expl: 'Call your bank as soon as you can, during opening hours or via the 24h fraud line. The sooner you tell them, the easier it is to get the money back or block the operation.',
-    s3expl: 'Banks never send you SMS links to "verify" anything. This is phishing: delete the message and, if in doubt, call your bank yourself using the number on your card.',
-    s4expl: 'Your real bank already knows your name, ID and account number. Nobody needs your passwords to "verify" you: hang up and tell your family or call your real bank.',
-    s5expl: 'Even when the story sounds real, it is very common for someone to impersonate a family member. Hang up and call that person on the number you already had: if they cannot reach that person, it was a lie.',
-    s6expl: 'For person-to-person sales, always pay in person and with methods that can be reversed (never a direct transfer to a stranger). A huge discount that "is about to end" is usually a sign of a scam.',
+    s1expl: 'Do not spend the money. Do not send it back to the number that wrote to you. Tell your bank. If you spend it, you may have to pay it back yourself.',
+    s2expl: 'Tell your bank as soon as you can. This makes it easier to get the money back or stop the payment.',
+    s3expl: 'Banks do not send SMS links to check your details. Delete the message. If you are unsure, call your bank using the number on your card.',
+    s4expl: 'Your bank already has your details. It does not need your passwords. Hang up and call the bank using its official number.',
+    s5expl: 'It may not be your family member. Hang up and call that person using the number you already had.',
+    s6expl: 'When buying from another person, meet in a safe place and do not pay in advance. An offer that is too good may be a scam.',
 
     pistaSigue: 'Read the situation again, calmly.',
     completado: 'Well done! You know how to look after your money.',
-    reiniciar: '↻ Play again',
+    reiniciar: '↻ Try it again',
     fallo: 'Almost. Read the situation again, calmly.',
-    yaCompletada: 'You already finished this activity.'
+    yaCompletada: 'You have already tried this situation. You can try it again.'
   }, 'en');
 })();

@@ -32,6 +32,7 @@
         save: 'Guardar',
         cancel: 'Cancelar',
         understood: 'Entendido',
+        situationProgress: 'Situación {current} de {total}',
         listen: '🔊 Escuchar',
         listenInstructions: 'Escuchar las instrucciones',
         loading: 'Cargando…',
@@ -55,7 +56,7 @@
           hintSubtract: 'Resta: lo que pagas menos lo que vale la compra.'
         },
         practice: {
-          tokensSuffix: 'monedas de práctica'
+          tokensSuffix: 'Tokens de práctica'
         }
       },
       feedback: {
@@ -71,6 +72,7 @@
         save: 'Save',
         cancel: 'Cancel',
         understood: 'Got it',
+        situationProgress: 'Situation {current} of {total}',
         listen: '🔊 Listen',
         listenInstructions: 'Listen to the instructions',
         loading: 'Loading…',
@@ -92,7 +94,7 @@
           hintSubtract: 'Subtract: what you pay minus what the purchase costs.'
         },
         practice: {
-          tokensSuffix: 'practice tokens'
+          tokensSuffix: 'practice Tokens'
         }
       },
       feedback: {
@@ -137,12 +139,25 @@
 
   /** Merges one language's texts into the internal dictionary.
       App.i18n.register({title: 'Mi dinero', ...}, 'es'); */
+  function mergeDictionary(target, source) {
+    Object.keys(source).forEach(function (key) {
+      if (key === '__proto__' || key === 'constructor' || key === 'prototype') return;
+      var value = source[key];
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        target[key] = mergeDictionary(target[key] && typeof target[key] === 'object' ? target[key] : {}, value);
+      } else { target[key] = value; }
+    });
+    return target;
+  }
+
   function register(dict, loc) {
     if (SUPPORTED.indexOf(loc) === -1 || !dict || typeof dict !== 'object') return;
     DICT[loc] = DICT[loc] || {};
     for (var key in dict) {
       if (Object.prototype.hasOwnProperty.call(dict, key)) {
-        DICT[loc][key] = dict[key];
+        if (dict[key] && typeof dict[key] === 'object' && !Array.isArray(dict[key])) {
+          DICT[loc][key] = mergeDictionary(DICT[loc][key] || {}, dict[key]);
+        } else { DICT[loc][key] = dict[key]; }
       }
     }
   }
@@ -209,6 +224,12 @@
   function init() {
     document.documentElement.lang = locale();
     apply(document);
+    /* Inject the shared footer into every <footer data-pie-app>
+       marker on the page. App.utils.inyectarPie is defined in
+       utils.js, which loads before i18n.js per the standard order. */
+    if (window.App && window.App.utils && typeof window.App.utils.inyectarPie === 'function') {
+      window.App.utils.inyectarPie();
+    }
   }
 
   if (document.readyState === 'loading') {

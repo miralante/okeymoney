@@ -343,7 +343,7 @@ only where the activity design calls for it").
 
 ## 5. Internationalization
 
-Full reference: [`doc/en/I18N.md`](I18N.md) (and its [`doc/es/I18N.md`](../es/I18N.md)
+Full reference: [`doc/en/i18n.md`](I18N.md) (and its [`doc/es/i18n.md`](../es/I18N.md)
 mirror). The short version: one file per language
 (`strings.es.js` / `strings.en.js`), both loaded synchronously (no
 `document.write`, so `App.i18n.register` always runs before `data.js` /
@@ -991,3 +991,18 @@ in one repo, mirror it across the others in the same PR.
 ---
 
 
+
+## Expanded practice
+
+The 11 activities include three new paths, with six situations each. Each path moves from identifying an amount to comparing and deciding. Each new activity credits 12 Tokens once. The catalogue total is 210 Tokens.
+
+- `save-step-by-step`: Save towards a goal.
+- `compare-prices`: Compare before paying.
+- `monthly-payments`: Organise your payments.
+
+Hints and explanations remain until the person selects “Got it”. There is no timed progression. Completion connects learning to everyday use. Activities do not store attempts or change the euro balance.
+
+
+### Situation navigation
+
+Each exercise return link uses `#unidad-<unitId>`. The home restores the topic from that address and supports returning to the catalogue or using browser history. The runtime announces “Situation X of Y”, focuses the scene on advancement and offers a return to the topic on completion. Hints restore focus to an enabled option.

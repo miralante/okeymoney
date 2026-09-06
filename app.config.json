@@ -1,0 +1,71 @@
+{
+  "name": "Okeymoney",
+  "domain": "okeymoney.apptonomia.uk",
+  "title": "Okeymoney — Tu dinero en el día a día",
+  "description": "Okeymoney es una aplicación web gratuita y sin registro para organizar tu dinero de cada día: saldo, gastos, metas de ahorro y decisiones antes de comprar. Pensada para autonomía diaria. Parte de la suite Apptonomia.",
+  "keywords": "okeymoney, apptonomia, educación financiera, dinero cotidiano, autonomía personal, ahorro, gastos, easy read, lectura fácil, accesibilidad cognitiva, aplicaciones gratuitas sin registro, compras, presupuesto",
+  "author": "Apptonomia",
+  "ogSiteName": "Apptonomia",
+  "ogDescription": "Saldo, gastos, metas de ahorro y decisiones antes de comprar. Gratis y sin registro. Parte de la suite Apptonomia.",
+  "twitterDescription": "Saldo, gastos, metas de ahorro y decisiones cotidianas. Gratis y sin registro.",
+  "ogImageAlt": "Okeymoney: educación financiera para la vida diaria",
+  "ogAccent": "#00695C",
+  "ogAccentInk": "#FFFFFF",
+  "ogTagline": "Tu dinero en el día a día",
+  "themeColor": "#FAF7F2",
+  "colorScheme": "light",
+  "ogImageAsset": "og-image.svg",
+  "iconAsset": "assets/img/icono-euro.svg",
+  "manifest": "manifest.json",
+  "hasItemList": false,
+  "dcCreator": "Okeymoney (parte de la suite Apptonomia)",
+  "dcSubject": "Aplicación web gratuita para organizar el dinero del día a día: saldo, gastos, metas de ahorro y decisiones antes de comprar.",
+  "dcRights": "MIT (código). Los textos y ejercicios son contenido propio bajo CC BY 4.0.",
+  "dcType": "InteractiveResource",
+  "faq": [
+    {
+      "question": "¿Qué es Okeymoney?",
+      "answer": "Okeymoney es una aplicación web gratuita y sin registro para organizar tu dinero de cada día: saldo, gastos, metas de ahorro y decisiones antes de comprar."
+    },
+    {
+      "question": "¿Okeymoney es un banco o un asesor financiero?",
+      "answer": "No. Okeymoney no es un banco, no ejecuta pagos, no se conecta a cuentas reales y no da asesoramiento financiero. Es una herramienta educativa para practicar con dinero ficticio."
+    },
+    {
+      "question": "¿Cómo se guardan mis datos?",
+      "answer": "Todo se guarda en el almacenamiento local del navegador con el prefijo 'okeymoney:'. No se envía a ningún servidor. Puedes verlo y borrarlo desde el menú principal de la propia aplicación."
+    },
+    {
+      "question": "¿Okeymoney necesita conexión a internet?",
+      "answer": "Solo para la primera visita. Después puede instalarse como aplicación web progresiva y seguir funcionando sin conexión."
+    },
+    {
+      "question": "¿Okeymoney es gratis?",
+      "answer": "Sí. Es gratuita, sin anuncios, sin cuentas, sin correo electrónico y sin cookies de seguimiento."
+    }
+  ],
+  "llmsTitle": "Okeymoney — Dinero del día a día",
+  "llmsSummary": "Aplicación web gratuita y sin registro para organizar el dinero del día a día: saldo, gastos, metas de ahorro y decisiones antes de comprar.",
+  "llmsWhatItIs": [
+    "Un cuaderno digital donde practicar con dinero ficticio: registrar un gasto, llevar un saldo, plantearse una meta de ahorro y decidir antes de comprar.",
+    "Diseñada con lectura fácil, contraste alto y pasos cortos para que cada flujo se complete sin prisas.",
+    "Gratuita, sin registro y con todos los datos guardados en el navegador.",
+    "Pensada para practicar autonomía diaria con el dinero, no para mover dinero real."
+  ],
+  "llmsWhatItIsNot": [
+    "No es un banco, ni una app de pagos, ni un asesor financiero: no mueve dinero real.",
+    "No usa IA generativa en tiempo de ejecución: ninguna página llama a una API externa.",
+    "No envía datos a un servidor: todo el saldo, los gastos y las metas viven en el navegador.",
+    "No conecta con cuentas reales: la práctica se hace con un saldo ficticio que se puede reiniciar."
+  ],
+  "llmsResources": [
+    { "name": "Portal Apptonomia", "url": "https://apptonomia.uk/", "description": "Página de inicio de la suite." },
+    { "name": "Calculia", "url": "https://calculia.apptonomia.uk/", "description": "Cálculo y razonamiento lógico." },
+    { "name": "Routime", "url": "https://routime.apptonomia.uk/", "description": "Actividades cotidianas." },
+    { "name": "Okeymoney", "url": "https://okeymoney.apptonomia.uk/", "description": "Esta aplicación." },
+    { "name": "Sinonimia", "url": "https://sinonimia.apptonomia.uk/", "description": "Diccionario en lectura fácil." },
+    { "name": "Memofun", "url": "https://memofun.apptonomia.uk/", "description": "Tarjetas de estudio." },
+    { "name": "Teclatlon", "url": "https://teclatlon.apptonomia.uk/", "description": "Mecanografía con el teclado del ordenador." }
+  ],
+  "llmsLicense": "MIT (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0."
+}

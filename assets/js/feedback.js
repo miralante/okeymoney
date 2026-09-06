@@ -17,7 +17,7 @@
 
   /* Soft sound with Web Audio (no audio files). Fails silently. Honors
      a 'sounds' preference (on by default: only muted if explicitly
-     turned off in settings). */
+     turned off in config). */
   var audioCtx = null;
 
   function soundsEnabled() {
@@ -148,6 +148,7 @@
         b.classList.remove('locked');
       });
       button.classList.add('hidden');
+      if (pending.length) pending[0].focus();
       if (onConfirm) onConfirm();
     };
     button.focus();
