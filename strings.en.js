@@ -624,6 +624,9 @@
         'safe-money':      'Keep your money safe'
       },
       activityDesc: {
+        'save-step-by-step': "Decide how much to set aside for a goal.",
+        'compare-prices': "Compare prices and costs before choosing.",
+        'monthly-payments': "Set money aside for monthly payments.",
         'concepts-money':  'Look at, count, and change coins and banknotes.',
         'needs-vs-wants':  'Think about whether something is needed or simply wanted.',
         'budget-first':    'Put your purchases in order when money is limited.',
@@ -634,6 +637,37 @@
         'safe-money':      'Spot unusual transfers and scams.'
       }
     },
+
+    catalog: {"topics":"Ideas to understand your money","try":"Try →","repeat":"✓ Try again","topicGroups":{"buy":"Buying and paying","organise":"Saving and organising","check":"Understanding other decisions"}},
+
+    journey: {
+  "shortcuts": "Practice shortcuts",
+  "progressTitle": "What you have practised",
+  "progress": "{done} of {total} activities completed",
+  "noPressure": "Go at your own pace. Repeat whenever you want.",
+  "next": "You could try",
+  "allDone": "You have tried everything. Choose what to practise again.",
+  "moduleDone": "You have practised this module",
+  "simulationGroups": {
+    "record": "Record and organise my money",
+    "shop": "Prepare a purchase",
+    "protect": "Stay safe and ask for help",
+    "compare": "Compare costs and useful life",
+    "invest": "Understand accounts and investments"
+  },
+  "purchaseChoice": "Would you like to rehearse or record a purchase?",
+  "purchaseChoiceDetail": "Rehearsal uses a fictional €100. Recording saves an expense.",
+  "rehearse": "Rehearse with fictional money",
+  "record": "Record in my expenses",
+  "practiceNotice": "Rehearsal: your balance and expenses do not change.",
+  "recordNotice": "Confirming will save this purchase in your expenses.",
+  "purchaseBudget": "Available money: {amount}",
+  "practicePay": "Rehearse paying {amount}",
+  "practiceDone": "Purchase rehearsed",
+  "receipt": "You had {before}. You pay {cost}. You have {after} left.",
+  "transfer": "Before paying, check the price and keep the receipt.",
+  "another": "Try another purchase"
+},
 
     wizard: {
       closeAria: 'Close without saving'

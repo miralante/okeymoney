@@ -539,13 +539,9 @@ confirm and save. See §8 below for the exact rationale of each step.
 
 ### 7.4 Everyday situations — practice plane
 
-The home presents five topics about **everyday decisions**. Each topic
-explains what is needed and groups one or two situations (`tools/<slug>`)
-to try it. The person does not need to understand the difference between a
-catalogue, a lesson and a test: first see the topic, then look at the example,
-and finally try a situation.
+The home displays all 11 activities as direct cards grouped by theme, following Routime’s style. Below them it preserves the 15 original explanatory topics with their examples and practice links. People can start an activity directly or read an explanation first.
 
-The recommended order is:
+The five internal progress groups retain this recommended order:
 
 1. **Count your money** — recognise coins, notes and your balance.
 2. **Choose before buying** — tell needs and wants apart and pause before
@@ -759,3 +755,13 @@ The 11 activities include three new paths, with six situations each. Each path m
 - `monthly-payments`: Organise your payments.
 
 Hints and explanations remain until the person selects “Got it”. There is no timed progression. Completion connects learning to everyday use. Activities do not store attempts or change the euro balance.
+
+
+### Visible catalogue and content preservation
+
+The home preserves all 11 activities as direct cards, grouped by theme using Routime’s visual pattern. Purchase priorities has its own entry. The 15 original topics remain in `DATA.topics`, with explanations and links to exercises or simulations. The five internal progress groups do not replace this catalogue. Simplifying navigation must not hide or remove activities.
+
+
+### Orientation and purchase rehearsal
+
+The three home blocks remain. Practice offers shortcuts to Basic concepts, Everyday life and Safety, plus explanatory topics. Modules show saved completion without speed rewards or streaks. Simulations have five purpose-based subgroups. The purchase lifecycle offers a choice of rehearsal with a fictional €100 or recording an expense. Rehearsal never writes to the ledger or credits Tokens; it shows the initial amount, cost and remainder and offers another purchase.

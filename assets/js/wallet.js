@@ -87,7 +87,19 @@
     });
   }
 
+  // Completion rewards reflect saved activity records, never speed or mistakes.
+  function practiceProgress(activities) {
+    var available = activities.filter(function (activity) { return activity.available; });
+    var pending = available.filter(function (activity) {
+      var status = activityStatus(activity.slug);
+      return !status || !status.done;
+    });
+    return { completed: available.length - pending.length, total: available.length,
+      nextSlug: pending.length ? pending[0].slug : null };
+  }
+
   window.App.wallet = {
+    practiceProgress: practiceProgress,
     balance: balance,
     credit: credit,
     reset: reset,

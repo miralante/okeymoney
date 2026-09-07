@@ -26,6 +26,169 @@ var DATA = {
   /* Five short units keep the learning path visible at a glance. Activities
      and simulations point back to a unit with `unitId`, so adding content
      never requires editing the home markup. */
+  // Preserve the complete topic catalogue independently of activity progress groups.
+  topics: [
+  {
+    "id": "money",
+    "icon": "💶",
+    "group": "buy",
+    "activities": [
+      "concepts-money"
+    ],
+    "simulations": [
+      "balance"
+    ]
+  },
+  {
+    "id": "choices",
+    "icon": "🧠",
+    "group": "buy",
+    "activities": [
+      "needs-vs-wants"
+    ],
+    "simulations": [
+      "plan"
+    ]
+  },
+  {
+    "id": "budget",
+    "icon": "📋",
+    "group": "buy",
+    "activities": [
+      "budget-first",
+      "monthly-payments",
+      "go-shopping"
+    ],
+    "simulations": [
+      "commitment"
+    ]
+  },
+  {
+    "id": "beforeBuying",
+    "icon": "🛒",
+    "group": "buy",
+    "activities": [
+      "before-buying",
+      "compare-prices"
+    ],
+    "simulations": [
+      "plan"
+    ]
+  },
+  {
+    "id": "change",
+    "icon": "🧾",
+    "group": "buy",
+    "activities": [
+      "change-back",
+      "my-shopping-day"
+    ],
+    "simulations": [
+      "change"
+    ]
+  },
+  {
+    "id": "saving",
+    "icon": "🪙",
+    "group": "organise",
+    "activities": [
+      "save-step-by-step"
+    ],
+    "simulations": [
+      "goals"
+    ]
+  },
+  {
+    "id": "safety",
+    "icon": "🛡️",
+    "group": "organise",
+    "activities": [
+      "safe-money"
+    ],
+    "simulations": [
+      "safety",
+      "rights",
+      "communication",
+      "emergency"
+    ]
+  },
+  {
+    "id": "documents",
+    "icon": "📦",
+    "group": "organise",
+    "activities": [],
+    "simulations": [
+      "purchase"
+    ]
+  },
+  {
+    "id": "assets",
+    "icon": "📊",
+    "group": "organise",
+    "activities": [],
+    "simulations": [
+      "balance"
+    ]
+  },
+  {
+    "id": "accounting",
+    "icon": "📚",
+    "group": "organise",
+    "activities": [],
+    "simulations": [
+      "income",
+      "expense"
+    ]
+  },
+  {
+    "id": "assetLifecycle",
+    "icon": "📉",
+    "group": "check",
+    "activities": [],
+    "simulations": [
+      "depreciation",
+      "obsolescence"
+    ]
+  },
+  {
+    "id": "returnRisk",
+    "icon": "⚖️",
+    "group": "check",
+    "activities": [],
+    "simulations": [
+      "return",
+      "risk"
+    ]
+  },
+  {
+    "id": "investmentOperations",
+    "icon": "🔄",
+    "group": "check",
+    "activities": [],
+    "simulations": [
+      "investment"
+    ]
+  },
+  {
+    "id": "bankProducts",
+    "icon": "💳",
+    "group": "check",
+    "activities": [],
+    "simulations": [
+      "bankProducts"
+    ]
+  },
+  {
+    "id": "housing",
+    "icon": "🏠",
+    "group": "check",
+    "activities": [],
+    "simulations": [
+      "housing"
+    ]
+  }
+],
+
   learningPath: [
     { id: 'money', icon: '💶', steps: ['moneyStep1', 'moneyStep2', 'moneyStep3'], exampleKey: 'moneyExample' },
     { id: 'choices', icon: '🧠', steps: ['choicesStep1', 'choicesStep2', 'choicesStep3'], exampleKey: 'choicesExample' },
@@ -39,25 +202,25 @@ var DATA = {
      A new card therefore needs one data entry and, only for a new behaviour,
      one dispatcher implementation in app.js. */
   simulations: [
-    { id: 'balance', unitId: 'money', icon: '💶', group: 'organise', accent: 'acento', titleKey: 'blocks.simulation.balanceTitle', detailKey: 'blocks.simulation.balanceDetail', action: 'balance', variant: 'money' },
-    { id: 'income', unitId: 'money', icon: '🫴', group: 'organise', accent: 'acento', titleKey: 'income.title', detailKey: 'income.instruction', action: 'income' },
-    { id: 'goals', unitId: 'money', icon: '🎯', group: 'organise', accent: 'acento-2', titleKey: 'blocks.simulation.goalsTitle', detailKey: 'goals.empty', action: 'goals', variant: 'goals' },
-    { id: 'expense', unitId: 'choices', icon: '🧾', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.expenseTitle', detailKey: 'blocks.simulation.expenseDetail', action: 'expense' },
-    { id: 'plan', unitId: 'choices', icon: '🛒', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.planTitle', detailKey: 'blocks.simulation.planDetail', action: 'plan' },
-    { id: 'purchase', unitId: 'choices', icon: '📦', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.purchaseTitle', detailKey: 'blocks.simulation.purchaseDetail', action: 'purchase' },
-    { id: 'commitment', unitId: 'budget', icon: '📌', group: 'check', accent: 'acento-3', titleKey: 'commitments.title', detailKey: 'commitments.detail', action: 'commitment' },
-    { id: 'depreciation', unitId: 'budget', icon: '📉', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.depreciationTitle', detailKey: 'blocks.simulation.depreciationDetail', action: 'depreciation' },
-    { id: 'obsolescence', unitId: 'budget', icon: '♻️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.obsolescenceTitle', detailKey: 'blocks.simulation.obsolescenceDetail', action: 'obsolescence' },
-    { id: 'return', unitId: 'change', icon: '📈', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.returnTitle', detailKey: 'blocks.simulation.returnDetail', action: 'return' },
-    { id: 'risk', unitId: 'change', icon: '⚖️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.riskTitle', detailKey: 'blocks.simulation.riskDetail', action: 'risk' },
-    { id: 'investment', unitId: 'change', icon: '🔄', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.investmentTitle', detailKey: 'blocks.simulation.investmentDetail', action: 'investment' },
-    { id: 'bankProducts', unitId: 'change', icon: '💳', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.bankProductsTitle', detailKey: 'blocks.simulation.bankProductsDetail', action: 'bankProducts' },
-    { id: 'housing', unitId: 'change', icon: '🏠', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.housingTitle', detailKey: 'blocks.simulation.housingDetail', action: 'housing' },
-    { id: 'change', unitId: 'change', icon: '💸', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.changeTitle', detailKey: 'blocks.simulation.changeDetail', action: 'change' },
-    { id: 'safety', unitId: 'safety', icon: '🛡️', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.safetyTitle', detailKey: 'blocks.simulation.safetyDetail', action: 'safety' },
-    { id: 'rights', unitId: 'safety', icon: '📄', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.rightsTitle', detailKey: 'blocks.simulation.rightsDetail', action: 'rights' },
-    { id: 'communication', unitId: 'safety', icon: '💬', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.communicationTitle', detailKey: 'blocks.simulation.communicationDetail', action: 'communication' },
-    { id: 'emergency', unitId: 'safety', icon: '🚨', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.emergencyTitle', detailKey: 'blocks.simulation.emergencyDetail', action: 'emergency' }
+    { id: 'balance', catalogGroup: 'record', unitId: 'money', icon: '💶', group: 'organise', accent: 'acento', titleKey: 'blocks.simulation.balanceTitle', detailKey: 'blocks.simulation.balanceDetail', action: 'balance', variant: 'money' },
+    { id: 'income', catalogGroup: 'record', unitId: 'money', icon: '🫴', group: 'organise', accent: 'acento', titleKey: 'income.title', detailKey: 'income.instruction', action: 'income' },
+    { id: 'goals', catalogGroup: 'record', unitId: 'money', icon: '🎯', group: 'organise', accent: 'acento-2', titleKey: 'blocks.simulation.goalsTitle', detailKey: 'goals.empty', action: 'goals', variant: 'goals' },
+    { id: 'expense', catalogGroup: 'record', unitId: 'choices', icon: '🧾', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.expenseTitle', detailKey: 'blocks.simulation.expenseDetail', action: 'expense' },
+    { id: 'plan', catalogGroup: 'shop', unitId: 'choices', icon: '🛒', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.planTitle', detailKey: 'blocks.simulation.planDetail', action: 'plan' },
+    { id: 'purchase', catalogGroup: 'shop', unitId: 'choices', icon: '📦', group: 'buy', accent: 'acento-2', titleKey: 'blocks.simulation.purchaseTitle', detailKey: 'blocks.simulation.purchaseDetail', action: 'purchase' },
+    { id: 'commitment', catalogGroup: 'record', unitId: 'budget', icon: '📌', group: 'check', accent: 'acento-3', titleKey: 'commitments.title', detailKey: 'commitments.detail', action: 'commitment' },
+    { id: 'depreciation', catalogGroup: 'compare', unitId: 'budget', icon: '📉', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.depreciationTitle', detailKey: 'blocks.simulation.depreciationDetail', action: 'depreciation' },
+    { id: 'obsolescence', catalogGroup: 'compare', unitId: 'budget', icon: '♻️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.obsolescenceTitle', detailKey: 'blocks.simulation.obsolescenceDetail', action: 'obsolescence' },
+    { id: 'return', catalogGroup: 'invest', unitId: 'change', icon: '📈', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.returnTitle', detailKey: 'blocks.simulation.returnDetail', action: 'return' },
+    { id: 'risk', catalogGroup: 'invest', unitId: 'change', icon: '⚖️', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.riskTitle', detailKey: 'blocks.simulation.riskDetail', action: 'risk' },
+    { id: 'investment', catalogGroup: 'invest', unitId: 'change', icon: '🔄', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.investmentTitle', detailKey: 'blocks.simulation.investmentDetail', action: 'investment' },
+    { id: 'bankProducts', catalogGroup: 'invest', unitId: 'change', icon: '💳', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.bankProductsTitle', detailKey: 'blocks.simulation.bankProductsDetail', action: 'bankProducts' },
+    { id: 'housing', catalogGroup: 'compare', unitId: 'change', icon: '🏠', group: 'check', accent: 'acento-3', advanced: true, titleKey: 'blocks.simulation.housingTitle', detailKey: 'blocks.simulation.housingDetail', action: 'housing' },
+    { id: 'change', catalogGroup: 'shop', unitId: 'change', icon: '💸', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.changeTitle', detailKey: 'blocks.simulation.changeDetail', action: 'change' },
+    { id: 'safety', catalogGroup: 'protect', unitId: 'safety', icon: '🛡️', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.safetyTitle', detailKey: 'blocks.simulation.safetyDetail', action: 'safety' },
+    { id: 'rights', catalogGroup: 'protect', unitId: 'safety', icon: '📄', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.rightsTitle', detailKey: 'blocks.simulation.rightsDetail', action: 'rights' },
+    { id: 'communication', catalogGroup: 'protect', unitId: 'safety', icon: '💬', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.communicationTitle', detailKey: 'blocks.simulation.communicationDetail', action: 'communication' },
+    { id: 'emergency', catalogGroup: 'protect', unitId: 'safety', icon: '🚨', group: 'check', accent: 'acento-3', titleKey: 'blocks.simulation.emergencyTitle', detailKey: 'blocks.simulation.emergencyDetail', action: 'emergency' }
   ],
 
   /* Euro simulations apply the concepts without Tokens or hidden writes to

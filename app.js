@@ -94,6 +94,7 @@
     if (saludo) saludo.textContent = App.i18n.t('home.saludo');
 
     renderModuleAnchors();
+    renderPracticeSummary();
     renderNextStep();
     renderDidacticLessons($('#didacticLessons'));
     renderFinancialCycle();
@@ -351,7 +352,7 @@
   }
 
   function lessonById(id) {
-    return DATA.learningPath.filter(function (lesson) { return lesson.id === id; })[0];
+    return DATA.topics.filter(function (lesson) { return lesson.id === id; })[0];
   }
 
   function learningIndexById(id) {
@@ -383,7 +384,7 @@
     } else if (simulation.action === 'plan') {
       openWizard({ type: 'planBudget', step: 1, budgetCents: 0, selectedItem: null });
     } else if (simulation.action === 'purchase') {
-      openWizard({ type: 'purchaseLifecycle', scenarioIndex: 0, stage: 0 });
+      openWizard({ type: 'purchaseLifecycle', scenarioIndex: 0, stage: 0, purchaseMode: null });
     } else if (simulation.action === 'commitment') {
       openWizard({ type: 'commitment', step: 1, name: '', dueDate: '', amountCents: 0 });
     } else if (simulation.action === 'change') {
@@ -396,14 +397,15 @@
   function renderSimulationCatalog() {
     var wrap = $('#simulationCatalog');
     if (!wrap) return;
-    var groupKeys = ['organise', 'buy', 'check'];
+    var groupKeys = ['record', 'shop', 'protect', 'compare', 'invest'];
     wrap.innerHTML = '';
     groupKeys.forEach(function (groupKey, groupIndex) {
-      var group = DATA.simulations.filter(function (simulation) { return simulation.group === groupKey; });
+      var group = DATA.simulations.filter(function (simulation) { return simulation.catalogGroup === groupKey; });
       if (!group.length) return;
-      var heading = document.createElement('p');
+      var heading = document.createElement('h3');
       heading.className = 'simulation-grid__group-title';
-      heading.textContent = App.i18n.t('blocks.simulation.groups.' + groupKey);
+      heading.textContent = App.i18n.t('journey.simulationGroups.' + groupKey);
+      heading.id = 'simulation-group-' + groupKey;
       if (groupIndex === 0) heading.classList.add('simulation-grid__group-title--first');
       wrap.appendChild(heading);
       group.forEach(function (simulation) {
@@ -433,8 +435,8 @@
   }
 
   function lessonTestLinks(lessonId) {
-    var lessonIndex = learningIndexById(lessonId);
-    var tests = activitiesForUnit(lessonIndex);
+    var topic = lessonById(lessonId);
+    var tests = DATA.activities.filter(function (activity) { return topic.activities.indexOf(activity.slug) !== -1 && activity.available; });
     var links = tests.map(function (activity) {
       var title = App.i18n.t('learn.activityTitle.' + activity.slug);
       var label = App.i18n.t('blocks.path.activityLink').replace('{title}', title);
@@ -447,9 +449,21 @@
   }
 
   function renderLessonDetail(detail, lesson) {
-    var title = App.i18n.t('blocks.path.units.' + lesson.id + '.title');
-    var body = App.i18n.t('blocks.path.units.' + lesson.id + '.body');
+    var title = App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title');
+    var body = App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Body');
     var testLinks = lessonTestLinks(lesson.id);
+    var explanation = '';
+    var prefix = 'blocks.didactic.lessons.' + lesson.id;
+    if (App.i18n.t(prefix + 'Step1') !== prefix + 'Step1') {
+      explanation = '<ol class="lesson-steps">' + [1, 2, 3].map(function (n) {
+        return '<li>' + App.utils.escapeHtml(App.i18n.t(prefix + 'Step' + n)) + '</li>';
+      }).join('') + '</ol><p class="lesson-example">' + App.utils.escapeHtml(App.i18n.t(prefix + 'Example')) + '</p>';
+    }
+    var actions = lesson.simulations.map(function (id) {
+      var simulation = simulationById(id);
+      return '<button type="button" class="btn btn--secundario" data-topic-simulation="' + id + '">' +
+        App.utils.escapeHtml(App.i18n.t(simulation.titleKey)) + '</button>';
+    }).join('');
     detail.classList.remove('hidden');
     detail.innerHTML =
       '<button type="button" class="back-link lesson-detail__back" id="lessonDetailBack">' +
@@ -459,11 +473,14 @@
         '<h3 id="lessonDetailTitle">' + App.utils.escapeHtml(title) + '</h3>' +
         '<p class="lesson-detail__body">' + App.utils.escapeHtml(body) + '</p>' +
       '</div>' +
-      '<div class="lesson-detail__practice">' +
+      explanation + '<div class="lesson-detail__practice">' +
         '<p class="learning-unit__phase">' + App.i18n.t('blocks.path.practicePhase') + '</p>' +
-        (testLinks || '') +
+        testLinks + '<div class="learning-unit__test-links">' + actions + '</div>' +
       '</div>';
     detail.setAttribute('aria-labelledby', 'lessonDetailTitle');
+    $('[data-topic-simulation]', detail).forEach(function (button) {
+      button.addEventListener('click', function () { openSimulation(button.dataset.topicSimulation); });
+    });
     detail.querySelector('#lessonDetailBack').addEventListener('click', function () {
       openLessonId = null;
       history.replaceState(null, '', '#bloque-didactico');
@@ -476,7 +493,60 @@
   /* The home is a short path: each unit opens its idea and the small
      activities that practise it. Advanced simulations stay in the actions
      part of the home and are not mixed into this learning decision. */
+  function renderPracticeSummary() {
+    var wrap = $('#practiceSummary');
+    if (!wrap) return;
+    var progress = App.wallet.practiceProgress(DATA.activities);
+    var next = DATA.activities.filter(function (activity) { return activity.slug === progress.nextSlug; })[0];
+    wrap.innerHTML = '<h3>' + App.i18n.t('journey.progressTitle') + '</h3>' +
+      '<p>' + App.i18n.t('journey.progress').replace('{done}', progress.completed).replace('{total}', progress.total) + '</p>' +
+      '<progress max="' + progress.total + '" value="' + progress.completed + '" aria-label="' + App.i18n.t('journey.progressTitle') + '"></progress>' +
+      '<p>' + App.i18n.t('journey.noPressure') + '</p>' +
+      (next ? '<a class="btn" href="' + next.href + '">' + App.i18n.t('journey.next') + ': ' + App.utils.escapeHtml(App.i18n.t('learn.activityTitle.' + next.slug)) + '</a>' : '<p>✓ ' + App.i18n.t('journey.allDone') + '</p>');
+  }
+
+  function renderActivityCatalog() {
+    var wrap = $('#activityCatalog');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    DATA.learnThemes.forEach(function (theme) {
+      var section = document.createElement('section');
+      section.className = 'activity-module';
+      section.id = 'practice-' + theme.id;
+      section.style.setProperty('--acento', 'var(--' + theme.accent + ')');
+      section.style.setProperty('--acento-suave', 'var(--' + theme.accent + '-suave)');
+      var heading = document.createElement('h3');
+      heading.textContent = App.i18n.t('learn.themes.' + theme.id);
+      section.appendChild(heading);
+      var grid = document.createElement('div');
+      grid.className = 'grid-tarjetas';
+      DATA.activities.filter(function (activity) { return activity.available && activity.theme === theme.id; }).forEach(function (activity) {
+        var card = document.createElement('a');
+        card.href = activity.href;
+        card.className = 'tarjeta activity-card';
+        card.id = 'activity-' + activity.slug;
+        var title = App.i18n.t('learn.activityTitle.' + activity.slug);
+        card.setAttribute('aria-label', title);
+        var status = App.wallet.activityStatus(activity.slug);
+        card.innerHTML = '<span class="picto" aria-hidden="true">' + activity.icon + '</span>' +
+          '<span class="topic-card__title">' + App.utils.escapeHtml(title) + '</span>' +
+          '<span class="topic-card__detail">' + App.utils.escapeHtml(App.i18n.t('learn.activityDesc.' + activity.slug)) + '</span>' +
+          '<span class="topic-card__action">' + App.i18n.t(status && status.done ? 'catalog.repeat' : 'catalog.try') + '</span>';
+        grid.appendChild(card);
+      });
+      section.appendChild(grid);
+      var activities = DATA.activities.filter(function (activity) { return activity.available && activity.theme === theme.id; });
+      var done = activities.filter(function (activity) { var status = App.wallet.activityStatus(activity.slug); return status && status.done; }).length;
+      var achievement = document.createElement('p');
+      achievement.className = 'module-achievement';
+      achievement.textContent = done === activities.length ? '✓ ' + App.i18n.t('journey.moduleDone') : App.i18n.t('journey.progress').replace('{done}', done).replace('{total}', activities.length);
+      section.appendChild(achievement);
+      wrap.appendChild(section);
+    });
+  }
+
   function renderDidacticLessons(wrap) {
+    renderActivityCatalog();
     if (!wrap) return;
     var detail = $('#lessonDetail');
     if (openLessonId) {
@@ -496,15 +566,21 @@
       detail.removeAttribute('aria-labelledby');
     }
     wrap.innerHTML = '';
-    DATA.learningPath.forEach(function (lesson) {
+    DATA.topics.forEach(function (lesson, index) {
+      if (index % 5 === 0) {
+        var heading = document.createElement('h4');
+        heading.className = 'catalog-heading';
+        heading.textContent = App.i18n.t('catalog.topicGroups.' + lesson.group);
+        wrap.appendChild(heading);
+      }
       var unit = learningIndexById(lesson.id) || lesson;
-      var activities = activitiesForUnit(unit);
+      var activities = DATA.activities.filter(function (activity) { return lesson.activities.indexOf(activity.slug) !== -1; });
       var completed = activities.filter(function (activity) {
         var status = App.wallet.activityStatus(activity.slug);
         return status && status.done;
       }).length;
       var card = document.createElement('button');
-      var title = App.i18n.t('blocks.path.units.' + lesson.id + '.title');
+      var title = App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title');
       card.type = 'button';
       card.className = 'tarjeta topic-card';
       card.id = 'unidad-' + lesson.id;
@@ -512,8 +588,8 @@
       card.innerHTML =
         '<span class="picto" aria-hidden="true">' + lesson.icon + '</span>' +
         '<span class="topic-card__title" id="unidad-' + lesson.id + '-title">' + App.utils.escapeHtml(title) + '</span>' +
-        '<span class="topic-card__detail">' + App.utils.escapeHtml(App.i18n.t('blocks.path.units.' + lesson.id + '.detail')) + '</span>' +
-        '<span class="topic-card__progress">' + App.utils.escapeHtml(App.i18n.t('blocks.didactic.activityProgress').replace('{done}', String(completed)).replace('{total}', String(activities.length))) + '</span>' +
+        '<span class="topic-card__detail">' + App.utils.escapeHtml(App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Detail')) + '</span>' +
+        (activities.length ? '<span class="topic-card__progress">' + App.utils.escapeHtml(App.i18n.t('blocks.didactic.activityProgress').replace('{done}', String(completed)).replace('{total}', String(activities.length))) + '</span>' : '') +
         '<span class="topic-card__action">' + App.i18n.t('blocks.didactic.openLink') + ' →</span>';
       card.addEventListener('click', function () {
         openLessonId = lesson.id;
@@ -1143,12 +1219,29 @@
 
   /* ---------- Purchase documents: order → delivery note → invoice → payment ---------- */
   function renderPurchaseLifecycle() {
+    if (!wizard.purchaseMode) {
+      $('#screen-wizard').innerHTML = wizardChrome(1, 1, null) +
+        '<h2>' + App.i18n.t('journey.purchaseChoice') + '</h2>' +
+        '<p>' + App.i18n.t('journey.purchaseChoiceDetail') + '</p>' +
+        '<div class="option-grid"><button class="btn" id="purchaseRehearse">' + App.i18n.t('journey.rehearse') + '</button>' +
+        '<button class="btn btn--secundario" id="purchaseRecord">' + App.i18n.t('journey.record') + '</button></div>';
+      wireChrome(null);
+      ['Rehearse', 'Record'].forEach(function (mode) {
+        $('#purchase' + mode).addEventListener('click', function () {
+          wizard.purchaseMode = mode === 'Rehearse' ? 'practice' : 'record';
+          renderPurchaseLifecycle();
+        });
+      });
+      return;
+    }
     var scenario = DATA.purchaseLifecycleScenarios[wizard.scenarioIndex || 0];
     var stage = wizard.stage || 0;
     var stageIds = ['order', 'delivery', 'invoice', 'payment'];
     var stageId = stageIds[stage];
     var baseKey = 'blocks.simulation.purchase';
-    var remaining = balanceCents() - scenario.priceCents;
+    var practice = wizard.purchaseMode === 'practice';
+    var before = practice ? 10000 : balanceCents();
+    var remaining = before - scenario.priceCents;
     var timeline = stageIds.map(function (id, index) {
       return '<span class="purchase-timeline__item ' + (index < stage ? 'is-done ' : '') + (index === stage ? 'is-current' : '') + '">' +
         App.i18n.t(baseKey + 'Stages.' + id + 'Title') + '</span>';
@@ -1159,6 +1252,8 @@
     } : null) +
       '<h2>' + App.i18n.t(baseKey + 'Title') + '</h2>' +
       '<p>' + App.i18n.t(baseKey + 'Intro') + '</p>' +
+      '<p class="practice-notice">' + App.i18n.t(practice ? 'journey.practiceNotice' : 'journey.recordNotice') + '</p>' +
+      '<p>' + App.i18n.t('journey.purchaseBudget').replace('{amount}', App.money.format(before)) + '</p>' +
       '<div class="purchase-timeline" aria-label="' + App.utils.escapeHtml(App.i18n.t(baseKey + 'Title')) + '">' + timeline + '</div>' +
       '<div class="card simulation-scene center"><p><strong>' +
         App.i18n.t(baseKey + 'Scenarios.' + scenario.id) + '</strong></p>' +
@@ -1171,7 +1266,7 @@
         (remaining < 0 ? '<p class="money-warning" role="status">' + App.i18n.t(baseKey + 'OverBalance') + '</p>' : '') +
         '</div>' +
         '<button type="button" class="btn" id="purchasePay">' +
-        App.i18n.t(baseKey + 'Pay').replace('{amount}', App.money.format(scenario.priceCents)) + '</button>';
+        App.i18n.t(practice ? 'journey.practicePay' : baseKey + 'Pay').replace('{amount}', App.money.format(scenario.priceCents)) + '</button>';
     }
     $('#screen-wizard').innerHTML = html;
     wireChrome(stage > 0 ? function () {
@@ -1184,8 +1279,24 @@
         renderPurchaseLifecycle();
       });
     } else {
+      $('#purchasePay').disabled = remaining < 0;
       $('#purchasePay').addEventListener('click', function () {
+        if (remaining < 0) return;
         $('#purchasePay').disabled = true;
+        if (practice) {
+          $('#screen-wizard').innerHTML = wizardChrome(1, 1, null) + '<h2>✓ ' + App.i18n.t('journey.practiceDone') + '</h2>' +
+            '<p>' + App.i18n.t('journey.receipt').replace('{before}', App.money.format(before)).replace('{cost}', App.money.format(scenario.priceCents)).replace('{after}', App.money.format(remaining)) + '</p>' +
+            '<p>' + App.i18n.t('journey.transfer') + '</p>' +
+            '<button class="btn" id="purchaseAnother">' + App.i18n.t('journey.another') + '</button>';
+          wireChrome(null);
+          $('#purchaseAnother').addEventListener('click', function () {
+            wizard.scenarioIndex = ((wizard.scenarioIndex || 0) + 1) % DATA.purchaseLifecycleScenarios.length;
+            wizard.stage = 0;
+            renderPurchaseLifecycle();
+          });
+          App.feedback.success();
+          return;
+        }
         state.movements.push({
           id: App.utils.uid(),
           type: 'expense',

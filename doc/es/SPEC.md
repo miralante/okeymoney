@@ -558,13 +558,9 @@ cada paso.
 
 ### 7.4 Situaciones cotidianas (plano de práctica)
 
-La portada presenta cinco temas de **decisiones cotidianas**. Cada tema
-explica lo necesario y reúne una o dos situaciones (`tools/<slug>`) para
-probarlo. La persona no tiene que entender la diferencia entre un catálogo,
-una lección y un test: primero ve el tema, después mira el ejemplo y por
-último prueba una situación.
+La portada muestra las 11 actividades como tarjetas directas agrupadas por tema, siguiendo el estilo de Routime. Debajo conserva los 15 temas explicativos originales, con sus ejemplos y enlaces de práctica. Se puede empezar por una actividad o consultar primero una explicación.
 
-El orden recomendado es:
+Los cinco grupos internos de progreso mantienen este orden recomendado:
 
 1. **Cuenta tu dinero** — reconocer monedas, billetes y saldo.
 2. **Elige antes de comprar** — distinguir necesidades y deseos y parar
@@ -783,3 +779,13 @@ Las 11 actividades incluyen tres recorridos nuevos, con seis situaciones cada un
 - `monthly-payments`: Organiza tus pagos.
 
 Las pistas y explicaciones permanecen hasta pulsar «Entendido». No hay avance por tiempo. Al terminar se recuerda cómo usar lo aprendido. Las actividades no guardan intentos y no modifican el saldo en euros.
+
+
+### Catálogo visible y conservación de contenidos
+
+La portada conserva las 11 actividades como tarjetas directas, agrupadas por tema con el patrón visual de Routime. «¿Qué compro primero?» tiene acceso propio. Los 15 temas originales permanecen en `DATA.topics`, con sus explicaciones y enlaces a ejercicios o simulaciones. Los cinco grupos internos de progreso no sustituyen ese catálogo. No se ocultan ni eliminan actividades al simplificar la navegación.
+
+
+### Orientación y ensayo de compras
+
+Se conservan los tres bloques de portada. La práctica tiene accesos a Conceptos básicos, Vida cotidiana y Seguridad, además de los temas explicativos. Cada módulo muestra su progreso guardado, sin premios por velocidad ni rachas. Las simulaciones se agrupan por propósito en cinco subgrupos. Del pedido al pago permite elegir entre ensayo con 100 € ficticios y registro de un gasto. El ensayo no escribe en el libro ni acredita Tokens; muestra el dinero inicial, el pago y el resto y permite probar otra compra.

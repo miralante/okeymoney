@@ -616,7 +616,7 @@
         "monthly-payments": "Organiza tus pagos",
         'concepts-money':  'Cuenta tu dinero',
         'needs-vs-wants':  '¿Lo necesitas o lo quieres?',
-        'budget-first':    '¿Qué te conviene comprar primero?',
+        'budget-first':    '¿Qué compro primero?',
         'before-buying':   'Cuatro preguntas antes de comprar',
         'go-shopping':     'Haz tu compra',
         'change-back':     'Comprueba tu cambio',
@@ -624,6 +624,9 @@
         'safe-money':      'Protege tu dinero'
       },
       activityDesc: {
+        'save-step-by-step': "Decide cuánto apartar para conseguir una meta.",
+        'compare-prices': "Compara precios y gastos antes de elegir.",
+        'monthly-payments': "Reserva dinero para los pagos del mes.",
         'concepts-money':  'Mira, cuenta y cambia monedas y billetes.',
         'needs-vs-wants':  'Piensa si algo te hace falta o simplemente te apetece.',
         'budget-first':    'Ordena tus compras cuando el dinero es limitado.',
@@ -634,6 +637,37 @@
         'safe-money':      'Reconoce transferencias extrañas y estafas.'
       }
     },
+
+    catalog: {"topics":"Ideas para entender tu dinero","try":"Probar →","repeat":"✓ Volver a probar","topicGroups":{"buy":"Comprar y pagar","organise":"Ahorrar y organizarte","check":"Entender otras decisiones"}},
+
+    journey: {
+  "shortcuts": "Accesos de práctica",
+  "progressTitle": "Lo que ya has practicado",
+  "progress": "{done} de {total} actividades completadas",
+  "noPressure": "Avanza a tu ritmo. Puedes repetir cuando quieras.",
+  "next": "Puedes seguir con",
+  "allDone": "Has probado todo. Elige qué quieres volver a practicar.",
+  "moduleDone": "Has practicado este módulo",
+  "simulationGroups": {
+    "record": "Anotar y organizar mi dinero",
+    "shop": "Preparar una compra",
+    "protect": "Protegerme y pedir ayuda",
+    "compare": "Comparar gastos y duración",
+    "invest": "Entender cuentas e inversiones"
+  },
+  "purchaseChoice": "¿Quieres ensayar o anotar una compra?",
+  "purchaseChoiceDetail": "El ensayo usa 100 € ficticios. Anotar guarda un gasto.",
+  "rehearse": "Ensayar con dinero ficticio",
+  "record": "Anotar en mis gastos",
+  "practiceNotice": "Ensayo: tu saldo y tus gastos no cambian.",
+  "recordNotice": "Al confirmar, esta compra se guardará en tus gastos.",
+  "purchaseBudget": "Dinero disponible: {amount}",
+  "practicePay": "Ensayar el pago de {amount}",
+  "practiceDone": "Compra ensayada",
+  "receipt": "Tenías {before}. Pagas {cost}. Te quedan {after}.",
+  "transfer": "Antes de pagar, revisa el precio y guarda el comprobante.",
+  "another": "Probar otra compra"
+},
 
     wizard: {
       closeAria: 'Cerrar y no guardar'
