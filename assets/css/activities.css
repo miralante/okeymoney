@@ -276,20 +276,48 @@
 
 @media (max-width: 640px) {
   .actividad {
-    padding-top: var(--espacio-6);
+    padding-top: var(--espacio-3);
   }
 
   .actividad .tool-header {
-    row-gap: var(--espacio-4);
-    margin-bottom: var(--espacio-6);
+    row-gap: var(--espacio-2);
+    margin-bottom: var(--espacio-3);
   }
 
   .actividad .tool-header h1 {
-    font-size: clamp(2.1rem, 10vw, 2.75rem);
+    font-size: clamp(1.9rem, 9vw, 2.45rem);
+  }
+
+  .actividad-objetivo {
+    margin-bottom: var(--espacio-3);
+    padding: var(--espacio-3);
+    font-size: var(--texto-300);
+  }
+
+  .actividad .instruccion {
+    margin: var(--espacio-3) auto var(--espacio-2);
+    font-size: var(--texto-400);
   }
 
   .actividad > .escena {
-    padding: var(--espacio-6) var(--espacio-4);
+    min-height: 120px;
+    padding: var(--espacio-3) var(--espacio-2);
+  }
+
+  .actividad > .escena > p {
+    margin: var(--espacio-1) 0;
+    font-size: var(--texto-300);
+  }
+
+  .actividad > .opciones {
+    gap: var(--espacio-2);
+    margin-top: var(--espacio-3);
+  }
+
+  .actividad > .opciones .opcion-btn {
+    min-height: 76px;
+    padding: var(--espacio-3) var(--espacio-2);
+    font-size: var(--texto-400);
   }
 }
 
