@@ -16,6 +16,91 @@
 #goalName::placeholder {
   color: var(--texto-tenue);
 }
+
+/* Mobile home: keep the catalogue scannable without shrinking touch targets.
+   The shared cards intentionally stay generous on larger screens, but their
+   desktop minimum widths make almost every mobile grid a single long column. */
+@media (max-width: 640px) {
+  .cabecera {
+    gap: var(--espacio-1);
+    padding-top: var(--espacio-2);
+  }
+
+  .cabecera .logo {
+    width: 56px;
+    height: 56px;
+  }
+
+  .anclas-modulo {
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(var(--espacio-3) * -1);
+    padding: 0 var(--espacio-3) var(--espacio-3);
+    scrollbar-width: none;
+  }
+
+  .anclas-modulo::-webkit-scrollbar { display: none; }
+  .anclas-modulo .ancla-modulo { flex: 0 0 auto; }
+
+  .modulos { gap: var(--espacio-3); }
+  .learning-block {
+    gap: var(--espacio-3);
+    padding: var(--espacio-3) var(--espacio-2) var(--espacio-4);
+    border-left-width: 5px;
+  }
+
+  .learning-block h2 { font-size: var(--texto-500); }
+  .learning-block__intro { font-size: var(--texto-200); }
+  .subgroup-nav { gap: var(--espacio-1); margin-block: var(--espacio-2); }
+  .subgroup-nav .ancla-modulo {
+    min-height: 44px;
+    padding: var(--espacio-1) var(--espacio-2);
+    font-size: var(--texto-200);
+  }
+
+  .activity-modules { gap: var(--espacio-3); margin-block: var(--espacio-2) var(--espacio-3); }
+  .activity-module h3 { margin-bottom: var(--espacio-2); }
+  .grid-tarjetas,
+  .didactic-grid,
+  .simulation-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--espacio-2);
+  }
+
+  .tarjeta,
+  .activity-card {
+    min-height: 124px;
+    padding: var(--espacio-2);
+    gap: 4px;
+  }
+
+  .tarjeta .picto,
+  .activity-card .picto { font-size: 36px; }
+  .tarjeta .nombre { font-size: var(--texto-300); }
+  .tarjeta .detalle { font-size: var(--texto-200); }
+  .tarjeta--money .tarjeta__nombre { font-size: var(--texto-500); }
+  .topic-card { min-height: 150px; }
+  .topic-card .picto { margin-bottom: var(--espacio-1); }
+  .topic-card__title { font-size: var(--texto-300); }
+  .topic-card__detail { font-size: var(--texto-200); }
+
+  .practice-summary { padding: var(--espacio-3); margin-block: var(--espacio-2); }
+  .next-step { margin-bottom: var(--espacio-3); }
+  .financial-cycle { margin-bottom: var(--espacio-3); padding: var(--espacio-3); }
+  .financial-cycle__steps { gap: var(--espacio-2); margin-top: var(--espacio-3); }
+  .financial-cycle__step { min-height: 108px; padding: var(--espacio-2); }
+  .simulation-panels { gap: var(--espacio-2); }
+  .movement-summary { padding: var(--espacio-3); }
+
+  .guide-content { gap: var(--espacio-3); }
+  .guide-callout { padding: var(--espacio-3); }
+  .guide-principles__grid,
+  .guide-roadmap__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--espacio-2); }
+  .guide-principle,
+  .guide-roadmap__step { padding: var(--espacio-2); }
+  .guide-principle__icon { font-size: 24px; }
+}
 /* Routime catalogue: visible activities, coloured modules and large pictograms. */
 .activity-modules { display: grid; gap: 40px; margin-block: 24px 40px; }
 .activity-module h3 { color: var(--acento); border-left: 8px solid var(--acento); padding-left: 12px; margin-bottom: 16px; }
@@ -33,3 +118,14 @@
 .module-achievement { font-weight: 700; margin-top: 16px; }
 .practice-notice { padding: 16px; border: 2px solid var(--acento); border-radius: 12px; }
 [id^="practice-"], #topic-catalog { scroll-margin-top: 24px; }
+
+/* Keep these after the legacy catalogue declarations above. */
+@media (max-width: 640px) {
+  .learning-block { padding: var(--espacio-3) var(--espacio-2) var(--espacio-4); }
+  .activity-modules { gap: var(--espacio-3); margin-block: var(--espacio-2) var(--espacio-3); }
+  .activity-module h3 { margin-bottom: var(--espacio-2); }
+  .activity-card { min-height: 124px; }
+  .activity-card .picto { font-size: 36px; }
+  .subgroup-nav { gap: var(--espacio-1); margin-block: var(--espacio-2); }
+  .practice-summary { padding: var(--espacio-3); margin-block: var(--espacio-2); }
+}
