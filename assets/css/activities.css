@@ -65,7 +65,7 @@
 }
 
 .actividad .tool-header .practice-tokens::before {
-  content: "🔑";
+  content: "🪙";
   font-family: inherit;
   font-size: 1em;
 }
