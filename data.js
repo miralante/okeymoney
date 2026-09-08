@@ -370,17 +370,17 @@ var DATA = {
      - 'safety':   recognising scams and fraud — the highest-stakes
        practical skill, kept last on purpose. */
   activities: [
-{ slug: 'concepts-money',  unitId: 'money', href: 'tools/concepts-money/index.html',  icon: '💰', available: true, theme: 'concepts' },
-    { slug: 'needs-vs-wants',  unitId: 'choices', href: 'tools/needs-vs-wants/index.html',  icon: '🤔', available: true, theme: 'concepts' },
-    { slug: 'budget-first',    unitId: 'budget', href: 'tools/budget-first/index.html',    icon: '📋', available: true, theme: 'daily' },
-    { slug: 'before-buying',   unitId: 'choices', href: 'tools/before-buying/index.html',   icon: '🛒', available: true, theme: 'daily' },
-    { slug: 'go-shopping',     unitId: 'budget', href: 'tools/go-shopping/index.html',     icon: '🛒', available: true, theme: 'daily' },
-    { slug: 'change-back',     unitId: 'change', href: 'tools/change-back/index.html',     icon: '💸', available: true, theme: 'daily' },
-    { slug: 'my-shopping-day', unitId: 'change', href: 'tools/my-shopping-day/index.html', icon: '🌟', available: true, theme: 'daily' },
-    { slug: 'save-step-by-step', unitId: 'money', href: 'tools/save-step-by-step/index.html', icon: '🎯', available: true, theme: 'daily' },
-    { slug: 'compare-prices', unitId: 'choices', href: 'tools/compare-prices/index.html', icon: '🏷️', available: true, theme: 'daily' },
-    { slug: 'monthly-payments', unitId: 'budget', href: 'tools/monthly-payments/index.html', icon: '📅', available: true, theme: 'daily' },
-    { slug: 'safe-money',      unitId: 'safety', href: 'tools/safe-money/index.html',      icon: '🛡️', available: true, theme: 'safety' }
+{ slug: 'concepts-money',  unitId: 'money', href: 'tools/concepts-money/',  icon: '💰', available: true, theme: 'concepts' },
+    { slug: 'needs-vs-wants',  unitId: 'choices', href: 'tools/needs-vs-wants/',  icon: '🤔', available: true, theme: 'concepts' },
+    { slug: 'budget-first',    unitId: 'budget', href: 'tools/budget-first/',    icon: '📋', available: true, theme: 'daily' },
+    { slug: 'before-buying',   unitId: 'choices', href: 'tools/before-buying/',   icon: '🛒', available: true, theme: 'daily' },
+    { slug: 'go-shopping',     unitId: 'budget', href: 'tools/go-shopping/',     icon: '🛒', available: true, theme: 'daily' },
+    { slug: 'change-back',     unitId: 'change', href: 'tools/change-back/',     icon: '💸', available: true, theme: 'daily' },
+    { slug: 'my-shopping-day', unitId: 'change', href: 'tools/my-shopping-day/', icon: '🌟', available: true, theme: 'daily' },
+    { slug: 'save-step-by-step', unitId: 'money', href: 'tools/save-step-by-step/', icon: '🎯', available: true, theme: 'daily' },
+    { slug: 'compare-prices', unitId: 'choices', href: 'tools/compare-prices/', icon: '🏷️', available: true, theme: 'daily' },
+    { slug: 'monthly-payments', unitId: 'budget', href: 'tools/monthly-payments/', icon: '📅', available: true, theme: 'daily' },
+    { slug: 'safe-money',      unitId: 'safety', href: 'tools/safe-money/',      icon: '🛡️', available: true, theme: 'safety' }
   ],
 
   /* Section headers painted above each theme's activity cards, in fixed
