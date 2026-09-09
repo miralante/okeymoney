@@ -41,6 +41,15 @@ captured in [`doc/en/PRODUCT-DESIGN.md`](doc/en/PRODUCT-DESIGN.md)
 mirror). Read it before touching `index.html`, `app.js`, or the tab
 bar.
 
+## Responsive design contract
+
+Follow the Apptonomia suite standard: real mobile viewport, fluid container
+padding, no horizontal overflow, and flexible grids that collapse to one
+column when cards no longer have comfortable reading width. Controls must
+fit the viewport, preserve usable touch targets, and avoid fixed heights or
+large empty vertical zones. Check 320px, 375px, 768px and desktop before
+shipping a layout change.
+
 ## Commands
 
 There is no build step, no package.json, and no test framework — it's
