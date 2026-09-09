@@ -33,15 +33,13 @@
 
   .anclas-modulo {
     justify-content: flex-start;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    margin-inline: calc(var(--espacio-3) * -1);
-    padding: 0 var(--espacio-3) var(--espacio-3);
-    scrollbar-width: none;
+    flex-wrap: wrap;
+    overflow-x: visible;
+    margin-inline: 0;
+    padding: 0 0 var(--espacio-3);
   }
 
-  .anclas-modulo::-webkit-scrollbar { display: none; }
-  .anclas-modulo .ancla-modulo { flex: 0 0 auto; }
+  .anclas-modulo .ancla-modulo { flex: 1 1 auto; justify-content: center; }
 
   .modulos { gap: var(--espacio-3); }
   .learning-block {
