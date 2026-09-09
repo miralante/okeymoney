@@ -292,8 +292,13 @@
       var progress = $('#activityProgress');
       if (progress) {
         progress.hidden = false;
-        progress.textContent = App.i18n.t('core.situationProgress')
-          .replace('{current}', String(currentIndex + 1)).replace('{total}', String(cases.length));
+        var progressBar = progress.querySelector('progress');
+        if (progressBar) {
+          progressBar.max = cases.length;
+          progressBar.value = currentIndex + 1;
+          progressBar.setAttribute('aria-label', App.i18n.t('core.situationProgress')
+            .replace('{current}', String(currentIndex + 1)).replace('{total}', String(cases.length)));
+        }
       }
       var escena = $('#escena');
       var opciones = $('#opciones');
@@ -594,11 +599,12 @@
         });
       }
 
-      var progress = document.createElement('p');
+      var progress = document.createElement('div');
       progress.id = 'activityProgress';
       progress.className = 'actividad-progress';
       progress.hidden = true;
       progress.setAttribute('role', 'status');
+      progress.innerHTML = '<progress max="1" value="0"></progress>';
       var scene = $('#escena');
       scene.parentNode.insertBefore(progress, scene);
       refreshWalletChip();
