@@ -40,6 +40,7 @@
   }
 
   .anclas-modulo .ancla-modulo { flex: 1 1 auto; justify-content: center; }
+  .anclas-modulo .ancla-modulo { min-width: 0; max-width: 100%; }
 
   .modulos { gap: var(--espacio-3); }
   .learning-block {
