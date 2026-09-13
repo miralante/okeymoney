@@ -2038,3 +2038,4 @@ header.suite-header {
 @media (max-width: 650px) {
   .container.suite-home { padding-inline: 12px; }
 }
+.progress-text { display: none; }
