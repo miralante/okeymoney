@@ -6,6 +6,7 @@
   'use strict';
 
   App.i18n.register({
+    suiteBy: 'Una app de',
     "title": "Okeymoney",
     "saludo": "Hola. ¿Qué quieres hacer hoy?",
     "listenGreeting": "Escuchar el saludo",

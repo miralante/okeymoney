@@ -173,16 +173,24 @@
     Las tarjetas siguen el patrón de módulos
     grandes, bordes de color y pictogramas del resto de la suite.
   -->
-  <div class="container" id="app">
+  <div class="container suite-home" id="app">
 
-    <header class="cabecera centrado">
-      <div class="idioma-selector" id="langRow" role="group" aria-label="Elegir idioma">
-        <!-- buttons injected by app.js init() from App.i18n.SUPPORTED -->
+    <header class="cabecera centrado suite-header">
+      <div class="suite-brand">
+        <img src="assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
+        <div class="suite-brand-copy">
+          <h1 data-i18n="appName">Okeymoney</h1>
+          <p class="suite-attribution"><span data-i18n="suiteBy">Una app de</span> <a href="https://apptonomia.uk/">Apptonomia</a>.</p>
+        </div>
       </div>
-      <img src="assets/img/icono-euro.svg" alt="" width="72" height="72" class="logo">
-      <h1 data-i18n="appName">Okeymoney</h1>
-      <div class="fila centrado-fila">
+      <div class="suite-controls"><div class="idioma-selector" id="langRow" role="group" aria-label="Elegir idioma">
+        <!-- buttons injected by app.js init() from App.i18n.SUPPORTED -->
+      </div></div>
+      <div class="suite-details">
+        <div class="fila centrado-fila">
         <p class="saludo" id="saludo" data-i18n="home.saludo">Hola. ¿Qué quieres hacer hoy?</p>
+      </div>
+        
       </div>
     </header>
 

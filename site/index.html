@@ -195,17 +195,25 @@
   <link rel="stylesheet" href="/site/styles.css">
 </head>
 <body>
-  <div class="container">
-    <header class="cabecera centrado">
-      <div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-idioma" id="btnIdiomaEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
-        <button type="button" class="btn-idioma" id="btnIdiomaEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
+  <div class="container suite-home">
+    <header class="cabecera centrado suite-header">
+      <div class="suite-brand">
+        <img src="../assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
+        <div class="suite-brand-copy">
+          <h1 data-i18n="title">Okeymoney</h1>
+          <p class="suite-attribution"><span data-i18n="suiteBy">Una app de</span> <a href="https://apptonomia.uk/">Apptonomia</a>.</p>
+        </div>
       </div>
-      <img src="../assets/img/icono-euro.svg" alt="" width="72" height="72" class="logo">
-      <h1 data-i18n="title">Okeymoney</h1>
-      <div class="fila centrado-fila">
+      <div class="suite-controls"><div class="idioma-selector" role="group" aria-label="Elegir idioma">
+        <button type="button" class="btn-idioma" id="btnIdiomaEs" data-locale="es" aria-pressed="false" aria-label="Español"><span class="locale-full" aria-hidden="true">🇪🇸 Español</span><span class="locale-short" aria-hidden="true">ES</span></button>
+        <button type="button" class="btn-idioma" id="btnIdiomaEn" data-locale="en" aria-pressed="false" aria-label="English"><span class="locale-full" aria-hidden="true">🇬🇧 English</span><span class="locale-short" aria-hidden="true">EN</span></button>
+      </div></div>
+      <div class="suite-details">
+        <div class="fila centrado-fila">
         <p class="saludo" id="saludo" data-i18n="saludo">Hola. ¿Qué quieres hacer hoy?</p>
         <button type="button" class="btn btn-audio" id="btnSaludo" data-i18n-aria="listenGreeting" aria-label="Escuchar el saludo">🔊</button>
+      </div>
+        
       </div>
     </header>
 

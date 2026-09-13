@@ -1006,3 +1006,13 @@ Hints and explanations remain until the person selects “Got it”. There is no
 ### Situation navigation
 
 Each exercise return link uses `#unidad-<unitId>`. The home restores the topic from that address and supports returning to the catalogue or using browser history. The runtime announces “Situation X of Y”, focuses the scene on advancement and offers a return to the topic on completion. Hints restore focus to an enabled option.
+
+## Compact application header
+
+The main header follows Memofun: a 44px app icon (32px below 650px),
+a Nunito brand title at 28px (22px on mobile), suite attribution and aligned
+utility controls. It uses an 8px vertical inset and a 6px row gap. Supporting
+copy uses regular weight; any star counter stays compact. Header language buttons, where present,
+show full names on desktop and ES/EN on mobile, with full accessible names.
+Teclatlon keeps its keyboard controls and settings; Enroca keeps its navigation
+and settings. These header styles do not change activity controls.

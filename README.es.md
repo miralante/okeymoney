@@ -1,4 +1,4 @@
-﻿# Okeymoney 💰
+# Okeymoney 💰
 
 > 🌐 **Otros idiomas:** [English](README.md)
 >
@@ -22,7 +22,8 @@ analítica: todo funciona en el navegador y tus datos solo se guardan en
 - 📦 **Repositorio**: [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney)
 - 💻 **Ejecutar en local**: abre `index.html` directamente en un
   navegador, o sirve la carpeta con cualquier servidor estático
-  (`npx serve .` / `python -m http.server 8080`) para tener la
+  (
+npx serve .` / `python -m http.server 8080`) para tener la
   experiencia completa de PWA con soporte sin conexión.
 
 ---
@@ -126,7 +127,6 @@ con algunos archivos en la raíz del repositorio:
 | Arquitectura multiidioma + receta para añadir un idioma | [`doc/es/i18n.md`](doc/es/i18n.md) · [`doc/en/i18n.md`](doc/en/i18n.md) |
 | **Home v2 (catálogo primero + tarjetas)** | [`doc/es/spec.md`](doc/es/spec.md) §6–§7 · [`doc/es/actividades.md`](doc/es/actividades.md) |
 | Catálogo de actividades (temas, agentes, mecánicas) | [`doc/es/actividades.md`](doc/es/actividades.md) · [`doc/en/activities.md`](doc/en/activities.md) |
-| Hoja de ruta del rediseño visual (entregado en v1.1) | [`TODO.es.md`](TODO.es.md) · [`TODO.md`](TODO.md) |
 | Flujo operativo para agentes de IA | [`CLAUDE.md`](CLAUDE.md) |
 
 ### 📄 Otros documentos del repo
@@ -185,7 +185,8 @@ consumidores.
 node scripts/check.js
 ```
 
-No hace falta `npm install` — el script solo usa la librería estándar
+No hace falta 
+pm install` — el script solo usa la librería estándar
 de Node. Comprueba sintaxis JS, paridad de claves es/en entre
 `strings.es.js` y `strings.en.js` (app raíz y `legal/`), que cada ruta
 en `FILES` de `sw.js` existe en disco, que los iconos de
@@ -237,7 +238,8 @@ MIT — ver [`LICENSE`](LICENSE).
 
 ## 🧹 Mantenimiento
 
-Este repo no tiene `node_modules`, artefactos de build, ni directorio
+Este repo no tiene 
+ode_modules`, artefactos de build, ni directorio
 de caché. Para limpiar la caché local de la PWA durante el desarrollo,
 desregistra el SW desde DevTools (`Application → Service workers →
 Unregister`) y borra los datos del sitio.
@@ -293,6 +295,5 @@ Este repo usa el modelo **Workers + static assets** (`wrangler.toml`
 Apptonomia/Teclatlon — ver [`CLOUDFLARE.md`](CLOUDFLARE.md) para la
 guía local.
 
-## More about this project
 
-- [About this project](https://okeymoney.apptonomia.uk/about/)
+

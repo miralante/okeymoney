@@ -1,4 +1,4 @@
-﻿# Okeymoney 💰
+# Okeymoney 💰
 
 > 🌐 **Other languages:** [Español](README.es.md)
 >
@@ -21,7 +21,8 @@ device.
 - 🌐 **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk/)
 - 📦 **Repository**: [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney)
 - 💻 **Run locally**: open `index.html` directly in a browser, or serve
-  the folder with any static server (`npx serve .` /
+  the folder with any static server (
+npx serve .` /
   `python -m http.server 8080`) for the full offline-capable PWA
   experience.
 
@@ -118,7 +119,6 @@ at the repository root:
 | Multilingual architecture + recipe to add a language | [`doc/en/i18n.md`](doc/en/i18n.md) · [`doc/es/i18n.md`](doc/es/i18n.md) |
 | **v2 home (catalogue-first home + cards)** | [`doc/en/spec.md`](doc/en/spec.md) §§6–7 · [`doc/en/activities.md`](doc/en/activities.md) |
 | Activities catalogue (themes, agents, mechanics) | [`doc/en/activities.md`](doc/en/activities.md) · [`doc/es/actividades.md`](doc/es/actividades.md) |
-| Visual redesign roadmap (shipped in v1.1) | [`TODO.md`](TODO.md) · [`TODO.es.md`](TODO.es.md) |
 | AI agent operational workflow | [`CLAUDE.md`](CLAUDE.md) |
 
 ### 📄 Other repo documents
@@ -172,7 +172,8 @@ stay coherent across the three consumers.
 node scripts/check.js
 ```
 
-No `npm install` needed — the script only uses Node's standard library.
+No 
+pm install` needed — the script only uses Node's standard library.
 It checks JS syntax, es/en key parity between `strings.es.js` and
 `strings.en.js` (root app and `legal/`), that every `sw.js` `FILES`
 path exists on disk, that `manifest.json` icons exist on disk, that
@@ -222,7 +223,8 @@ MIT — see [`LICENSE`](LICENSE).
 
 ## 🧹 Housekeeping
 
-There is no `node_modules`, no build artifacts, and no cache directory
+There is no 
+ode_modules`, no build artifacts, and no cache directory
 in this repo. To clean the local PWA cache during development,
 unregister the service worker from DevTools (`Application → Service
 workers → Unregister`) and clear site data.
@@ -277,6 +279,5 @@ This repo uses the **Workers + static assets** model (`wrangler.toml`
 classic Pages model — see [`CLOUDFLARE.md`](CLOUDFLARE.md) for the
 local runbook.
 
-## More about this project
 
-- [About this project](https://okeymoney.apptonomia.uk/about/)
+

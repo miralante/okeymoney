@@ -1067,3 +1067,14 @@ Las pistas y explicaciones permanecen hasta pulsar «Entendido». No hay avance 
 ### Navegación de situaciones
 
 Los enlaces de vuelta de cada ejercicio usan `#unidad-<unitId>`. La portada restaura el tema desde esa dirección y permite volver al catálogo o usar el historial del navegador. El runtime anuncia «Situación X de Y», enfoca la escena al avanzar y ofrece volver al tema al terminar. Las pistas devuelven el foco a una opción habilitada.
+
+## Cabecera compacta de la aplicación
+
+La cabecera principal sigue el modelo de Memofun: icono de 44px (32px por
+debajo de 650px), título Nunito de 28px (22px en móvil), atribución a la suite
+y controles alineados. Usa un margen interior vertical de 8px y separa las
+filas 6px. El texto secundario tiene peso normal y el contador de estrellas
+es compacto. Los botones de idioma de la cabecera muestran nombres completos en escritorio
+y ES/EN en móvil, con nombres accesibles completos. Teclatlon conserva sus
+controles de teclado y ajustes; Enroca conserva navegación y ajustes. Estos
+estilos de cabecera no cambian los controles de las actividades.

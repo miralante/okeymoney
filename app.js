@@ -1652,7 +1652,15 @@
       btn.setAttribute('data-locale', loc);
       btn.setAttribute('aria-pressed', String(active === loc));
       btn.setAttribute('aria-label', App.i18n.LABEL[loc] || loc);
-      btn.textContent = (App.i18n.FLAG[loc] || '') + ' ' + (App.i18n.LABEL[loc] || loc);
+      var fullLabel = document.createElement('span');
+      fullLabel.className = 'locale-full';
+      fullLabel.setAttribute('aria-hidden', 'true');
+      fullLabel.textContent = (App.i18n.FLAG[loc] || '') + ' ' + (App.i18n.LABEL[loc] || loc);
+      var shortLabel = document.createElement('span');
+      shortLabel.className = 'locale-short';
+      shortLabel.setAttribute('aria-hidden', 'true');
+      shortLabel.textContent = loc.toUpperCase();
+      btn.append(fullLabel, shortLabel);
       btn.addEventListener('click', function () { App.i18n.setLocale(loc); });
       row.appendChild(btn);
     });

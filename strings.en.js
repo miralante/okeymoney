@@ -2,6 +2,7 @@
 (function () {
   'use strict';
   App.i18n.register({
+    suiteBy: 'An app by',
     title: 'Okeymoney',
     appName: 'Okeymoney',
 
