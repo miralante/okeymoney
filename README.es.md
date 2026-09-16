@@ -10,6 +10,7 @@
 [![PWA](https://img.shields.io/badge/PWA-instalable-5A0FC8.svg)](manifest.json)
 [![i18n](https://img.shields.io/badge/i18n-es%20%7C%20en-yellow.svg)](#-documentaci%C3%B3n-del-proyecto-biling%C3%BCe)
 [![CI](https://img.shields.io/badge/CI-node%20scripts%2Fcheck.js-blue.svg)](.github/workflows/validate.yml)
+[![Pacto del colaborador](https://img.shields.io/badge/Pacto%20del%20colaborador-2.1-4baaaa.svg)](CODE_OF_CONDUCT.es.md)
 
 Una aplicación web gratuita, estática y sin dependencias que enseña
 **finanzas personales y autonomía cotidiana** a nuestros/as usuarios/as
@@ -134,6 +135,7 @@ con algunos archivos en la raíz del repositorio:
 | Documento | Para quién |
 |---|---|
 | [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md) | Familias, terapeutas y desarrolladores que quieran contribuir |
+| [`CODE_OF_CONDUCT.es.md`](CODE_OF_CONDUCT.es.md) | Pacto del colaborador (Contributor Covenant 2.1) |
 | `CLAUDE.md` | Agentes IA: reglas obligatorias y estado del proyecto |
 | [`CLOUDFLARE.md`](CLOUDFLARE.md) | Guía canónica de despliegue en Cloudflare Workers para la suite (Okeymoney + Apptonomia + Calculia, Memofun, Sinonimia, Teclatlon) |
 | Historial del proyecto | En `git log`; no se mantiene una hoja de ruta externa |
@@ -236,6 +238,15 @@ MIT — ver [`LICENSE`](LICENSE).
 
 ---
 
+## Contribuir
+
+Issues y pull requests son bienvenidos. Ver [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md)
+para el flujo de trabajo (y [`CONTRIBUTING.md`](CONTRIBUTING.md) para la versión en inglés).
+Todas las personas participantes deben seguir
+[`CODE_OF_CONDUCT.es.md`](CODE_OF_CONDUCT.es.md).
+
+---
+
 ## 🧹 Mantenimiento
 
 Este repo no tiene 
@@ -250,22 +261,6 @@ La carpeta `scripts/` tiene dos helpers útiles:
 cacheados) y [`scripts/serve.js`](scripts/serve.js) (un servidor
 estático local mínimo que imita el comportamiento de Cloudflare para
 previsualizaciones).
-
----
-
-## 🙏 Créditos
-
-El modelo de **libro contable compartido** de Okeymoney sigue a
-Teclatlon (una app de la suite): un único libro en `localStorage`
-leído y escrito por cada flujo que toca saldo, metas o monedero, de
-modo que siempre se mantienen coherentes — ver [`doc/es/tecnico.md`](doc/es/tecnico.md)
-§2 con la justificación y el esquema.
-
-La **home catálogo-primero** presenta cinco unidades cortas y un
-catálogo de simulaciones en euros. Las actividades conservan tres temas
-como metadatos. La navegación y el alcance están en
-[`doc/es/spec.md`](doc/es/spec.md) §§6–7; el catálogo y su ampliación
-están en [`doc/es/actividades.md`](doc/es/actividades.md).
 
 ---
 

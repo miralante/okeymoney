@@ -4,7 +4,7 @@
    Phase 3 audit (TODO.md §5.3): every selector that duplicated a
    component in `assets/css/componentes.css` has been removed. The
    shared components (`.feedback`, `.wallet-chip`, `.opcion-btn`,
-   `.pista`, `.actividad-header`, `.opciones`, `.escena`, `.agente`)
+   `.hint`, `.actividad-header`, `.options`, `.scene`, `.agent`)
    are now sourced exclusively from `componentes.css`. This file
    keeps ONLY the rules that are genuinely activity-mechanic specific
    and would not belong in the shared components layer.
@@ -81,7 +81,7 @@
   line-height: var(--linea-base);
 }
 
-.actividad .instruccion {
+.actividad .instruction {
   max-width: var(--contenedor-lectura);
   margin: var(--espacio-7) auto var(--espacio-4);
   color: var(--texto-primario);
@@ -91,7 +91,7 @@
   text-align: center;
 }
 
-.actividad > .escena {
+.actividad > .scene {
   min-height: calc(var(--tocable-xl) + var(--espacio-8));
   margin: 0;
   padding: var(--espacio-7) var(--espacio-6);
@@ -100,21 +100,21 @@
   box-shadow: var(--sombra-2);
 }
 
-.actividad > .escena > p {
+.actividad > .scene > p {
   margin: var(--espacio-2) 0;
   color: var(--texto-primario);
   font-size: var(--texto-400);
   line-height: var(--linea-base);
 }
 
-.actividad > .opciones {
+.actividad > .options {
   display: grid;
   gap: var(--espacio-4);
   margin: var(--espacio-6) auto 0;
 }
 
-.actividad > .opciones .btn,
-.actividad > .opciones .opcion-btn {
+.actividad > .options .btn,
+.actividad > .options .opcion-btn {
   width: 100%;
 }
 
@@ -122,7 +122,7 @@
   max-width: var(--contenedor-lectura);
 }
 
-/* Activity option button — only the .correcta / .animo state colours
+/* Activity option button — only the .correct / .animo state colours
    remain, which encode Socratic feedback per activity (Apptonomia-style
    state colours, not a generic component). The shared .btn component
    already provides size, padding, focus ring, transitions. */
@@ -142,7 +142,7 @@
 }
 .opcion-btn:hover { border-color: var(--acento); }
 .opcion-btn:active { transform: scale(0.98); }
-.opcion-btn.correcta {
+.opcion-btn.correct {
   border-color: var(--exito);
   background: var(--acento-suave);
 }
@@ -259,7 +259,7 @@
   font-size: var(--texto-400);
 }
 
-.pista {
+.hint {
   background: rgba(192, 86, 33, 0.12);      /* aliento transparente (light) */
   color: var(--aliento);
   padding: var(--espacio-4);
@@ -294,27 +294,27 @@
     font-size: var(--texto-300);
   }
 
-  .actividad .instruccion {
+  .actividad .instruction {
     margin: var(--espacio-3) auto var(--espacio-2);
     font-size: var(--texto-400);
   }
 
-  .actividad > .escena {
+  .actividad > .scene {
     min-height: 120px;
     padding: var(--espacio-3) var(--espacio-2);
   }
 
-  .actividad > .escena > p {
+  .actividad > .scene > p {
     margin: var(--espacio-1) 0;
     font-size: var(--texto-300);
   }
 
-  .actividad > .opciones {
+  .actividad > .options {
     gap: var(--espacio-2);
     margin-top: var(--espacio-3);
   }
 
-  .actividad > .opciones .opcion-btn {
+  .actividad > .options .opcion-btn {
     min-height: 76px;
     padding: var(--espacio-3) var(--espacio-2);
     font-size: var(--texto-400);

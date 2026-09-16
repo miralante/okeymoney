@@ -1,7 +1,7 @@
 /* tools/change-back — Calcular la vuelta.
    Actividad numérica (6 casos): pagas con X, la compra vale Y, hay que
    escribir la vuelta (X − Y). El keypad, el display, el botón
-   "Comprobar", el Socratic 2-intentos y la recompensa de práctica los
+   "Comprobar", el Socratic 2-attempts y la recompensa de práctica los
    gestiona el runtime compartido (assets/js/activity-runtime.js) bajo
    sceneMode: 'keypad'. */
 (function () {
@@ -28,6 +28,6 @@
     sceneMode: 'keypad',
     checkAnswer: checkAnswer,
     explainAnswer: explainAnswer,
-    casos: DATA.casos
+    cases: DATA.cases
   });
 })();

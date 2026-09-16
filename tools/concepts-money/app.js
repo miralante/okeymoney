@@ -57,7 +57,7 @@
     shuffleCases: false,
     moneyPresentation: presentationValues(),
     presentationLabelKey: 'didacticPresentationLabel',
-    casos: DATA.casos,
+    cases: DATA.cases,
     formatOption: function (value) {
       if (typeof value === 'number') return App.money.format(value);
       if (value && value.pieces) return describePieces(value.pieces);

@@ -11,60 +11,60 @@
   App.activity.run({
     slug: 'safe-money',
     rewardCents: 1500,
-    casos: [
+    cases: [
       {
         id: 'sm1',
-        instruccionKey: 's1instr',
-        escenaHtml: '<p>📩 <strong>+50,00 €</strong><br>Bizum recibido<br>De: número desconocido</p>',
-        opciones: ['opLlamarBanco', 'opGastar', 'opDevolver'],
-        correctaIndex: 0,
-        pistaKey: 's1pista',
-        explicacionKey: 's1expl'
+        instructionKey: 's1instr',
+        sceneHtml: '<p>📩 <strong>+50,00 €</strong><br>Bizum recibido<br>De: número desconocido</p>',
+        options: ['opLlamarBanco', 'opGastar', 'opDevolver'],
+        correctIndex: 0,
+        hintKey: 's1pista',
+        explanationKey: 's1expl'
       },
       {
         id: 'sm2',
-        instruccionKey: 's2instr',
-        escenaHtml: '<p>📤 Bizum enviado<br>Para: 612 345 678<br>Importe: 100,00 €</p>',
-        opciones: ['opLlamarBanco', 'opPedirMas', 'opNoGastar'],
-        correctaIndex: 0,
-        pistaKey: 's2pista',
-        explicacionKey: 's2expl'
+        instructionKey: 's2instr',
+        sceneHtml: '<p>📤 Bizum enviado<br>Para: 612 345 678<br>Importe: 100,00 €</p>',
+        options: ['opLlamarBanco', 'opPedirMas', 'opNoGastar'],
+        correctIndex: 0,
+        hintKey: 's2pista',
+        explanationKey: 's2expl'
       },
       {
         id: 'sm3',
-        instruccionKey: 's3instr',
-        escenaHtml: '<p>📩 SMS de "Banco"<br>"Verifica tu cuenta aquí:<br>🔗 bbanco-seguro.info"</p>',
-        opciones: ['opBorrar', 'opPinchar', 'opLlamarBanco'],
-        correctaIndex: 0,
-        pistaKey: 's3pista',
-        explicacionKey: 's3expl'
+        instructionKey: 's3instr',
+        sceneHtml: '<p>📩 SMS de "Banco"<br>"Verifica tu cuenta aquí:<br>🔗 bbanco-seguro.info"</p>',
+        options: ['opBorrar', 'opPinchar', 'opLlamarBanco'],
+        correctIndex: 0,
+        hintKey: 's3pista',
+        explanationKey: 's3expl'
       },
       {
         id: 'sm4',
-        instruccionKey: 's4instr',
-        escenaHtml: '<p>📞 "Hola, soy de tu banco.<br>Necesito tus claves<br>para proteger tu cuenta."</p>',
-        opciones: ['opCortar', 'opDecirClaves', 'opSeguirLlamada'],
-        correctaIndex: 0,
-        pistaKey: 's4pista',
-        explicacionKey: 's4expl'
+        instructionKey: 's4instr',
+        sceneHtml: '<p>📞 "Hola, soy de tu banco.<br>Necesito tus claves<br>para proteger tu cuenta."</p>',
+        options: ['opCortar', 'opDecirClaves', 'opSeguirLlamada'],
+        correctIndex: 0,
+        hintKey: 's4pista',
+        explanationKey: 's4expl'
       },
       {
         id: 'sm5',
-        instruccionKey: 's5instr',
-        escenaHtml: '<p>📱 WhatsApp<br>"Soy tu primo. Estoy<br>en un problema. ¿Me<br>mandas 200 € ya?"</p>',
-        opciones: ['opLlamarFamiliar', 'opPagarRapido', 'opPedirMas'],
-        correctaIndex: 0,
-        pistaKey: 's5pista',
-        explicacionKey: 's5expl'
+        instructionKey: 's5instr',
+        sceneHtml: '<p>📱 WhatsApp<br>"Soy tu primo. Estoy<br>en un problema. ¿Me<br>mandas 200 € ya?"</p>',
+        options: ['opLlamarFamiliar', 'opPagarRapido', 'opPedirMas'],
+        correctIndex: 0,
+        hintKey: 's5pista',
+        explanationKey: 's5expl'
       },
       {
         id: 'sm6',
-        instruccionKey: 's6instr',
-        escenaHtml: '<p>📱 Móvil nuevo, 200 €<br>(vale 600 € nuevo)<br>"Solo hoy. Adelanto<br>por Bizum y te lo envío."</p>',
-        opciones: ['opQuedarBanco', 'opPagarAdelanto', 'opComprarYa'],
-        correctaIndex: 0,
-        pistaKey: 's6pista',
-        explicacionKey: 's6expl'
+        instructionKey: 's6instr',
+        sceneHtml: '<p>📱 Móvil nuevo, 200 €<br>(vale 600 € nuevo)<br>"Solo hoy. Adelanto<br>por Bizum y te lo envío."</p>',
+        options: ['opQuedarBanco', 'opPagarAdelanto', 'opComprarYa'],
+        correctIndex: 0,
+        hintKey: 's6pista',
+        explanationKey: 's6expl'
       }
     ]
   });

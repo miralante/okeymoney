@@ -322,7 +322,7 @@
     action.dataset.nextAction = mode;
   }
 
-  /* Pinta la barra de anclas a las tres partes de la home. */
+  /* Pinta la barra de anclas a las three partes de la home. */
   function renderModuleAnchors() {
     var wrap = $('#anclasModulo');
     if (!wrap) return;
@@ -412,8 +412,8 @@
         var card = document.createElement('button');
         card.type = 'button';
         card.id = 'simulation-card-' + simulation.id;
-        card.className = 'tarjeta simulation-card simulation-card--action' + (simulation.advanced ? ' simulation-card--advanced' : '') +
-          (simulation.variant === 'money' ? ' tarjeta--money' : '') + (simulation.variant === 'goals' ? ' tarjeta--goals' : '');
+        card.className = 'card simulation-card simulation-card--action' + (simulation.advanced ? ' simulation-card--advanced' : '') +
+          (simulation.variant === 'money' ? ' card--money' : '') + (simulation.variant === 'goals' ? ' card--goals' : '');
         card.dataset.simulationId = simulation.id;
         card.style.setProperty('--acento', 'var(--' + simulation.accent + ')');
         card.style.setProperty('--acento-suave', 'var(--' + simulation.accent + '-suave)');
@@ -483,7 +483,7 @@
     });
     detail.querySelector('#lessonDetailBack').addEventListener('click', function () {
       openLessonId = null;
-      history.replaceState(null, '', '#bloque-didactico');
+      history.replaceState(null, '', '#block-didactico');
       renderDidacticLessons($('#didacticLessons'));
       var card = $('#unidad-' + lesson.id);
       if (card) { card.focus({ preventScroll: true }); card.scrollIntoView({ block: 'nearest' }); }
@@ -519,11 +519,11 @@
       heading.textContent = App.i18n.t('learn.themes.' + theme.id);
       section.appendChild(heading);
       var grid = document.createElement('div');
-      grid.className = 'grid-tarjetas';
+      grid.className = 'grid-cards';
       DATA.activities.filter(function (activity) { return activity.available && activity.theme === theme.id; }).forEach(function (activity) {
         var card = document.createElement('a');
         card.href = activity.href;
-        card.className = 'tarjeta activity-card';
+        card.className = 'card activity-card';
         card.id = 'activity-' + activity.slug;
         var title = App.i18n.t('learn.activityTitle.' + activity.slug);
         card.setAttribute('aria-label', title);
@@ -582,7 +582,7 @@
       var card = document.createElement('button');
       var title = App.i18n.t('blocks.didactic.lessons.' + lesson.id + 'Title');
       card.type = 'button';
-      card.className = 'tarjeta topic-card';
+      card.className = 'card topic-card';
       card.id = 'unidad-' + lesson.id;
       card.setAttribute('aria-labelledby', 'unidad-' + lesson.id + '-title');
       card.innerHTML =
@@ -601,9 +601,9 @@
     });
   }
 
-  /* Tarjeta "Mis metas": un resumen compacto. Cuando NO hay metas,
+  /* Tarjeta "Mis metas": un summary compacto. Cuando NO hay metas,
      muestra el mensaje empty + CTA "+ Nueva meta". Cuando hay,
-     muestra la primera meta con su porcentaje y el sufijo "+N más"
+     muestra la primera meta con su percentage y el sufijo "+N más"
      si hay más. */
   function renderMetasResumen() {
     var detalle = $('#simulationGoalsSummary');
@@ -670,7 +670,7 @@
 
   function renderGoals() {
     /* Deprecated en Fase 3: la pantalla Mis metas ya no existe como
-       pestaña. La tarjeta grande del home (#tarjetaMetas) la pinta
+       pestaña. La card grande del home (#tarjetaMetas) la pinta
        renderMetasResumen(). Esta función se conserva vacía por si
        alguien la llama por error desde código viejo; no hace nada. */
     var list = $('#goalList');
@@ -709,7 +709,7 @@
   }
 
   /* Deprecated en Fase 3: el botón "+ Nueva meta" ya solo vive en la
-     tarjeta compacta del home (#btnNewGoalHome). Conservamos el binding
+     card compacta del home (#btnNewGoalHome). Conservamos el binding
      por compatibilidad con herramientas externas que aún lo busquen. */
   var btnNewGoal = $('#btnNewGoal');
   if (btnNewGoal) {
@@ -718,7 +718,7 @@
     });
   }
 
-  /* "+ Nueva meta" dentro de la tarjeta Mis metas del home abre el
+  /* "+ Nueva meta" dentro de la card Mis metas del home abre el
      wizard nuevo de meta. */
   var btnNewGoalHome = $('#btnNewGoalHome');
   if (btnNewGoalHome) {
@@ -729,7 +729,7 @@
 
   function renderLearn() {
     /* Deprecated: la pestaña Aprender se ha integrado al home
-       como parte #bloque-didactico. No queda nada
+       como parte #block-didactico. No queda nada
        que pintar aquí, pero conservamos la función vacía por si código
        viejo (tests, tools externos) la sigue invocando. */
   }

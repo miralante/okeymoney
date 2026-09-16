@@ -57,15 +57,15 @@ for (const locale of ['es', 'en']) {
     context.App.activity={run:o=>{options=o;}};
     load('tools/'+slug+'/strings.'+locale+'.js',context);
     load('tools/'+slug+'/app.js',context);
-    for(const c of options.casos) {
-      check(()=>assert(c.correctaIndex >= 0 && c.correctaIndex < c.opciones.length));
-      for(const key of [c.sceneKey,c.instruccionKey,c.pistaKey,c.explicacionKey,...c.opciones].filter(k=>typeof k==='string')) {
+    for(const c of options.cases) {
+      check(()=>assert(c.correctIndex >= 0 && c.correctIndex < c.options.length));
+      for(const key of [c.sceneKey,c.instructionKey,c.hintKey,c.explanationKey,...c.options].filter(k=>typeof k==='string')) {
         check(()=>assert.notStrictEqual(context.App.i18n.t(key),key));
       }
     }
     if(slug==='go-shopping') {
-      const c=options.casos.find(c=>c.id==='s6');
-      check(()=>assert.strictEqual(c.opciones[c.correctaIndex],'opLibroTiritas2'));
+      const c=options.cases.find(c=>c.id==='s6');
+      check(()=>assert.strictEqual(c.options[c.correctIndex],'opLibroTiritas2'));
       check(()=>assert(800+300<=2000 && 1500+800>2000));
     }
     if(slug==='my-shopping-day') {

@@ -18,9 +18,9 @@ var DATA = {
   /* The home has three clear parts: everyday situations, actions with the
      person's money, and practical ideas for caring for it. */
   blocks: [
-    { id: 'didactic', accent: 'acento-3', anchor: 'bloque-didactico' },
-    { id: 'simulation', accent: 'acento', anchor: 'bloque-simulacion' },
-    { id: 'guide', accent: 'acento-2', anchor: 'bloque-cuidado' }
+    { id: 'didactic', accent: 'acento-3', anchor: 'block-didactico' },
+    { id: 'simulation', accent: 'acento', anchor: 'block-simulacion' },
+    { id: 'guide', accent: 'acento-2', anchor: 'block-cuidado' }
   ],
 
   /* Five short units keep the learning path visible at a glance. Activities

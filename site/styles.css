@@ -8,7 +8,7 @@
   justify-content: center;
 }
 
-.btn-idioma {
+.btn-lang {
   min-height: var(--boton-min);
   min-width: 64px;
   padding: 0 var(--espacio);
@@ -22,9 +22,9 @@
   cursor: pointer;
 }
 
-.btn-idioma:hover { border-color: var(--color-foco); }
+.btn-lang:hover { border-color: var(--color-foco); }
 
-.btn-idioma[aria-pressed="true"] {
+.btn-lang[aria-pressed="true"] {
   border-color: var(--color-foco);
   background: var(--color-superficie);
 }

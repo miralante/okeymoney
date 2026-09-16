@@ -2,13 +2,13 @@
    Okeymoney — Activity runtime (shared core for tools/<slug>/)
    Exposes window.App.activity.run(opts), a generic Socratic loop used by
    every practice activity. Activities only need to provide:
-     - DATA.casos             — array of { id, sceneHtml/escenaHtml: <html>,
-                                  opciones: [...]
-                                  or { paidCents, costCents, agenteName } for
-                                  sceneMode 'keypad' }
-     - a strings.<locale>.js   with the keys the runtime asks for
-     - a DOM with #escena, #opciones, #pista, #feedback, #practiceTokens,
-       #btnReiniciar (and #wizAmount/#wizPreview for 'keypad' mode)
+     - DATA.cases            — array of { id, sceneHtml: <html>,
+                                 options: [...]
+                                 or { paidCents, costCents, agentName } for
+                                 sceneMode 'keypad' }
+     - a strings.<locale>.js  with the keys the runtime asks for
+     - a DOM with #scene, #options, #hint, #feedback, #practiceTokens,
+       #btnRestart (and #wizAmount/#wizPreview for 'keypad' mode)
 
    Before the cases, it shows a short didactic explanation and example. The
    person then starts the cases as a separate understanding check. On
@@ -17,30 +17,30 @@
    See doc/en/technical.md §10 for the contract.
 
    sceneMode values:
-     'html' (default) — caso.opciones is [labelKey, labelKey, labelKey],
-                        correctaIndex is 0..2. Pintado en #opciones.
-     'money-token'    — caso.cents is a number; pinta un token en #escena.
-                        opciones as in 'html'.
-     'money-bundle'   — caso.pieces is an array of denominations; paints
+     'html' (default) — case.options is [labelKey, labelKey, labelKey],
+                        correctIndex is 0..2. Rendered in #options.
+     'money-token'    — case.cents is a number; renders a token in #scene.
+                        options as in 'html'.
+     'money-bundle'   — case.pieces is an array of denominations; renders
                         several pieces for a counting question.
-     'money-equivalent' — caso.targetCents is the value to match; options
+     'money-equivalent' — case.targetCents is the value to match; options
                         can describe alternative groups of pieces.
-     'money-change'   — caso.paidCents and caso.costCents show a payment and
+     'money-change'   — case.paidCents and case.costCents show a payment and
                         a price; options contain possible change amounts.
-     'keypad'         — caso.paidCents/costCents define una resta. El
-                        runtime pinta un keypad numérico dentro de
-                        #opciones + display grande + botón "Comprobar".
-                        La corrección la decide opts.checkAnswer(value,
-                        current) — devuelve true/false. La 2ª pista y la
-                        revelación de la respuesta correcta las decide
-                        opts.explainAnswer(current) — devuelve string.
+     'keypad'         — case.paidCents/costCents define a subtraction. The
+                        runtime renders a numeric keypad inside #options,
+                        a large display, and a "Check" button.
+                        Correction is decided by opts.checkAnswer(value,
+                        current) — returns true/false. The 2nd hint and
+                        correct-answer reveal are decided by
+                        opts.explainAnswer(current) — returns string.
    ========================================================================== */
 (function () {
   'use strict';
 
   window.App = window.App || {};
 
-  var MAX_CENTS = 9999999; /* mismo techo que el wizard raíz */
+  var MAX_CENTS = 9999999; /* same ceiling as the root wizard */
 
   function $(selector, root) { return (root || document).querySelector(selector); }
   function $$(selector, root) {
@@ -51,7 +51,7 @@
    * @param {object} opts
    * @param {string} opts.slug          Activity id (used for wallet + status)
    * @param {number} opts.rewardCents   Tokens credited on first completion
-   * @param {Array}  opts.casos         Array of case objects (see header)
+   * @param {Array}  opts.cases         Array of case objects (see header)
    * @param {string} [opts.sceneMode]   'html' (default) | money modes | 'keypad'
    * @param {function} [opts.checkAnswer]  (value, current) => boolean — para keypad
    * @param {function} [opts.explainAnswer] (current) => string   — para keypad
@@ -68,12 +68,12 @@
     var answerLocked = false;
 
     function focusScene() {
-      var scene = $('#escena');
+      var scene = $('#scene');
       if (scene) { scene.setAttribute('tabindex', '-1'); scene.focus(); }
     }
 
     function clearFeedback() {
-      var pista = $('#pista');
+      var pista = $('#hint');
       var feedback = $('#feedback');
       if (pista) {
         pista.hidden = true;
@@ -86,10 +86,10 @@
     }
 
     function renderDidactic() {
-      var escena = $('#escena');
-      var opciones = $('#opciones');
-      var instruction = $('#instruccion');
-      var btnReiniciar = $('#btnReiniciar');
+      var escena = $('#scene');
+      var opciones = $('#options');
+      var instruction = $('#instruction');
+      var btnReiniciar = $('#btnRestart');
       if (!escena || !opciones) return;
 
       clearFeedback();
@@ -171,8 +171,8 @@
     }
 
     /* ---- Keypad helpers (sceneMode: 'keypad') ----
-       Renderizan display + preview + keypad + submit dentro de #opciones.
-       Mantienen un valor entero en cents, igual que el wizard raíz. */
+       Render display + preview + keypad + submit inside #options.
+       Maintain an integer value in cents, same as the root wizard. */
     function paintKeypad(value) {
       var amountEl = $('#wizAmount');
       var previewEl = $('#wizPreview');
@@ -185,11 +185,11 @@
     }
 
     function renderKeypad(onSubmit) {
-      var opciones = $('#opciones');
+      var opciones = $('#options');
       opciones.innerHTML = '';
-      /* Si el HTML de la actividad ya trae #wizAmount / #wizPreview /
-         #wizSubmit fuera de #opciones (caso heredado de change-back v1),
-         los reusamos en sitio; si no, los creamos dentro de #opciones. */
+      /* If the activity HTML already provides #wizAmount / #wizPreview /
+         #wizSubmit outside #options (legacy change-back v1 layout),
+         reuse them in place; otherwise create them inside #options. */
       var haveAmount = !!$('#wizAmount');
       var havePreview = !!$('#wizPreview');
       var haveSubmit = !!$('#wizSubmit');
@@ -300,29 +300,29 @@
             .replace('{current}', String(currentIndex + 1)).replace('{total}', String(cases.length)));
         }
       }
-      var escena = $('#escena');
-      var opciones = $('#opciones');
+      var escena = $('#scene');
+      var opciones = $('#options');
       clearFeedback();
       escena.innerHTML = '';
       opciones.innerHTML = '';
       var submitEl = $('#wizSubmit');
       if (submitEl) submitEl.disabled = true;
 
-      /* Cada caso puede sobreescribir el sceneMode global con su propio
-         current.sceneMode (ej.: my-shopping-day mezcla money-token con
-         opciones HTML en una sola actividad). */
+      /* Each case can override the global sceneMode with its own
+         current.sceneMode (e.g.: my-shopping-day mixes money-token with
+         HTML options in a single activity). */
       var sceneMode = current.sceneMode || opts.sceneMode || 'html';
-      var sceneMarkup = current.sceneHtml || current.escenaHtml;
+      var sceneMarkup = current.sceneHtml || current.escenaHtml; /* backwards compat with pre-migration tools */
 
-      var instruction = $('#instruccion');
+      var instruction = $('#instruction');
       if (instruction) {
         instruction.hidden = false;
         if (sceneMode === 'keypad') {
-          instruction.textContent = App.i18n.t('instruccion');
-        } else if (current.instruccionKey) {
-          instruction.textContent = App.i18n.t(current.instruccionKey);
+          instruction.textContent = App.i18n.t('instruction');
+        } else if (current.instructionKey) {
+          instruction.textContent = App.i18n.t(current.instructionKey);
         } else {
-          instruction.textContent = App.i18n.t('instruccion');
+          instruction.textContent = App.i18n.t('instruction');
         }
       }
 
@@ -350,10 +350,10 @@
         renderMoneyAmount(changeScene, current.priceLabelKey || 'didacticTitle', current.costCents);
         escena.appendChild(changeScene);
       } else if (sceneMode === 'keypad') {
-        /* La "escena" para keypad: pintamos la pregunta (pagas con X, la
-           compra vale Y) y el monedero visual de cada cantidad. Si la
-           actividad provee sceneHtml o escenaHtml, lo respetamos; si no,
-           montamos la escena a partir de paidCents/costCents. */
+        /* The "scene" for keypad: render the question (you paid X,
+           the purchase costs Y) and the visual purse for each amount. If the
+           activity provides sceneHtml or escenaHtml, we honour it; otherwise
+           we build the scene from paidCents/costCents. */
         if (sceneMarkup) {
           escena.innerHTML = sceneMarkup;
         } else {
@@ -386,19 +386,19 @@
         escena.appendChild(sceneText);
       } else if (current.promptKey) {
         var prompt = document.createElement('p');
-        prompt.className = 'instruccion-interna';
+        prompt.className = 'instruction-interna';
         prompt.textContent = App.i18n.t(current.promptKey);
         escena.appendChild(prompt);
       }
 
-      if (current.agente && current.agenteName) {
+      if (current.agent && current.agentName) {
         var agent = document.createElement('p');
-        agent.className = 'agente';
-        agent.textContent = ({persona: '👤', empresa: '🏪', banco: '🏦'}[current.agente] || '👤') + ' ' + App.i18n.t(current.agenteName);
+        agent.className = 'agent';
+        agent.textContent = ({persona: '👤', empresa: '🏪', banco: '🏦'}[current.agent] || '👤') + ' ' + App.i18n.t(current.agentName);
         escena.appendChild(agent);
       }
       var optionIndices = [];
-      for (var oi = 0; oi < current.opciones.length; oi += 1) {
+      for (var oi = 0; oi < current.options.length; oi += 1) {
         optionIndices.push(oi);
       }
       var order = shuffle(optionIndices);
@@ -406,8 +406,8 @@
         var optIdx = i;
         var btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'opcion-btn';
-        var label = current.opciones[optIdx];
+        btn.className = 'option-btn';
+        var label = current.options[optIdx];
         if (typeof opts.formatOption === 'function') {
           btn.textContent = opts.formatOption(label, current);
         } else {
@@ -423,13 +423,13 @@
 
     function onAnswer(btn, chosenIdx, current) {
       if (answerLocked) return;
-      var pista = $('#pista');
+      var pista = $('#hint');
       var feedback = $('#feedback');
-      var allBtns = $$('#opciones .opcion-btn');
+      var allBtns = $$('#options .option-btn');
 
-      if (chosenIdx === current.correctaIndex) {
-        btn.classList.add('correcta');
-        if (current.explicacionKey) { pista.hidden = false; pista.textContent = App.i18n.t(current.explicacionKey); }
+      if (chosenIdx === current.correctIndex) {
+        btn.classList.add('correct');
+        if (current.explanationKey) { pista.hidden = false; pista.textContent = App.i18n.t(current.explanationKey); }
         allBtns.forEach(function (b) { b.disabled = true; });
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
@@ -448,26 +448,26 @@
       if (attemptsOnCurrent >= 2) {
         allBtns.forEach(function (b) {
           b.disabled = true;
-          if (Number(b.getAttribute('data-idx')) === current.correctaIndex) {
-            b.classList.add('correcta');
+          if (Number(b.getAttribute('data-idx')) === current.correctIndex) {
+            b.classList.add('correct');
           }
         });
         pista.hidden = false;
-        pista.textContent = App.i18n.t(current.explicacionKey || current.pistaKey || 'pistaSigue');
+        pista.textContent = App.i18n.t(current.explanationKey || current.hintKey || 'pistaSigue');
         offerContinue();
       } else {
         pista.hidden = false;
-        pista.textContent = App.i18n.t(current.pistaKey || 'pistaSigue');
+        pista.textContent = App.i18n.t(current.hintKey || 'pistaSigue');
         App.feedback.lockUntilAck(allBtns, feedback);
       }
     }
 
     /* Socratic loop para sceneMode: 'keypad'. Mismo ritmo que onAnswer:
        acierto → 700 ms y avanza; 1er fallo → pista; 2º fallo → explicación
-       con la respuesta correcta visible y avanza. */
+       con la response correcta visible y avanza. */
     function onKeypadAnswer(value, current) {
       if (answerLocked) return;
-      var pista = $('#pista');
+      var pista = $('#hint');
       var feedback = $('#feedback');
       var submitBtn = $('#wizSubmit');
       if (submitBtn) submitBtn.disabled = true;
@@ -499,7 +499,7 @@
       } else {
         pista.hidden = false;
         pista.textContent = App.i18n.t('core.challenge.hintSubtract') || App.i18n.t('core.challenge.hint') || '';
-        App.feedback.lockUntilAck($$('#opciones .keypad-key'), feedback, function () {
+        App.feedback.lockUntilAck($$('#options .keypad-key'), feedback, function () {
           if (submitBtn) submitBtn.disabled = false;
         });
       }
@@ -507,7 +507,7 @@
 
     function offerContinue() {
       answerLocked = true;
-      $$('#opciones button').forEach(function (b) { b.disabled = true; });
+      $$('#options button').forEach(function (b) { b.disabled = true; });
       var submit = $('#wizSubmit');
       if (submit) submit.disabled = true;
       var feedback = $('#feedback');
@@ -525,14 +525,14 @@
       resolved = true;
       var progress = $('#activityProgress');
       if (progress) progress.hidden = true;
-      var escena = $('#escena');
-      var opciones = $('#opciones');
-      var pista = $('#pista');
+      var escena = $('#scene');
+      var opciones = $('#options');
+      var pista = $('#hint');
       var feedback = $('#feedback');
-      var btnReiniciar = $('#btnReiniciar');
+      var btnReiniciar = $('#btnRestart');
       escena.innerHTML = '';
       opciones.innerHTML = '';
-      var instruction = $('#instruccion');
+      var instruction = $('#instruction');
       if (instruction) instruction.hidden = true;
       pista.hidden = true;
       feedback.textContent = '';
@@ -553,17 +553,17 @@
       if (!already || !already.done) {
         App.wallet.credit(opts.rewardCents, 'activity:' + opts.slug);
         App.wallet.markActivityDone(opts.slug);
-        feedback.textContent = App.i18n.t('completado') + ' +' +
+        feedback.textContent = App.i18n.t('completed') + ' +' +
           App.money.formatPractice(opts.rewardCents);
         feedback.className = 'feedback success';
-        App.feedback.celebrate(App.i18n.t('completado'));
+        App.feedback.celebrate(App.i18n.t('completed'));
       } else {
         feedback.textContent = App.i18n.t('yaCompletada');
         feedback.className = 'feedback';
       }
       refreshWalletChip();
       var transfer = document.createElement('p');
-      transfer.textContent = App.i18n.t(opts.transferKey || 'objetivo');
+      transfer.textContent = App.i18n.t(opts.transferKey || 'target');
       escena.appendChild(transfer);
       var back = document.querySelector('.tool-header .back-link');
       if (back) {
@@ -576,22 +576,22 @@
     }
 
     function init() {
-      cases = opts.shuffleCases === false ? opts.casos.slice() : shuffle(opts.casos.slice());
+      cases = opts.shuffleCases === false ? (opts.cases || opts.casos || []).slice() : shuffle(opts.cases || opts.casos || []);
       currentIndex = 0;
       attemptsOnCurrent = 0;
       totalAttempts = 0;
       resolved = false;
 
-      var btnReiniciar = $('#btnReiniciar');
+      var btnReiniciar = $('#btnRestart');
       if (btnReiniciar) {
         btnReiniciar.addEventListener('click', function () {
-          cases = opts.shuffleCases === false ? opts.casos.slice() : shuffle(opts.casos.slice());
+          cases = opts.shuffleCases === false ? (opts.cases || opts.casos || []).slice() : shuffle(opts.cases || opts.casos || []);
           currentIndex = 0;
           attemptsOnCurrent = 0;
           totalAttempts = 0;
           btnReiniciar.hidden = true;
-          /* Si terminamos en modo keypad, el submit quedó hidden por
-             finishActivity(); lo recuperamos para el nuevo round. */
+          /* If we ended in keypad mode, the submit was hidden by
+             finishActivity(); recover it for the new round. */
           var submitEl = $('#wizSubmit');
           if (submitEl) submitEl.style.display = '';
           renderDidactic();
@@ -605,7 +605,7 @@
       progress.hidden = true;
       progress.setAttribute('role', 'status');
       progress.innerHTML = '<progress max="1" value="0"></progress>';
-      var scene = $('#escena');
+      var scene = $('#scene');
       scene.parentNode.insertBefore(progress, scene);
       refreshWalletChip();
       App.i18n.apply();

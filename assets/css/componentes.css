@@ -719,20 +719,21 @@
 }
 
 /* ==========================================================================
-   Barra de progreso (legado — la usaban .progress-bar en components.css)
+   Compact progress track, matching Ludia
    ========================================================================== */
 .progress-bar {
   position: relative;
-  height: 28px;
-  background: var(--superficie-3);
-  border-radius: 14px;
+  height: 6px;
+  background: #ddd9eb;
+  border: 0;
+  border-radius: 4px;
   overflow: hidden;
 }
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: var(--acento);
-  border-radius: 14px;
+  background: #7462bb;
+  border-radius: 4px;
   transition: width var(--motion-normal) var(--ease-suave);
 }
 /* Ocultar números (estilo runtime: barra limpia sin presión) */
@@ -882,7 +883,7 @@
   align-self: stretch;
 }
 
-.btn-idioma {
+.btn-lang {
   min-height: var(--tocable);
   padding: var(--espacio-2) var(--espacio-3);
   font-family: inherit;
@@ -897,14 +898,14 @@
               background var(--motion-rapida) var(--ease-suave);
 }
 
-.btn-idioma:hover { border-color: var(--acento); }
+.btn-lang:hover { border-color: var(--acento); }
 
-.btn-idioma[aria-pressed="true"] {
+.btn-lang[aria-pressed="true"] {
   border-color: var(--acento);
   background: var(--acento-suave);
 }
 
-.btn-idioma:focus-visible {
+.btn-lang:focus-visible {
   outline: 2px solid var(--superficie-3);
   outline-offset: 2px;
   box-shadow: 0 0 0 4px var(--acento);
@@ -2038,8 +2039,4 @@ header.suite-header {
 @media (max-width: 650px) {
   .container.suite-home { padding-inline: 12px; }
 }
-.progress-text { display: none; }
-.progress-bar { height: 76px !important; border: 4px solid var(--color-borde, #d8d6cf) !important; border-radius: 40px !important; }
-.progress-fill { background: var(--color-acierto, #159b8c) !important; border-radius: 40px !important; }
-.progress-text { display: none !important; }
 

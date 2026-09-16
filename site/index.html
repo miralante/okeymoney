@@ -196,7 +196,7 @@
 </head>
 <body>
   <div class="container suite-home">
-    <header class="cabecera centrado suite-header">
+    <header class="cabecera centered suite-header">
       <div class="suite-brand">
         <img src="../assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
         <div class="suite-brand-copy">
@@ -205,11 +205,11 @@
         </div>
       </div>
       <div class="suite-controls"><div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-idioma" id="btnIdiomaEs" data-locale="es" aria-pressed="false" aria-label="Español"><span class="locale-full" aria-hidden="true">🇪🇸 Español</span><span class="locale-short" aria-hidden="true">ES</span></button>
-        <button type="button" class="btn-idioma" id="btnIdiomaEn" data-locale="en" aria-pressed="false" aria-label="English"><span class="locale-full" aria-hidden="true">🇬🇧 English</span><span class="locale-short" aria-hidden="true">EN</span></button>
+        <button type="button" class="btn-lang" id="btnLangEs" data-locale="es" aria-pressed="false" aria-label="Español"><span class="locale-full" aria-hidden="true">🇪🇸 Español</span><span class="locale-short" aria-hidden="true">ES</span></button>
+        <button type="button" class="btn-lang" id="btnLangEn" data-locale="en" aria-pressed="false" aria-label="English"><span class="locale-full" aria-hidden="true">🇬🇧 English</span><span class="locale-short" aria-hidden="true">EN</span></button>
       </div></div>
       <div class="suite-details">
-        <div class="fila centrado-fila">
+        <div class="fila centered-fila">
         <p class="saludo" id="saludo" data-i18n="saludo">Hola. ¿Qué quieres hacer hoy?</p>
         <button type="button" class="btn btn-audio" id="btnSaludo" data-i18n-aria="listenGreeting" aria-label="Escuchar el saludo">🔊</button>
       </div>
@@ -224,14 +224,14 @@
       <a href="#seccion-accesible" class="ancla-modulo" style="--acento: var(--color-foco);"><span data-i18n="anchorAccessible">♿ Accesible</span></a>
     </nav>
 
-    <main class="pila modulos">
+    <main class="stack modulos">
 
       <!-- Sección: Abrir la app -->
       <section class="modulo" id="seccion-entrar" style="--acento: var(--color-foco); --acento-suave: var(--color-superficie);">
         <h2><span aria-hidden="true" data-i18n="openAppTitle">▶️ Abrir Okeymoney</span></h2>
         <p data-i18n="openAppBody">La app tiene tu saldo, tus gastos y tus metas. Pulsa el botón para entrar.</p>
         <p>
-          <a class="tarjeta tarjeta-cta" href="../index.html" data-i18n="openAppCta">Entrar a Okeymoney</a>
+          <a class="card card-cta" href="../index.html" data-i18n="openAppCta">Entrar a Okeymoney</a>
         </p>
       </section>
 
@@ -243,7 +243,7 @@
       </section>
 
       <!-- Sección: Cómo empezar -->
-      <section class="modulo" id="seccion-empezar" style="--acento: var(--color-foco); --acento-suave: var(--color-superficie);">
+      <section class="modulo" id="seccion-start" style="--acento: var(--color-foco); --acento-suave: var(--color-superficie);">
         <h2><span aria-hidden="true" data-i18n="startTitle">🚀 Cómo empezar</span></h2>
         <ol class="pasos">
           <li data-i18n="startStep1">Entra en Okeymoney con el botón de arriba.</li>
@@ -282,18 +282,18 @@
 
       function pintarSelectorIdioma() {
         var activo = App.i18n.locale();
-        document.getElementById('btnIdiomaEs').setAttribute('aria-pressed', String(activo === 'es'));
-        document.getElementById('btnIdiomaEn').setAttribute('aria-pressed', String(activo === 'en'));
+        document.getElementById('btnLangEs').setAttribute('aria-pressed', String(activo === 'es'));
+        document.getElementById('btnLangEn').setAttribute('aria-pressed', String(activo === 'en'));
       }
 
       document.getElementById('btnSaludo').addEventListener('click', function () {
         App.tts.speak(App.i18n.t('saludo'));
       });
 
-      document.getElementById('btnIdiomaEs').addEventListener('click', function () {
+      document.getElementById('btnLangEs').addEventListener('click', function () {
         App.i18n.setLocale('es');
       });
-      document.getElementById('btnIdiomaEn').addEventListener('click', function () {
+      document.getElementById('btnLangEn').addEventListener('click', function () {
         App.i18n.setLocale('en');
       });
       pintarSelectorIdioma();

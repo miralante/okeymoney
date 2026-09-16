@@ -5,19 +5,19 @@
   App.activity.run({
     slug: 'before-buying',
     rewardCents: 1000,
-    casos: [
-      { id: 'q1', instruccionKey: 'q1instr', escenaHtml: '<p>📱 Un móvil nuevo te llama la atención.</p>',
-        opciones: ['opNeed', 'opWant', 'opNotSure'], correctaIndex: 1,
-        pistaKey: 'q1hint', explicacionKey: 'q1expl' },
-      { id: 'q2', instruccionKey: 'q2instr', escenaHtml: '<p>🚲 La compra cuesta más de lo que tienes reservado.</p>',
-        opciones: ['opBuyNow', 'opBorrow', 'opWait'], correctaIndex: 2,
-        pistaKey: 'q2hint', explicacionKey: 'q2expl' },
-      { id: 'q3', instruccionKey: 'q3instr', escenaHtml: '<p>🎧 Encuentras unos auriculares que te gustan.</p>',
-        opciones: ['opCompare', 'opBuyNow', 'opSkip'], correctaIndex: 0,
-        pistaKey: 'q3hint', explicacionKey: 'q3expl' },
-      { id: 'q4', instruccionKey: 'q4instr', escenaHtml: '<p>🎮 Piensas en comprar un juego por impulso.</p>',
-        opciones: ['opFeelGood', 'opThinkLong', 'opNoThink'], correctaIndex: 1,
-        pistaKey: 'q4hint', explicacionKey: 'q4expl' }
+    cases: [
+      { id: 'q1', instructionKey: 'q1instr', sceneHtml: '<p>📱 Un móvil nuevo te llama la atención.</p>',
+        options: ['opNeed', 'opWant', 'opNotSure'], correctIndex: 1,
+        hintKey: 'q1hint', explanationKey: 'q1expl' },
+      { id: 'q2', instructionKey: 'q2instr', sceneHtml: '<p>🚲 La compra cuesta más de lo que tienes reservado.</p>',
+        options: ['opBuyNow', 'opBorrow', 'opWait'], correctIndex: 2,
+        hintKey: 'q2hint', explanationKey: 'q2expl' },
+      { id: 'q3', instructionKey: 'q3instr', sceneHtml: '<p>🎧 Encuentras unos auriculares que te gustan.</p>',
+        options: ['opCompare', 'opBuyNow', 'opSkip'], correctIndex: 0,
+        hintKey: 'q3hint', explanationKey: 'q3expl' },
+      { id: 'q4', instructionKey: 'q4instr', sceneHtml: '<p>🎮 Piensas en comprar un juego por impulso.</p>',
+        options: ['opFeelGood', 'opThinkLong', 'opNoThink'], correctIndex: 1,
+        hintKey: 'q4hint', explanationKey: 'q4expl' }
     ]
   });
 })();

@@ -175,7 +175,7 @@
   -->
   <div class="container suite-home" id="app">
 
-    <header class="cabecera centrado suite-header">
+    <header class="cabecera centered suite-header">
       <div class="suite-brand">
         <img src="assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
         <div class="suite-brand-copy">
@@ -187,7 +187,7 @@
         <!-- buttons injected by app.js init() from App.i18n.SUPPORTED -->
       </div></div>
       <div class="suite-details">
-        <div class="fila centrado-fila">
+        <div class="fila centered-fila">
         <p class="saludo" id="saludo" data-i18n="home.saludo">Hola. ¿Qué quieres hacer hoy?</p>
       </div>
         
@@ -197,10 +197,10 @@
     <!-- Anclas a las tres partes de la portada. -->
     <nav class="anclas-modulo" aria-label="Ir a una parte" id="anclasModulo"></nav>
 
-    <main class="pila modulos">
+    <main class="stack modulos">
 
       <!-- Parte 1: situaciones cotidianas que se abren para ver su desarrollo. -->
-      <section id="bloque-didactico" class="learning-block learning-block--didactic" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
+      <section id="block-didactico" class="learning-block learning-block--didactic" style="--acento: var(--acento-3); --acento-suave: var(--acento-3-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow" data-i18n="blocks.path.didacticEyebrow">TU DINERO, EN EL DÍA A DÍA</p>
           <h2 data-i18n="blocks.path.didacticTitle">Tu dinero, en el día a día</h2>
@@ -215,13 +215,13 @@
         <section id="practiceSummary" class="practice-summary" aria-live="polite"></section>
         <div id="activityCatalog" class="activity-modules"></div>
         <h3 id="topic-catalog" class="catalog-heading" data-i18n="catalog.topics">Ideas para entender tu dinero</h3>
-        <div id="didacticLessons" class="grid-tarjetas didactic-grid"></div>
+        <div id="didacticLessons" class="grid-cards didactic-grid"></div>
         <section id="lessonDetail" class="lesson-detail hidden" aria-live="polite"></section>
         <a class="btn btn--secundario learning-block__cta" href="#bloque-simulacion" data-i18n="blocks.path.didacticCta">Organizar mi dinero</a>
       </section>
 
       <!-- Parte 2: acciones que la persona puede hacer con su dinero. -->
-      <section id="bloque-simulacion" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
+      <section id="block-simulacion" class="learning-block learning-block--simulation" style="--acento: var(--acento); --acento-suave: var(--acento-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow" data-i18n="blocks.path.simulationEyebrow">ACCIONES PRÁCTICAS</p>
           <h2 data-i18n="blocks.path.simulationTitle">Lo que puedes hacer con tu dinero</h2>
@@ -238,7 +238,7 @@
           <button type="button" class="btn next-step__action" id="nextStepAction">Anotar mi saldo</button>
         </section>
         <div id="financialCycle" class="financial-cycle"></div>
-        <div id="simulationCatalog" class="grid-tarjetas simulation-grid">
+        <div id="simulationCatalog" class="grid-cards simulation-grid">
         </div>
         <div class="simulation-panels">
           <div class="movement-summary" id="movementSummary"></div>
@@ -250,7 +250,7 @@
       </section>
 
       <!-- Parte 3: ideas prácticas para cuidar el dinero. -->
-      <section id="bloque-cuidado" class="learning-block learning-block--guide" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
+      <section id="block-cuidado" class="learning-block learning-block--guide" style="--acento: var(--acento-2); --acento-suave: var(--acento-2-suave);">
         <div class="learning-block__header">
           <p class="learning-block__eyebrow" data-i18n="blocks.path.guideEyebrow">DECISIONES COTIDIANAS</p>
           <h2 data-i18n="blocks.guide.title">Más ideas para cuidar tu dinero</h2>

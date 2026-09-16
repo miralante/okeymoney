@@ -55,7 +55,7 @@
     * config/ and legal/ keep richer footer structures with extra
     * nav links that aren't shared with the landing.
     * --------------------------------------------------------------- */
-  function inyectarPie() {
+  function injectFooter() {
     if (!window.App || !window.App.i18n) return;
     var pies = document.querySelectorAll('footer[data-pie-app]');
     for (var i = 0; i < pies.length; i++) {
@@ -84,6 +84,6 @@
     reducedMotion: reducedMotion,
     uid: uid,
     escapeHtml: escapeHtml,
-    inyectarPie: inyectarPie
+    injectFooter: injectFooter
   };
 })();

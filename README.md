@@ -10,6 +10,7 @@
 [![PWA](https://img.shields.io/badge/PWA-installable-5A0FC8.svg)](manifest.json)
 [![i18n](https://img.shields.io/badge/i18n-es%20%7C%20en-yellow.svg)](#-project-documentation-bilingual)
 [![CI](https://img.shields.io/badge/CI-node%20scripts%2Fcheck.js-blue.svg)](.github/workflows/validate.yml)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 A free, static, dependency-free app that teaches **personal finance and
 everyday autonomy** to our typical user profile: knowing how much money
@@ -21,8 +22,7 @@ device.
 - 🌐 **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk/)
 - 📦 **Repository**: [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney)
 - 💻 **Run locally**: open `index.html` directly in a browser, or serve
-  the folder with any static server (
-npx serve .` /
+  the folder with any static server (`npx serve .` /
   `python -m http.server 8080`) for the full offline-capable PWA
   experience.
 
@@ -126,6 +126,7 @@ at the repository root:
 | Document | Audience |
 |---|---|
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Anyone who wants to contribute (family, therapists, devs) |
+| [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Contributor covenant (Contributor Covenant 2.1) |
 | `CLAUDE.md` | AI agents: operational workflow, coordination and approvals |
 | [`CLOUDFLARE.md`](CLOUDFLARE.md) | Canonical Cloudflare Workers deploy guide for the suite (Okeymoney + Apptonomia + Calculia, Memofun, Sinonimia, Teclatlon) |
 | Project history | Lives in `git log`; no external roadmap is maintained |
@@ -221,6 +222,15 @@ MIT — see [`LICENSE`](LICENSE).
 
 ---
 
+## Contributing
+
+Issues and pull requests are welcome. See [`CONTRIBUTING.md`](CONTRIBUTING.md)
+for the workflow (and [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md) for the
+Spanish version). All participants are expected to follow
+[`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
+
+---
+
 ## 🧹 Housekeeping
 
 There is no 
@@ -234,22 +244,6 @@ The `scripts/` directory holds two helpers worth knowing:
 in CI, catches missed `VERSION` bumps on cached files) and
 [`scripts/serve.js`](scripts/serve.js) (a tiny local static server
 that mimics Cloudflare's behaviour for previews).
-
----
-
-## 🙏 Credits
-
-Okeymoney's **shared-ledger** data model follows Teclatlon (an app of the suite
-project in the suite): one `localStorage` ledger read and written by
-every flow that touches the balance, goals or wallet, so they always
-stay coherent — see [`doc/en/technical.md`](doc/en/technical.md) §2
-for the rationale and the schema.
-
-The **catalogue-first home** presents five short units and a euro-
-simulation catalogue. Activities retain three themes as metadata. Its
-navigation and scope are in [`doc/en/spec.md`](doc/en/spec.md) §§6–7;
-the catalogue and its expansion contract are in
-[`doc/en/activities.md`](doc/en/activities.md).
 
 ---
 
