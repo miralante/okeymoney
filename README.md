@@ -89,12 +89,75 @@ practice wallet always stay coherent.
 
 ---
 
-## 👥 Roles in the project
+##  About
+
+Okeymoney is a **personal finance and everyday-autonomy trainer**:
+the end user sees a shared balance (savings, goals, expenses) on
+the home screen, registers a real expense through a step-by-step
+wizard, and works through themed practice activities that rehearse
+change-back, what-do-I-need and where-to-store — all without ever
+touching a real bank account. The home screen is stratified into
+three blocks (didactic learning, tests that earn Tokens, euro
+simulations) so a single install covers every level of detail.
+
+Okeymoney ships as a static, dependency-free web app and a
+progressive web app. It is one of the **Miralante** suite of
+seven sibling apps — see [🌐 The Miralante suite](#-the-miralante-suite--projects-in-the-suite)
+below for the full list. The real product specification lives in
+[`doc/en/spec.md`](doc/en/spec.md); this README deliberately
+avoids rephrasing product decisions to keep the public
+description and the spec in lock-step.
+
+---
+
+## 🎯 Goals
+
+Okeymoney is built to:
+
+- 💶 **Let a new user open the app and see a working balance**
+  in under five minutes, with no tutorial and no setup wizard.
+- 📒 **Keep one shared ledger across every flow** — the
+  balance, the goals and the practice wallet read and write the
+  same `okeymoney:data` ledger, so they always stay coherent.
+- 🧭 **Practice without touching the real balance** — a
+  separate "practice wallet" lets the user rehearse change-back,
+  cards vs. cash, and emergency decisions in isolation.
+- 🌐 **Stay bilingual end-to-end** — Spanish is the default
+  and source of truth, English keeps parity in every string.
+- 🔒 **Keep progress on the user's device only** — every
+  ledger entry lives in `localStorage` under the `okeymoney:`
+  prefix; nothing is ever uploaded.
+- 📦 **Work offline as a PWA** — install to the home screen,
+  register an expense on a tablet with no signal.
+- 🪶 **Stay dependency-free** — pure HTML/CSS/JS, no build,
+  no framework.
+
+Each goal cross-references a spec section in
+[`doc/en/spec.md`](doc/en/spec.md); if a goal is not in the spec,
+either add it to the spec or drop it from this list.
+
+---
+
+## 👥 Audience & roles
+
+Okeymoney is designed for a **typical user profile** — anyone
+who wants to rehearse personal finance and everyday autonomy on
+their own device, with no account and no real-money risk. The
+real product specification lives in [`doc/en/spec.md`](doc/en/spec.md);
+this README deliberately avoids any clinical label so the public
+description stays generic.
+
+The project recognises three roles around the app, each with its
+own entry point:
+
+
+The project recognises three roles around the app, each with its
+own entry point:
 
 | Role | Who they are | How they participate | Where they look first |
 |---|---|---|---|
-| 👤 **End user** (typical user profile) | Practices personal finance and everyday autonomy | Opens the app in a browser; doesn't read or write code | The app |
-| ❤️ **Support / family** | Helps an end user set up the balance and goals | Initializes the ledger with the user's starting amount and goals; guides the first expense registration | [`CONTRIBUTING.md`](CONTRIBUTING.md) (the "Support" section) |
+| 👤 **End user** (typical user profile) | Practices personal finance and everyday autonomy | Opens the app in a browser; doesn’t read or write code | The app |
+| ❤ **Support / family** | Helps an end user set up the balance and goals | Initializes the ledger with the user’s starting amount and goals; guides the first expense registration | [`CONTRIBUTING.md`](CONTRIBUTING.md) (the “Support” section) |
 | 💻 **Build / developer** | Maintains the shared ledger and the catalogue | Edits `app.js`, the per-activity data, and the catalogue-first home (see [`doc/en/spec.md`](doc/en/spec.md) §§6–7) | [`CLAUDE.md`](CLAUDE.md) |
 
 See [`doc/en/roles.md`](doc/en/roles.md) for the full role description
@@ -102,7 +165,7 @@ and the trio-vs-pair-vs-sole patterns across the apps of the suite.
 
 ---
 
-## 📚 Project documentation (bilingual)
+## �📚 Project documentation (bilingual)
 
 All project documentation lives in the `doc/` folder plus a few files
 at the repository root:
@@ -212,7 +275,8 @@ no telemetry, no third-party runtime. The threat model is essentially
 "what a hostile offline page could do to the same origin", which the
 browser already sandboxes. See [`SECURITY.md`](SECURITY.md) (or
 [`SECURITY.es.md`](SECURITY.es.md)) for how to report a suspected
-issue privately.
+issue privately (preferred channel:
+[`hello@apptonomia.uk`](mailto:hello@apptonomia.uk)).
 
 ---
 
@@ -249,7 +313,7 @@ that mimics Cloudflare's behaviour for previews).
 
 ## 🌐 The Miralante suite — projects in the suite
 
-Okeymoney is one of **six apps** in the **Miralante** suite, sharing
+Okeymoney is one of **seven apps** in the **Miralante** suite, sharing
 the same author, the same accessibility-first / no-backend philosophy
 and the same deploy story. Apptonomia, on top of being an app itself,
 also acts as the **landing portal** that introduces the whole suite.
@@ -260,6 +324,7 @@ just the original product this group grew out of.
 |---|---|---|
 | **Apptonomia** *(portal — landing only, no app)* | Landing page that introduces the Miralante suite (not a runtime app) | [github.com/miralante/apptonomia](https://github.com/miralante/apptonomia) |
 | [Calculia](https://calculia.apptonomia.uk/) | Math and logical reasoning | [github.com/miralante/calculia](https://github.com/miralante/calculia) |
+| [Ludia](https://ludia.apptonomia.uk/) | Adapted games with rules, exercises and matches | [github.com/miralante/ludia](https://github.com/miralante/ludia) |
 | [Memofun](https://memofun.apptonomia.uk/) | Flashcards built around meaningful learning | [github.com/miralante/memofun](https://github.com/miralante/memofun) |
 | [Okeymoney](https://okeymoney.apptonomia.uk/) | Personal finance and everyday autonomy | [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) |
 | [Routime](https://routime.apptonomia.uk/) | Activities for routines and daily-life skills | [github.com/miralante/routime](https://github.com/miralante/routime) |

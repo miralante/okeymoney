@@ -5,7 +5,7 @@
 > contribuir, consulta el [`CONTRIBUTING.md`](../../CONTRIBUTING.md) de
 > la raíz.
 >
-> **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk) · **Repositorio**: [github.com/thenkdframe/okeymoney](https://github.com/thenkdframe/okeymoney) · **Otro idioma**: [English](../en/index.md)
+> **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk) · **Repositorio**: [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) · **Otro idioma**: [English](../en/index.md)
 
 ---
 
@@ -16,7 +16,9 @@ doc/
 ├── es/
 │   ├── indice.md                ← Esta carpeta (punto de entrada, ES)
 │   ├── roles.md                 ← Roles del proyecto
-│   ├── SPEC.md    ├── README.md                ← Introducción en lectura fácil (orientada a la audiencia)│   ├── tecnico.md
+│   ├── SPEC.md
+│   ├── README.md                ← Introducción en lectura fácil (orientada a la audiencia)
+│   ├── tecnico.md
 │   ├── I18N.md
 │   ├── actividades.md           ← Catálogo de actividades
 │   ├── equipo.md                ← Guía para familias / terapeutas

@@ -3,7 +3,7 @@
    Cache-first strategy for the app shell (works offline).
    When adding new files: add them to FILES and bump VERSION.
    ============================================================ */
-var VERSION = 'okeymoney-v113';
+var VERSION = 'okeymoney-v119';
 
 var FILES = [
   './tools/monthly-payments/index.html',
@@ -42,6 +42,8 @@ var FILES = [
   './assets/css/tokens.css',
   './assets/css/base.css',
   './assets/css/componentes.css',
+  './assets/css/locale-picker.css',
+  './assets/js/locale-picker.js',
   './assets/fonts/atkinson-hyperlegible-400.woff2',
   './assets/fonts/atkinson-hyperlegible-700.woff2',
   './assets/fonts/nunito-variable.woff2',

@@ -123,9 +123,12 @@ on-target; note deliberate v1 simplifications (SPEC.md §7) before
 
 Before finishing:
 1. Run `node scripts/check.js`.
-2. If you touched `index.html`, `styles.css`, `sw.js`, or added assets,
+2. Before pushing, run `npm run test:ui`, `node scripts/smoke-sw.js`,
+   and `node scripts/check-version-bump.js`; do not push if any required
+   check fails.
+3. If you touched `index.html`, `styles.css`, `sw.js`, or added assets,
    bump `VERSION` in `sw.js` and add new files to `FILES`.
-3. Report only verifications you actually ran; flag remaining manual
+4. Report only verifications you actually ran; flag remaining manual
    tests (e.g. a real browser walk through a wizard, or a WebKit check).
 
 A deploy (even to a preview channel) is a network operation: ask before

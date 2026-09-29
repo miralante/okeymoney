@@ -73,7 +73,7 @@
 
 .cabecera h1 { color: var(--color-texto); }
 
-.saludo {
+.welcome {
   font-size: var(--texto-grande);
   font-weight: 700;
 }

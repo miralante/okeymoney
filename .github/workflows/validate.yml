@@ -5,9 +5,9 @@
 # Deploy is handled by the Cloudflare Git connector reading _headers
 # from the repo root; this workflow does not deploy.
 #
-# All scripts run with plain node and only use stdlib modules (fs,
-# path, vm, child_process). The repo has no package.json — nothing
-# to install.
+# Structural checks run with plain node and stdlib modules. The UI
+# smoke job installs the package's Playwright dev dependency and
+# Chromium separately.
 #
 # Job list:
 #   1. check      — runs scripts/check.js (structural + i18n).
@@ -61,3 +61,27 @@ jobs:
         env:
           DIFF_BASE: ${{ github.event.pull_request.base.sha || (github.event.before == '0000000000000000000000000000000000000000' && 'HEAD~1') || github.event.before }}
         run: node scripts/check-version-bump.js
+
+  ui-smoke:
+    name: Playwright UI and service-worker smoke
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install UI test dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright UI smoke
+        run: npm run test:ui
+
+      - name: Run service-worker smoke
+        run: npm run test:sw

@@ -20,13 +20,24 @@
      turned off in config). */
   var audioCtx = null;
 
-  function soundsEnabled() {
-    if (!window.App.storage) return true;
-    return App.storage.get('prefs').sounds !== false;
+  function sharedSoundEnabled(kind) {
+    try {
+      var saved = JSON.parse(localStorage.getItem('miralante:sounds') || 'null');
+      if (saved && typeof saved[kind] === 'boolean') return saved[kind];
+    } catch (e) { /* ignore */ }
+    return null;
   }
 
-  function tone(frequency, duration, type) {
-    if (!soundsEnabled()) return;
+  function soundsEnabled(kind) {
+    var shared = sharedSoundEnabled(kind);
+    if (shared !== null) return shared;
+    if (!window.App.storage) return kind !== 'error';
+    var prefs = App.storage.get('prefs');
+    return kind === 'error' ? prefs.sounds === true : prefs.sounds !== false;
+  }
+
+  function tone(frequency, duration, type, kind) {
+    if (!soundsEnabled(kind || 'success')) return;
     try {
       if (!audioCtx) {
         var AC = window.AudioContext || window.webkitAudioContext;
@@ -47,12 +58,12 @@
   }
 
   function soundSuccess() {
-    tone(523.25, 0.15);
-    setTimeout(function () { tone(659.25, 0.2); }, 120);
+    tone(523.25, 0.15, 'sine', 'success');
+    setTimeout(function () { tone(659.25, 0.2, 'sine', 'success'); }, 120);
   }
 
   function soundEncourage() {
-    tone(392, 0.2, 'sine');
+    tone(180, 0.12, 'triangle', 'error');
   }
 
   /**

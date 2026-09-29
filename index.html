@@ -163,8 +163,7 @@
 
   <link rel="stylesheet" href="assets/css/tokens.css">
   <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/componentes.css?v=73">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/componentes.css?v=73"><link rel="stylesheet" href="assets/css/locale-picker.css?v=okeymoney-v1">  <link rel="stylesheet" href="styles.css">
 </head>
 <body data-tema="dinero">
   <!--
@@ -183,12 +182,10 @@
           <p class="suite-attribution"><span data-i18n="suiteBy">Una app de</span> <a href="https://apptonomia.uk/">Apptonomia</a>.</p>
         </div>
       </div>
-      <div class="suite-controls"><div class="idioma-selector" id="langRow" role="group" aria-label="Elegir idioma">
-        <!-- buttons injected by app.js init() from App.i18n.SUPPORTED -->
-      </div></div>
+      <div class="suite-controls"><div id="locale-picker"></div></div>
       <div class="suite-details">
         <div class="fila centered-fila">
-        <p class="saludo" id="saludo" data-i18n="home.saludo">Hola. ¿Qué quieres hacer hoy?</p>
+        <p class="welcome" id="welcome" data-i18n="home.welcome">Hola. ¿Qué quieres hacer hoy?</p>
       </div>
         
       </div>
@@ -346,5 +343,19 @@
   <script src="strings.en.js?v=74"></script>
   <script src="data.js?v=72"></script>
   <script src="app.js?v=72"></script>
+  <!-- Locale picker config (must run BEFORE assets/js/locale-picker.js).
+       Okeymoney stores strings next to index.html (not under assets/js/),
+       so path: 'strings'. storageKey must match the one assets/js/i18n.js
+       writes to localStorage ('okeymoney:locale'). -->
+  <script>
+  window.LocalePickerConfig = {
+    storageKey: 'okeymoney:locale',
+    path: null,
+    requiredLocales: ['es', 'en'],
+    defaultLocale: 'en',
+    settingsHref: 'config/'
+  };
+  </script>
+  <script src="assets/js/locale-picker.js?v=okeymoney-v1" defer></script>
 </body>
 </html>

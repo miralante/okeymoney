@@ -4,7 +4,7 @@
 > for project roles, see [`roles.md`](roles.md); for how to contribute, see
 > the root [`CONTRIBUTING.md`](../../CONTRIBUTING.md).
 >
-> **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk) · **Repository**: [github.com/thenkdframe/okeymoney](https://github.com/thenkdframe/okeymoney) · **Other language**: [Español](../es/indice.md)
+> **App**: [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk) · **Repository**: [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) · **Other language**: [Español](../es/indice.md)
 
 ---
 

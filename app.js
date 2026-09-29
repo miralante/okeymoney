@@ -90,8 +90,8 @@
      The presentation has three clear parts: everyday situations, actions
      with money, and practical ideas for caring for it. */
   function renderHome() {
-    var saludo = $('#saludo');
-    if (saludo) saludo.textContent = App.i18n.t('home.saludo');
+    var welcome = $('#welcome');
+    if (welcome) welcome.textContent = App.i18n.t('home.welcome');
 
     renderModuleAnchors();
     renderPracticeSummary();
@@ -478,7 +478,7 @@
         testLinks + '<div class="learning-unit__test-links">' + actions + '</div>' +
       '</div>';
     detail.setAttribute('aria-labelledby', 'lessonDetailTitle');
-    $('[data-topic-simulation]', detail).forEach(function (button) {
+    $$('[data-topic-simulation]', detail).forEach(function (button) {
       button.addEventListener('click', function () { openSimulation(button.dataset.topicSimulation); });
     });
     detail.querySelector('#lessonDetailBack').addEventListener('click', function () {

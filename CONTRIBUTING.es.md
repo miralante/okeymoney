@@ -1,57 +1,170 @@
 # Contribuir a Okeymoney
 
-¡Gracias por tu interés! Antes de abrir un issue o un PR, echa un
-vistazo a:
+> 🌐 **Otros idiomas:** [English](CONTRIBUTING.md)
+>
+> **Parte de la suite [Miralante](https://apptonomia.uk)** —
+> Okeymoney es uno de los siete proyectos hermanos (Apptonomia,
+> Calculia, Memofun, Okeymoney, Routime, Sinonimia, Teclatlon) que
+> comparten el mismo flujo de trabajo, las mismas reglas de
+> accesibilidad y el mismo código de conducta. Este repo publica
+> **Okeymoney** en sí.
 
-- La especificación de producto en la carpeta `doc/` de este repo (la
-  fuente canónica de las reglas no negociables de producto y
-  accesibilidad).
-- La referencia técnica en `doc/` (arquitectura, restricciones,
-  política de idioma).
-- `CLAUDE.md` (el flujo de trabajo que seguimos al editar el repo).
+Gracias por tu interés en contribuir. Esta guía cubre el flujo de
+trabajo en GitHub que seguimos en toda la suite, los roles del
+proyecto y el pequeño conjunto de recetas que mantienen a cada
+hermano coherente.
 
-> **Sobre la suite Miralante** — Okeymoney es una de las **seis apps**
-> de la [suite Miralante](https://apptonomia.uk) (Calculia, Memofun,
-> Okeymoney, Routime, Sinonimia, Teclatlon). El repo
-> [Apptonomia](https://github.com/miralante/apptonomia) aloja
-> **únicamente el portal de la suite** — no es una app en tiempo de
-> ejecución. La tabla completa de la suite vive en la sección
-> ["La suite Miralante — proyectos del grupo" del `README.es.md`](README.es.md#-la-suite-miralante--proyectos-del-grupo).
+---
 
-## Cómo contribuir
+## 🔀 Flujo de trabajo en GitHub
 
-- **Bugs y peticiones de producto**: usa las
-  [plantillas de issue](../../.github/ISSUE_TEMPLATE/).
-- **Pull requests**: usa la
-  [plantilla de PR](../../.github/PULL_REQUEST_TEMPLATE.md).
-
-## Cambios de producto: ambos idiomas
-
-`es` es el idioma por defecto y la fuente de verdad. Si tocas cadenas
-de UI, contenido o cualquier otro contenido dividido por idioma,
-actualiza tanto `es` como `en` (raíz y/o `legal/`, según el caso).
-`node scripts/check.js` impone paridad de claves, pero no calidad de
-traducción: revisa los dos idiomas.
-
-## Estilo de código
-
-- JavaScript estilo ES5 (`var`, funciones clásicas, IIFE con
-  `'use strict'`).
-- Identificadores, comentarios y mensajes de commit en inglés.
-- Texto de UI en el idioma que representa.
-- Sin frameworks, sin bundlers, sin CDNs de JS.
-
-## Entorno de desarrollo
-
-```bash
-npx serve .
-# o
-python -m http.server 8080
+```text
+1. 🔍 Buscar o crear un issue (en español o inglés)
+2. 💬 Comentar y consensuar el alcance
+3. 🌿 Crear una rama (fork si no tienes acceso de push)
+4. ✏️  Hacer los cambios siguiendo las recetas de abajo
+5. 📤 Abrir un Pull Request (PR) referenciando el issue
+6. 👀 Esperar revisión (al menos 1 de un maintainer)
+7. ✅ Merge cuando hay aprobación
 ```
 
-No hay paso de build. `node scripts/check.js` es el único paso de
-validación (lo corre también el CI en cada push y PR).
+**Etiquetas de issues** (las usamos para clasificar):
 
-## Cómo reportar una vulnerabilidad
+| Etiqueta | Significado |
+|---|---|
+| `UX` | Mejora de usabilidad o experiencia |
+| `contenido` | Textos, traducciones, copy de accesibilidad |
+| `bug` | Error reproducible en el comportamiento |
+| `tech` | Implementación técnica, refactor |
+| `docs` | Cambios en la documentación |
+| `good first issue` | Apto para una primera contribución |
 
-Ver [`SECURITY.md`](SECURITY.md).
+### Convenciones de ramas
+
+- `feat/<slug>` — nuevas funcionalidades
+- `fix/<slug>` — corrección de bugs
+- `docs/<slug>` — cambios solo en documentación
+- `content/<slug>` — cambios solo de contenido (categorías, iconos de metas)
+- `i18n/<código>` — traducción a un idioma (ej. `i18n/ca`, `i18n/gl`)
+
+### Commits
+
+- Mensaje en **inglés** (convención del repo), resumen en imperativo.
+- Una cosa por commit — commits grandes se pueden pedir trocear.
+- Si cierran un issue, incluir `Closes #123` al final.
+
+---
+
+## 👥 Roles del proyecto
+
+| # | Rol | Lee primero |
+|---|---|---|
+| 1 | 👤 **Persona usuaria** | La app — nunca este fichero. |
+| 2 | 🤝 **Apoyo** (familia / docente / terapeuta) | El `doc/es/roles.md`. |
+| 3 | 💻 **Persona constructora** (contenido o código) | Este fichero, más el `doc/es/SPEC.md`, el `doc/es/tecnico.md` y el `CLAUDE.md`. |
+
+> Las decisiones puramente técnicas viven en el rol de persona
+> constructora, **no porque se ignore a la persona usuaria, sino
+> porque ese es el dominio de cada rol.** Las decisiones de
+> producto, contenido, idioma y diseño de UI **se prueban y validan
+> con la persona usuaria siempre que es posible**, y su feedback es
+> la fuente principal de mejora.
+
+---
+
+## 📝 Qué puedes aportar
+
+- **Correcciones de copy** — typos, redacción más clara, ajustes de
+  accesibilidad en `strings.es.js` / `strings.en.js`.
+- **Nueva actividad / elemento** — consulta
+  [`doc/es/guia-crear-elementos.md`](doc/es/guia-crear-elementos.md)
+  para la receta completa (paridad de catálogo, integridad del
+  ledger compartido en `localStorage`, bump de SW, reglas de
+  didáctica y lectura fácil).
+- **Nuevo idioma** — consulta el `doc/es/I18N.md` para la receta
+  completa.
+- **Accesibilidad** — contraste, orden de foco, visibilidad de foco,
+  `prefers-reduced-motion`, etiquetas ARIA, copy en lectura fácil
+  (UNE 153101).
+- **Corrección de bugs** — cualquier cosa que se rompa en un
+  navegador soportado.
+- **Cabeceras de seguridad / CSP** — endurecer la política en
+  `_headers`.
+
+---
+
+## 🌐 Recetas
+
+### Corrección de copy
+
+1. Edita el `strings.<locale>.js` fuente de verdad (`es` por defecto).
+2. Refleja el cambio en todos los demás ficheros de strings
+   (`en` como mínimo).
+3. Ejecuta `node scripts/check.js` para verificar la paridad de claves.
+4. Abre un PR con una descripción de una línea.
+
+### Nuevo idioma
+
+Consulta el `doc/es/I18N.md` para el paso a paso completo. Añadir un
+idioma **no requiere cambios** en el bootstrap ni en el código de la
+app.
+
+### Mejora de accesibilidad
+
+Lee primero el `doc/es/SPEC.md` §3 — las restricciones innegociables
+viven ahí (botones ≥ 64×64 px, contraste WCAG AA con AAA como
+objetivo de diseño, copy en lectura fácil, feedback sin presión).
+Cualquier cosa que las rompa será rechazada.
+
+### Añadir o endurecer una cabecera de seguridad
+
+Las cabeceras viven en `_headers`. La CSP es deliberadamente
+estricta (`script-src 'self'`, sin scripts inline; JSON-LD es dato y
+no necesita `unsafe-inline`). Endurecerla es bienvenido; relajarla
+casi nunca lo es — abre un issue antes.
+
+---
+
+## ✅ Checklist antes de abrir PR
+
+- [ ] `node scripts/check.js` pasa en local.
+- [ ] Si tocaste `sw.js`, `node scripts/check-version-bump.js` pasa y
+      bumpeaste `VERSION` por cualquier cambio en un fichero cacheado.
+- [ ] Si añadiste cadenas de UI, todos los locales soportados están en
+      sincronía.
+- [ ] Probaste el cambio en un navegador real de escritorio y en
+      móvil si la app es PWA.
+- [ ] No añadiste ninguna dependencia de runtime nueva — solo HTML /
+      CSS / JS vanilla.
+- [ ] No aflojaste la CSP en `_headers` sin abrir un issue.
+
+---
+
+## 🚫 Lo que este repositorio NO acepta
+
+- **Relajar la CSP** (`script-src 'self'` se queda estricto).
+- **Nuevas dependencias de runtime** — solo HTML / CSS / JS vanilla.
+- **Añadir analítica / telemetría / llamadas a terceros.**
+- **Datos personales** de cualquier tipo.
+- **Una SPA, un router o un paso de build.**
+
+---
+
+## 📞 Comunicación
+
+- **Issues** → canal principal para propuestas, bugs, preguntas.
+- **Revisiones de Pull Request** → para revisar cambios concretos.
+
+---
+
+## 📜 Código de conducta
+
+Este proyecto sigue [`CODE_OF_CONDUCT.es.md`](CODE_OF_CONDUCT.es.md).
+Participar implica aceptarlo.
+
+---
+
+## 🙏 Gracias
+
+Gracias por dedicar tiempo a una herramienta que ayuda a las personas
+a manejar sus finanzas cotidianas con confianza.

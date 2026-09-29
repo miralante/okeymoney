@@ -98,20 +98,88 @@ mantienen coherentes.
 
 ---
 
-## 👥 Roles del proyecto
+##  Acerca de
+
+Okeymoney es un **entrenador de finanzas personales y autonomía
+cotidiana**: la persona usuaria ve un saldo compartido (ahorros,
+metas, gastos) en la pantalla de inicio, registra un gasto real
+mediante un asistente paso a paso, y practica con actividades
+temáticas que entrenan el cambio, lo que necesito y dónde guardar
+— todo sin tocar nunca una cuenta bancaria real. La home está
+estratificada en tres bloques (didáctica, tests que dan Tokens,
+simulaciones en euros) para que una sola instalación cubra todos
+los niveles de detalle.
+
+Okeymoney se publica como web estática sin dependencias y como
+PWA instalable. Es una de las **siete apps** de la suite
+**Miralante** — la lista completa está en
+[🌐 La suite Miralante](#-la-suite-miralante--proyectos-del-grupo)
+más abajo. La especificación real del producto vive en
+[`doc/es/spec.md`](doc/es/spec.md); este README rehúye
+reformular decisiones de producto para que la descripción
+pública y la especificación no se separen.
+
+---
+
+## 🎯 Objetivos
+
+Okeymoney se construye para:
+
+- 💶 **Permitir que una persona nueva abra la app y vea un
+  saldo funcional** en menos de cinco minutos, sin tutorial ni
+  asistente de configuración.
+- 📒 **Mantener un único libro contable compartido** — el
+  saldo, las metas y el monedero de práctica leen y escriben
+  el mismo libro `okeymoney:data`, para que siempre estén
+  coherentes.
+- 🧭 **Practicar sin tocar el saldo real** — un "monedero de
+  práctica" aparte permite ensayar el cambio, tarjeta vs.
+  efectivo y decisiones de emergencia de forma aislada.
+- 🌐 **Mantener la paridad bilingüe** — español por defecto y
+  fuente de verdad; inglés con paridad en cada cadena.
+- 🔒 **Guardar el progreso solo en el dispositivo** — cada
+  apunte vive en `localStorage` bajo el prefijo `okeymoney:`;
+  nada se sube nunca.
+- 📦 **Funcionar sin conexión como PWA** — instalar en la
+  pantalla de inicio, registrar un gasto en una tablet sin
+  señal.
+- 🪶 **Mantenerse sin dependencias** — HTML/CSS/JS puros, sin
+  build, sin frameworks.
+
+Cada objetivo referencia una sección de
+[`doc/es/spec.md`](doc/es/spec.md); si un objetivo no está allí,
+añádelo a la especificación o sácalo de la lista.
+
+---
+
+## 👥 Audiencia y roles
+
+Okeymoney está pensada para una **persona tipo** — quien quiera
+ensayar finanzas personales y autonomía cotidiana en su propio
+dispositivo, sin cuenta ni riesgo con dinero real. La
+especificación real del producto vive en [`doc/es/spec.md`](doc/es/spec.md);
+este README evita a propósito cualquier etiqueta clínica para que
+la descripción pública se mantenga genérica.
+
+El proyecto reconoce tres roles alrededor de la app, cada uno
+con su propio punto de entrada:
+
+
+El proyecto reconoce tres roles alrededor de la app, cada uno
+con su propio punto de entrada:
 
 | Rol | Quién es | Cómo participa | Dónde mira primero |
 |---|---|---|---|
 | 👤 **Persona usuaria** (persona tipo) | Practica finanzas personales y autonomía cotidiana | Abre la app en un navegador; no lee ni escribe código | La aplicación |
-| ❤️ **Apoyo / familia** | Ayuda a la persona usuaria a configurar saldo y metas | Inicializa el libro contable con el importe inicial y las metas; acompaña el primer registro de gasto | [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md) (la sección "Apoyo") |
-| 💻 **Construcción / desarrollador/a** | Mantiene el libro contable compartido y el catálogo | Edita `app.js`, los datos por actividad y la home catálogo-primero (ver [`doc/es/spec.md`](doc/es/spec.md) §6–§7) | [`CLAUDE.md`](CLAUDE.md) |
+| ❤ **Apoyo / familia** | Ayuda a la persona usuaria a configurar saldo y metas | Inicializa el libro contable con el importe inicial y las metas; acompaña el primer registro de gasto | [`CONTRIBUTING.es.md`](CONTRIBUTING.es.md) (la sección “Apoyo”) |
+| 💻 **Construcción / desarrollador/a** | Mantiene el libro contable compartido y el catálogo | Edita `app.js`, los datos por actividad y la home catálogo-primero (ver [`doc/es/spec.md`](doc/es/spec.md) §6–7) | [`CLAUDE.md`](CLAUDE.md) |
 
 Ver [`doc/es/roles.md`](doc/es/roles.md) para la descripción completa
 de los roles y los patrones trio/par/único en el conjunto de la suite.
 
 ---
 
-## 📚 Documentación del proyecto (bilingüe)
+## �📚 Documentación del proyecto (bilingüe)
 
 Toda la documentación del proyecto vive en la carpeta `doc/`, junto
 con algunos archivos en la raíz del repositorio:
@@ -228,7 +296,9 @@ backend, sin base de datos, sin telemetría, sin servicios de terceros en
 tiempo de ejecución. El modelo de amenaza es esencialmente "qué podría
 hacer una página maliciosa offline contra el mismo origen", algo que el
 navegador ya aísla. Ver [`SECURITY.es.md`](SECURITY.es.md) (o
-[`SECURITY.md`](SECURITY.md)) para reportar una sospecha de forma privada.
+[`SECURITY.md`](SECURITY.md)) para reportar una sospecha de forma
+privada (canal preferido:
+[`hello@apptonomia.uk`](mailto:hello@apptonomia.uk)).
 
 ---
 
@@ -266,7 +336,7 @@ previsualizaciones).
 
 ## 🌐 La suite Miralante — proyectos del grupo
 
-Okeymoney es una de las **seis apps** de la suite **Miralante**, que
+Okeymoney es una de las **siete apps** de la suite **Miralante**, que
 comparten autor, la misma filosofía de accesibilidad sin backend, y la
 misma historia de despliegue en Cloudflare. Apptonomia, además de ser
 una app en sí misma, actúa como **portal de la suite** que la presenta
@@ -277,6 +347,7 @@ este es el producto original del que nació el grupo.
 |---|---|---|
 | **Apptonomia** *(portal — landing only, no es app)* | Landing que presenta la suite Miralante (no es una app en tiempo de ejecución) | [github.com/miralante/apptonomia](https://github.com/miralante/apptonomia) |
 | [Calculia](https://calculia.apptonomia.uk/) | Cálculo y razonamiento lógico | [github.com/miralante/calculia](https://github.com/miralante/calculia) |
+| [Ludia](https://ludia.apptonomia.uk/) | Juegos adaptados con reglas, ejercicios y partidas | [github.com/miralante/ludia](https://github.com/miralante/ludia) |
 | [Memofun](https://memofun.apptonomia.uk/) | Tarjetas de memoria con aprendizaje significativo | [github.com/miralante/memofun](https://github.com/miralante/memofun) |
 | [Okeymoney](https://okeymoney.apptonomia.uk/) | Finanzas personales y autonomía cotidiana | [github.com/miralante/okeymoney](https://github.com/miralante/okeymoney) |
 | [Routime](https://routime.apptonomia.uk/) | Actividades para rutinas y vida cotidiana | [github.com/miralante/routime](https://github.com/miralante/routime) |

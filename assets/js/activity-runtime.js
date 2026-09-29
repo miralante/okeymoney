@@ -318,11 +318,11 @@
       if (instruction) {
         instruction.hidden = false;
         if (sceneMode === 'keypad') {
-          instruction.textContent = App.i18n.t('instruction');
+          instruction.textContent = App.i18n.t('instruccion');
         } else if (current.instructionKey) {
           instruction.textContent = App.i18n.t(current.instructionKey);
         } else {
-          instruction.textContent = App.i18n.t('instruction');
+          instruction.textContent = App.i18n.t('instruccion');
         }
       }
 
@@ -553,10 +553,10 @@
       if (!already || !already.done) {
         App.wallet.credit(opts.rewardCents, 'activity:' + opts.slug);
         App.wallet.markActivityDone(opts.slug);
-        feedback.textContent = App.i18n.t('completed') + ' +' +
+        feedback.textContent = App.i18n.t('completado') + ' +' +
           App.money.formatPractice(opts.rewardCents);
         feedback.className = 'feedback success';
-        App.feedback.celebrate(App.i18n.t('completed'));
+        App.feedback.celebrate(App.i18n.t('completado'));
       } else {
         feedback.textContent = App.i18n.t('yaCompletada');
         feedback.className = 'feedback';

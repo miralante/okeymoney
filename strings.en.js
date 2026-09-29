@@ -27,7 +27,7 @@
     },
 
     home: {
-      saludo: 'Hi. What do you want to do today?',
+      welcome: 'Hi. What do you want to do today?',
       moreGoals: '+{n} more',
       anchorAria: 'Jump to {theme}',
       anchorNavAria: 'Jump to a part',

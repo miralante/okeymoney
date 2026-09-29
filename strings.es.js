@@ -27,7 +27,7 @@
     },
 
     home: {
-      saludo: 'Hola. ¿Qué quieres hacer hoy?',
+      welcome: 'Hola. ¿Qué quieres hacer hoy?',
       moreGoals: '+{n} más',
       anchorAria: 'Ir a {theme}',
       anchorNavAria: 'Ir a una parte',

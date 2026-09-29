@@ -210,8 +210,8 @@
       </div></div>
       <div class="suite-details">
         <div class="fila centered-fila">
-        <p class="saludo" id="saludo" data-i18n="saludo">Hola. ¿Qué quieres hacer hoy?</p>
-        <button type="button" class="btn btn-audio" id="btnSaludo" data-i18n-aria="listenGreeting" aria-label="Escuchar el saludo">🔊</button>
+        <p class="welcome" id="welcome" data-i18n="welcome">Hola. ¿Qué quieres hacer hoy?</p>
+        <button type="button" class="btn btn-audio" id="btnWelcome" data-i18n-aria="listenGreeting" aria-label="Escuchar el saludo">🔊</button>
       </div>
         
       </div>
@@ -286,8 +286,8 @@
         document.getElementById('btnLangEn').setAttribute('aria-pressed', String(activo === 'en'));
       }
 
-      document.getElementById('btnSaludo').addEventListener('click', function () {
-        App.tts.speak(App.i18n.t('saludo'));
+      document.getElementById('btnWelcome').addEventListener('click', function () {
+        App.tts.speak(App.i18n.t('welcome'));
       });
 
       document.getElementById('btnLangEs').addEventListener('click', function () {

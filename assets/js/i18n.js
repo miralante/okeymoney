@@ -5,8 +5,8 @@
    -> money.js -> strings.<locale>.js -> data.js -> app.js.
 
    Active language: localStorage 'okeymoney:locale' if supported; otherwise
-   detected from navigator.language ('es' prefix -> 'es', anything else -> 'en'
-   falls back to 'es', the source of truth).
+   detected from navigator.language ('es' prefix -> 'es', anything else -> 'en',
+   the source of truth).
 
    Each strings.<locale>.js calls App.i18n.register({key: 'text', ...}, 'es'|'en').
    ========================================================================== */
@@ -17,7 +17,7 @@
 
   var LOCALE_KEY = 'okeymoney:locale';
   var SUPPORTED = ['es', 'en'];
-  var DEFAULT_LOCALE = 'es';
+  var DEFAULT_LOCALE = 'en';
   /* BCP47 mapping for speechSynthesis voices. Add a new entry for each
      locale in SUPPORTED. Falls back to DEFAULT_LOCALE if a language
      isn't listed. */

@@ -17,8 +17,8 @@
   <div class="container settings">
     <header class="cabecera-settings">
       <div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-lang" id="btnLangEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
-        <button type="button" class="btn-lang" id="btnLangEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
+        <button type="button" class="btn-idioma" id="btnLangEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
+        <button type="button" class="btn-idioma" id="btnLangEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
       </div>
       <p class="aviso-ruta" data-i18n="routeNotice">Página de ajustes. No aparece en el menú de la aplicación:
         solo se llega escribiendo esta dirección.</p>
@@ -40,7 +40,7 @@
         <h2 data-i18n="personalDataTitle">Borrar los datos de la persona</h2>
         <p data-i18n="personalDataIntro">Borra el tamaño del texto y la preferencia de idioma.
           <strong data-i18n="personalDataKeeps">Se conservan</strong> el saldo, los movimientos, las metas y los compromisos.</p>
-        <button type="button" id="btnBorrarPersona" class="btn btn-secundario" data-i18n="btnResetPersonal">Borrar mis datos personales</button>
+        <button type="button" id="btnBorrarPersona" class="btn btn-secondary" data-i18n="btnResetPersonal">Borrar mis datos personales</button>
         <p id="feedbackPersona" class="feedback" aria-live="polite"></p>
       </section>
 
@@ -59,6 +59,7 @@
 
   <script src="../assets/js/utils.js"></script>
   <script src="../assets/js/i18n.js"></script>
+  <script src="../assets/js/storage.js"></script>
   <script src="strings.es.js"></script>
   <script src="strings.en.js"></script>
   <script src="app.js"></script>
