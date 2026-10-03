@@ -593,6 +593,50 @@ async function runRoute(browser, baseUrl, route) {
   }
 }
 
+async function exerciseOkeymoneyAchievements(browser, baseUrl) {
+  const context = await browser.newContext({
+    locale: 'es-ES', serviceWorkers: 'block', viewport: { width: 375, height: 800 },
+  });
+  const page = await context.newPage();
+  const errors = listenForErrors(page, baseUrl);
+  try {
+    /* Progress saved before achievements existed must be credited. */
+    await page.addInitScript(() => {
+      if (sessionStorage.getItem('seeded')) return;
+      sessionStorage.setItem('seeded', '1');
+      localStorage.clear();
+      localStorage.setItem('okeymoney:locale', 'es');
+      localStorage.setItem('okeymoney:activity:concepts-money',
+        JSON.stringify({ done: true, completedAt: '2026-01-10' }));
+      localStorage.setItem('okeymoney:data', JSON.stringify({
+        version: 1, initialBalanceCents: 5000,
+        movements: [{ id: 'm1', type: 'expense', categoryId: 'food', amountCents: 200, date: '2026-01-11' },
+          { id: 'm2', type: 'saving', goalId: 'g1', amountCents: 1000, date: '2026-01-12' }],
+        goals: [{ id: 'g1', name: 'Bici', icon: '🚲', targetCents: 1000, savedCents: 1000, achieved: true }],
+      }));
+    });
+    await page.goto(baseUrl + '/', { waitUntil: 'domcontentloaded', timeout: NAV_TIMEOUT });
+    const links = page.locator('.footer-app a');
+    assert.strictEqual(await links.nth(0).getAttribute('href'), 'about-app/',
+      'El pie debe enlazar "Sobre la app" antes de Configuración');
+    assert.strictEqual(await links.nth(1).getAttribute('href'), 'config/');
+    await links.nth(0).click();
+    await page.waitForURL(/\/about-app\/$/, { timeout: NAV_TIMEOUT });
+    await page.locator('#achievementsGrid .achievement-badge').first().waitFor({ timeout: NAV_TIMEOUT });
+    assert.strictEqual(await page.locator('#achievementsGrid .achievement-badge').count(), 6);
+    assert.strictEqual(await page.locator('#achievementsGrid .achievement-badge.unlocked').count(), 4,
+      'Deben desbloquearse primera actividad, primer apunte, meta conseguida y racha de 3 días');
+    assert.match(await page.locator('#achievementsCount').innerText(), /4 de 6/);
+    const scrollWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+    assert.ok(scrollWidth <= 375, 'La página de logros no debe tener scroll horizontal a 375px');
+    assert.deepEqual(errors.page, [], 'Errores de página: ' + errors.page.join('; '));
+    assert.deepEqual(errors.console, [], 'Errores de consola: ' + errors.console.join('; '));
+  } finally {
+    await page.close().catch(() => {});
+    await context.close().catch(() => {});
+  }
+}
+
 async function main() {
   const allRoutes = publicRoutes();
   const requestedRoutes = process.argv.slice(2);
@@ -612,6 +656,10 @@ async function main() {
     process.stdout.write('\n[' + APP + '] sound settings OK');
     await exerciseUnsupportedBrowserLanguage(browser, baseUrl);
     process.stdout.write('\n[' + APP + '] fr-FR fallback OK');
+    if (APP === 'okeymoney') {
+      await exerciseOkeymoneyAchievements(browser, baseUrl);
+      process.stdout.write('\n[' + APP + '] achievements (about-app/) OK');
+    }
     for (const route of routes) {
       process.stdout.write('\n[' + APP + '] ' + route + ' ');
       try {

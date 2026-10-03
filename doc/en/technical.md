@@ -456,6 +456,23 @@ Completing an activity for the first time calls `App.wallet.credit(rewardCents, 
 do not re-credit (the `activityStatus.done` check is idempotent) but
 stay available if the person wants to repeat the activity.
 
+### 10.2.1 Achievements ("About the app")
+
+`assets/js/achievements.js` (`App.achievements`) holds six achievements:
+`firstActivity`, `fiveActivities`, `streak3`, `allActivities`,
+`firstRecord` and `goalReached`. Unlocks are stored as
+`okeymoney:achievements` → `{ <id>: <timestamp> }`, so the full reset in
+`/config/` (`App.storage.clearAll()`) removes them too.
+
+All six are derived from data that is already saved (`activity:<slug>`
+records and the `okeymoney:data` ledger), never from mistakes, attempts
+or time. `App.achievements.sync()` re-reads that data and unlocks what is
+earned. It runs on home boot, after every ledger `save()` in `app.js`,
+and on the `about-app/` page. Activities in `tools/<slug>/` do not load
+it (they stay isolated); their completion is credited when the person
+returns to the home. The badges are shown on `about-app/`, linked from
+the home footer right before Settings.
+
 ### 10.3 Test activities inside each unit
 
 Eight activities live under `tools/<slug>/`. Each one is a self-contained
