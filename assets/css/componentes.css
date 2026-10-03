@@ -824,6 +824,83 @@
   text-decoration: underline;
 }
 
+.footer-app .legal-link + .legal-link { margin-left: var(--espacio-3); }
+
+/* Footer injected by App.utils.injectFooter() (site/): keep links apart. */
+footer.pie-app {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--espacio-2) var(--espacio-4);
+  margin-top: var(--espacio-6);
+  padding: var(--espacio-4) 0;
+}
+
+/* ==========================================================================
+   Achievements (about-app/). Locked badges keep full text contrast:
+   the state is told by the lock icon, the dashed border and the
+   status text, never by color or transparency alone.
+   ========================================================================== */
+.achievements-grid {
+  list-style: none;
+  padding: 0;
+  margin: var(--espacio-3) 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr));
+  gap: var(--espacio-3);
+}
+
+.achievement-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--espacio-1);
+  padding: var(--espacio-3);
+  border-radius: var(--radius);
+  border: 2px solid var(--borde);
+  background: var(--superficie-1);
+}
+
+.achievement-badge.locked {
+  border-style: dashed;
+  border-color: var(--borde-fuerte);
+  background: var(--superficie-1);
+}
+
+.achievement-badge.unlocked {
+  border-color: var(--acento-2);
+  background: var(--acento-2-suave);
+}
+
+.achievement-badge-icon {
+  font-size: 2.25rem;
+  line-height: 1;
+}
+
+.achievement-badge-name {
+  font-size: var(--texto-300);
+  font-weight: var(--peso-fuerte);
+  color: var(--texto-primario);
+  line-height: 1.2;
+}
+
+.achievement-badge-desc {
+  font-size: var(--texto-200);
+  color: var(--texto-secundario);
+  line-height: 1.35;
+}
+
+.achievement-badge-status {
+  font-size: var(--texto-200);
+  font-weight: var(--peso-fuerte);
+  color: var(--texto-primario);
+}
+
+.achievement-badge.unlocked .achievement-badge-status {
+  color: var(--exito);
+}
+
 /* ==========================================================================
    Goal grid
    ========================================================================== */

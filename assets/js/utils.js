@@ -67,6 +67,8 @@
       if (extraClass) pie.className = (pie.className ? pie.className + ' ' : '') + extraClass;
       var html = '';
       if (includeConfig) {
+        /* "About the app" (achievements) sits right before Settings. */
+        html += '<a href="' + base + 'about-app/" class="enlace-legal" data-i18n="core.aboutApp"></a>';
         html += '<a href="' + base + 'config/" class="enlace-legal" data-i18n="core.config"></a>';
       }
       html += '<a href="' + base + 'legal/index.html" class="enlace-legal" data-i18n="core.dataProtection"></a>';
