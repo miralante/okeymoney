@@ -73,7 +73,7 @@ alcance — no un motivo para cambiar la base de hoy.
 - **Persistencia solo en `localStorage`.** Sin inicio de sesión, sin
   cookies, sin datos personales, sin analítica.
 - **PWA con soporte sin conexión**: `manifest.json` + `sw.js` (caché
-  "cache-first" del cascarón de la app).
+  "network-first con caché de respaldo" del cascarón de la app).
 - **Estilo de código**: JS al estilo ES5 (`var`, funciones clásicas, IIFE
   con `'use strict'`); identificadores, comentarios y mensajes de commit
   en inglés. El propio texto de la interfaz (`strings.es.js`,
@@ -412,7 +412,7 @@ válida sin mostrar nunca un mensaje de error.
 
 ## 7. PWA y service worker
 
-- `sw.js` sigue la estrategia **cache-first** para el cascarón de la app.
+- `sw.js` sigue la estrategia **network-first con caché de respaldo** para el cascarón de la app.
   Contrato al tocar archivos: añadir los nuevos a `FILES`; subir
   `VERSION` (`okeymoney-vNN`) ante cualquier cambio en un archivo
   cacheado, o quien tenga la PWA instalada no verá el cambio.
@@ -679,15 +679,17 @@ la **plantilla**; las desviaciones se indican donde apliquen.
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v4aa">
 </head>
 <body>
   <div class="container {legal|about}">
     <header class="cabecera-{legal|about}">
-      <div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-idioma" id="btnIdiomaEs"
-                data-locale="es" aria-pressed="false">🇪🇸 Español</button>
-        <button type="button" class="btn-idioma" id="btnIdiomaEn"
-                data-locale="en" aria-pressed="false">🇬🇧 English</button>
+      <!-- El idioma es un control de primer nivel de la cabecera, no un
+           subapartado del cajon de ajustes: el componente compartido se
+           monta dentro de .suite-controls y el engranaje se inserta el
+           solo, justo detras. No hay ningun boton de idioma en el HTML. -->
+      <div class="suite-controls">
+        <div id="locale-picker"></div>
       </div>
       <img src="../assets/img/icono.svg" alt="" width="80" height="80"
            class="logo-{legal|about}">
@@ -719,23 +721,13 @@ la **plantilla**; las desviaciones se indican donde apliquen.
   <script src="../assets/js/i18n.js"></script>
   <script src="strings.es.js"></script>
   <script src="strings.en.js"></script>
-  <script>
-    (function () {
-      'use strict';
-      function paintLanguageSelector() {
-        var active = App.i18n.locale();
-        document.getElementById('btnIdiomaEs')
-          .setAttribute('aria-pressed', String(active === 'es'));
-        document.getElementById('btnIdiomaEn')
-          .setAttribute('aria-pressed', String(active === 'en'));
-      }
-      document.getElementById('btnIdiomaEs')
-        .addEventListener('click', function () { App.i18n.setLocale('es'); });
-      document.getElementById('btnIdiomaEn')
-        .addEventListener('click', function () { App.i18n.setLocale('en'); });
-      paintLanguageSelector();
-    })();
-  </script>
+  <!-- El desplegable necesita su configuracion ANTES que el
+       componente. Los dos van diferidos, y los diferidos se ejecutan
+       en orden de documento, con listarlos en ese orden basta. El ?v=
+       no es opcional: los .js y .css se sirven immutable un ano, sin el
+       la pagina sirve la version vieja desde la cache. -->
+  <script src="../assets/js/locale-picker-config.js?v=okeymoney-v4aa"></script>
+  <script src="../assets/js/locale-picker.js?v=okeymoney-v4aa" defer></script>
   <script>
     /* Register the SW from this entry point so it is active for any
        later navigation, matching what the main index.html and the
@@ -1061,7 +1053,11 @@ Las 11 actividades incluyen tres recorridos nuevos, con seis situaciones cada un
 - `compare-prices`: Compara antes de pagar.
 - `monthly-payments`: Organiza tus pagos.
 
-Las pistas y explicaciones permanecen hasta pulsar «Entendido». No hay avance por tiempo. Al terminar se recuerda cómo usar lo aprendido. Las actividades no guardan intentos y no modifican el saldo en euros.
+Las pistas y explicaciones tras un fallo permanecen hasta pulsar «Entendido».
+Al acertar, se mantiene el mensaje positivo y se oculta la explicación con la
+respuesta para reducir la carga visual. No hay avance por tiempo. Al terminar
+se recuerda cómo usar lo aprendido. Las actividades no guardan intentos y no
+modifican el saldo en euros.
 
 
 ### Navegación de situaciones

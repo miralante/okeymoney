@@ -34,3 +34,6 @@ id_ed25519
 id_ed25519.pub
 **/credentials.json
 **/service-account*.json
+
+# Cache local de Wrangler CLI (deployments, logs).
+.wrangler/

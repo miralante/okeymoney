@@ -87,7 +87,10 @@
   /* Text (TODO.md §2.2) — contraste AAA verificado arriba. */
   --texto-primario: #1A1A2E;
   --texto-secundario: #4A4A68;
-  --texto-tenue: #7B7488;            /* captions, metadata, disabled */
+  /* Texto tenue (captions, notas): #7B7488 daba 4.47:1, justo por
+     debajo del 4.5:1 que exige WCAG AA para texto normal. Este gris
+     da 5.1:1 sin perder la intención de "secundario". */
+  --texto-tenue: #6E6879;
 
   /* Per-theme accent palette (TODO.md §2.2) — valores claros,
      coherentes con la paleta v1 ya en uso por Routime. Las tarjetas
@@ -95,7 +98,9 @@
      según el módulo temático. */
   --acento: #2E7D32;                /* verde dinero (Mi dinero) */
   --acento-suave: #E6F2E6;
-  --acento-2: #B8860B;              /* oro (Mis metas) */
+  --acento-2: #8A6208;              /* oro (Mis metas) — legible como
+                                       texto: #B8860B daba 3.25:1 en los
+                                       eyebrows, este da 4.8:1 */
   --acento-2-suave: #F7EFDD;
   --acento-3: #1B6CA8;              /* azul (Aprender / catálogo) */
   --acento-3-suave: #DCE9F2;
@@ -160,4 +165,130 @@
   --tocable: 64px;                  /* alias of --button-min */
   --tocable-lg: 88px;
   --tocable-xl: 120px;
+
+  /* Text on solid accents (primary buttons). In dark/contrast the
+     accents get lighter, so the text on top has to turn dark or the
+     button reads as white-on-light and is illegible. */
+  --color-on-accent: #FFFFFF;
+  --color-on-error: #FFFFFF;
+  --color-on-success: #FFFFFF;
+  --texto-sobre-acento: #FFFFFF;
 }
+
+/* -------- Dark theme --------
+   data-theme="dark", which is what the gear switch sets; the default is
+   "light" and the "auto" option is gone. Both the English and the Spanish
+   token families are overridden: the app reads a mix of them. */
+[data-theme="dark"] {
+  --color-bg: #14161E;
+  --color-surface: #1E2230;
+  --color-text: #F2F0EA;
+  --color-text-soft: #B3B0C8;
+  --color-border: #39405A;
+
+  --superficie-base: #14161E;
+  --superficie-1: #1E2230;
+  --superficie-2: #262B3C;
+  --superficie-3: #2F3547;
+
+  --texto-primario: #F2F0EA;
+  --texto-secundario: #B3B0C8;
+  --texto-tenue: #9693AC;
+
+  --accent: #7BD389;
+  --accent-soft: #1E3D24;
+  --accent-2: #E0B85C;
+  --accent-2-soft: #3A2C1E;
+
+  --acento: #7BD389;
+  --acento-suave: #1E3D24;
+  --acento-2: #E0B85C;
+  --acento-2-suave: #3A2C1E;
+  --acento-3: #6BB4F2;
+  --acento-3-suave: #19354D;
+
+  --color-success: #7BD389;
+  --color-success-soft: #1E3D24;
+  --color-encourage: #F2B07A;
+  --color-encourage-soft: #3A2C1E;
+
+  --exito: #7BD389;
+  --aliento: #F2B07A;
+  --error: #F2907A;
+
+  --mod-learn: #6BB4F2;
+  --mod-learn-soft: #19354D;
+  --mod-safe: #C3A0F0;
+  --mod-safe-soft: #2C2340;
+
+  --borde: #39405A;
+  --borde-fuerte: #4E5675;
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --sombra-2: 0 6px 18px rgba(0, 0, 0, 0.45);
+  --sombra-3: 0 16px 40px rgba(0, 0, 0, 0.5);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --color-focus: #6BB4F2;
+
+  --color-on-accent: #14161E;
+  --color-on-error: #14161E;
+  --color-on-success: #14161E;
+  --texto-sobre-acento: #14161E;
+}
+
+/* -------- High contrast -------- */
+[data-theme="contrast"] {
+  --color-bg: #000000;
+  --color-surface: #000000;
+  --color-text: #FFFFFF;
+  --color-text-soft: #FFFFFF;
+  --color-border: #FFFFFF;
+
+  --superficie-base: #000000;
+  --superficie-1: #000000;
+  --superficie-2: #000000;
+  --superficie-3: #000000;
+
+  --texto-primario: #FFFFFF;
+  --texto-secundario: #FFFFFF;
+  --texto-tenue: #FFFFFF;
+
+  --accent: #00FF66;
+  --accent-soft: #000000;
+  --accent-2: #FFFF00;
+  --accent-2-soft: #000000;
+
+  --acento: #00FF66;
+  --acento-suave: #000000;
+  --acento-2: #FFFF00;
+  --acento-2-suave: #000000;
+  --acento-3: #FFFF00;
+  --acento-3-suave: #000000;
+
+  --color-success: #00FF66;
+  --color-success-soft: #000000;
+  --color-encourage: #FF8800;
+  --color-encourage-soft: #000000;
+
+  --exito: #00FF66;
+  --aliento: #FF8800;
+  --error: #FF6666;
+
+  --mod-learn: #FFFF00;
+  --mod-learn-soft: #000000;
+  --mod-safe: #FF66FF;
+  --mod-safe-soft: #000000;
+
+  --borde: #FFFFFF;
+  --borde-fuerte: #FFFFFF;
+  --sombra-1: none;
+  --sombra-2: none;
+  --sombra-3: none;
+  --shadow: none;
+  --color-focus: #FFFF00;
+
+  --color-on-accent: #000000;
+  --color-on-error: #000000;
+  --color-on-success: #000000;
+  --texto-sobre-acento: #000000;
+}
+

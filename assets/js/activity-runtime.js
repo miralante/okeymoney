@@ -429,7 +429,8 @@
 
       if (chosenIdx === current.correctIndex) {
         btn.classList.add('correct');
-        if (current.explanationKey) { pista.hidden = false; pista.textContent = App.i18n.t(current.explanationKey); }
+        pista.hidden = true;
+        pista.textContent = '';
         allBtns.forEach(function (b) { b.disabled = true; });
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
@@ -448,13 +449,16 @@
       if (attemptsOnCurrent >= 2) {
         allBtns.forEach(function (b) {
           b.disabled = true;
-          if (Number(b.getAttribute('data-idx')) === current.correctIndex) {
-            b.classList.add('correct');
-          }
         });
         pista.hidden = false;
-        pista.textContent = App.i18n.t(current.explanationKey || current.hintKey || 'pistaSigue');
-        offerContinue();
+        pista.textContent = App.i18n.t(current.hintKey || 'pistaSigue');
+        App.feedback.lockUntilAck([], feedback, function () {
+          allBtns.forEach(function (b) {
+            if (Number(b.getAttribute('data-idx')) === current.correctIndex) b.classList.add('correct');
+          });
+          pista.textContent = App.i18n.t(current.explanationKey || current.hintKey || 'pistaSigue');
+          offerContinue();
+        });
       } else {
         pista.hidden = false;
         pista.textContent = App.i18n.t(current.hintKey || 'pistaSigue');
@@ -492,10 +496,13 @@
 
       if (attemptsOnCurrent >= 2) {
         pista.hidden = false;
-        pista.textContent = typeof opts.explainAnswer === 'function'
-          ? opts.explainAnswer(current)
-          : (App.i18n.t('core.challenge.hint') || '');
-        offerContinue();
+        pista.textContent = App.i18n.t('core.challenge.hint') || '';
+        App.feedback.lockUntilAck([], feedback, function () {
+          pista.textContent = typeof opts.explainAnswer === 'function'
+            ? opts.explainAnswer(current)
+            : (App.i18n.t('core.challenge.hint') || '');
+          offerContinue();
+        });
       } else {
         pista.hidden = false;
         pista.textContent = App.i18n.t('core.challenge.hintSubtract') || App.i18n.t('core.challenge.hint') || '';

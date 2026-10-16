@@ -189,25 +189,25 @@
 }
   </script>
 
-  <link rel="stylesheet" href="../assets/css/tokens.css">
-  <link rel="stylesheet" href="../assets/css/base.css">
-  <link rel="stylesheet" href="../assets/css/componentes.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css?v=okeymoney-v43b5e7a7">
+  <link rel="stylesheet" href="../assets/css/base.css?v=okeymoney-v37d7d5c4">
+  <link rel="stylesheet" href="../assets/css/componentes.css?v=okeymoney-v5471f71f">
   <link rel="stylesheet" href="/site/styles.css">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v75403dc2">
 </head>
 <body>
   <div class="container suite-home">
     <header class="cabecera centered suite-header">
       <div class="suite-brand">
-        <img src="../assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
+        <img src="../assets/img/icono-euro.svg?v=okeymoney-v886f8d96" alt="" width="44" height="44" class="logo">
         <div class="suite-brand-copy">
           <h1 data-i18n="title">Okeymoney</h1>
           <p class="suite-attribution"><span data-i18n="suiteBy">Una app de</span> <a href="https://apptonomia.uk/">Apptonomia</a>.</p>
         </div>
       </div>
-      <div class="suite-controls"><div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-lang" id="btnLangEs" data-locale="es" aria-pressed="false" aria-label="Español"><span class="locale-full" aria-hidden="true">🇪🇸 Español</span><span class="locale-short" aria-hidden="true">ES</span></button>
-        <button type="button" class="btn-lang" id="btnLangEn" data-locale="en" aria-pressed="false" aria-label="English"><span class="locale-full" aria-hidden="true">🇬🇧 English</span><span class="locale-short" aria-hidden="true">EN</span></button>
-      </div></div>
+      <div class="suite-controls"><div class="suite-controls">
+  <div id="locale-picker"></div>
+</div></div>
       <div class="suite-details">
         <div class="fila centered-fila">
         <p class="welcome" id="welcome" data-i18n="welcome">Hola. ¿Qué quieres hacer hoy?</p>
@@ -231,7 +231,7 @@
         <h2><span aria-hidden="true" data-i18n="openAppTitle">▶️ Abrir Okeymoney</span></h2>
         <p data-i18n="openAppBody">La app tiene tu saldo, tus gastos y tus metas. Pulsa el botón para entrar.</p>
         <p>
-          <a class="card card-cta" href="../index.html" data-i18n="openAppCta">Entrar a Okeymoney</a>
+          <a class="card card-cta" href="../" data-i18n="openAppCta">Entrar a Okeymoney</a>
         </p>
       </section>
 
@@ -270,38 +270,17 @@
     <footer data-pie-app data-pie-base="../" data-pie-class="pie-app" data-pie-include-config="true"></footer>
   </div>
 
-  <script src="../assets/js/utils.js"></script>
-  <script src="../assets/js/i18n.js"></script>
-  <script src="../assets/js/tts.js"></script>
-  <script src="../assets/js/storage.js"></script>
+  <script src="../assets/js/utils.js?v=okeymoney-v94d287a7"></script>
+  <script src="../assets/js/i18n.js?v=okeymoney-v08c506e2"></script>
+  <script src="../assets/js/tts.js?v=okeymoney-vc0b64f89"></script>
+  <script src="../assets/js/storage.js?v=okeymoney-v31796a76"></script>
   <script src="/site/strings.es.js"></script>
   <script src="/site/strings.en.js"></script>
-  <script>
-    (function () {
-      'use strict';
-
-      function pintarSelectorIdioma() {
-        var activo = App.i18n.locale();
-        document.getElementById('btnLangEs').setAttribute('aria-pressed', String(activo === 'es'));
-        document.getElementById('btnLangEn').setAttribute('aria-pressed', String(activo === 'en'));
-      }
-
-      document.getElementById('btnWelcome').addEventListener('click', function () {
-        App.tts.speak(App.i18n.t('welcome'));
-      });
-
-      document.getElementById('btnLangEs').addEventListener('click', function () {
-        App.i18n.setLocale('es');
-      });
-      document.getElementById('btnLangEn').addEventListener('click', function () {
-        App.i18n.setLocale('en');
-      });
-      pintarSelectorIdioma();
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('../sw.js').catch(function () {});
-      }
-    })();
-  </script>
+    <script src="../assets/js/sw-register.js?v=okeymoney-v0cbb5f0a"></script>
+<!-- Controles compartidos con la pantalla principal: el desplegable de idioma
+     y el ⚙️ de la cabecera, con su cajón de accesibilidad. Mismo ?v= que la
+     portada, para que las dos páginas compartan la copia en caché. -->
+<script src="../assets/js/locale-picker-config.js?v=okeymoney-vb96eda9a"></script>
+<script src="../assets/js/locale-picker.js?v=okeymoney-v8b6a4103" defer></script>
 </body>
 </html>

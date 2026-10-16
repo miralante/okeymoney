@@ -63,8 +63,8 @@ separately-scoped addition — not a reason to change the baseline today.
   app works fully offline (an external Google Fonts request would not).
 - **Persistence only in `localStorage`.** No login, no cookies, no
   personal data, no analytics.
-- **Offline-first PWA**: `manifest.json` + `sw.js` (cache-first app
-  shell).
+- **Offline-first PWA**: `manifest.json` + `sw.js` (network-first with a
+  cache fallback for the app shell).
 - **Code style**: ES5-style JS (`var`, classic functions, IIFE with
   `'use strict'`); identifiers, comments and commit messages in English.
   UI copy itself (`strings.es.js`, `strings.en.js`, `data.js` labels)
@@ -387,7 +387,7 @@ invalid entry without ever showing an error message.
 
 ## 7. PWA and service worker
 
-- `sw.js` is **cache-first** for the app shell. Contract when touching
+- `sw.js` is **network-first with a cache fallback** for the app shell. Contract when touching
   files: add new files to `FILES`; bump `VERSION` (`okeymoney-vNN`) on
   any change to a cached file, otherwise installed-PWA users won't see it.
 - `manifest.json`: `display: standalone`, `start_url: ./index.html`.
@@ -633,15 +633,17 @@ the **template**; deviations are called out where they apply.
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v4aa">
 </head>
 <body>
   <div class="container {legal|about}">
     <header class="cabecera-{legal|about}">
-      <div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-idioma" id="btnIdiomaEs"
-                data-locale="es" aria-pressed="false">🇪🇸 Español</button>
-        <button type="button" class="btn-idioma" id="btnIdiomaEn"
-                data-locale="en" aria-pressed="false">🇬🇧 English</button>
+      <!-- Language is a first-level control in the header, not a
+           sub-item of the settings drawer: the shared component mounts
+           inside .suite-controls and the gear is inserted on its own,
+           right behind it. There is no language button in the HTML. -->
+      <div class="suite-controls">
+        <div id="locale-picker"></div>
       </div>
       <img src="../assets/img/icono.svg" alt="" width="80" height="80"
            class="logo-{legal|about}">
@@ -673,23 +675,13 @@ the **template**; deviations are called out where they apply.
   <script src="../assets/js/i18n.js"></script>
   <script src="strings.es.js"></script>
   <script src="strings.en.js"></script>
-  <script>
-    (function () {
-      'use strict';
-      function paintLanguageSelector() {
-        var active = App.i18n.locale();
-        document.getElementById('btnIdiomaEs')
-          .setAttribute('aria-pressed', String(active === 'es'));
-        document.getElementById('btnIdiomaEn')
-          .setAttribute('aria-pressed', String(active === 'en'));
-      }
-      document.getElementById('btnIdiomaEs')
-        .addEventListener('click', function () { App.i18n.setLocale('es'); });
-      document.getElementById('btnIdiomaEn')
-        .addEventListener('click', function () { App.i18n.setLocale('en'); });
-      paintLanguageSelector();
-    })();
-  </script>
+  <!-- The dropdown needs its config BEFORE the component. Both
+       are deferred, and deferred scripts run in document order, so
+       listing them in that order is enough. The ?v= is not optional:
+       .js and .css are served immutable for a year, and without it the
+       page serves the stale copy from cache. -->
+  <script src="../assets/js/locale-picker-config.js?v=okeymoney-v4aa"></script>
+  <script src="../assets/js/locale-picker.js?v=okeymoney-v4aa" defer></script>
   <script>
     /* Register the SW from this entry point so it is active for any
        later navigation, matching what the main index.html and the
@@ -1000,7 +992,11 @@ The 11 activities include three new paths, with six situations each. Each path m
 - `compare-prices`: Compare before paying.
 - `monthly-payments`: Organise your payments.
 
-Hints and explanations remain until the person selects “Got it”. There is no timed progression. Completion connects learning to everyday use. Activities do not store attempts or change the euro balance.
+Hints and explanations after mistakes remain until the person selects “Got it”.
+After a correct answer, keep the positive feedback visible and hide its answer
+explanation to reduce visual load. There is no timed progression. Completion
+connects learning to everyday use. Activities do not store attempts or change
+the euro balance.
 
 
 ### Situation navigation

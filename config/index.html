@@ -8,17 +8,17 @@
        Aimed at families or therapists managing the device. -->
   <meta name="robots" content="noindex, nofollow">
   <meta name="theme-color" content="#FAF7F2">
-  <link rel="stylesheet" href="../assets/css/tokens.css">
-  <link rel="stylesheet" href="../assets/css/base.css">
-  <link rel="stylesheet" href="../assets/css/componentes.css">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="../assets/css/tokens.css?v=okeymoney-v43b5e7a7">
+  <link rel="stylesheet" href="../assets/css/base.css?v=okeymoney-v37d7d5c4">
+  <link rel="stylesheet" href="../assets/css/componentes.css?v=okeymoney-v5471f71f">
+  <link rel="stylesheet" href="styles.css?v=okeymoney-vd8213c22">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v75403dc2">
 </head>
 <body>
   <div class="container settings">
     <header class="cabecera-settings">
-      <div class="idioma-selector" role="group" aria-label="Elegir idioma">
-        <button type="button" class="btn-idioma" id="btnLangEs" data-locale="es" aria-pressed="false">🇪🇸 Español</button>
-        <button type="button" class="btn-idioma" id="btnLangEn" data-locale="en" aria-pressed="false">🇬🇧 English</button>
+      <div class="suite-controls">
+        <div id="locale-picker"></div>
       </div>
       <p class="aviso-ruta" data-i18n="routeNotice">Página de ajustes. No aparece en el menú de la aplicación:
         solo se llega escribiendo esta dirección.</p>
@@ -57,11 +57,16 @@
     </main>
   </div>
 
-  <script src="../assets/js/utils.js"></script>
-  <script src="../assets/js/i18n.js"></script>
-  <script src="../assets/js/storage.js"></script>
-  <script src="strings.es.js"></script>
-  <script src="strings.en.js"></script>
-  <script src="app.js"></script>
+  <script src="../assets/js/utils.js?v=okeymoney-v94d287a7"></script>
+  <script src="../assets/js/i18n.js?v=okeymoney-v08c506e2"></script>
+  <script src="../assets/js/storage.js?v=okeymoney-v31796a76"></script>
+  <script src="strings.es.js?v=okeymoney-v3e02050a"></script>
+  <script src="strings.en.js?v=okeymoney-vf164625c"></script>
+  <script src="app.js?v=okeymoney-v1ee6a2f2"></script>
+<!-- Controles compartidos con la pantalla principal: el desplegable de idioma
+     y el ⚙️ de la cabecera, con su cajón de accesibilidad. Mismo ?v= que la
+     portada, para que las dos páginas compartan la copia en caché. -->
+<script src="../assets/js/locale-picker-config.js?v=okeymoney-vb96eda9a"></script>
+<script src="../assets/js/locale-picker.js?v=okeymoney-v8b6a4103" defer></script>
 </body>
 </html>

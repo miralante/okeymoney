@@ -121,13 +121,13 @@
   border: 0;
   border-radius: 4px;
   overflow: hidden;
-  background: #ddd9eb;
-  color: #7462bb;
-  accent-color: #7462bb;
+  background: var(--color-border, #D8D2C8);
+  color: var(--acento, var(--accent, #2E7D32));
+  accent-color: var(--acento, var(--accent, #2E7D32));
 }
-.practice-summary progress::-webkit-progress-bar { background: #ddd9eb; border-radius: 4px; }
-.practice-summary progress::-webkit-progress-value { background: #7462bb; border-radius: 4px; }
-.practice-summary progress::-moz-progress-bar { background: #7462bb; border-radius: 4px; }
+.practice-summary progress::-webkit-progress-bar { background: var(--color-border, #D8D2C8); border-radius: 4px; }
+.practice-summary progress::-webkit-progress-value { background: var(--acento, var(--accent, #2E7D32)); background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.18) 0 3px, transparent 3px 6px); border-radius: 4px; }
+.practice-summary progress::-moz-progress-bar { background: var(--acento, var(--accent, #2E7D32)); background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.18) 0 3px, transparent 3px 6px); border-radius: 4px; }
 .module-achievement { font-weight: 700; margin-top: 16px; }
 .practice-notice { padding: 16px; border: 2px solid var(--acento); border-radius: 12px; }
 [id^="practice-"], #topic-catalog { scroll-margin-top: 24px; }

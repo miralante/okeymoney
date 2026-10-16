@@ -15,27 +15,6 @@
   margin-bottom: 1.5rem;
 }
 
-.idioma-selector {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.btn-lang {
-  padding: 0.4rem 0.8rem;
-  border: 1px solid var(--borde, #d0d0d0);
-  border-radius: 6px;
-  background: var(--fondo-tarjeta, #fff);
-  cursor: pointer;
-  font-size: 0.95rem;
-}
-
-.btn-lang[aria-pressed="true"] {
-  background: var(--acento, #5a8fbe);
-  color: #fff;
-  border-color: var(--acento, #5a8fbe);
-}
-
 .aviso-ruta {
   font-size: 0.85rem;
   color: var(--texto-secundario, #555);
@@ -59,8 +38,8 @@
 }
 
 .btn-peligro {
-  background: var(--error, #b03a3a);
-  color: #fff;
+  background: var(--error);
+  color: var(--color-on-error, #fff);
   border: 0;
   padding: 0.6rem 1rem;
   border-radius: 6px;
@@ -74,8 +53,8 @@
 }
 
 .btn-secundario {
-  background: var(--fondo-tarjeta, #fff);
-  color: var(--texto, #222);
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #222);
   border: 1px solid var(--borde, #d0d0d0);
   padding: 0.6rem 1rem;
   border-radius: 6px;
@@ -90,7 +69,7 @@
 }
 
 .feedback.acierto {
-  color: var(--ok, #1e7a3a);
+  color: var(--color-success, #1e7a3a);
 }
 
 .feedback.animo {

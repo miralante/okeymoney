@@ -45,7 +45,10 @@
   border: 3px solid transparent;
   border-radius: var(--radio-2);
   background: var(--acento);
-  color: var(--texto-primario);
+  /* Texto sobre el acento sólido, no el texto de página: en oscuro el
+     acento se aclara, así que --texto-primario (claro) quedaba ilegible
+     encima. El token pasa a oscuro cuando el acento se aclara. */
+  color: var(--texto-sobre-acento, #1A1A2E);
   font-family: inherit;
   font-size: var(--texto-400);
   font-weight: var(--peso-medio);
@@ -79,7 +82,9 @@
 .btn--fantasma:hover { background: var(--superficie-2); }
 .btn--peligro {
   background: var(--error);
-  color: var(--texto-primario);
+  /* --texto-primario se aclara en oscuro, y --error tambien (#F2907A):
+     texto claro sobre fondo claro. El token "on" sigue al color. */
+  color: var(--color-on-error);
 }
 
 /* Tamaños */
@@ -461,7 +466,7 @@
   height: var(--tocable-lg);
   border-radius: 50%;
   background: var(--acento);
-  color: var(--texto-primario);
+  color: var(--texto-sobre-acento, #1A1A2E);
   border: none;
   font-size: 40px;
   font-weight: var(--peso-fuerte);
@@ -724,7 +729,7 @@
 .progress-bar {
   position: relative;
   height: 6px;
-  background: #ddd9eb;
+  background: var(--color-border);
   border: 0;
   border-radius: 4px;
   overflow: hidden;
@@ -732,7 +737,8 @@
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: #7462bb;
+  background: var(--acento, var(--accent, #2E7D32));
+  background-image: repeating-linear-gradient(45deg, rgba(0, 0, 0, 0.18) 0 3px, transparent 3px 6px);
   border-radius: 4px;
   transition: width var(--motion-normal) var(--ease-suave);
 }
@@ -824,6 +830,14 @@
   text-decoration: underline;
 }
 
+.legal-link-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
 /* ==========================================================================
    Goal grid
    ========================================================================== */
@@ -872,43 +886,6 @@
   font-weight: var(--peso-medio);
   color: var(--texto-secundario);
   text-align: center;
-}
-
-/* ---- Selector de idioma (Routime) ---- */
-.idioma-selector {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--espacio-2);
-  justify-content: center;
-  align-self: stretch;
-}
-
-.btn-lang {
-  min-height: var(--tocable);
-  padding: var(--espacio-2) var(--espacio-3);
-  font-family: inherit;
-  font-size: var(--texto-300);
-  font-weight: var(--peso-medio);
-  color: var(--texto-primario);
-  background: var(--superficie-1);
-  border: 2px solid var(--borde);
-  border-radius: var(--radio-2);
-  cursor: pointer;
-  transition: border-color var(--motion-rapida) var(--ease-suave),
-              background var(--motion-rapida) var(--ease-suave);
-}
-
-.btn-lang:hover { border-color: var(--acento); }
-
-.btn-lang[aria-pressed="true"] {
-  border-color: var(--acento);
-  background: var(--acento-suave);
-}
-
-.btn-lang:focus-visible {
-  outline: 2px solid var(--superficie-3);
-  outline-offset: 2px;
-  box-shadow: 0 0 0 4px var(--acento);
 }
 
 /* (legacy .stars rules removed: el contador de práctica ya no aparece
@@ -1093,7 +1070,7 @@
 .tarjeta .detalle {
   font-size: var(--texto-300);
   color: var(--texto-secundario);
-  line-height: var(--linea-normal, 1.4);
+  line-height: var(--linea-base, 1.4);
 }
 
 .tarjeta__estado {
@@ -1247,7 +1224,7 @@
 .topic-card__detail {
   color: var(--texto-secundario);
   font-size: var(--texto-300);
-  line-height: var(--linea-normal, 1.4);
+  line-height: var(--linea-base, 1.4);
 }
 
 .topic-card__unit,
@@ -1414,7 +1391,7 @@
   margin: 0;
   color: var(--texto-primario);
   font-size: var(--texto-400);
-  line-height: var(--linea-normal, 1.5);
+  line-height: var(--linea-base, 1.5);
 }
 
 .lesson-detail__explanation {
@@ -1447,7 +1424,7 @@
   gap: var(--espacio-2);
   color: var(--texto-primario);
   font-size: var(--texto-300);
-  line-height: var(--linea-normal, 1.5);
+  line-height: var(--linea-base, 1.5);
 }
 
 .lesson-detail__step-number {

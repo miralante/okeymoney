@@ -1,5 +1,19 @@
 # CLAUDE.md
 
+## Shared Playwright installation
+
+Playwright and its browsers are installed globally for the machine by
+`dev/setups/pc-playwright-first-setup.ps1` or
+`pc-playwright-next-setup.ps1`. Run the project's existing browser-test
+command (for example, `npm run test:ui`) or invoke the global CLI with
+`playwright test`.
+
+Do not add `playwright` or `@playwright/test` to project dependencies, install
+Playwright with `npm`/`npx`, or run `npx playwright install`. The setup scripts
+manage the shared browser cache under `{drive}\apps\playwright_browsers`.
+Always attempt the relevant browser test; if the global CLI or browsers are
+unavailable, report that blocker and continue with the other checks.
+
 This file provides guidance to Claude Code (claude.ai/code) when working
 with code in this repository.
 
@@ -230,3 +244,26 @@ publicly naming a clinical group. This rule is mirrored in the
 metaproject's `apptonomia/CLAUDE.md` and in every sibling's own
 `CLAUDE.md` and `SPEC.md` so it survives a single project's docs going
 out of sync.
+
+## Asset version tokens (`?v=`) — never hand-edit these
+
+This project's `_headers` serves some assets as
+`Cache-Control: public, max-age=31536000, immutable`: one year, no
+revalidation. A changed asset only reaches a returning visitor if the
+URL referencing it changes, which is what `?v=` is for. The tokens used
+to be a hand-typed serial, so the same asset ended up with different
+tokens on different pages and a missed reference failed silently.
+
+The token is now a hash of the file's own bytes. Do not type one by hand:
+
+```bash
+node ../scripts/asset-tokens.js okeymoney           # rewrite
+node ../scripts/asset-tokens.js --check okeymoney   # verify
+```
+
+`scripts/check-version-bump.js` runs the check, so a stale token fails
+the pre-push gate with the exact value it expects. Which files are
+tokenised is read from this project's own `_headers` — see
+[../scripts/ASSET-TOKENS.md](../scripts/ASSET-TOKENS.md) for the
+per-project table and for why `*.js` also matches nested paths and why
+fonts are tokenised from CSS rather than from HTML.

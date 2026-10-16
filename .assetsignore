@@ -1,0 +1,34 @@
+# Keep development files and repository metadata out of the public Worker.
+/.git/
+/.dev/
+/.claude/
+/.github/
+/.agents/
+/.codex/
+/.vscode/
+/.wrangler/
+/node_modules/
+/graphify-out*/
+/scripts/
+/doc/
+/test-results/
+/.assetsignore
+/*.md
+/*.log
+/debug*.js
+/package.json
+/package-lock.json
+/pnpm-lock.yaml
+/yarn.lock
+/serve.js
+/_o.txt
+
+# Do not publish credentials if copied into the asset tree.
+**/.env*
+**/*.pem
+**/*.p12
+**/*.pfx
+**/*.key
+**/credentials.json
+**/service-account*.json
+/wrangler.toml

@@ -1681,6 +1681,28 @@
   });
 
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('sw.js?build=72', { updateViaCache: 'none' }).catch(function () {});
+    /* config/index.html loads app.js without assets/js/sw-register.js, so the
+       registration cannot simply live in one place. Both must register the
+       SAME url with the SAME options: a registration is keyed by scope, not
+       by script URL, so this used to register "sw.js?build=72" against the
+       "/sw.js" of sw-register.js and flip the registered script on every
+       page load, forcing a second full precache each time. */
+    /* Reload once when a NEW worker takes control (never on the first install,
+       when no worker controlled the page yet). Mirrors sw-register.js. */
+    var hadController = !!navigator.serviceWorker.controller;
+    var reloaded = false;
+    navigator.serviceWorker.addEventListener('controllerchange', function () {
+      if (!hadController || reloaded) return;
+      reloaded = true;
+      location.reload();
+    });
+    navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
+      .then(function (registration) {
+        /* Check for a new sw.js whenever the tab comes back into view. */
+        document.addEventListener('visibilitychange', function () {
+          if (document.visibilityState === 'visible') registration.update().catch(function () {});
+        });
+      })
+      .catch(function () {});
   }
 })();

@@ -64,7 +64,7 @@
       <meta name="color-scheme" content="light">
     
     <!-- build:head:end -->
-  <link rel="icon" href="assets/img/icono-euro.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/img/icono-euro.svg?v=okeymoney-v886f8d96" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
 
     <script type="application/ld+json">
@@ -161,9 +161,9 @@
 }
   </script>
 
-  <link rel="stylesheet" href="assets/css/tokens.css">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/componentes.css?v=73"><link rel="stylesheet" href="assets/css/locale-picker.css?v=okeymoney-v1">  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="assets/css/tokens.css?v=okeymoney-v43b5e7a7">
+  <link rel="stylesheet" href="assets/css/base.css?v=okeymoney-v37d7d5c4">
+  <link rel="stylesheet" href="assets/css/componentes.css?v=okeymoney-v5471f71f"><link rel="stylesheet" href="assets/css/locale-picker.css?v=okeymoney-v75403dc2">  <link rel="stylesheet" href="styles.css?v=okeymoney-vfb8b4b50">
 </head>
 <body data-tema="dinero">
   <!--
@@ -176,7 +176,7 @@
 
     <header class="cabecera centered suite-header">
       <div class="suite-brand">
-        <img src="assets/img/icono-euro.svg" alt="" width="44" height="44" class="logo">
+        <img src="assets/img/icono-euro.svg?v=okeymoney-v886f8d96" alt="" width="44" height="44" class="logo">
         <div class="suite-brand-copy">
           <h1 data-i18n="appName">Okeymoney</h1>
           <p class="suite-attribution"><span data-i18n="suiteBy">Una app de</span> <a href="https://apptonomia.uk/">Apptonomia</a>.</p>
@@ -326,36 +326,30 @@
     <section id="screen-wizard" class="stack hidden" aria-live="polite"></section>
 
     <div class="footer-app">
-      <a class="legal-link" href="config/" data-i18n="core.config">Configuración</a>
-      <a class="legal-link" href="legal/index.html" data-i18n="core.dataProtection">Protección de datos</a>
+      <button type="button" class="legal-link legal-link-button" id="btnSettings" data-i18n="core.config">Configuración</button>
+      <a class="legal-link" href="legal/" data-i18n="core.dataProtection">Protección de datos</a>
     </div>
 
   </div>
 
-  <script src="assets/js/utils.js"></script>
-  <script src="assets/js/i18n.js"></script>
-  <script src="assets/js/tts.js"></script>
-  <script src="assets/js/storage.js"></script>
-  <script src="assets/js/feedback.js"></script>
-  <script src="assets/js/money.js"></script>
-  <script src="assets/js/wallet.js"></script>
-  <script src="strings.es.js?v=74"></script>
-  <script src="strings.en.js?v=74"></script>
-  <script src="data.js?v=72"></script>
-  <script src="app.js?v=72"></script>
+  <script src="assets/js/utils.js?v=okeymoney-v94d287a7"></script>
+  <script src="assets/js/i18n.js?v=okeymoney-v08c506e2"></script>
+  <script src="assets/js/tts.js?v=okeymoney-vc0b64f89"></script>
+  <script src="assets/js/storage.js?v=okeymoney-v31796a76"></script>
+  <script src="assets/js/feedback.js?v=okeymoney-vcb526c25"></script>
+  <script src="assets/js/money.js?v=okeymoney-v36d11550"></script>
+  <script src="assets/js/wallet.js?v=okeymoney-v6a980566"></script>
+  <script src="strings.es.js?v=okeymoney-v58bd4ca8"></script>
+  <script src="strings.en.js?v=okeymoney-v00f51331"></script>
+  <script src="data.js?v=okeymoney-v622d1926"></script>
+  <script src="app.js?v=okeymoney-v32064db7"></script>
   <!-- Locale picker config (must run BEFORE assets/js/locale-picker.js).
-       Okeymoney stores strings next to index.html (not under assets/js/),
-       so path: 'strings'. storageKey must match the one assets/js/i18n.js
-       writes to localStorage ('okeymoney:locale'). -->
-  <script>
-  window.LocalePickerConfig = {
-    storageKey: 'okeymoney:locale',
-    path: null,
-    requiredLocales: ['es', 'en'],
-    defaultLocale: 'en',
-    settingsHref: 'config/'
-  };
-  </script>
-  <script src="assets/js/locale-picker.js?v=okeymoney-v1" defer></script>
+       External file: the CSP is `script-src 'self'`, so an inline
+       <script> is dropped in production and the component would fall
+       back to its defaults (losing the config/ link and the
+       okeymoney:locale key). See assets/js/locale-picker-config.js?v=1ab -->
+  <script src="assets/js/locale-picker-config.js?v=okeymoney-vb96eda9a"></script>
+  <script src="assets/js/locale-picker.js?v=okeymoney-v8b6a4103" defer></script>
+  <script src="assets/js/sw-register.js?v=okeymoney-v0cbb5f0a"></script>
 </body>
 </html>
