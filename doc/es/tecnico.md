@@ -728,8 +728,6 @@ la **plantilla**; las desviaciones se indican donde apliquen.
          data-i18n="footerDataProtection">Protección de datos</a>
       <a class="btn btn-secundario" href="../about/"
          data-i18n="footerAbout">Sobre este proyecto</a>
-      <a class="btn btn-secundario" href="../team/"
-         data-i18n="footerTeamGuide">Quiénes la hacen</a>
       <a class="btn btn-secundario" href="../config/"
          data-i18n="footerSettings">Ajustes</a>
     </footer>
