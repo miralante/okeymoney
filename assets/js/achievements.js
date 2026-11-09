@@ -18,7 +18,7 @@
 
    Texts come from App.i18n (keys achievement<Name>, achievement<Name>Desc,
    achievementLocked, achievementUnlockedAt), registered only by the
-   "About the app" page (about-app/), the one place render() is used.
+   "About the app" page (about-app/), removed; render() has no caller now.
    ========================================================================== */
 (function () {
   'use strict';

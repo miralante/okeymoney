@@ -90,7 +90,6 @@ var jsFiles = fs.readdirSync(ROOT, { withFileTypes: true })
   .map(function (e) { return path.join(ROOT, e.name); })
   .concat(listJs(path.join(ROOT, 'assets', 'js')))
   .concat(listJs(path.join(ROOT, 'legal')))
-  .concat(listJs(path.join(ROOT, 'about-app')))
   .concat(listJs(path.join(ROOT, 'scripts')))
   .concat(listJs(path.join(ROOT, 'tools')));
 
@@ -169,7 +168,6 @@ function compareLocales(dir, label) {
 
 compareLocales(ROOT, 'strings.<locale>.js');
 compareLocales(path.join(ROOT, 'legal'), 'legal/');
-compareLocales(path.join(ROOT, 'about-app'), 'about-app/');
 
 /* Each tools/<slug>/ folder ships its own strings.<locale>.js pair;
    parity must hold per activity so the bilingual contract is kept
@@ -270,8 +268,7 @@ function listFiles(dir) {
   return out;
 }
 var userFacingTargets = [path.join(ROOT, 'index.html')]
-  .concat(listFiles(path.join(ROOT, 'legal')))
-  .concat(listFiles(path.join(ROOT, 'about-app')));
+  .concat(listFiles(path.join(ROOT, 'legal')));
 
 /* Each tools/<slug>/index.html is a user-facing page too: the end
    user can land there directly from the home-screen icon, a deep link,
@@ -491,8 +488,7 @@ headersContent.split('\n').filter(function (line) {
   var targets = [
     path.join(ROOT, 'index.html'),
     path.join(ROOT, 'offline.html'),
-    path.join(ROOT, 'legal', 'index.html'),
-    path.join(ROOT, 'about-app', 'index.html')
+    path.join(ROOT, 'legal', 'index.html')
   ].filter(function (f) { return fs.existsSync(f); });
   var toolsDir = path.join(ROOT, 'tools');
   if (fs.existsSync(toolsDir)) {
