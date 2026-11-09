@@ -489,6 +489,24 @@ vuelven a acreditar (la comprobación `activityStatus.done` es
 idempotente), pero la actividad sigue disponible si la persona quiere
 repetirla.
 
+### 10.2.1 Logros («Sobre la app»)
+
+`assets/js/achievements.js` (`App.achievements`) define seis logros:
+`firstActivity`, `fiveActivities`, `streak3`, `allActivities`,
+`firstRecord` y `goalReached`. Se guardan como
+`okeymoney:achievements` → `{ <id>: <marca de tiempo> }`, así que el
+borrado total de `/config/` (`App.storage.clearAll()`) también los borra.
+
+Los seis se derivan de datos que ya se guardan (registros
+`activity:<slug>` y el libro `okeymoney:data`), nunca de fallos, intentos
+ni tiempos. `App.achievements.sync()` relee esos datos y desbloquea lo
+conseguido. Se ejecuta al arrancar la página de inicio, tras cada
+`save()` del libro en `app.js` y en la página `about-app/`. Las
+actividades de `tools/<slug>/` no lo cargan (siguen aisladas); su
+finalización se cuenta al volver a la página de inicio. Las insignias se
+muestran en `about-app/`, enlazada desde el pie de la página de inicio
+justo antes de Configuración.
+
 ### 10.3 Actividades de test dentro de las unidades
 
 Siete actividades viven bajo `tools/<slug>/`. Cada una es una carpeta

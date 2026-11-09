@@ -16,7 +16,7 @@
 
   var $ = App.utils.$;
 
-  var KEPT_KEYS = ['data', 'practiceWallet'];
+  var KEPT_KEYS = ['data', 'practiceWallet', 'achievements'];
   var PII_KEYS = ['prefs', 'locale'];
 
   function renderState() {

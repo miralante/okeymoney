@@ -27,7 +27,12 @@
   if (typeof state.cycle.budgeted !== 'boolean') state.cycle.budgeted = false;
   if (!state.cycle.lastPlan || typeof state.cycle.lastPlan !== 'object') state.cycle.lastPlan = null;
 
-  function save() { App.storage.set(SLUG, state); }
+  /* Every ledger write may earn an achievement (first expense or
+     income, a goal reached): see assets/js/achievements.js. */
+  function save() {
+    App.storage.set(SLUG, state);
+    if (App.achievements) App.achievements.sync();
+  }
 
   /** Net effect of every movement on the balance (income - expense - saving). */
   function movementsNet() {
@@ -1670,6 +1675,9 @@
   /* ---------- Boot ---------- */
   App.i18n.apply();
   renderHome();
+  /* Credits activities finished in tools/<slug>/ (the person comes back
+     here from each one) and any progress saved before achievements existed. */
+  if (App.achievements) App.achievements.sync();
   if (openLessonId) focusLesson($('#lessonDetailTitle'));
   window.addEventListener('hashchange', function () {
     openLessonId = lessonFromHash();

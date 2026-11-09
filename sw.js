@@ -6,7 +6,7 @@
    When adding new files: add them to FILES and bump VERSION (the
    precache still needs the list for offline use).
    ============================================================ */
-var VERSION = 'okeymoney-v133';
+var VERSION = 'okeymoney-v134';
 
 var FILES = [
   './tools/monthly-payments/',
@@ -42,6 +42,11 @@ var FILES = [
   './about/styles.css',
   './about/strings.es.js',
   './about/strings.en.js',
+  './about-app/index.html',
+  './about-app/app.js',
+  './about-app/styles.css',
+  './about-app/strings.es.js',
+  './about-app/strings.en.js',
   './assets/css/tokens.css',
   './assets/css/base.css',
   './assets/css/componentes.css',
@@ -57,6 +62,7 @@ var FILES = [
   './assets/js/feedback.js',
   './assets/js/money.js',
   './assets/js/wallet.js',
+  './assets/js/achievements.js',
   './assets/js/activity-runtime.js',
   /* External scripts that used to be inline <script> blocks. The CSP is
      `script-src self`, so they must stay external: locale-picker-config
