@@ -113,7 +113,7 @@
   function restDone() {}
 
   /* suite:answer-round:begin
-     Miralante answer round. ONE definition for every suite app.
+     Apptonomia answer round. ONE definition for every suite app.
      Canonical source: apptonomia/scripts/suite/answer-round.js. The block between
      the begin/end markers is copied byte-for-byte into assets/js/feedback.js of
      each app by apptonomia/scripts/sync-answer-round.js. Never edit a copy by hand.
@@ -233,7 +233,7 @@
   /* suite:answer-round:end */
 
   /* suite:reward-screen:begin
-     Miralante closing screen of an activity. ONE definition for every suite app.
+     Apptonomia closing screen of an activity. ONE definition for every suite app.
      Canonical source: apptonomia/scripts/suite/reward-screen.js. The block between
      the begin/end markers is copied byte for byte into assets/js/feedback.js of each
      app by apptonomia/scripts/sync-answer-round.js. Never edit a copy by hand.
@@ -264,7 +264,7 @@
   /* suite:reward-screen:end */
 
   /* suite:celebrate:begin
-     Miralante closing celebration. ONE definition for every suite app.
+     Apptonomia closing celebration. ONE definition for every suite app.
      Canonical source: apptonomia/scripts/suite/celebrate.js. The block between the
      begin/end markers is copied byte for byte into assets/js/feedback.js of each app
      (and into the new-app template) by apptonomia/scripts/sync-answer-round.js.
