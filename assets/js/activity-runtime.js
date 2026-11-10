@@ -431,7 +431,7 @@
         btn.classList.add('correct');
         pista.hidden = true;
         pista.textContent = '';
-        allBtns.forEach(function (b) { b.disabled = true; });
+        App.feedback.markCorrect(btn, allBtns);
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
         App.feedback.success();
