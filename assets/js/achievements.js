@@ -1,78 +1,79 @@
 /* ==========================================================================
-   Okeymoney — Achievements catalog, unlock logic and badge grid
-   Exposes window.App.achievements.list / .unlocked() / .achieve(id) /
-   .sync() / .render(container).
+   Okeymoney — achievements catalogue ("logros").
 
-   Unlocked achievements are stored as { id: timestamp } under the
-   'okeymoney:achievements' key (via App.storage), so the full reset in
-   /config/ (App.storage.clearAll) wipes them together with the rest.
+   The policy is the suite's (apptonomia/doc/es/spec.md §2.6): milestones
+   computed from saved progress, no streaks, no timers, no losses. A new one is
+   announced once, neutrally, when the activity that earns it is finished. The
+   mechanism lives in ./achievements-engine.js (identical in every app); this file
+   holds Okeymoney's rules and texts.
 
-   Every achievement is derived from data the app already saves:
-   - 'activity:<slug>' completion records (App.wallet.markActivityDone),
-   - the shared ledger 'okeymoney:data' (movements[] and goals[]).
-   sync() re-reads that data and unlocks whatever is already earned, so
-   people who used the app before achievements existed get credit the
-   next time they open the home, an activity or the "About the app"
-   page. It never reads or stores mistakes, attempts or time taken
-   (see legal/: none of that is ever saved).
+   Storage: 'okeymoney:achievements' -> { <id>: <timestamp of first unlock> }
+   (App.storage's reset in /config/ deletes the keys with the app prefix).
 
-   Texts come from App.i18n (keys achievement<Name>, achievement<Name>Desc,
-   achievementLocked, achievementUnlockedAt), registered only by the
-   "About the app" page (about-app/), removed; render() has no caller now.
+   Public API (window.App.achievements):
+     list                    the catalogue
+     unlocked()              { id: timestamp }
+     sync()                  check every rule against the saved progress; saves the
+                             new ones silently and returns their ids
+     onActivityFinished()    sync() and announce the new ids in #achievement-notice
+
+   Rules use only data the app already saves: 'activity:<slug>' records and the
+   ledger 'data' (movements, goals). Mistakes and time are never read.
    ========================================================================== */
 (function () {
   'use strict';
 
   window.App = window.App || {};
 
-  var KEY = 'achievements';
-  var FEW_ACTIVITIES = 5;
-  var STREAK_DAYS = 3;
+  App.i18n.register({
+    achievementNew: 'Nuevo logro: {name}',
+    achievementFirstActivity: 'Primera actividad',
+    achievementFirstActivityDesc: 'Termina tu primera actividad.',
+    achievementFiveActivities: 'Cinco actividades',
+    achievementFiveActivitiesDesc: 'Termina cinco actividades.',
+    achievementAllActivities: 'Todas las actividades',
+    achievementAllActivitiesDesc: 'Termina todas las actividades del catálogo.',
+    achievementFirstRecord: 'Primer registro',
+    achievementFirstRecordDesc: 'Anota tu primer ingreso o gasto.',
+    achievementGoalReached: 'Meta cumplida',
+    achievementGoalReachedDesc: 'Alcanza una de tus metas de ahorro.'
+  }, 'es');
 
-  var LIST = [
-    { id: 'firstActivity',  icon: '⭐', key: 'achievementFirstActivity' },
-    { id: 'fiveActivities', icon: '🌟', key: 'achievementFiveActivities' },
-    { id: 'streak3',        icon: '🔥', key: 'achievementStreak3' },
-    { id: 'allActivities',  icon: '🎓', key: 'achievementAllActivities' },
-    { id: 'firstRecord',    icon: '🧾', key: 'achievementFirstRecord' },
-    { id: 'goalReached',    icon: '🏆', key: 'achievementGoalReached' }
+  App.i18n.register({
+    achievementNew: 'New achievement: {name}',
+    achievementFirstActivity: 'First activity',
+    achievementFirstActivityDesc: 'Finish your first activity.',
+    achievementFiveActivities: 'Five activities',
+    achievementFiveActivitiesDesc: 'Finish five activities.',
+    achievementAllActivities: 'All activities',
+    achievementAllActivitiesDesc: 'Finish every activity in the catalogue.',
+    achievementFirstRecord: 'First record',
+    achievementFirstRecordDesc: 'Record your first income or expense.',
+    achievementGoalReached: 'Goal reached',
+    achievementGoalReachedDesc: 'Reach one of your savings goals.'
+  }, 'en');
+
+  var CATALOG = [
+    { id: 'firstActivity', icon: '⭐', nameKey: 'achievementFirstActivity', descKey: 'achievementFirstActivityDesc',
+      test: function (p) { return p.activities >= 1; } },
+    { id: 'fiveActivities', icon: '🌟', nameKey: 'achievementFiveActivities', descKey: 'achievementFiveActivitiesDesc',
+      test: function (p) { return p.activities >= 5; } },
+    { id: 'allActivities', icon: '🎓', nameKey: 'achievementAllActivities', descKey: 'achievementAllActivitiesDesc',
+      test: function (p) { return p.allActivities === true; } },
+    { id: 'firstRecord', icon: '🧾', nameKey: 'achievementFirstRecord', descKey: 'achievementFirstRecordDesc',
+      test: function (p) { return p.records >= 1; } },
+    { id: 'goalReached', icon: '🏆', nameKey: 'achievementGoalReached', descKey: 'achievementGoalReachedDesc',
+      test: function (p) { return p.goalReached === true; } }
   ];
 
-  /** Unlocked achievements as { id: timestamp }. */
-  function unlocked() {
-    var data = App.storage.get(KEY);
-    return (data && typeof data === 'object' && !Array.isArray(data)) ? data : {};
-  }
+  var board = window.MiralanteAchievements.create({
+    storageKey: 'okeymoney:achievements',
+    catalog: CATALOG,
+    t: function (key) { return App.i18n.t(key); }
+  });
 
-  /** Unlocks one achievement. Idempotent: keeps the first unlock date.
-      Returns true only when it was newly unlocked. */
-  function achieve(id) {
-    var known = LIST.some(function (a) { return a.id === id; });
-    if (!known) return false;
-    var done = unlocked();
-    if (done[id]) return false;
-    done[id] = Date.now();
-    App.storage.set(KEY, done);
-    return true;
-  }
-
-  /* Slugs of every finished activity, read from the saved
-     'activity:<slug>' records. */
-  function completedActivities() {
-    var snapshot = App.storage.dump ? App.storage.dump() : {};
-    var out = [];
-    Object.keys(snapshot).forEach(function (k) {
-      if (k.indexOf('activity:') !== 0) return;
-      var rec = snapshot[k];
-      if (rec && typeof rec === 'object' && rec.done) {
-        out.push({ slug: k.slice('activity:'.length), date: rec.completedAt });
-      }
-    });
-    return out;
-  }
-
-  /* The home catalogue (root data.js) when the page loaded it. Tool
-     pages ship their own unrelated DATA, so check the shape. */
+  /* The home catalogue (root data.js) when the page loaded it. Tool pages ship
+     their own unrelated DATA, so check the shape. */
   function catalogSlugs() {
     var data = window.DATA;
     if (!data || !Array.isArray(data.activities)) return null;
@@ -81,90 +82,58 @@
       .map(function (a) { return a.slug; });
   }
 
-  /* true if `dates` ('YYYY-MM-DD') contain `n` consecutive calendar days. */
-  function hasStreak(dates, n) {
-    var days = {};
-    dates.forEach(function (d) {
-      if (typeof d === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(d)) days[d] = true;
-    });
-    return Object.keys(days).some(function (d) {
-      var parts = d.split('-');
-      var start = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
-      for (var i = 1; i < n; i++) {
-        var next = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
-        var key = next.getFullYear() + '-' +
-          String(next.getMonth() + 1).padStart(2, '0') + '-' +
-          String(next.getDate()).padStart(2, '0');
-        if (!days[key]) return false;
+  /** Snapshot of the saved progress. */
+  function snapshot() {
+    var saved = App.storage.dump ? App.storage.dump() : {};
+    var done = {};
+    var activities = 0;
+    Object.keys(saved).forEach(function (k) {
+      if (k.indexOf('activity:') !== 0) return;
+      var rec = saved[k];
+      if (rec && typeof rec === 'object' && rec.done) {
+        activities += 1;
+        done[k.slice('activity:'.length)] = true;
       }
-      return true;
     });
-  }
-
-  /** Unlocks every achievement already earned by the saved data.
-      Safe to call often (on load and after each progress event).
-      Returns the ids unlocked by this call. */
-  function sync() {
-    var newly = [];
-    function unlock(id) { if (achieve(id)) newly.push(id); }
-
-    var activities = completedActivities();
-    if (activities.length >= 1) unlock('firstActivity');
-    if (activities.length >= FEW_ACTIVITIES) unlock('fiveActivities');
-
-    var catalog = catalogSlugs();
-    if (catalog && catalog.length) {
-      var doneSlugs = {};
-      activities.forEach(function (a) { doneSlugs[a.slug] = true; });
-      if (catalog.every(function (slug) { return doneSlugs[slug]; })) unlock('allActivities');
-    }
-
-    var ledger = App.storage.get('data');
+    var ledger = App.storage.get('data') || {};
     var movements = Array.isArray(ledger.movements) ? ledger.movements : [];
     var goals = Array.isArray(ledger.goals) ? ledger.goals : [];
-    if (movements.some(function (m) { return m && (m.type === 'expense' || m.type === 'income'); })) {
-      unlock('firstRecord');
-    }
-    if (goals.some(function (g) {
-      return g && (g.achieved || (g.targetCents > 0 && g.savedCents >= g.targetCents));
-    })) {
-      unlock('goalReached');
-    }
-
-    var dates = activities.map(function (a) { return a.date; })
-      .concat(movements.map(function (m) { return m && m.date; }));
-    if (hasStreak(dates, STREAK_DAYS)) unlock('streak3');
-
-    return newly;
+    var catalog = catalogSlugs();
+    return {
+      activities: activities,
+      allActivities: !!(catalog && catalog.length && catalog.every(function (slug) { return done[slug]; })),
+      records: movements.filter(function (m) { return m && (m.type === 'expense' || m.type === 'income'); }).length,
+      goalReached: goals.some(function (g) {
+        return g && (g.achieved || (g.targetCents > 0 && g.savedCents >= g.targetCents));
+      })
+    };
   }
 
-  /** Draws one badge per achievement inside `container`. */
-  function render(container) {
-    if (!container) return;
-    var t = App.i18n.t;
-    var done = unlocked();
-    container.innerHTML = '';
-    LIST.forEach(function (a) {
-      var isUnlocked = !!done[a.id];
-      var dateStr = isUnlocked ? new Date(done[a.id]).toLocaleDateString(App.i18n.lang()) : null;
-      var item = document.createElement('li');
-      item.className = 'achievement-badge' + (isUnlocked ? ' unlocked' : ' locked');
-      item.innerHTML =
-        '<span class="achievement-badge-icon" aria-hidden="true">' + (isUnlocked ? a.icon : '🔒') + '</span>' +
-        '<span class="achievement-badge-name">' + App.utils.escapeHtml(t(a.key)) + '</span>' +
-        '<span class="achievement-badge-desc">' + App.utils.escapeHtml(t(a.key + 'Desc')) + '</span>' +
-        '<span class="achievement-badge-status">' +
-          App.utils.escapeHtml(isUnlocked ? t('achievementUnlockedAt').replace('{date}', dateStr) : t('achievementLocked')) +
-        '</span>';
-      container.appendChild(item);
-    });
+  function sync() {
+    return board.evaluate(snapshot());
+  }
+
+  /** Neutral notice. The element is created on first use. */
+  function announce(ids) {
+    if (!ids || !ids.length) return;
+    var el = document.getElementById('achievement-notice');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'achievement-notice';
+      el.className = 'achievement-notice';
+      el.setAttribute('aria-live', 'polite');
+      document.body.appendChild(el);
+    }
+    board.notify(el, ids);
   }
 
   window.App.achievements = {
-    list: LIST,
-    unlocked: unlocked,
-    achieve: achieve,
+    list: CATALOG,
+    unlocked: board.unlocked,
     sync: sync,
-    render: render
+    onActivityFinished: function () { announce(sync()); }
   };
+
+  /* Retroactive credit from progress saved before this page loaded: silent. */
+  try { sync(); } catch (err) { /* never block the page over a badge */ }
 })();

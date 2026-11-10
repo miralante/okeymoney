@@ -6,7 +6,7 @@
    When adding new files: add them to FILES and bump VERSION (the
    precache still needs the list for offline use).
    ============================================================ */
-var VERSION = 'okeymoney-v144';
+var VERSION = 'okeymoney-v145';
 
 var FILES = [
   './tools/monthly-payments/',
@@ -57,6 +57,7 @@ var FILES = [
   './assets/js/feedback.js',
   './assets/js/money.js',
   './assets/js/wallet.js',
+  './assets/js/achievements-engine.js',
   './assets/js/achievements.js',
   './assets/js/activity-runtime.js',
   /* External scripts that used to be inline <script> blocks. The CSP is

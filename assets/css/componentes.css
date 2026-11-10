@@ -2136,3 +2136,11 @@ button.bloqueada {
   .container.suite-home { padding-inline: 12px; }
 }
 
+/* Neutral notice for a new achievement, shown once when an activity finishes. */
+.achievement-notice {
+  margin: var(--espacio) auto 0;
+  max-width: 560px;
+  font-weight: 700;
+  text-align: center;
+}
+.achievement-notice:empty { display: none; }

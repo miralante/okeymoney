@@ -560,6 +560,7 @@
       if (!already || !already.done) {
         App.wallet.credit(opts.rewardCents, 'activity:' + opts.slug);
         App.wallet.markActivityDone(opts.slug);
+        if (App.achievements) App.achievements.onActivityFinished();
         feedback.textContent = App.i18n.t('completado') + ' +' +
           App.money.formatPractice(opts.rewardCents);
         feedback.className = 'feedback success';
