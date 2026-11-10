@@ -131,9 +131,10 @@
     list: CATALOG,
     unlocked: board.unlocked,
     sync: sync,
+    announce: announce,
     onActivityFinished: function () { announce(sync()); }
   };
 
   /* Retroactive credit from progress saved before this page loaded: silent. */
-  try { sync(); } catch (err) { /* never block the page over a badge */ }
+  try { announce(sync()); } catch (err) { /* never block the page over a badge */ }
 })();
