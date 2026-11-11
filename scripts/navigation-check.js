@@ -17,7 +17,7 @@ function addRoute(routes, route) {
   if (routes.indexOf(route) === -1) routes.push(route);
 }
 
-var routes = ['/', '/site/', '/config/', '/legal/index.html'];
+var routes = ['/', '/config/', '/legal/index.html'];
 var data = fs.readFileSync(path.join(ROOT, 'data.js'), 'utf8');
 var hrefPattern = /href:\s*'([^']+)'/g;
 var match;

@@ -258,7 +258,7 @@ Okeymoney is a fully static site (HTML/CSS/JS, no build step), so it
 ships directly to **[Cloudflare Workers (static assets)](https://developers.cloudflare.com/workers/static-assets/)**
 through its built-in GitHub integration. The HTTP security headers
 live in [`_headers`](_headers), the offline fallback in
-[`offline.html`](offline.html), and the project metadata in
+[`sw.js`](sw.js), and the project metadata in
 [`wrangler.toml`](wrangler.toml). See [`CLOUDFLARE.md`](CLOUDFLARE.md)
 for the full runbook (rebuild, rollback, custom domain, credential
 rotation).

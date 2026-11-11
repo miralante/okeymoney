@@ -678,14 +678,6 @@
     keypad: {
       deleteDigit: 'Borrar el último dígito',
       clear: 'Borrar todo'
-    },
-
-    offline: {
-      title: 'Sin conexión',
-      heading: 'Sin conexión',
-      body: 'No hemos podido cargar esta página. Comprueba tu conexión a Internet y vuelve a intentarlo.',
-      homeLink: 'Volver a Okeymoney',
-      metaDescription: 'Okeymoney está sin conexión: comprueba tu conexión a Internet y vuelve a intentarlo.'
     }
   }, 'es');
 })();

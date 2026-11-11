@@ -678,14 +678,6 @@
     keypad: {
       deleteDigit: 'Delete last digit',
       clear: 'Clear'
-    },
-
-    offline: {
-      title: 'Offline',
-      heading: 'Offline',
-      body: "We couldn't load this page. Check your internet connection and try again.",
-      homeLink: 'Back to Okeymoney',
-      metaDescription: "Okeymoney is offline: check your internet connection and try again."
     }
   }, 'en');
 })();

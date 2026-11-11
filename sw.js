@@ -6,7 +6,7 @@
    When adding new files: add them to FILES and bump VERSION (the
    precache still needs the list for offline use).
    ============================================================ */
-var VERSION = 'okeymoney-v152';
+var VERSION = 'okeymoney-v153';
 
 var FILES = [
   './tools/monthly-payments/',
@@ -22,7 +22,6 @@ var FILES = [
   './tools/save-step-by-step/strings.es.js',
   './tools/save-step-by-step/strings.en.js',
   './',
-  './offline.html',
   './manifest.json',
   './app.js',
   './data.js',
@@ -63,11 +62,9 @@ var FILES = [
   './assets/js/activity-runtime.js',
   /* External scripts that used to be inline <script> blocks. The CSP is
      `script-src self`, so they must stay external: locale-picker-config
-     (the okeymoney:locale key), sw-register (the PWA) and sw-refresh
-     (offline.html). */
+     (the okeymoney:locale key) and sw-register (the PWA). */
   './assets/js/locale-picker-config.js',
   './assets/js/sw-register.js',
-  './assets/js/sw-refresh.js',
   './assets/css/activities.css',
   './assets/img/icono-euro.svg',
 
@@ -104,18 +101,11 @@ var FILES = [
   './tools/safe-money/',
   './tools/safe-money/app.js',
   './tools/safe-money/strings.es.js',
-  './tools/safe-money/strings.en.js',
-
-  /* Public landing site/. Added when /site/ was created; bump VERSION
-     so installed PWAs refetch the shell and pick the new files. */
-  './site/',
-  './site/styles.css',
-  './site/strings.es.js',
-  './site/strings.en.js'
+  './tools/safe-money/strings.en.js'
 ];
 
 /* Cloudflare answers EVERY "/x.html" URL with a 307 to its extensionless form
-   (/index.html -> /, /404.html -> /404, /offline.html -> /offline). Following
+   (/index.html -> /, /404.html -> /404). Following
    that redirect yields a response with `redirected === true`, and the Cache API
    PRESERVES that flag across a store/load round trip, so cache.addAll()
    silently poisons the entry under its original key. Chrome refuses to hand
@@ -195,10 +185,9 @@ self.addEventListener('fetch', function (event) {
     }).catch(function () {
       return caches.match(event.request).then(function (cached) {
         if (cached) return deRedirect(cached);
-        /* Offline and not cached: serve offline.html (i18n-aware via the
-           same strings.<locale>.js files cached at install), or a minimal
+        /* Offline and not cached: serve the cached home page, or a minimal
            fallback if even that misses in the cache. */
-        return caches.match('./offline.html').then(function (offline) {
+        return caches.match('./').then(function (offline) {
           /* This one IS a navigation response: a poisoned entry here is
              exactly the reported failure. Sanitise it. */
           if (offline) return deRedirect(offline);

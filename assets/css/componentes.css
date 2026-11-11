@@ -817,16 +817,6 @@
 
 .footer-app .legal-link + .legal-link { margin-left: var(--espacio-3); }
 
-/* Footer injected by App.utils.injectFooter() (site/): keep links apart. */
-footer.pie-app {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: var(--espacio-2) var(--espacio-4);
-  margin-top: var(--espacio-6);
-  padding: var(--espacio-4) 0;
-}
-
 /* ==========================================================================
    Achievements (about-app/). Locked badges keep full text contrast:
    the state is told by the lock icon, the dashed border and the

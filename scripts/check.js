@@ -487,7 +487,6 @@ headersContent.split('\n').filter(function (line) {
 
   var targets = [
     path.join(ROOT, 'index.html'),
-    path.join(ROOT, 'offline.html'),
     path.join(ROOT, 'legal', 'index.html')
   ].filter(function (f) { return fs.existsSync(f); });
   var toolsDir = path.join(ROOT, 'tools');
