@@ -37,6 +37,7 @@
         listen: '🔊 Escuchar',
         listenInstructions: 'Escuchar las instrucciones',
         loading: 'Cargando…',
+        chrome: { appName: 'Okeymoney', portal: 'Volver al portal', about: 'Sobre la app', legal: 'Protección de datos', settings: 'Ajustes' },
         dataProtection: 'Protección de datos',
         aboutApp: 'Sobre la app',
         config: 'Configuración',
@@ -80,6 +81,7 @@
         listen: '🔊 Listen',
         listenInstructions: 'Listen to the instructions',
         loading: 'Loading…',
+        chrome: { appName: 'Okeymoney', portal: 'Back to the portal', about: 'About the app', legal: 'Data protection', settings: 'Settings' },
         dataProtection: 'Data protection',
         aboutApp: 'About the app',
         config: 'Settings',
@@ -228,12 +230,6 @@
   function init() {
     document.documentElement.lang = locale();
     apply(document);
-    /* Inject the shared footer into every <footer data-pie-app>
-       marker on the page. App.utils.injectFooter is defined in
-       utils.js, which loads before i18n.js per the standard order. */
-    if (window.App && window.App.utils && typeof window.App.utils.injectFooter === 'function') {
-      window.App.utils.injectFooter();
-    }
   }
 
   if (document.readyState === 'loading') {
