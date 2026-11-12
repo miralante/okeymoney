@@ -7,7 +7,7 @@
     appName: 'Okeymoney',
 
     core: {
-      chrome: { appName: 'Okeymoney', portal: 'Volver al portal', about: 'Sobre la app', legal: 'Protección de datos', settings: 'Ajustes' },
+      chrome: { appName: 'Okeymoney' },
       config: 'Configuración'
     },
 
