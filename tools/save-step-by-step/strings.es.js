@@ -2,7 +2,7 @@ App.i18n.register({
   "title": "Ahorra para una meta",
   "metaDescription": "Una meta es algo para lo que guardas dinero. Aparta primero lo necesario.",
   "objetivo": "Cuando recibas dinero, revisa lo necesario antes de ahorrar.",
-  "instruccion": "Elige qué harías.",
+  "instruccion": "Piensa qué harías y responde.",
   "didacticTitle": "Ahorra para una meta",
   "didacticBody": "Una meta es algo para lo que guardas dinero. Aparta primero lo necesario.",
   "didacticExampleLabel": "Ejemplo",

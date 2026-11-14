@@ -7,6 +7,7 @@
   'use strict';
   App.activity.run({
     slug: 'needs-vs-wants',
+    sceneMode: 'sort',
     rewardCents: 800,
     cases: [
       { id: 'w1', sceneKey: 'scenes.w1',

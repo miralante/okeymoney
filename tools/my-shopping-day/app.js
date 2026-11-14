@@ -13,6 +13,9 @@
     slug: 'my-shopping-day',
     rewardCents: 6000,
     shuffleCases: false,
+    /* Change cases (d4) are typed on the keypad; the rest are choices. */
+    checkAnswer: function (value, current) { return typeof current.answerCents === 'number' && value === current.answerCents; },
+    explainAnswer: function (current) { return App.i18n.t(current.explanationKey); },
     cases: [
       { id: 'd1',
         instructionKey: 'd1instr',
@@ -34,7 +37,9 @@
         hintKey: 'd3pista', explanationKey: 'd3expl' },
       { id: 'd4',
         instructionKey: 'd4instr',
-        sceneKey: 'reviewScene3',
+        sceneMode: 'keypad',
+        answerCents: 270,
+        sceneKey: 'd4instr',
         options: ['op2e70', 'op3e70', 'op1e30'],
         correctIndex: 0,
         hintKey: 'd4pista', explanationKey: 'd4expl' },

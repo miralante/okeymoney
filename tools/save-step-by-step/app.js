@@ -1,6 +1,9 @@
 (function () {
   'use strict';
   App.activity.run({
+  /* Money cases (c0, c1) are typed on the keypad; the rest are choices. */
+  checkAnswer: function (value, current) { return typeof current.answerCents === 'number' && value === current.answerCents; },
+  explainAnswer: function (current) { return App.i18n.t(current.explanationKey); },
   "slug": "save-step-by-step",
   "rewardCents": 1200,
   "shuffleCases": false,
@@ -9,6 +12,8 @@
     {
       "id": "case1",
       "level": 1,
+      "sceneMode": "keypad",
+      "answerCents": 1500,
       "sceneKey": "cases.c0.scene",
       "agent": "persona",
       "agentName": "actor",
@@ -24,6 +29,8 @@
     {
       "id": "case2",
       "level": 1,
+      "sceneMode": "keypad",
+      "answerCents": 300,
       "sceneKey": "cases.c1.scene",
       "agent": "persona",
       "agentName": "actor",

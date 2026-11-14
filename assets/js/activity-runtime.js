@@ -27,6 +27,10 @@
                         can describe alternative groups of pieces.
      'money-change'   — case.paidCents and case.costCents show a payment and
                         a price; options contain possible change amounts.
+     'sort'           — the scene is a card to place: the person taps the card,
+                        then the box (an option) it goes in. The boxes stay
+                        disabled until the card is chosen. Same Socratic loop
+                        as 'html'; used by needs-vs-wants.
      'keypad'         — case.paidCents/costCents define a subtraction. The
                         runtime renders a numeric keypad inside #options,
                         a large display, and a "Check" button.
@@ -152,7 +156,7 @@
          la cabecera del tool). El saldo se redondea hacia abajo:
          1 token = 100 céntimos = 1 € de práctica. Pintamos solo el
          número entero; el emoji 🪙 lo añade el CSS via ::before en
-         .tool-header .practice-tokens. */
+         .suite-chrome-activity .practice-tokens. */
       var tokens = $('#practiceTokens');
       if (tokens) {
         var n = Math.floor(App.wallet.balance() / 100);
@@ -356,6 +360,11 @@
            we build the scene from paidCents/costCents. */
         if (sceneMarkup) {
           escena.innerHTML = sceneMarkup;
+        } else if (current.sceneKey && typeof current.paidCents !== 'number') {
+          /* A keypad case that is only a question (no paid/cost amounts): its text. */
+          var questionText = document.createElement('p');
+          questionText.textContent = App.i18n.t(current.sceneKey);
+          escena.appendChild(questionText);
         } else {
           escena.innerHTML = '';
           var lbl1 = document.createElement('span');
@@ -397,6 +406,30 @@
         agent.textContent = ({persona: '👤', empresa: '🏪', banco: '🏦'}[current.agent] || '👤') + ' ' + App.i18n.t(current.agentName);
         escena.appendChild(agent);
       }
+      /* sceneMode 'sort': the scene is a card to place. The person taps the card
+         first, and only then the box (an option) takes it. The boxes wait disabled. */
+      var sortMode = sceneMode === 'sort';
+      if (sortMode) {
+        var sortCard = document.createElement('div');
+        sortCard.className = 'sort-card';
+        sortCard.setAttribute('role', 'button');
+        sortCard.setAttribute('tabindex', '0');
+        sortCard.setAttribute('aria-pressed', 'false');
+        while (escena.firstChild) sortCard.appendChild(escena.firstChild);
+        escena.appendChild(sortCard);
+        var pickCard = function () {
+          if (answerLocked) return;
+          sortCard.classList.add('is-selected');
+          sortCard.setAttribute('aria-pressed', 'true');
+          $$('#options .option-btn').forEach(function (b) { b.disabled = false; });
+          feedbackFor(App.i18n.t('core.sortPickBox'));
+        };
+        sortCard.addEventListener('click', pickCard);
+        sortCard.addEventListener('keydown', function (event) {
+          if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); pickCard(); }
+        });
+        feedbackFor(App.i18n.t('core.sortPickCard'));
+      }
       var optionIndices = [];
       for (var oi = 0; oi < current.options.length; oi += 1) {
         optionIndices.push(oi);
@@ -417,8 +450,49 @@
         btn.addEventListener('click', function () { onAnswer(btn, optIdx, current); });
         opciones.appendChild(btn);
       });
+      if (sortMode) {
+        $$('#options .option-btn').forEach(function (b) { b.disabled = true; });
+      }
 
       attemptsOnCurrent = 0;
+    }
+
+    /* A short line of guidance under the scene (sort mode). */
+    function feedbackFor(text) {
+      var feedback = $('#feedback');
+      if (!feedback) return;
+      feedback.textContent = text;
+      feedback.className = 'feedback';
+    }
+
+    /* The basket: the right choices of this activity, in the order they were made.
+       Each right answer puts its label in it, so the progress can be seen. */
+    function addToBasket(label) {
+      var basket = $('#basket');
+      if (!basket) {
+        basket = document.createElement('div');
+        basket.id = 'basket';
+        basket.className = 'basket';
+        basket.setAttribute('aria-live', 'polite');
+        var title = document.createElement('p');
+        title.className = 'basket-title';
+        title.textContent = App.i18n.t('core.basketTitle');
+        basket.appendChild(title);
+        var opciones = $('#options');
+        if (opciones && opciones.parentNode) opciones.parentNode.insertBefore(basket, opciones);
+      }
+      var chip = document.createElement('span');
+      chip.className = 'basket-item';
+      chip.textContent = label;
+      basket.appendChild(chip);
+    }
+
+    function clearBasket() {
+      var basket = $('#basket');
+      if (basket) {
+        var items = basket.querySelectorAll('.basket-item');
+        for (var i = 0; i < items.length; i += 1) items[i].remove();
+      }
     }
 
     function onAnswer(btn, chosenIdx, current) {
@@ -432,6 +506,7 @@
         pista.hidden = true;
         pista.textContent = '';
         App.feedback.markCorrect(btn, allBtns);
+        addToBasket(btn.textContent);
         feedback.textContent = App.i18n.t('core.understood') + ' ✓';
         feedback.className = 'feedback success';
         App.feedback.success();
@@ -496,7 +571,7 @@
 
       if (attemptsOnCurrent >= 2) {
         pista.hidden = false;
-        pista.textContent = App.i18n.t('core.challenge.hint') || '';
+        pista.textContent = current.hintKey ? App.i18n.t(current.hintKey) : (App.i18n.t('core.challenge.hint') || '');
         App.feedback.lockUntilAck([], feedback, function () {
           pista.textContent = typeof opts.explainAnswer === 'function'
             ? opts.explainAnswer(current)
@@ -505,7 +580,9 @@
         });
       } else {
         pista.hidden = false;
-        pista.textContent = App.i18n.t('core.challenge.hintSubtract') || App.i18n.t('core.challenge.hint') || '';
+        pista.textContent = current.hintKey
+          ? App.i18n.t(current.hintKey)
+          : (App.i18n.t('core.challenge.hintSubtract') || App.i18n.t('core.challenge.hint') || '');
         App.feedback.lockUntilAck($$('#options .keypad-key'), feedback, function () {
           if (submitBtn) submitBtn.disabled = false;
         });
@@ -573,7 +650,7 @@
       var transfer = document.createElement('p');
       transfer.textContent = App.i18n.t(opts.transferKey || 'target');
       escena.appendChild(transfer);
-      var back = document.querySelector('.tool-header .back-link');
+      var back = document.querySelector('.suite-chrome-activity .back-link');
       if (back) {
         var returnLink = back.cloneNode(true);
         returnLink.className = 'btn';
@@ -585,6 +662,7 @@
 
     function init() {
       cases = opts.shuffleCases === false ? (opts.cases || opts.casos || []).slice() : shuffle(opts.cases || opts.casos || []);
+      clearBasket();
       currentIndex = 0;
       attemptsOnCurrent = 0;
       totalAttempts = 0;

@@ -24,16 +24,13 @@
   padding-top: var(--espacio-7);
 }
 
-.actividad .tool-header {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  column-gap: var(--espacio-4);
-  row-gap: var(--espacio-5);
+/* The activity block is centred by the shared suite header (suite-chrome block).
+   This app only sets the space under the header row. */
+.actividad .suite-chrome-header:has(> .suite-chrome-activity) {
   margin-bottom: var(--espacio-7);
 }
 
-.actividad .tool-header .back-link {
+.actividad .suite-chrome-activity .back-link {
   width: auto;
   min-height: var(--tocable);
   padding: 0;
@@ -44,27 +41,24 @@
   font-weight: var(--peso-fuerte);
 }
 
-.actividad .tool-header .back-link:hover {
+.actividad .suite-chrome-activity .back-link:hover {
   border-color: transparent;
   color: var(--texto-primario);
 }
 
-.actividad .tool-header h1 {
-  grid-column: 1 / -1;
-  grid-row: 2;
-  max-width: 18ch;
-  font-size: clamp(2.25rem, 5vw, 3.25rem);
+.actividad .suite-chrome-activity h1 {
+  font-size: clamp(1.4rem, 2.8vw, 2rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
 }
 
-.actividad .tool-header .practice-tokens {
+.actividad .suite-chrome-activity .practice-tokens {
   min-height: var(--tocable);
   padding: var(--espacio-2) var(--espacio-3);
   border: 1px solid var(--acento-suave);
 }
 
-.actividad .tool-header .practice-tokens::before {
+.actividad .suite-chrome-activity .practice-tokens::before {
   content: "🪙";
   font-family: inherit;
   font-size: 1em;
@@ -279,13 +273,13 @@
     padding-top: var(--espacio-3);
   }
 
-  .actividad .tool-header {
+  .actividad .suite-chrome-activity {
     row-gap: var(--espacio-2);
     margin-bottom: var(--espacio-3);
   }
 
-  .actividad .tool-header h1 {
-    font-size: clamp(1.9rem, 9vw, 2.45rem);
+  .actividad .suite-chrome-activity h1 {
+    font-size: clamp(1.3rem, 6vw, 1.6rem);
   }
 
   .actividad-objetivo {

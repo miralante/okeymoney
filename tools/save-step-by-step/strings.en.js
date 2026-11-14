@@ -2,7 +2,7 @@ App.i18n.register({
   "title": "Save towards a goal",
   "metaDescription": "A goal is something you save money for. Keep essentials covered first.",
   "objetivo": "When you receive money, check essentials before saving.",
-  "instruccion": "Choose what you would do.",
+  "instruccion": "Think about what you would do and answer.",
   "didacticTitle": "Save towards a goal",
   "didacticBody": "A goal is something you save money for. Keep essentials covered first.",
   "didacticExampleLabel": "Example",
