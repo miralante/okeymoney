@@ -11,6 +11,7 @@
   'use strict';
   App.activity.run({
     slug: 'my-shopping-day',
+    pairedDidactic: true,
     rewardCents: 6000,
     shuffleCases: false,
     /* Change cases (d4) are typed on the keypad; the rest are choices. */

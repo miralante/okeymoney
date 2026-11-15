@@ -95,6 +95,8 @@
       var instruction = $('#instruction');
       var btnReiniciar = $('#btnRestart');
       if (!escena || !opciones) return;
+      /* pairedDidactic: the explanation lives in its own panel on the left; the scene stays empty until the cases start. */
+      var explain = opts.pairedDidactic ? ($('#explainPanel') || escena) : escena;
 
       clearFeedback();
       var progress = $('#activityProgress');
@@ -106,7 +108,7 @@
         instruction.hidden = true;
       }
 
-      escena.innerHTML =
+      explain.innerHTML =
         '<div class="actividad-didactica">' +
           '<h2>' + App.utils.escapeHtml(App.i18n.t('didacticTitle')) + '</h2>' +
           '<p>' + App.utils.escapeHtml(App.i18n.t('didacticBody')) + '</p>' +
@@ -139,8 +141,9 @@
           presentationList.appendChild(item);
         });
         presentation.appendChild(presentationList);
-        escena.querySelector('.actividad-didactica').appendChild(presentation);
+        explain.querySelector('.actividad-didactica').appendChild(presentation);
       }
+      if (explain !== escena) escena.innerHTML = '';
       opciones.innerHTML =
         '<button type="button" class="btn actividad-didactica__start" id="btnStartActivity">' +
           App.utils.escapeHtml(App.i18n.t('didacticContinue')) +
@@ -685,6 +688,27 @@
         });
       }
 
+      /* pairedDidactic: the explanation (left) and the case frame (right) share one row (.flow-pair).
+         The frame takes the instruction, the scene, the options and the feedback as they are. */
+      if (opts.pairedDidactic && $('#scene') && !$('#explainPanel')) {
+        var first = $('#instruction') || $('#scene');
+        var wrap = document.createElement('div');
+        wrap.className = 'flow-pair';
+        var explainPanel = document.createElement('div');
+        explainPanel.id = 'explainPanel';
+        explainPanel.className = 'explain-panel';
+        var frame = document.createElement('div');
+        frame.className = 'flow-frame';
+        first.parentNode.insertBefore(wrap, first);
+        wrap.appendChild(explainPanel);
+        wrap.appendChild(frame);
+        ['#instruction', '#scene', '#options', '#hint', '#feedback'].forEach(function (sel) {
+          var node = $(sel);
+          if (node) frame.appendChild(node);
+        });
+        var restart = $('#btnRestart');
+        if (restart && restart.parentNode) frame.appendChild(restart.parentNode);
+      }
       var progress = document.createElement('div');
       progress.id = 'activityProgress';
       progress.className = 'actividad-progress';

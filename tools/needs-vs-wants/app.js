@@ -7,6 +7,7 @@
   'use strict';
   App.activity.run({
     slug: 'needs-vs-wants',
+    pairedDidactic: true,
     sceneMode: 'sort',
     rewardCents: 800,
     cases: [

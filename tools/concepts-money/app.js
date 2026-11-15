@@ -52,6 +52,7 @@
 
   App.activity.run({
     slug: 'concepts-money',
+    pairedDidactic: true,
     rewardCents: DATA.rewardCents,
     sceneMode: 'money-token',
     shuffleCases: false,

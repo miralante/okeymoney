@@ -5,6 +5,7 @@
   'use strict';
   App.activity.run({
     slug: 'budget-first',
+    pairedDidactic: true,
     rewardCents: 1200,
     cases: [
       { id: 'b1',

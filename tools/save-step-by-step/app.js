@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   App.activity.run({
+    pairedDidactic: true,
   /* Money cases (c0, c1) are typed on the keypad; the rest are choices. */
   checkAnswer: function (value, current) { return typeof current.answerCents === 'number' && value === current.answerCents; },
   explainAnswer: function (current) { return App.i18n.t(current.explanationKey); },

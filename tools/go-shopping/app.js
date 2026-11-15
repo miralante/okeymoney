@@ -5,6 +5,7 @@
   'use strict';
   App.activity.run({
     slug: 'go-shopping',
+    pairedDidactic: true,
     rewardCents: 2000,
     cases: [
       { id: 's1',

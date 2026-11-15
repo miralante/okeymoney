@@ -431,6 +431,7 @@ adaptados a su dominio.
     la pérdida. La lista completa de patrones prohibidos vive en
     §3.7. La persona maneja su dinero porque la app se lo pone fácil,
     no porque la estemos empujando.
+15. **Cada pantalla es explicativa o interactiva, y se dice cuál.** Las explicativas (tipo *slide*) se leen y se avanza en ellas, sin responder ni puntuar. Las interactivas (tipo *frame* de juego) actúan sobre el contenido —teclear un gasto, arrastrar una moneda, llenar una meta— y reciben ✓ o ✗ en cada intento. Son módulos distintos y pueden compartir pantalla en escritorio: la explicación a la izquierda y el frame interactivo a la derecha. En móvil se apilan, con la explicación primero. Un frame interactivo nunca aparece antes de su explicación. Implementada en las 11 actividades del motor compartido de práctica (flag `pairedDidactic`).
 
 ## 5. Regla de obligado cumplimiento: cero menciones en el producto
 

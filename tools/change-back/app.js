@@ -24,6 +24,7 @@
 
   App.activity.run({
     slug: 'change-back',
+    pairedDidactic: true,
     rewardCents: DATA.rewardCents,
     sceneMode: 'keypad',
     checkAnswer: checkAnswer,

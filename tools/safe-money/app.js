@@ -10,6 +10,7 @@
 
   App.activity.run({
     slug: 'safe-money',
+    pairedDidactic: true,
     rewardCents: 1500,
     cases: [
       {

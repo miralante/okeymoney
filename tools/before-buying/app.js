@@ -5,6 +5,7 @@
   App.activity.run({
     slug: 'before-buying',
     rewardCents: 1000,
+    pairedDidactic: true,
     cases: [
       { id: 'q1', instructionKey: 'q1instr', sceneHtml: '<p>📱 Un móvil nuevo te llama la atención.</p>',
         options: ['opNeed', 'opWant', 'opNotSure'], correctIndex: 1,

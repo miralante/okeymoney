@@ -1,6 +1,7 @@
 (function () {
   'use strict';
   App.activity.run({
+    pairedDidactic: true,
   "slug": "compare-prices",
   "rewardCents": 1200,
   "shuffleCases": false,

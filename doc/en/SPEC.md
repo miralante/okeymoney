@@ -421,6 +421,7 @@ domain.
     patterns or exploitative loss aversion. The full list of
     forbidden patterns lives in §3.7. The person manages their money
     because the app makes it easy, not because we are pushing them.
+15. **Every screen is explanatory or interactive, and says which.** Explanatory screens (*slide* type) are read, and the person moves on, with no answer and no score. Interactive screens (game *frame* type) act on the content — typing an expense, dragging a coin, filling a goal — and give ✓ or ✗ on each attempt. They are separate modules and can share a screen on desktop: the explanation on the left and the interactive frame on the right. On mobile they stack, with the explanation first. An interactive frame never appears before its explanation. Implemented in the 11 activities of the shared practice runtime (flag `pairedDidactic`).
 
 ## 5. Mandatory rule: zero mentions in the user-facing product
 
