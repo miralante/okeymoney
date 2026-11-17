@@ -21,7 +21,20 @@
   --acento: var(--acento-3);
   --acento-suave: var(--acento-3-suave);
   max-width: var(--contenedor-lectura);
+  margin-inline: auto;
+  padding-inline: var(--espacio-4);
   padding-top: var(--espacio-7);
+}
+
+/* The activity page wraps its <main> in .container (the page footer shares that
+   column); the activity keeps its own top space, so the wrapper adds none. */
+.container:has(> .actividad) {
+  padding-top: 0;
+}
+
+/* The activity's content column takes the activity's own gutters, not a second set. */
+.actividad > .suite-body {
+  padding-inline: 0;
 }
 
 /* The activity block is centred by the shared suite header (suite-chrome block).

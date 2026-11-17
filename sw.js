@@ -6,7 +6,7 @@
    When adding new files: add them to FILES and bump VERSION (the
    precache still needs the list for offline use).
    ============================================================ */
-var VERSION = 'okeymoney-v186';
+var VERSION = 'okeymoney-v187';
 
 var FILES = [
   './tools/monthly-payments/',
