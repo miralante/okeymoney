@@ -104,10 +104,12 @@
 
 /* Alias legacy (v1) — mantiene compatibilidad con clases ya en uso en
    index.html / tools/* mientras se migran a los modificadores BEM. */
+/* Secondary buttons take the progress bar's colour (--acento, the same token as .progress-fill) and the text
+   that reads on accents in each theme (--texto-sobre-acento). */
 .btn-secondary {
-  background: var(--superficie-2);
-  color: var(--texto-primario);
-  border-color: var(--borde);
+  background: var(--acento, var(--accent, #2E7D32));
+  color: var(--texto-sobre-acento, #FFFFFF);
+  border-color: var(--acento, var(--accent, #2E7D32));
 }
 .btn-audio {
   width: auto;
