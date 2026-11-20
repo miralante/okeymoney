@@ -6,7 +6,7 @@
 
 ## Comprobaciones
 
-- [ ] `node scripts/check.js` pasa en local.
+- [ ] `npm run lint` pasa en local.
 - [ ] Si has añadido un asset al shell, está en `FILES` de
       `sw.js` y has bumpeado `VERSION`.
 - [ ] Si has modificado el shell de la app, has actualizado la
