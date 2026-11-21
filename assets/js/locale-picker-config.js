@@ -23,6 +23,7 @@ window.LocalePickerConfig = {
      preferencias. Coste: un clic más para llegar al idioma. */
   languageInDrawer: true,
   storageKey: 'okeymoney:locale',
+  storagePrefix: 'okeymoney:',
   /* Okeymoney stores strings next to index.html (not under assets/js/),
      so discovery is skipped: no HEAD probes (each one was a 404), and
      requiredLocales names the two locales actually shipped. */
