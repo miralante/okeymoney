@@ -1,13 +1,13 @@
 /* ==========================================================================
    Okeymoney — Service worker registration.
-   Shared by every entry point (root, 404, about/, legal/, config/,
+   Shared by every entry point (root, 404, about/, legal/,
    tools/<slug>/, offline) so it can run as an external file: the CSP in
    `_headers` is `script-src 'self'` with no `unsafe-inline`, so an inline
    <script> here is silently blocked by the browser and the PWA never
    installs. Uses an absolute path so the same file works at any depth.
 
    The URL and options MUST stay identical to the ones in app.js, which also
-   registers (config/index.html loads app.js but not this file). A registration
+   registers. A registration
    is keyed by SCOPE, not by script URL, so registering "sw.js?build=72" here
    and "/sw.js" there means each page load flips the registered script and
    forces a second full precache. Same rule that made ludia's sw.js and

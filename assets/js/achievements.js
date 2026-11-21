@@ -8,7 +8,7 @@
    holds Okeymoney's rules and texts.
 
    Storage: 'okeymoney:achievements' -> { <id>: <timestamp of first unlock> }
-   (App.storage's reset in /config/ deletes the keys with the app prefix).
+   (the gear reset deletes the keys with the app prefix).
 
    Public API (window.App.achievements):
      list                    the catalogue

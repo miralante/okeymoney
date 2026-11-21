@@ -192,27 +192,3 @@ test('the settings wizard exports a backup and refuses an invalid import', async
   expect(errors).toEqual([]);
 });
 
-test('the settings page clears the data of Okeymoney and nothing else', async ({ page }) => {
-  const errors = watchErrors(page);
-  await page.goto('/config/');
-
-  // The page tells what this browser keeps.
-  await expect(page.locator('#listaEstado li')).toHaveCount(6);
-
-  // The data of the app and a key of another app that shares the browser.
-  await page.evaluate(() => {
-    localStorage.setItem('okeymoney:data', JSON.stringify({ initialBalanceCents: 5000, movements: [] }));
-    localStorage.setItem('otra-app:datos', 'no tocar');
-  });
-
-  // The reset asks for a second tap before it deletes anything.
-  await page.locator('#btnBorrarTodo').click();
-  await page.locator('#btnBorrarTodo').click();
-
-  await expect(page.locator('#feedbackTodo')).not.toBeEmpty();
-  const keys = await page.evaluate(() => Object.keys(localStorage));
-  expect(keys.filter((key) => key.startsWith('okeymoney:'))).toEqual([]);
-  expect(keys).toContain('otra-app:datos');
-
-  expect(errors).toEqual([]);
-});

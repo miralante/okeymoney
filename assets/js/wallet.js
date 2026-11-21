@@ -43,7 +43,7 @@
    * Adds `cents` (positive or negative) to the practice balance and
    * records the reason in history. `reason` is one of:
    *   'activity:<slug>'     — credit on completing an activity
-   *   'reset'               — explicit reset from /config/ (future)
+   *   'reset'               — explicit reset (future)
    * Returns the new balance.
    */
   function credit(cents, reason) {
