@@ -78,13 +78,16 @@ jobs:
           node-version: "20"
 
       - name: Install UI test dependencies
-        run: npm install --no-save --no-audit --no-fund playwright
+        run: npm install --no-audit --no-fund
 
       - name: Install Chromium
         run: npx playwright install --with-deps chromium
 
-      - name: Run Playwright UI smoke
+      - name: Run Playwright spec suite
         run: npm run test:ui
+
+      - name: Run the UI crawler
+        run: npm run test:crawl
 
       - name: Run service-worker smoke
         run: npm run test:sw

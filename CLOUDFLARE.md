@@ -87,8 +87,8 @@ everything else is in `localStorage` on the user's device.
 
 The site uses a [`_headers`](_headers) file at the repo root to set
 security headers (CSP, X-Frame-Options, Referrer-Policy,
-Permissions-Policy, etc.) and a cache policy: a one-year immutable
-cache for the JS, CSS, font and image assets. Cloudflare reads
+Permissions-Policy, etc.) and a cache policy: every asset is served
+`no-cache, must-revalidate`, so a deploy is visible at once. Cloudflare reads
 this file on every deploy and applies the rules automatically — no
 dashboard configuration needed.
 

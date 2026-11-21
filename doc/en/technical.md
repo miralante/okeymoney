@@ -74,8 +74,7 @@ separately-scoped addition — not a reason to change the baseline today.
 
 Same setup as the sibling apps: **Cloudflare Pages** via the Git
 connector, no build step (the repo root is the build output), cache
-policy in `_headers` (HTML/`sw.js`/`manifest.json` must-revalidate,
-fingerprint-free JS/CSS/font assets cached a year). `manifest.json` and `sw.js`
+policy in `_headers` (every asset is served `no-cache, must-revalidate`). `manifest.json` and `sw.js`
 use relative paths so the app works on any host unmodified. A one-off
 preview deploy without pushing: `npx wrangler pages deploy . --project-name okeymoney`.
 
@@ -649,7 +648,7 @@ the **template**; deviations are called out where they apply.
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v4aa">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css">
 </head>
 <body>
   <div class="container {legal|about}">
@@ -691,11 +690,9 @@ the **template**; deviations are called out where they apply.
   <script src="strings.en.js"></script>
   <!-- The dropdown needs its config BEFORE the component. Both
        are deferred, and deferred scripts run in document order, so
-       listing them in that order is enough. The ?v= is not optional:
-       .js and .css are served immutable for a year, and without it the
-       page serves the stale copy from cache. -->
-  <script src="../assets/js/locale-picker-config.js?v=okeymoney-v4aa"></script>
-  <script src="../assets/js/locale-picker.js?v=okeymoney-v4aa" defer></script>
+       listing them in that order is enough. Assets are served no-cache, so no version token is needed. -->
+  <script src="../assets/js/locale-picker-config.js"></script>
+  <script src="../assets/js/locale-picker.js" defer></script>
   <script>
     /* Register the SW from this entry point so it is active for any
        later navigation, matching what the main index.html and the

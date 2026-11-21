@@ -84,9 +84,7 @@ alcance — no un motivo para cambiar la base de hoy.
 
 Misma configuración que las apps hermanas: **Cloudflare Pages** mediante
 el conector de Git, sin paso de compilación (la raíz del repositorio es
-el resultado del despliegue), política de caché en `_headers` (HTML/
-`sw.js`/`manifest.json` con revalidación obligatoria, el resto de
-recursos JS/CSS/fuentes cacheados un año). `manifest.json` y `sw.js`
+el resultado del despliegue), política de caché en `_headers` (todos los recursos: `no-cache, must-revalidate`). `manifest.json` y `sw.js`
 usan rutas relativas para que la app funcione en cualquier alojamiento
 sin cambios. Un despliegue de previsualización puntual sin hacer push:
 `npx wrangler pages deploy . --project-name okeymoney`.
@@ -697,7 +695,7 @@ la **plantilla**; las desviaciones se indican donde apliquen.
   <link rel="stylesheet" href="../assets/css/base.css">
   <link rel="stylesheet" href="../assets/css/components.css">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="../assets/css/locale-picker.css?v=okeymoney-v4aa">
+  <link rel="stylesheet" href="../assets/css/locale-picker.css">
 </head>
 <body>
   <div class="container {legal|about}">
@@ -736,11 +734,9 @@ la **plantilla**; las desviaciones se indican donde apliquen.
   <script src="strings.en.js"></script>
   <!-- El desplegable necesita su configuracion ANTES que el
        componente. Los dos van diferidos, y los diferidos se ejecutan
-       en orden de documento, con listarlos en ese orden basta. El ?v=
-       no es opcional: los .js y .css se sirven immutable un ano, sin el
-       la pagina sirve la version vieja desde la cache. -->
-  <script src="../assets/js/locale-picker-config.js?v=okeymoney-v4aa"></script>
-  <script src="../assets/js/locale-picker.js?v=okeymoney-v4aa" defer></script>
+       en orden de documento, con listarlos en ese orden basta. Los recursos se sirven sin caché, así que no hace falta ningún token de versión. -->
+  <script src="../assets/js/locale-picker-config.js"></script>
+  <script src="../assets/js/locale-picker.js" defer></script>
   <script>
     /* Register the SW from this entry point so it is active for any
        later navigation, matching what the main index.html and the

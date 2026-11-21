@@ -85,36 +85,6 @@ console.log(
 );
 
 
-/* --- Asset version tokens (?v=) ---------------------------------------
-   The second cache layer. _headers serves this project's immutable
-   assets (see _headers: Cache-Control immutable) for a year, so a
-   changed file only reaches a returning visitor if the URL that
-   references it changes. The token is a hash of the file's own bytes,
-   computed by the suite-wide tool, so it cannot drift silently the way
-   a hand-typed serial did: the same asset used to be referenced with
-   different tokens from different pages.
-
-   Run `node ../scripts/asset-tokens.js okeymoney` to fix.
-   ------------------------------------------------------------------- */
-(function () {
-  const suiteTool = require('path').join(__dirname, '..', '..', 'scripts', 'asset-tokens.js');
-  if (!require('fs').existsSync(suiteTool)) {
-    console.log('~ skipping asset-token check: ' + suiteTool + ' not found');
-    return;
-  }
-  try {
-    require('node:child_process').execFileSync(
-      process.execPath, [suiteTool, '--check', 'okeymoney'],
-      { cwd: require('path').join(__dirname, '..'), encoding: 'utf8', stdio: 'pipe' }
-    );
-    console.log('✓ asset-token check passed (okeymoney)');
-  } catch (e) {
-    console.error('✗ asset version tokens (?v=) are stale:\n' + String(e.stdout || e.message).trim());
-    console.error('  Fix: node ../scripts/asset-tokens.js okeymoney');
-    process.exitCode = 1;
-  }
-})();
-
 /* --- Redirect-free links, sanitised service-worker caches -------------
    Third cache-layer check, same slot as the one above. Cloudflare answers
    EVERY "/x.html" URL with a 307 to its extensionless form (verified on all

@@ -1,8 +1,7 @@
 # Cloudflare Pages headers — applied to every matching path.
 #
 # The HTML entry point and service worker must NOT be long-cached, otherwise
-# the PWA's cache-first strategy gets pinned to an old shell. JS/CSS/font
-# assets are fingerprinted only when changed, so a 1-year cache is safe.
+# the PWA's cache-first strategy gets pinned to an old shell. All assets are revalidated on each request (no-cache).
 #
 # See doc/en/technical.md (or doc/es/tecnico.md) for the matching
 # security model; the directives below mirror what the app actually
@@ -68,35 +67,34 @@
 # the shell: they MUST be revalidated on every visit, otherwise the
 # PWA's cache-first strategy pins users to an old shell (see sw.js),
 # and a 404 page edit wouldn't reach visitors until they cleared the
-# cache. All other assets are content-hashed or fingerprinted only
-# when changed, so a 1-year cache is safe.
+# cache. All other assets are revalidated on each request (no-cache).
 
 /index.html
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache, must-revalidate
 
 /404.html
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache, must-revalidate
 
 /legal/*
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache, must-revalidate
 
 /manifest.json
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache, must-revalidate
 
 /sw.js
-  Cache-Control: public, max-age=0, must-revalidate
+  Cache-Control: no-cache, must-revalidate
 
 /*.js
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: no-cache, must-revalidate
 
 /*.css
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: no-cache, must-revalidate
 
 /*.png
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: no-cache, must-revalidate
 
 /*.svg
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: no-cache, must-revalidate
 
 /*.woff2
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: no-cache, must-revalidate
