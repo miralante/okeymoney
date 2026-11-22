@@ -22,6 +22,14 @@ window.LocalePickerConfig = {
   languageInDrawer: true,
   storageKey: 'okeymoney:locale',
   storagePrefix: 'okeymoney:',
+  soundStorageKey: 'okeymoney:sounds',
+  personalReset: function () {
+    try {
+      localStorage.removeItem('okeymoney:prefs');
+      localStorage.removeItem('okeymoney:locale');
+    } catch (e) { /* storage unavailable */ }
+    return true;
+  },
   /* Okeymoney stores strings next to index.html (not under assets/js/),
      so discovery is skipped: no HEAD probes (each one was a 404), and
      requiredLocales names the two locales actually shipped. */
