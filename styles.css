@@ -21,16 +21,6 @@
    The shared cards intentionally stay generous on larger screens, but their
    desktop minimum widths make almost every mobile grid a single long column. */
 @media (max-width: 640px) {
-  .cabecera {
-    gap: var(--espacio-1);
-    padding-top: var(--espacio-2);
-  }
-
-  .cabecera .logo {
-    width: 56px;
-    height: 56px;
-  }
-
   .anclas-modulo {
     justify-content: flex-start;
     flex-wrap: wrap;
