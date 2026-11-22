@@ -6,7 +6,7 @@
    When adding new files: add them to FILES and bump VERSION (the
    precache still needs the list for offline use).
    ============================================================ */
-var VERSION = 'okeymoney-v194';
+var VERSION = 'okeymoney-v195';
 
 var FILES = [
   './tools/monthly-payments/',
@@ -32,6 +32,10 @@ var FILES = [
   './legal/styles.css',
   './legal/strings.es.js',
   './legal/strings.en.js',
+  './datos-persona/',
+  './datos-persona/app.js',
+  './datos-persona/strings.es.js',
+  './datos-persona/strings.en.js',
   './about/',
   './about/styles.css',
   './about/strings.es.js',
