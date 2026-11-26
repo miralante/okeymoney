@@ -16,7 +16,7 @@
       (e.g. 'self') has exactly one leading and one trailing quote —
       catches malformed quoting like ''self'' that browsers silently
       drop, turning a directive into "block everything" (this bit
-      teclatlon in production; see the sibling repo's CLOUDFLARE.md).
+      teclatlon in production; see the sibling repo's CI-CD.md).
    7. Usage vs. registration: every data-i18n / data-i18n-aria /
       data-i18n-meta / data-i18n-title attribute in a page's index.html,
       and every literal App.i18n.t('key') call reachable from that page,

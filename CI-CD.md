@@ -1,4 +1,12 @@
-# Cloudflare Workers (static assets) — Okeymoney
+# CI/CD and deployment — Okeymoney
+
+This is the project-specific CI/CD and Cloudflare deployment runbook. For the suite-wide test matrix, see the [Miralante CI/CD guide](https://github.com/miralante/apptonomia/blob/main/CI-CD.md).
+
+## CI validation
+
+Run the checks required by `.github/workflows/validate.yml` from this repository before merging. Project-specific checks and the suite-wide Playwright, crawler, service-worker, and release checks are listed in the linked CI/CD guide.
+
+## Cloudflare deployment profile — Okeymoney
 
 > **Deploy:** automatic on every push to `main` through the Cloudflare Git connector; Workers Builds deploys the repo and GitHub Actions only validates. The Cloudflare dashboard is the source of truth for project settings. This is a Worker with static assets, not classic Pages. Live at <https://okeymoney.miralante.workers.dev>.
 
@@ -15,7 +23,7 @@
 
 `wrangler.toml` is the deploy configuration: it pins the Worker name, serves `[assets] directory = "."` without a `main` script, and sets `not_found_handling = "404-page"`. Keep it; do not convert this project to classic Pages (`pages_build_output_dir` or `wrangler pages deploy`). Workers Builds reads it directly.
 
-`_headers` applies security and cache headers at deploy time; no dashboard rules are needed. No environment variables or Cloudflare service-account keys are required. No `_redirects`, `functions/`, or `package.json`.
+`_headers` applies security and cache headers at deploy time; no dashboard rules are needed. The app needs no runtime environment variables. The root `package.json` contains development and CI test tooling only. No `_redirects` or `functions/`.
 
 ## Routing and Workers.dev
 
@@ -45,4 +53,4 @@ No server-side calls or environment variables. Speech uses the browser Web Speec
 - [`_headers`](_headers) — security and cache policy.
 - [`.github/workflows/validate.yml`](.github/workflows/validate.yml) — validation; it does not deploy unless stated above.
 - [`CLAUDE.md`](CLAUDE.md) — agent workflow and, where applicable, the canonical service-worker cache contract (§B.1).
-- [Miralante's shared Cloudflare runbook](https://github.com/miralante/apptonomia/blob/main/CLOUDFLARE.md) — common setup and recovery steps.
+- [Miralante's shared Cloudflare runbook](https://github.com/miralante/apptonomia/blob/main/CI-CD.md) — common setup and recovery steps.

@@ -965,7 +965,7 @@ de usar uno de estos, para y vuelve a leer esta sección".
   `subpages.css`.** Todos pertenecen al modelo de fusión
   SPA retirado.
 - **Sin `_redirects` SPA catch-all.** Cloudflare lo
-  rechaza como loop; documentado en `CLOUDFLARE.md` y en
+  rechaza como loop; documentado en `CI-CD.md` y en
   la receta de deploy.
 - **Sin flash de `data-app-blocked="mobile"`.** El script
   pre-paint es un único `<script>` inline en `<head>`; no
@@ -1044,7 +1044,7 @@ demás en el mismo PR.
   que se construyen sobre este patrón.
 - [`I18N.md`](I18N.md) — Cómo añadir un idioma manteniendo
   las invariantes de i18n intactas.
-- [`CLOUDFLARE.md`](../../CLOUDFLARE.md) — Contratos de
+- [`CI-CD.md`](../../CI-CD.md) — Contratos de
   deploy y SW/headers a nivel de Cloudflare Workers.
 - [`SPEC.md`](SPEC.md) §"Mandatory rule" — Las invariantes
   de accesibilidad y "ninguna mención clínica" que cada

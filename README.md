@@ -191,7 +191,7 @@ at the repository root:
 | [`CONTRIBUTING.md`](CONTRIBUTING.md) | Anyone who wants to contribute (family, therapists, devs) |
 | [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md) | Contributor covenant (Contributor Covenant 2.1) |
 | `CLAUDE.md` | AI agents: operational workflow, coordination and approvals |
-| [`CLOUDFLARE.md`](CLOUDFLARE.md) | Canonical Cloudflare Workers deploy guide for the suite (Okeymoney + Apptonomia + Calculia, Memofun, Sinonimia, Teclatlon) |
+| [`CI-CD.md`](CI-CD.md) | Project CI/CD and Cloudflare deployment guide |
 | Project history | Lives in `git log`; no external roadmap is maintained |
 | `doc/en/i18n.md` / `doc/es/i18n.md` | Details of the ES/EN multilanguage system |
 
@@ -259,7 +259,7 @@ ships directly to **[Cloudflare Workers (static assets)](https://developers.clou
 through its built-in GitHub integration. The HTTP security headers
 live in [`_headers`](_headers), the offline fallback in
 [`sw.js`](sw.js), and the project metadata in
-[`wrangler.toml`](wrangler.toml). See [`CLOUDFLARE.md`](CLOUDFLARE.md)
+[`wrangler.toml`](wrangler.toml). See [`CI-CD.md`](CI-CD.md)
 for the full runbook (rebuild, rollback, custom domain, credential
 rotation).
 
@@ -331,11 +331,7 @@ just the original product this group grew out of.
 | [Sinonimia](https://sinonimia.apptonomia.uk/) | Easy-read dictionary | [github.com/miralante/sinonimia](https://github.com/miralante/sinonimia) |
 | [Teclatlon](https://teclatlon.apptonomia.uk/) | Touch-typing with a physical keyboard | [github.com/miralante/teclatlon](https://github.com/miralante/teclatlon) |
 
-The canonical Cloudflare / deploy guide for the group lives in
-[Apptonomia's `CLOUDFLARE.md`](https://github.com/miralante/apptonomia/blob/main/CLOUDFLARE.md).
-This repo uses the **Workers + static assets** model (`wrangler.toml`
-+ `[assets]`), which is a different shape than Apptonomia/Teclatlon's
-classic Pages model — see [`CLOUDFLARE.md`](CLOUDFLARE.md) for the
+The suite-wide CI/CD matrix lives in Apptonomia's `CI-CD.md`. This project uses Cloudflare Workers with static assets; see its [`CI-CD.md`](CI-CD.md) for configuration, deployment, and recovery.
 local runbook.
 
 
