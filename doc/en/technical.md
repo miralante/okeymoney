@@ -525,7 +525,7 @@ with the agent's emoji avatar (`👤` / `🏪` / `🏦`), a role label from
 
 ## 11. License
 
-MIT — see [`LICENSE`](../../LICENSE).
+GNU AGPL v3.0 — see [`LICENSE`](../../LICENSE).
 
 ## 12. Suite pattern — how every app of Miralante is built
 

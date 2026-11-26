@@ -115,4 +115,4 @@ Explica activos, deudas previstas, ingresos y gastos con los datos que ya has re
 
 ## Créditos y licencia
 
-Okeymoney es un proyecto de código abierto, distribuido bajo la licencia MIT. **No** es un banco, ni un asesor financiero, ni una evaluación clínica, ni un juego competitivo, y no ejecuta pagos.
+Okeymoney es un proyecto de código abierto, distribuido bajo la licencia GNU AGPL v3.0. **No** es un banco, ni un asesor financiero, ni una evaluación clínica, ni un juego competitivo, y no ejecuta pagos.

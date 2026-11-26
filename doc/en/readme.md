@@ -115,4 +115,4 @@ Explains assets, expected liabilities, income and expenses using the data you've
 
 ## Credits and licence
 
-Okeymoney is an open source project, distributed under the MIT licence. It is **not** a bank, a financial adviser, a clinical assessment or a competitive game, and it does not execute payments.
+Okeymoney is an open source project, distributed under the GNU AGPL v3.0 licence. It is **not** a bank, a financial adviser, a clinical assessment or a competitive game, and it does not execute payments.

@@ -20,7 +20,7 @@
   "hasItemList": false,
   "dcCreator": "Okeymoney (parte de la suite Apptonomia)",
   "dcSubject": "Aplicación web gratuita para organizar el dinero del día a día: saldo, gastos, metas de ahorro y decisiones antes de comprar.",
-  "dcRights": "MIT (código). Los textos y ejercicios son contenido propio bajo CC BY 4.0.",
+  "dcRights": "GNU AGPL v3.0 (código). Los textos y ejercicios son contenido propio bajo CC BY 4.0.",
   "dcType": "InteractiveResource",
   "supportEmail": "hello@apptonomia.uk",
   "faq": [
@@ -68,5 +68,5 @@
     { "name": "Memofun", "url": "https://memofun.apptonomia.uk/", "description": "Tarjetas de estudio." },
     { "name": "Teclatlon", "url": "https://teclatlon.apptonomia.uk/", "description": "Mecanografía con el teclado del ordenador." }
   ],
-  "llmsLicense": "MIT (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0."
+  "llmsLicense": "GNU AGPL v3.0 (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0."
 }

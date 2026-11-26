@@ -28,4 +28,4 @@
 
 ## License
 
-MIT (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0.
+GNU AGPL v3.0 (código). Los textos, ejercicios e iconos son contenido propio bajo CC BY 4.0.

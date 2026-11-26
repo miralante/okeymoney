@@ -4,7 +4,7 @@
 >
 > 🚀 **Pruébalo en vivo:** [okeymoney.apptonomia.uk](https://okeymoney.apptonomia.uk/)
 
-[![Licencia MIT](https://img.shields.io/badge/licencia-MIT-blue.svg)](LICENSE)
+[![Licencia GNU AGPL v3.0](https://img.shields.io/badge/licencia-AGPL--3.0-blue.svg)](LICENSE)
 [![Sin dependencias](https://img.shields.io/badge/dependencias-ninguna-success.svg)](#-caracter%C3%ADsticas)
 [![Sitio estático](https://img.shields.io/badge/build-ninguno-informational.svg)](#-caracter%C3%ADsticas)
 [![PWA](https://img.shields.io/badge/PWA-instalable-5A0FC8.svg)](manifest.json)
@@ -304,7 +304,7 @@ privada (canal preferido:
 
 ## 📄 Licencia
 
-MIT — ver [`LICENSE`](LICENSE).
+GNU AGPL v3.0 — ver [`LICENSE`](LICENSE).
 
 ---
 

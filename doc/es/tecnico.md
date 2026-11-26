@@ -565,7 +565,7 @@ reutilizan las mismas tres entradas del mapa `AGENTES` en
 
 ## 11. Licencia
 
-MIT — ver [`LICENSE`](../../LICENSE).
+GNU AGPL v3.0 — ver [`LICENSE`](../../LICENSE).
 
 ## 12. Patrón de la suite — cómo se construye cada app de Miralante
 
