@@ -1870,23 +1870,8 @@
    el saldo de App.wallet (en céntimos, redondeado a enteros de
    1 token = 1 €). El emoji 🪙 lo añade CSS via ::before.
    ========================================================================== */
-.suite-chrome-activity {
-  display: flex;
-  align-items: center;
-  gap: var(--espacio-3);
-  flex-wrap: wrap;
-  margin-bottom: var(--espacio-4);
-}
-
-.suite-chrome-activity h1 {
-  flex: 1;
-  margin: 0;
-  font-size: var(--texto-500);
-  font-weight: var(--peso-fuerte);
-  line-height: var(--linea-apretada);
-  color: var(--texto-primario);
-  min-width: 0; /* permite que el texto se trunque si el título es largo */
-}
+/* La cabecera de cada tool (.suite-chrome-activity, su título y sus controles) es la del
+   bloque compartido suite-chrome al final de este fichero: aquí no hay una segunda copia. */
 
 /* Tokens de práctica en tools: pill con fondo verde claro, emoji 🪙
    aplicado por CSS, número entero escrito por activity-runtime.js.
@@ -1925,7 +1910,6 @@
     padding-left: var(--espacio-3);
     padding-right: var(--espacio-3);
   }
-  .suite-chrome-activity h1 { font-size: 1.75rem; }
   .tarjeta--money,
   .tarjeta--goals { padding: var(--espacio-3); }
   .btn { padding: var(--espacio-2) var(--espacio-3); }
@@ -1937,7 +1921,6 @@
    punto. No movemos layout porque el grid sigue siendo auto-fill.
    ========================================================================== */
 @media (min-width: 641px) and (max-width: 1023px) {
-  .suite-chrome-activity h1 { font-size: 2rem; }
   .tarjeta--money,
   .tarjeta--goals { padding: var(--espacio-4); }
 }
@@ -1950,7 +1933,6 @@
    siendo auto-fill/minmax así que se reordenará sola.
    ========================================================================== */
 @media (min-width: 1024px) {
-  .suite-chrome-activity h1 { font-size: 2.25rem; }
   .tarjeta--money,
   .tarjeta--goals { padding: var(--espacio-5); }
   .catalogo { gap: var(--espacio-4); }
@@ -2042,7 +2024,9 @@
    wraps inside its own space instead of dropping under the back link. */
 .suite-chrome-activity {
   display: flex;
-  flex: 1 1 0;
+  /* auto, not 0: with a 0 basis the block shrinks to nothing when the row is full, and the
+     title overlaps the controls. Auto keeps its own width and wraps to its own row instead. */
+  flex: 1 1 auto;
   flex-wrap: nowrap;
   align-items: center;
   justify-content: flex-start;
@@ -2194,30 +2178,35 @@
   font-weight: 800;
 }
 
-/* The "← Menú" button (teclatlon's top-bar button, drawn for every suite page). Styled
-   here, not through the app's .btn classes, so every app shows the same button. */
+/* The "← Menú" button (teclatlon's top-bar button, drawn for every suite page). It has the
+   look of the shared back link (.back-link: accent fill, on-accent text), so the header
+   shows one button in one style. Styled here, not through the app's .btn classes. */
 .suite-chrome-menu {
   flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
-  min-height: 48px;
-  padding: 6px 14px;
+  gap: 8px;
+  min-height: var(--button-min, var(--boton-min, var(--tocable, 44px)));
+  padding: 6px 16px;
   font: inherit;
-  font-size: var(--suite-menu-size, 16px);
+  font-size: var(--text-small, var(--texto-pequeno, var(--texto-300, 1rem)));
   font-weight: 700;
-  color: var(--color-text, inherit);
-  background: var(--color-surface, #fff);
-  border: 2px solid var(--color-border, #7a8a92);
-  border-radius: var(--radius, 10px);
+  color: var(--color-on-accent, #FFFFFF);
+  background: var(--accent, var(--acento, #1B6CA8));
+  border: 2px solid var(--accent, var(--acento, #1B6CA8));
+  border-radius: var(--radius, var(--radio, 12px));
   text-decoration: none;
   cursor: pointer;
 }
 
-.suite-chrome-menu:hover { background: var(--color-surface-alt, #f1f3f4); }
+/* The page's own back link is hidden once the menu button stands in for it (see suite-chrome.js). */
+.suite-chrome-activity .back-link[hidden] { display: none; }
+
+.suite-chrome-menu:hover { filter: brightness(1.08); }
 
 .suite-chrome-menu:focus-visible {
-  outline: 3px solid var(--color-focus, #1a73e8);
-  outline-offset: 2px;
+  outline: 2px solid var(--accent, var(--acento, currentColor));
+  outline-offset: 3px;
 }
 
 .suite-chrome-footer {
