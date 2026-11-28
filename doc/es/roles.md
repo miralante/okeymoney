@@ -1,41 +1,34 @@
 # Roles del proyecto
 
-Okeymoney tiene **tres roles diferenciados**, igual que el resto de la
-familia de proyectos (Apptonomia, Calculia, Memofun, Sinonimia,
-Teclatlon):
+Todos los proyectos de la suite Miralante tienen los **mismos tres roles**,
+con los mismos nombres. Este archivo es idéntico en los ocho proyectos.
 
-| Rol | Quién es | Cómo participa | Dónde mira primero |
+> ⚠️ **No edites la copia de un solo proyecto.** El archivo canónico es
+> `apptonomia/doc/es/roles.md` (espejo en inglés: `apptonomia/doc/en/roles.md`).
+> Cámbialo ahí y cópialo a los demás proyectos. Los detalles propios de cada
+> proyecto (quién es la persona usuaria, qué pantallas usa, qué archivos
+> leer primero) van en el `README.md` y el `CLAUDE.md` de ese proyecto, no aquí.
+
+| Rol | Quién es | Cómo participa | Dónde mirar primero |
 |---|---|---|---|
-| 👤 **Persona usuaria** (alguien con discapacidad intelectual o del desarrollo que aprende finanzas personales, y en particular personas que se benefician de la lectura fácil) | Practica el saldo, las metas y el registro de gastos | Abre `index.html` en un navegador y usa la app de forma autónoma. **No lee código**, no toca el libro contable directamente. | La aplicación — no hace falta leer nada más |
-| ❤️ **Apoyo**: familia, cuidador/a, profesional de apoyo | Inicializa el libro contable y acompaña los primeros gastos | Define el saldo inicial y las primeras metas de ahorro en `Mi dinero` / `Mis metas`; acompaña el primer registro de gasto en `Registrar un gasto`; supervisa el progreso con el tiempo. | [`CONTRIBUTING.es.md`](../../CONTRIBUTING.es.md) (la sección "Apoyo") |
-| 💻 **Construcción**: desarrollador/a | Mantiene el libro contable compartido y el catálogo | Edita `app.js`, los datos por actividad y la home de catálogo-primero descrita en [`SPEC.md`](SPEC.md) §6–§7; ejecuta [`scripts/check.js`](../../scripts/check.js), sube el `VERSION` en `sw.js` y despliega. | [`CLAUDE.md`](../../CLAUDE.md) · [`tecnico.md`](tecnico.md) |
+| 👤 **Persona usuaria** | La persona que usa la app para aprender, practicar o resolver algo. La suite está pensada para lectura fácil. | Usa la app por su cuenta. No participa en el desarrollo. | La propia app — no hay nada más que leer |
+| ❤️ **Apoyo** | Familia, docente, terapeuta o cualquier persona que ayuda a la persona usuaria a elegir y usar la app, sin tomar sus decisiones por ella. | Elige la app o el contenido adecuado para una necesidad, la prepara para la persona usuaria e informa de problemas o de textos poco claros. | [`README.md`](README.md) |
+| 💻 **Construcción** | Desarrolladoras y mantenedoras que cambian el código, el contenido, las pruebas o el despliegue. | Edita el código, revisa las pull requests y despliega, siguiendo las reglas del proyecto. | [`CLAUDE.md`](CLAUDE.md), después [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 
-> 💡 La persona usuaria final es siempre alguien que se beneficia de la
-> lectura fácil, un ritmo sin presión y pantallas sin ruido — ver
-> [`SPEC.md`](SPEC.md) §2. Las decisiones de contenido, lenguaje e
-> interfaz se piensan siempre desde su experiencia. Lo que queda fuera
-> de su participación son las decisiones puramente técnicas (el esquema
-> de `localStorage`, el invariante del libro único, GitHub) — no por
-> exclusión, sino porque es el ámbito de apoyo/construcción.
+> 💡 **La persona usuaria es el público.** Cada decisión sobre la interfaz,
+> los textos y la accesibilidad se toma pensando en su experiencia. Las
+> decisiones técnicas corresponden al rol de Construcción.
 
-## Por dónde empezar, según tu perfil
+Una persona puede tener más de un rol: un familiar puede ser Apoyo y, además,
+usar la app junto con la persona usuaria.
+
+---
+
+## 🗺️ Por dónde empezar, según perfil
 
 | Si eres… | Empieza por… |
 |---|---|
-| 👤 Persona usuaria o familiar directo | La aplicación — no hace falta leer nada técnico |
-| ❤️ Profesional de apoyo que configura el libro contable por primera vez | [`README.es.md`](../../README.es.md) (la sección "Preparar / Ampliar contenido") |
-| ❤️ Persona de apoyo que reporta una categoría que falta o una redacción poco clara | [`CONTRIBUTING.es.md`](../../CONTRIBUTING.es.md) (la sección "Apoyo") |
-| 🤔 Solo quiero entender qué es Okeymoney | [`README.es.md`](../../README.es.md) |
-| 💻 Desarrollador/a | [`CLAUDE.md`](../../CLAUDE.md) · [`tecnico.md`](tecnico.md) · [`SPEC.md`](SPEC.md) |
-
-## 🤝 Un proyecto pequeño y enfocado
-
-A diferencia de un producto con varios equipos, Okeymoney es
-deliberadamente pequeño: un libro contable compartido
-(`okeymoney:data` + `okeymoney:practiceWallet`), un shell de PWA, sin
-backend. El rol de **apoyo** suele solaparse con el de
-**construcción** — la misma persona que configura el saldo para quien
-aprende es también quien abre el PR — y eso es esperable. Los tres
-roles se documentan por separado para que quien se incorpore al
-proyecto sepa qué se espera de cada perfil, no porque tengan que
-hacerlo tres personas distintas.
+| 👤 Persona usuaria, o familiar que usa la app con ella | La app. No hay nada más que leer. |
+| ❤️ Apoyo | El [`README.md`](README.md) de la app |
+| 💻 Desarrolladora o mantenedora | [`CLAUDE.md`](CLAUDE.md), después [`CONTRIBUTING.md`](CONTRIBUTING.md) |
+| 🤔 Solo quieres entender qué es el proyecto | [`README.md`](README.md) |
