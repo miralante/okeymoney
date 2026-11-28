@@ -6,7 +6,7 @@
 
   App.i18n.register({
     "pageTitle": "About the app",
-    "backToCover": "← Back",
+    "backToCover": "Teclatlon menu",
     "routeNotice": "This page is not linked from the app. You only reach it by typing the address.",
     "eyebrow": "About the app",
     "tagline": "Everyday money, at your own pace.",

@@ -746,7 +746,7 @@
       dots += '<span class="dot ' + (i < step ? 'done' : i === step ? 'active' : '') + '"></span>';
     }
     var backButton = onBack
-      ? '<button type="button" class="back-link" id="wizBack">' + App.i18n.t('core.back') + '</button>'
+      ? '<button type="button" class="back-link" id="wizBack">' + App.i18n.t('core.backStep') + '</button>'
       : '<span></span>';
     return (
       '<div class="wizard-header">' + backButton +

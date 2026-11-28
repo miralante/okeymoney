@@ -31,7 +31,8 @@
   var DICT = {
     es: {
       core: {
-        back: '← Volver',
+        back: 'Menú de Teclatlon',
+        backStep: '← Volver',
         close: 'Cerrar',
         next: 'Siguiente →',
         save: 'Guardar',
@@ -79,7 +80,8 @@
     },
     en: {
       core: {
-        back: '← Back',
+        back: 'Teclatlon menu',
+        backStep: '← Back',
         close: 'Close',
         next: 'Next →',
         save: 'Save',
