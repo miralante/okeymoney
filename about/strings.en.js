@@ -6,8 +6,8 @@
 
   App.i18n.register({
     "pageTitle": "About the app",
-    "backToCover": "Teclatlon menu",
-    "routeNotice": "This page is not linked from the app. You only reach it by typing the address.",
+    "backToCover": "Menu",
+    "backHome": "Menu",
     "eyebrow": "About the app",
     "tagline": "Everyday money, at your own pace.",
     "lead1": "Okeymoney is a ",
@@ -40,7 +40,7 @@
     "techTitle": "How it is built",
     "techIntro1": "Okeymoney is a ",
     "techIntroStrong": "installable web app (PWA)",
-    "techIntro2": " that is part of the Apptonomia suite. It has hidden routes for families, professionals and maintenance.",
+    "techIntro2": " that is part of the Apptonomia suite.",
     "techItem1Label": "No server of its own",
     "techItem1Text": "the app is a set of files served by static hosting. No backend, no databases, no API of its own.",
     "techItem2Label": "Works offline",
